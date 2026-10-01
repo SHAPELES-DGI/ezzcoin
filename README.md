@@ -1,4 +1,4 @@
-# Ezzcoin
+# Ezzcoins
 
 An EA SPORTS FC 27 Ultimate Team trading desk: the weekly market cycle, fodder prices, SBC demand, content drops and graded trade calls.
 
