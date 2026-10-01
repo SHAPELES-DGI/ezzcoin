@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Privacy and cookies · Ezzcoin</title>
+<meta name="description" content="How Ezzcoin handles sign-in, watchlists, cookies and ads.">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+:root { --bg: #F2F4EF; --surface: #FFFFFF; --ink: #15201A; --muted: #58685F; --line: #D5DCD2; --gold: #8F6210; color-scheme: light; }
+@media (prefers-color-scheme: dark) { :root { --bg: #0C1310; --surface: #131C17; --ink: #E5ECE7; --muted: #93A59A; --line: #26332C; --gold: #E3B34E; color-scheme: dark; } }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif; padding: 24px 16px 48px; }
+main { max-width: 760px; margin: 0 auto; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 24px; }
+h1 { font-size: 1.7rem; line-height: 1.2; margin: 0 0 4px; }
+h2 { font-size: 1.1rem; margin: 26px 0 6px; }
+p, li { color: var(--ink); }
+.muted { color: var(--muted); font-size: .92rem; }
+a { color: var(--gold); }
+ul { padding-left: 20px; }
+.back { display: inline-block; margin-bottom: 14px; text-decoration: none; font-weight: 600; }
+</style>
+</head>
+<body>
+<main>
+<a class="back" href="./">← Back to Ezzcoin</a>
+<h1>Privacy and cookies</h1>
+<p class="muted">Last updated 1 October 2026</p>
+
+<p>Ezzcoin is a fan-made trading guide for EA SPORTS FC 27 Ultimate Team. You can use it without an account. This page explains what is stored when you sign in, what your browser keeps, and how ads work.</p>
+
+<h2>Signing in with Google</h2>
+<p>Sign-in is handled by Google's Firebase Authentication. When you sign in, Firebase keeps an account record with your Google name, email address, profile picture and a random account ID, so you can sign in again on any device. Ezzcoin uses this only to sign you in and to show your first name to you. It is never shown to other visitors, sold or used for marketing.</p>
+
+<h2>Your watchlist</h2>
+<p>Your watchlist is stored in Google Cloud Firestore under your random account ID. It holds only the player numbers you picked and the time of your last change, with no name or email. The site's hourly updater reads all watchlists to decide which player prices to fetch, so watchlists are technically readable without signing in. They can't be linked to you without access to the Firebase account records.</p>
+<p>You can delete your watchlist at any time with <strong>Delete my data</strong> on the Players tab.</p>
+
+<h2>What your browser keeps</h2>
+<ul>
+  <li>The last tab you opened, so the site opens there next time.</li>
+  <li>If you sign in, Firebase keeps you signed in using your browser's storage until you sign out.</li>
+</ul>
+
+<h2>Advertising</h2>
+<p>On wide screens, Ezzcoin may show ads from Google AdSense. Google and its partners use cookies to show ads, including ads based on your visits to this and other websites. You can turn off personalised ads in <a href="https://myadcenter.google.com/" rel="noopener">Google's My Ad Center</a>, and read how Google uses data from sites like this one in <a href="https://policies.google.com/technologies/partner-sites" rel="noopener">How Google uses information from sites that use its services</a>. If you visit from the EEA, the UK or Switzerland, Google's consent message asks for your choice before personalised ads are shown.</p>
+
+<h2>Other services</h2>
+<ul>
+  <li>The site is hosted on GitHub Pages. GitHub may log your IP address for security; see <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" rel="noopener">GitHub's privacy statement</a>.</li>
+  <li>Fonts load from Google Fonts, which receives your IP address when it sends them.</li>
+  <li>Prices and data come from FUT.GG, FUTBIN and EA. Links to those sites open them in a new tab, where their own privacy policies apply.</li>
+</ul>
+
+<p class="muted">Ezzcoin is not affiliated with EA SPORTS, FUTBIN or FUT.GG.</p>
+</main>
+</body>
+</html>
