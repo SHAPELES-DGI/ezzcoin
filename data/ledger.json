@@ -1,1 +1,93 @@
-{"calls": [{"checkAt": "2026-10-02T17:00:00+02:00", "confidence": "medium", "entry": 650, "entryAt": "2026-10-01T10:00:00+02:00", "entryRecordedAt": "2026-10-01T08:29:00Z", "exit": null, "id": "c-2026-10-01-84floor", "madeAt": "2026-09-30T18:26:38Z", "note": "Entry is the cheapest 84 on FUT.GG at the first update after 10:00 Thursday", "ref": {"kind": "floor", "label": "FUT.GG cheapest 84", "ovr": 84, "source": "FUT.GG", "url": "https://www.fut.gg/cheapest-by-rating/"}, "result": null, "rule": "buy_after_tax", "status": "open", "title": "Buy 84-rated fodder Thursday morning, sell or use by Friday 17:00", "tone": "buy"}, {"checkAt": "2026-10-03T12:00:00+02:00", "confidence": "medium", "entry": null, "entryAt": "2026-10-02T17:00:00+02:00", "exit": null, "id": "c-2026-10-02-isak", "madeAt": "2026-09-30T18:26:38Z", "note": "609,000 on FUTBIN when the call was made", "ref": {"kind": "player", "label": "FUTBIN Destined for Glory page, PS price", "name": "Alexander Isak", "ovr": 88, "source": "FUTBIN", "url": "https://www.futbin.com/27/totw/DestinedForGlory", "version": "Destined for Glory"}, "result": null, "rule": "sell_lower", "status": "pending", "title": "Sell DFG Isak (88) before the Friday 19:00 promo", "tone": "sell"}], "lessons": [{"date": "2026-09-30T18:26:38Z", "text": "Coin-seller blogs contradicted each other on basic dates. Only EA, FUT.GG, FUTBIN, FUT Sheriff, FifaTradingRomania and The FUT Accountant are used now."}, {"date": "2026-09-30T18:26:38Z", "text": "FUT.GG and FUTBIN can show different prices for the same card. Every call is graded on the same site and page it was made from."}, {"date": "2026-09-30T19:20:05Z", "kind": "miss", "text": "Listed the Mora and Pedro Gonçalves OTW SBCs as upcoming on 30 Sep, but both posts were from 11–16 Sep and FUTBIN shows the SBC already released and expired (Ones to Watch Duo Pick 1). Check each post's date and FUTBIN's past SBCs before listing a drop."}, {"date": "2026-09-30T19:20:05Z", "kind": "hit", "text": "The two-source rule held: FUT Sheriff and FifaTradingRomania both reported the Mora vs Pedro Gonçalves OTW Pick SBC on 16 Sep, and it landed as described."}, {"date": "2026-09-30T19:48:34Z", "kind": "tip", "status": "new", "text": "Sell-before-promo calls are for spare cards only. Keep the cards you play Champions with that weekend: selling and rebuying them costs the 5% tax and usually a higher Friday price.", "tipId": "4d2f57d7l9pknakf169p"}, {"date": "2026-10-01T05:33:00Z", "kind": "miss", "text": "Repeated FUTBIN's +25% Index 100 day change for ~10 hours as a reason to sell, then it reset to +1.3%. Don't base a verdict on one day-change figure; use the index level, momentum gauge and EA's reward times together."}, {"date": "2026-10-01T11:28:00Z", "kind": "miss", "text": "The fodder move said 09:00–13:00 but floors stayed at 650 well past 13:00. Tie fodder buy windows to a price level (e.g. while the 84 floor is at 650), not a fixed clock time."}, {"date": "2026-10-01T15:45:00Z", "kind": "miss", "text": "Earlier updates wrote plain clock times in text. Write every time as a {{t:...}} token so each viewer sees their own zone."}]}
+{
+  "calls": [
+    {
+      "checkAt": "2026-10-02T17:00:00+02:00",
+      "confidence": "medium",
+      "entry": 650,
+      "entryAt": "2026-10-01T10:00:00+02:00",
+      "entryRecordedAt": "2026-10-01T08:29:00Z",
+      "exit": null,
+      "id": "c-2026-10-01-84floor",
+      "madeAt": "2026-09-30T18:26:38Z",
+      "note": "Entry is the cheapest 84 on FUT.GG at the first update after 10:00 Thursday",
+      "ref": {
+        "kind": "floor",
+        "label": "FUT.GG cheapest 84",
+        "ovr": 84,
+        "source": "FUT.GG",
+        "url": "https://www.fut.gg/cheapest-by-rating/"
+      },
+      "result": null,
+      "rule": "buy_after_tax",
+      "status": "open",
+      "title": "Buy 84-rated fodder Thursday morning, sell or use by Friday 17:00",
+      "tone": "buy"
+    },
+    {
+      "checkAt": "2026-10-03T12:00:00+02:00",
+      "confidence": "medium",
+      "entry": null,
+      "entryAt": "2026-10-02T17:00:00+02:00",
+      "exit": null,
+      "id": "c-2026-10-02-isak",
+      "madeAt": "2026-09-30T18:26:38Z",
+      "note": "609,000 on FUTBIN when the call was made",
+      "ref": {
+        "kind": "player",
+        "label": "FUTBIN Destined for Glory page, PS price",
+        "name": "Alexander Isak",
+        "ovr": 88,
+        "source": "FUTBIN",
+        "url": "https://www.futbin.com/27/totw/DestinedForGlory",
+        "version": "Destined for Glory"
+      },
+      "result": null,
+      "rule": "sell_lower",
+      "status": "pending",
+      "title": "Sell DFG Isak (88) before the Friday 19:00 promo",
+      "tone": "sell"
+    }
+  ],
+  "lessons": [
+    {
+      "date": "2026-09-30T18:26:38Z",
+      "text": "Coin-seller blogs contradicted each other on basic dates. Only EA, FUT.GG, FUTBIN, FUT Sheriff, FifaTradingRomania and The FUT Accountant are used now."
+    },
+    {
+      "date": "2026-09-30T18:26:38Z",
+      "text": "FUT.GG and FUTBIN can show different prices for the same card. Every call is graded on the same site and page it was made from."
+    },
+    {
+      "date": "2026-09-30T19:20:05Z",
+      "kind": "miss",
+      "text": "Listed the Mora and Pedro Gonçalves OTW SBCs as upcoming on 30 Sep, but both posts were from 11–16 Sep and FUTBIN shows the SBC already released and expired (Ones to Watch Duo Pick 1). Check each post's date and FUTBIN's past SBCs before listing a drop."
+    },
+    {
+      "date": "2026-09-30T19:20:05Z",
+      "kind": "hit",
+      "text": "The two-source rule held: FUT Sheriff and FifaTradingRomania both reported the Mora vs Pedro Gonçalves OTW Pick SBC on 16 Sep, and it landed as described."
+    },
+    {
+      "date": "2026-09-30T19:48:34Z",
+      "kind": "tip",
+      "status": "new",
+      "text": "Sell-before-promo calls are for spare cards only. Keep the cards you play Champions with that weekend: selling and rebuying them costs the 5% tax and usually a higher Friday price.",
+      "tipId": "4d2f57d7l9pknakf169p"
+    },
+    {
+      "date": "2026-10-01T05:33:00Z",
+      "kind": "miss",
+      "text": "Repeated FUTBIN's +25% Index 100 day change for ~10 hours as a reason to sell, then it reset to +1.3%. Don't base a verdict on one day-change figure; use the index level, momentum gauge and EA's reward times together."
+    },
+    {
+      "date": "2026-10-01T11:28:00Z",
+      "kind": "miss",
+      "text": "The fodder move said 09:00–13:00 but floors stayed at 650 well past 13:00. Tie fodder buy windows to a price level (e.g. while the 84 floor is at 650), not a fixed clock time."
+    },
+    {
+      "date": "2026-10-01T15:45:00Z",
+      "kind": "miss",
+      "text": "Earlier updates wrote plain clock times in text. Write every time as a {{t:...}} token so each viewer sees their own zone."
+    }
+  ]
+}
