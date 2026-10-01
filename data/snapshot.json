@@ -1,24 +1,6 @@
 {
   "corrections": [
     {
-      "date": "2026-09-30T19:20:05Z",
-      "section": "Moves right now",
-      "what": "Removed \"Hold Thursday fodder for the OTW SBCs\".",
-      "why": "It was based on those already-released SBCs."
-    },
-    {
-      "date": "2026-09-30T19:46:00Z",
-      "section": "Moves right now",
-      "what": "The Friday sell call now says to keep the cards you play Champions with.",
-      "why": "From your tip, checked against FUTBIN prices and the 5% tax."
-    },
-    {
-      "date": "2026-10-01T00:28:56Z",
-      "section": "Calendar",
-      "what": "The Friday promo event now says to sell spare DFG Team 1 cards only and keep your Champions cards.",
-      "why": "It still said to sell all DFG Team 1 cards, which contradicts the checked tip rule already applied to the moves."
-    },
-    {
       "date": "2026-10-01T05:33:00Z",
       "section": "Latest market read",
       "what": "Verdict now says the market has cooled and to hold coins for the 08:59 rewards.",
@@ -89,6 +71,24 @@
       "section": "Moves right now",
       "what": "85s now beat 84s on Item Score only below about 1,645, not 1,615.",
       "why": "650 coins ÷ 830 points = 0.783 per point; × 2,100 points gives about 1,645."
+    },
+    {
+      "date": "2026-10-01T20:21:42Z",
+      "section": "Hot SBCs",
+      "what": "Olise and Malen POTM costs now show FUTBIN's console cost (548.6K and 70.85K).",
+      "why": "The listed 700K and 90K were the Item Score requirements, not the coin cost, per FUTBIN."
+    },
+    {
+      "date": "2026-10-01T20:21:42Z",
+      "section": "Hot SBCs",
+      "what": "Marquee Matchups now costs 14.7K instead of Free.",
+      "why": "FUTBIN shows a 14.7K console cost for it."
+    },
+    {
+      "date": "2026-10-01T20:50:00Z",
+      "section": "Movers",
+      "what": "Replaced the fallers list and the first move's examples (Tzolakis, Kayode, Carpenter).",
+      "why": "FUT.GG's momentum page now lists Yamal, Dalglish, Wilson and Olise as the biggest fallers; the old names no longer appear."
     }
   ],
   "drops": [
@@ -206,39 +206,60 @@
   ],
   "fallers": [
     {
-      "name": "Tzolakis",
-      "ovr": 81,
-      "pct": -41.3,
-      "price": "−4,443",
+      "name": "Lamine Yamal",
+      "ovr": 91,
+      "pct": -13.2,
+      "price": "−186,598",
       "version": "TOTW"
     },
     {
-      "name": "Kayode",
-      "ovr": 83,
-      "pct": -34.3,
-      "price": "−8,998",
+      "name": "Dalglish",
+      "ovr": 90,
+      "pct": -7.3,
+      "price": "−128,802",
+      "version": "Base Icon"
+    },
+    {
+      "name": "Wilson",
+      "ovr": 89,
+      "pct": -7.9,
+      "price": "−59,800",
       "version": "TOTW"
     },
     {
-      "name": "Carpenter",
+      "name": "Olise",
+      "ovr": 91,
+      "pct": -6.9,
+      "price": "−65,417",
+      "version": "TOTW"
+    },
+    {
+      "name": "Mbappé",
+      "ovr": 91,
+      "pct": -5.8,
+      "price": "−415,151",
+      "version": "Destined for Glory"
+    },
+    {
+      "name": "Kika Nazareth",
       "ovr": 86,
-      "pct": -27.1,
-      "price": "−4,739",
-      "version": "TOTW"
+      "pct": -5.5,
+      "price": "−46,281",
+      "version": "Destined for Glory"
     },
     {
-      "name": "Baena",
-      "ovr": 84,
-      "pct": -25.9,
-      "price": "−4,082",
-      "version": "TOTW"
+      "name": "Carlos Alberto",
+      "ovr": 91,
+      "pct": -5.5,
+      "price": "−76,450",
+      "version": "Base Icon"
     },
     {
-      "name": "Gyökeres",
-      "ovr": 87,
-      "pct": -14.7,
-      "price": "−8,746",
-      "version": "TOTW"
+      "name": "Nuno Mendes",
+      "ovr": 89,
+      "pct": -4.7,
+      "price": "−46,647",
+      "version": "Destined for Glory"
     }
   ],
   "fodder": [
@@ -274,27 +295,27 @@
     },
     {
       "ovr": 87,
-      "price": 5200,
+      "price": 5000,
       "score": 5500
     },
     {
       "ovr": 88,
-      "price": 8500,
+      "price": 8200,
       "score": 8300
     },
     {
       "ovr": 89,
-      "price": 18000,
+      "price": 17750,
       "score": 11000
     },
     {
       "ovr": 90,
-      "price": 28000,
+      "price": 27750,
       "score": 14000
     },
     {
       "ovr": 91,
-      "price": 107000,
+      "price": 112000,
       "score": 19000
     }
   ],
@@ -307,7 +328,7 @@
     "idx86": 62.61,
     "momentum": 49.67,
     "momentumLabel": "The market is chillin",
-    "note": "FUTBIN did not load this run (403), so the index values are from an earlier update: Index 100 116.43 (+1.3%), momentum 49.67."
+    "note": "FUTBIN's market page did not load this run (403), so these index figures are from an earlier update: Index 100 116.43 (+1.33%), momentum 49.67."
   },
   "meta": [
     {
@@ -370,22 +391,22 @@
   "moves": [
     {
       "confidence": "medium",
-      "detail": "Rivals rewards landed at {{t:2026-10-01T08:59:00+02:00}} (EA: Thursdays 06:59 UTC). TOTW cards still lead FUT.GG's fallers (Tzolakis 81 −41%, Kayode 83 −34%, Carpenter 86 −27%), so wait before buying older specials. Spend on fodder first.",
-      "title": "Don't chase specials after the rewards",
+      "detail": "FUT.GG's biggest fallers are expensive specials: Yamal TOTW 91 −13%, Olise TOTW 91 −7%, Wilson TOTW 89 −8%, Mbappé DFG 91 −6%. Last week's TOTW cards left packs when TOTW 3 arrived at {{t:2026-09-30T18:00:00+01:00}}. Spend on fodder first.",
+      "title": "Don't buy TOTW and Destined for Glory specials yet",
       "tone": "hold",
-      "when": "Today"
+      "when": "Until {{t:2026-10-02T19:00:00+02:00}}"
     },
     {
       "confidence": "medium",
-      "detail": "84s are still at 650 (FUT.GG, this update) on FUT.GG; an 84 carries 830 Item Score on FUTBIN against 410 for an 83, about 0.78 coins per point. Any 84 works for Streamlined SBCs. Tracked call: entry recorded at 650 (FUT.GG, {{t:2026-10-01T10:29:00+02:00}}); graded at {{t:2026-10-02T17:00:00+02:00}}. Selling only pays above 685 after the 5% tax.",
+      "detail": "84s are still at 650 on FUT.GG this update (a few reach 700); an 84 carries 830 Item Score on FUTBIN against 410 for an 83, about 0.78 coins per point. Any 84 works for Streamlined SBCs. Tracked call: entry recorded at 650 (FUT.GG, {{t:2026-10-01T10:29:00+02:00}}); graded at {{t:2026-10-02T17:00:00+02:00}}. Selling only pays above 685 after the 5% tax. Follows the lesson to tie fodder buys to a price level, not a clock time.",
       "ledgerId": "c-2026-10-01-84floor",
       "title": "Buy 84-rated fodder at 650",
       "tone": "buy",
-      "when": "Today, while the 84 floor is 700 or less"
+      "when": "Until {{t:2026-10-02T17:00:00+02:00}}, while the 84 floor is 700 or less"
     },
     {
       "confidence": "medium",
-      "detail": "New promo teams open in packs on Fridays at {{t:2026-10-02T18:00:00+01:00}}, which pulls coins away from older specials. DFG Isak was 495K on FUTBIN in an earlier update, down from 609K the evening before, and DFG cards lead FUT.GG's fallers. This is for spare cards only: keep the ones you play Champions with, since selling and rebuying costs the 5% tax. Follows the checked tip rule: sell spares only.",
+      "detail": "New promo teams open in packs on Fridays at {{t:2026-10-02T18:00:00+01:00}}, which pulls coins away from older specials. DFG Isak was 495K on FUTBIN at an earlier update (FUTBIN did not load this run), down from 609K two evenings ago. This is for spare cards only: keep the ones you play Champions with, since selling and rebuying costs the 5% tax. Follows the checked tip rule: sell spares only.",
       "ledgerId": "c-2026-10-02-isak",
       "title": "Sell spare Destined for Glory Team 1 cards before the next promo",
       "tone": "sell",
@@ -393,7 +414,7 @@
     },
     {
       "confidence": "medium",
-      "detail": "84s at 650 cost 0.78 coins per point, against 0.81 for 85s at 1,700 and 0.93 for 86s at 3,800. 85s only beat 84s below about 1,645.",
+      "detail": "84s at 650 cost 0.78 coins per point, against 0.81 for 85s at 1,700 and 0.93 for 86s at 3,800 (FUT.GG). 85s only beat 84s below about 1,645.",
       "title": "84s are still the cheapest Item Score",
       "tone": "watch",
       "when": "Every update"
@@ -431,62 +452,62 @@
       "title": "Season 1 ends 22 October"
     },
     {
-      "detail": "FUTBIN's Index 100 was 116.43 (+1.3% on the day) with the momentum gauge near 50 in an earlier update; FUTBIN did not load this run. TOTW cards lead FUT.GG's fallers (Kayode 83 −34%, Baena 84 −26%). 84s are at 650.",
+      "detail": "FUT.GG: 81–84 at 650, 85s at 1,700. Biggest fallers are expensive specials (Yamal TOTW 91 −13%, Wilson TOTW 89 −8%). Index figures (116.43, +1.33%) are from an earlier update because FUTBIN returned an error.",
       "kind": "data",
       "source": "FUTBIN · FUT.GG",
-      "title": "Market cools off"
+      "title": "Market stays calm, specials fall"
     }
   ],
   "platform": "console",
   "risers": [],
   "sbcs": [
     {
-      "cost": "2.05K",
+      "cost": "1.8K",
       "expires": "Until {{t:2026-10-02T18:00:00+01:00}}",
       "name": "DFG Challenge 2",
-      "note": "Mini Gold Pack, tradeable, not repeatable"
+      "note": "Mini Gold Pack, tradeable; FUTBIN shows about 22 hours left"
     },
     {
-      "cost": "700K",
-      "expires": "Active (expiry not refreshed)",
+      "cost": "14.7K",
+      "expires": "About 6 days left (FUTBIN)",
+      "name": "Marquee Matchups",
+      "note": "Jumbo Gold Pack, tradeable, repeatable"
+    },
+    {
+      "cost": "548.6K",
+      "expires": "About 3 weeks left (FUTBIN)",
       "name": "Bundesliga POTM September (Olise)",
-      "note": "91-rated, per FUT.GG"
+      "note": "700,000 Item Score; 91-rated per FUT.GG"
     },
     {
-      "cost": "90K",
-      "expires": "Active (expiry not refreshed)",
+      "cost": "70.85K",
+      "expires": "About 3 weeks left (FUTBIN)",
       "name": "Serie A POTM September (Malen)",
-      "note": "85-rated, per FUT.GG"
+      "note": "90,000 Item Score; 85-rated per FUT.GG"
     },
     {
       "cost": "67.3K",
       "expires": "Active (expiry not refreshed)",
       "name": "DFG Antonio Nusa",
-      "note": "75,000 Item Score; FUT.GG lists 75K"
+      "note": "75,000 Item Score; cost from an earlier update"
     },
     {
       "cost": "35.2K",
       "expires": "Active (expiry not refreshed)",
       "name": "DFG Davide Frattesi",
-      "note": "40,000 Item Score"
+      "note": "40,000 Item Score; cost from an earlier update"
     },
     {
       "cost": "21.6K",
       "expires": "Active (expiry not refreshed)",
       "name": "DFG Renato Veiga",
-      "note": "25,000 Item Score"
+      "note": "25,000 Item Score; cost from an earlier update"
     },
     {
       "cost": "2.5K",
       "expires": "Active (expiry not refreshed)",
       "name": "83+ Upgrade",
-      "note": "Repeatable"
-    },
-    {
-      "cost": "Free",
-      "expires": "Active (expiry not refreshed)",
-      "name": "Marquee Matchups",
-      "note": "Jumbo Gold Pack, per FUT.GG"
+      "note": "83+ Gold Player Pack, per FUT.GG"
     }
   ],
   "source": "scheduled",
@@ -564,10 +585,10 @@
       "url": "https://www.futbin.com/27/squad-building-challenge/22"
     }
   ],
-  "updatedAt": "2026-10-01T19:42:00Z",
+  "updatedAt": "2026-10-01T20:50:00Z",
   "verdict": {
-    "detail": "FUT.GG shows 81–84 at 650, 85s at 1,700 and 86s at 3,800. FUTBIN did not load this run (403), so the index values are from an earlier update (Index 100 116.43, momentum about 50). The next demand point is Destined for Glory Team 2 at {{t:2026-10-02T18:00:00+01:00}}.",
-    "headline": "84s stay at 650, the cheapest Item Score at about 0.78 coins per point.",
+    "detail": "FUT.GG shows 81–84 at 650, 85s at 1,700 and 86s at 3,800. FUTBIN did not load this run, so the index reading (116.43, momentum 49.67, calm) is from an earlier update. Expensive specials keep falling (Yamal TOTW −13%), and the next demand point is Destined for Glory Team 2 at {{t:2026-10-02T18:00:00+01:00}}.",
+    "headline": "84s hold at 650 and remain the cheapest Item Score at about 0.78 coins per point.",
     "label": "Buy 84s as fodder, hold the rest",
     "tone": "buy"
   }

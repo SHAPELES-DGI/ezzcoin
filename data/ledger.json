@@ -88,6 +88,11 @@
       "date": "2026-10-01T15:45:00Z",
       "kind": "miss",
       "text": "Earlier updates wrote plain clock times in text. Write every time as a {{t:...}} token so each viewer sees their own zone."
+    },
+    {
+      "date": "2026-10-01T20:21:42Z",
+      "kind": "miss",
+      "text": "FUT.GG's SBC list showed Item Score requirements (700,000, 90,000) where a coin cost was expected. Take SBC coin costs from FUTBIN's console column and label Item Score separately."
     }
   ]
 }
