@@ -2,12 +2,6 @@
   "corrections": [
     {
       "date": "2026-09-30T19:20:05Z",
-      "section": "Calendar",
-      "what": "Removed the Mora, Pedro Gonçalves and Bouaddi OTW SBCs from upcoming drops.",
-      "why": "The leaks were from 11–16 Sep and FUTBIN shows both SBCs already released."
-    },
-    {
-      "date": "2026-09-30T19:20:05Z",
       "section": "Moves right now",
       "what": "Removed \"Hold Thursday fodder for the OTW SBCs\".",
       "why": "It was based on those already-released SBCs."
@@ -89,6 +83,12 @@
       "section": "Moves right now",
       "what": "Replaced \"85s are now the cheapest Item Score\" with 84s at 650.",
       "why": "FUT.GG now lists 85s at 1,700 (0.81 per point) and 84s at 650 (0.78), so the earlier claim was out of date."
+    },
+    {
+      "date": "2026-10-01T19:42:00Z",
+      "section": "Moves right now",
+      "what": "85s now beat 84s on Item Score only below about 1,645, not 1,615.",
+      "why": "650 coins ÷ 830 points = 0.783 per point; × 2,100 points gives about 1,645."
     }
   ],
   "drops": [
@@ -208,36 +208,36 @@
     {
       "name": "Tzolakis",
       "ovr": 81,
-      "pct": -50,
-      "price": "−5,250",
+      "pct": -41.3,
+      "price": "−4,443",
       "version": "TOTW"
     },
     {
       "name": "Kayode",
       "ovr": 83,
-      "pct": -34.2,
-      "price": "−8,633",
-      "version": "TOTW"
-    },
-    {
-      "name": "Baena",
-      "ovr": 84,
-      "pct": -30.2,
-      "price": "−4,686",
+      "pct": -34.3,
+      "price": "−8,998",
       "version": "TOTW"
     },
     {
       "name": "Carpenter",
       "ovr": 86,
-      "pct": -30.1,
-      "price": "−5,567",
+      "pct": -27.1,
+      "price": "−4,739",
       "version": "TOTW"
     },
     {
-      "name": "Olise",
-      "ovr": 91,
-      "pct": -20.6,
-      "price": "−169,002",
+      "name": "Baena",
+      "ovr": 84,
+      "pct": -25.9,
+      "price": "−4,082",
+      "version": "TOTW"
+    },
+    {
+      "name": "Gyökeres",
+      "ovr": 87,
+      "pct": -14.7,
+      "price": "−8,746",
       "version": "TOTW"
     }
   ],
@@ -264,37 +264,37 @@
     },
     {
       "ovr": 85,
-      "price": 1900,
+      "price": 1700,
       "score": 2100
     },
     {
       "ovr": 86,
-      "price": 3500,
+      "price": 3800,
       "score": 4100
     },
     {
       "ovr": 87,
-      "price": 5300,
+      "price": 5200,
       "score": 5500
     },
     {
       "ovr": 88,
-      "price": 8600,
+      "price": 8500,
       "score": 8300
     },
     {
       "ovr": 89,
-      "price": 18750,
+      "price": 18000,
       "score": 11000
     },
     {
       "ovr": 90,
-      "price": 29000,
+      "price": 28000,
       "score": 14000
     },
     {
       "ovr": 91,
-      "price": 112000,
+      "price": 107000,
       "score": 19000
     }
   ],
@@ -370,14 +370,14 @@
   "moves": [
     {
       "confidence": "medium",
-      "detail": "Rivals rewards landed at {{t:2026-10-01T08:59:00+02:00}} (EA: Thursdays 06:59 UTC). TOTW cards still lead FUT.GG's fallers (Tzolakis 81 −57%, Kayode 83 −38%, Son 83 −34%), so wait before buying older specials. Spend on fodder first.",
+      "detail": "Rivals rewards landed at {{t:2026-10-01T08:59:00+02:00}} (EA: Thursdays 06:59 UTC). TOTW cards still lead FUT.GG's fallers (Tzolakis 81 −41%, Kayode 83 −34%, Carpenter 86 −27%), so wait before buying older specials. Spend on fodder first.",
       "title": "Don't chase specials after the rewards",
       "tone": "hold",
       "when": "Today"
     },
     {
       "confidence": "medium",
-      "detail": "84s are still at 650 on FUT.GG; an 84 carries 830 Item Score on FUTBIN against 410 for an 83, about 0.78 coins per point. Any 84 works for Streamlined SBCs. Tracked call: entry recorded at 650 (FUT.GG, {{t:2026-10-01T10:29:00+02:00}}); graded at {{t:2026-10-02T17:00:00+02:00}}. Selling only pays above 685 after the 5% tax.",
+      "detail": "84s are still at 650 (FUT.GG, this update) on FUT.GG; an 84 carries 830 Item Score on FUTBIN against 410 for an 83, about 0.78 coins per point. Any 84 works for Streamlined SBCs. Tracked call: entry recorded at 650 (FUT.GG, {{t:2026-10-01T10:29:00+02:00}}); graded at {{t:2026-10-02T17:00:00+02:00}}. Selling only pays above 685 after the 5% tax.",
       "ledgerId": "c-2026-10-01-84floor",
       "title": "Buy 84-rated fodder at 650",
       "tone": "buy",
@@ -393,8 +393,8 @@
     },
     {
       "confidence": "medium",
-      "detail": "84s at 650 cost 0.78 coins per point, against 0.90 for 85s at 1,900 and 0.85 for 86s at 3,500. 85s only beat 84s below about 1,615.",
-      "title": "84s are the cheapest Item Score again",
+      "detail": "84s at 650 cost 0.78 coins per point, against 0.81 for 85s at 1,700 and 0.93 for 86s at 3,800. 85s only beat 84s below about 1,645.",
+      "title": "84s are still the cheapest Item Score",
       "tone": "watch",
       "when": "Every update"
     }
@@ -431,7 +431,7 @@
       "title": "Season 1 ends 22 October"
     },
     {
-      "detail": "FUTBIN's Index 100 was 116.43 (+1.3% on the day) with the momentum gauge near 50 in an earlier update; FUTBIN did not load this run. TOTW cards lead FUT.GG's fallers (Kayode 83 −34%, Baena 84 −30%). 84s are at 650.",
+      "detail": "FUTBIN's Index 100 was 116.43 (+1.3% on the day) with the momentum gauge near 50 in an earlier update; FUTBIN did not load this run. TOTW cards lead FUT.GG's fallers (Kayode 83 −34%, Baena 84 −26%). 84s are at 650.",
       "kind": "data",
       "source": "FUTBIN · FUT.GG",
       "title": "Market cools off"
@@ -483,10 +483,10 @@
       "note": "Repeatable"
     },
     {
-      "cost": "Free per FUT.GG",
+      "cost": "Free",
       "expires": "Active (expiry not refreshed)",
       "name": "Marquee Matchups",
-      "note": "Jumbo Gold Pack per FUT.GG; cost earlier listed as 9.6K"
+      "note": "Jumbo Gold Pack, per FUT.GG"
     }
   ],
   "source": "scheduled",
@@ -564,10 +564,10 @@
       "url": "https://www.futbin.com/27/squad-building-challenge/22"
     }
   ],
-  "updatedAt": "2026-10-01T18:50:00Z",
+  "updatedAt": "2026-10-01T19:42:00Z",
   "verdict": {
-    "detail": "FUT.GG shows 81–84 at 650, 85s at 1,900 and 86s at 3,500. FUTBIN did not load this run (403), so the index values are from an earlier update (Index 100 116.43, momentum about 50). The next demand point is Destined for Glory Team 2 at {{t:2026-10-02T18:00:00+01:00}}.",
-    "headline": "84s are back at 650, the cheapest Item Score at about 0.78 coins per point.",
+    "detail": "FUT.GG shows 81–84 at 650, 85s at 1,700 and 86s at 3,800. FUTBIN did not load this run (403), so the index values are from an earlier update (Index 100 116.43, momentum about 50). The next demand point is Destined for Glory Team 2 at {{t:2026-10-02T18:00:00+01:00}}.",
+    "headline": "84s stay at 650, the cheapest Item Score at about 0.78 coins per point.",
     "label": "Buy 84s as fodder, hold the rest",
     "tone": "buy"
   }
