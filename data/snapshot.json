@@ -189,60 +189,25 @@
   ],
   "fallers": [
     {
-      "name": "Undav",
-      "ovr": 87,
-      "pct": -16.3,
-      "price": "−6,650",
-      "version": "DFG"
+      "name": "Tzolakis",
+      "ovr": 81,
+      "pct": -59.3,
+      "price": "−6,818",
+      "version": "TOTW"
     },
     {
-      "name": "Scott",
-      "ovr": 85,
-      "pct": -13.7,
-      "price": "−10,503",
-      "version": "Hero"
+      "name": "Kayode",
+      "ovr": 83,
+      "pct": -43.7,
+      "price": "−10,927",
+      "version": "TOTW"
     },
     {
-      "name": "Rațiu",
-      "ovr": 85,
-      "pct": -12.3,
-      "price": "−13,396",
-      "version": "DFG"
-    },
-    {
-      "name": "Solskjær",
+      "name": "Carpenter",
       "ovr": 86,
-      "pct": -12.1,
-      "price": "−12,060",
-      "version": "Hero"
-    },
-    {
-      "name": "Kökçü",
-      "ovr": 86,
-      "pct": -11.6,
-      "price": "−3,370",
-      "version": "DFG"
-    },
-    {
-      "name": "Tévez",
-      "ovr": 88,
-      "pct": -11.4,
-      "price": "−56,750",
-      "version": "Hero"
-    },
-    {
-      "name": "Ljungberg",
-      "ovr": 86,
-      "pct": -11.2,
-      "price": "−8,816",
-      "version": "Hero"
-    },
-    {
-      "name": "Veerman",
-      "ovr": 85,
-      "pct": -10.5,
-      "price": "−2,683",
-      "version": "DFG"
+      "pct": -38.2,
+      "price": "−7,260",
+      "version": "TOTW"
     }
   ],
   "fodder": [
@@ -268,37 +233,37 @@
     },
     {
       "ovr": 85,
-      "price": 1900,
+      "price": 1800,
       "score": 2100
     },
     {
       "ovr": 86,
-      "price": 3500,
+      "price": 3800,
       "score": 4100
     },
     {
       "ovr": 87,
-      "price": 5900,
+      "price": 5800,
       "score": 5500
     },
     {
       "ovr": 88,
-      "price": 8900,
+      "price": 9700,
       "score": 8300
     },
     {
       "ovr": 89,
-      "price": 19000,
+      "price": 20000,
       "score": 11000
     },
     {
       "ovr": 90,
-      "price": 29000,
+      "price": 30500,
       "score": 14000
     },
     {
       "ovr": 91,
-      "price": 129000,
+      "price": 111000,
       "score": 19000
     }
   ],
@@ -311,7 +276,7 @@
     "idx86": 62.61,
     "momentum": 49.67,
     "momentumLabel": "The market is chillin",
-    "note": "FUTBIN console values read at 15:28 Thursday, unchanged since 09:28. Index 100 is 116.43 (+1.3% on the day) and momentum 49.67. Index 84 +7.6%, 85 +2.1%, 86 +0.2%, Icons +3.4%. Top Index 100 gainers: Mokio, Roberts, Solís, St. Juste, Rüdiger."
+    "note": "FUTBIN did not load this run, so the index values are from the 16:30 update: Index 100 116.43 (+1.3%), momentum 49.67. Top Index 100 gainers then: Mokio, Roberts, Solís, St. Juste, Rüdiger."
   },
   "meta": [
     {
@@ -374,14 +339,14 @@
   "moves": [
     {
       "confidence": "medium",
-      "detail": "Rivals rewards landed at 08:59 (EA: Thursdays 06:59 UTC). Hero and DFG cards still lead FUT.GG's fallers (Undav DFG 87 −16%, Scott Hero 85 −14%), so wait before buying older specials. Spend on fodder first.",
+      "detail": "Rivals rewards landed at 08:59 (EA: Thursdays 06:59 UTC). Fresh TOTW cards now lead FUT.GG's fallers (Tzolakis 81 −59%, Kayode 83 −44%, Carpenter 86 −38%), so wait before buying older specials. Spend on fodder first.",
       "title": "Don't chase specials after the rewards",
       "tone": "hold",
       "when": "Today"
     },
     {
       "confidence": "medium",
-      "detail": "81–84s all still sit on FUT.GG's 650 floor (15:28), but an 84 carries 830 Item Score on FUTBIN against 410 for an 83. That's 0.78 coins per point, the cheapest score in the game. Any 84 works for Streamlined SBCs. Tracked call: entry recorded at 650 (FUT.GG, 10:29); graded Friday 17:00. Selling only pays above 684 after the 5% tax.",
+      "detail": "81–84s all still sit on FUT.GG's 650 floor (16:45), but an 84 carries 830 Item Score on FUTBIN against 410 for an 83. That's 0.78 coins per point, the cheapest score in the game. Any 84 works for Streamlined SBCs. Tracked call: entry recorded at 650 (FUT.GG, 10:29); graded Friday 17:00. Selling only pays above 684 after the 5% tax.",
       "ledgerId": "c-2026-10-01-84floor",
       "title": "Buy 84-rated fodder at 650 or less",
       "tone": "buy",
@@ -397,7 +362,7 @@
     },
     {
       "confidence": "high",
-      "detail": "85s beat 84s as fodder once they fall under about 1,645 (now 1,900). 86s are already close at 0.85 coins per point, so use them if the 84 floor runs dry.",
+      "detail": "85s beat 84s as fodder once they fall under about 1,645 (now 1,800). 86s are at 0.93 coins per point (3,800 for 4,100), so 84s stay the better buy.",
       "title": "Watch 85s and 86s",
       "tone": "watch",
       "when": "Every update"
@@ -435,7 +400,7 @@
       "title": "Season 1 ends 22 October"
     },
     {
-      "detail": "FUTBIN's Index 100 is 116.43 (+1.3% on the day) and the momentum gauge reads about 50. Index 84 is still up 7.6%. Hero and DFG cards lead FUT.GG's fallers; Undav (DFG 87) is down 16% and Tévez (Hero 88) 11%. Fodder floors had not moved six and a half hours after the rewards.",
+      "detail": "FUTBIN's Index 100 is 116.43 (+1.3% on the day) and the momentum gauge reads about 50. Index 84 is still up 7.6%. Hero and DFG cards lead FUT.GG's fallers; Undav (DFG 87) is down 16% and Tévez (Hero 88) 11%. Fodder floors had not moved seven and a half hours after the rewards.",
       "kind": "data",
       "source": "FUTBIN · FUT.GG",
       "title": "Market cools off"
@@ -560,9 +525,9 @@
       "url": "https://www.ea.com/games/ea-sports-fc/fc-27/news"
     }
   ],
-  "updatedAt": "2026-10-01T13:28:30Z",
+  "updatedAt": "2026-10-01T14:42:36Z",
   "verdict": {
-    "detail": "At 15:28 FUT.GG still shows the 81–84 floor at 650, 85s at 1,900 and 86s at 3,500, unchanged since the 08:59 Rivals rewards. FUTBIN's Index 100 is 116.43 (+1.3%) with momentum about 50 (\"chillin\"). Buy 84s while they sit at 650; the next demand point is Destined for Glory Team 2 on Friday at 19:00.",
+    "detail": "At 16:45 FUT.GG shows the 81–84 floor at 650, 85s at 1,800 and 86s at 3,800. FUTBIN's index (116.43, momentum ~50) is from the 16:30 update, as FUTBIN did not load. Buy 84s while they sit at 650; the next demand point is Destined for Glory Team 2 on Friday at 19:00.",
     "headline": "Fodder is still at its post-rewards floor; 84s at 650 remain the cheapest Item Score in the game.",
     "label": "Buy fodder at the floor, hold the rest",
     "tone": "buy"
