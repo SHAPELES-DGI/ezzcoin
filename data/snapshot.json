@@ -1,12 +1,6 @@
 {
   "corrections": [
     {
-      "date": "2026-10-01T19:42:00Z",
-      "section": "Moves right now",
-      "what": "85s now beat 84s on Item Score only below about 1,645, not 1,615.",
-      "why": "650 coins ÷ 830 points = 0.783 per point; × 2,100 points gives about 1,645."
-    },
-    {
       "date": "2026-10-01T20:21:42Z",
       "section": "Hot SBCs",
       "what": "Olise and Malen POTM costs now show FUTBIN's console cost (548.6K and 70.85K).",
@@ -89,6 +83,12 @@
       "section": "Movers",
       "what": "Replaced Crouch, Gutiérrez and Raphinha in the first move, fallers list and news with Stoica, Martinelli, Tzolakis and Félix.",
       "why": "FUT.GG's momentum page no longer lists Crouch, Gutiérrez or Raphinha among the top fallers."
+    },
+    {
+      "date": "2026-10-02T11:13:10Z",
+      "section": "Moves right now",
+      "what": "Replaced \"84s at 650 are the cheapest Item Score\" with 86s at 2,500.",
+      "why": "FUT.GG now lists 86s at 2,500 (0.61 per point) against 84s at 650 (0.78)."
     }
   ],
   "drops": [
@@ -206,13 +206,6 @@
   ],
   "fallers": [
     {
-      "name": "Ianis Stoica",
-      "ovr": 80,
-      "pct": -12.76,
-      "price": "−1,499",
-      "version": "TOTW"
-    },
-    {
       "name": "Gabriel Martinelli",
       "ovr": 82,
       "pct": -10.6,
@@ -220,25 +213,32 @@
       "version": "TOTW"
     },
     {
-      "name": "Konstantinos Tzolakis",
-      "ovr": 81,
-      "pct": -8.69,
-      "price": "−934",
+      "name": "De Rossi",
+      "ovr": 87,
+      "pct": -10.13,
+      "price": "−27,351",
+      "version": "Base Hero"
+    },
+    {
+      "name": "Beasley",
+      "ovr": 85,
+      "pct": -8.19,
+      "price": "−6,961",
+      "version": "Base Hero"
+    },
+    {
+      "name": "Lamine Yamal",
+      "ovr": 91,
+      "pct": -4.11,
+      "price": "n/a",
       "version": "TOTW"
     },
     {
-      "name": "João Félix",
-      "ovr": 84,
-      "pct": -7.85,
-      "price": "−12,952",
-      "version": "TOTW"
-    },
-    {
-      "name": "Bobby Charlton",
-      "ovr": 92,
-      "pct": -5.54,
-      "price": "−127,420",
-      "version": "Icon"
+      "name": "Eden Hazard",
+      "ovr": 89,
+      "pct": -4.08,
+      "price": "−63,240",
+      "version": "Base Hero"
     }
   ],
   "fodder": [
@@ -269,32 +269,32 @@
     },
     {
       "ovr": 86,
-      "price": 4000,
+      "price": 2500,
       "score": 4100
     },
     {
       "ovr": 87,
-      "price": 5300,
+      "price": 5400,
       "score": 5500
     },
     {
       "ovr": 88,
-      "price": 8500,
+      "price": 8800,
       "score": 8300
     },
     {
       "ovr": 89,
-      "price": 17250,
+      "price": 17000,
       "score": 11000
     },
     {
       "ovr": 90,
-      "price": 28250,
+      "price": 27750,
       "score": 14000
     },
     {
       "ovr": 91,
-      "price": 113000,
+      "price": 112000,
       "score": 19000
     }
   ],
@@ -370,8 +370,8 @@
   "moves": [
     {
       "confidence": "medium",
-      "detail": "FUT.GG's biggest fallers are TOTW specials: Stoica TOTW 80 −13%, Martinelli TOTW 82 −11%, Tzolakis TOTW 81 −9%, Félix TOTW 84 −8%. Last week's TOTW cards left packs when TOTW 3 arrived at {{t:2026-09-30T18:00:00+01:00}}. Spend on fodder first.",
-      "title": "Don't buy TOTW and Destined for Glory specials yet",
+      "detail": "FUT.GG's biggest fallers: De Rossi Hero 87 −10%, Martinelli TOTW 82 −11%, Beasley Hero 85 −8%, Yamal TOTW 91 −4%. Last week's TOTW cards left packs when TOTW 3 arrived at {{t:2026-09-30T18:00:00+01:00}}. Spend on fodder first.",
+      "title": "Don't buy TOTW, Hero and Destined for Glory specials yet",
       "tone": "hold",
       "when": "Until {{t:2026-10-02T19:00:00+02:00}}"
     },
@@ -392,9 +392,9 @@
       "when": "Before {{t:2026-10-02T19:00:00+02:00}}"
     },
     {
-      "confidence": "medium",
-      "detail": "FUT.GG this update: 84s at 650 cost 0.78 coins per point, against 0.95 for 85s at 2,000, 0.98 for 86s at 4,000 and 0.96 for 87s at 5,300. Prefer 84s when an SBC needs a big Item Score.",
-      "title": "84s at 650 are the cheapest Item Score",
+      "confidence": "low",
+      "detail": "FUT.GG this update: 86s at 2,500 cost 0.61 coins per point, against 0.78 for 84s at 650, 0.95 for 85s at 2,000 and 0.98 for 87s at 5,400. Prefer 86s when an SBC needs a big Item Score; 86 floors have swung between 2,500 and 4,000 today, so check the price before buying.",
+      "title": "86s at 2,500 are now the cheapest Item Score",
       "tone": "watch",
       "when": "Every update"
     }
@@ -431,7 +431,7 @@
       "title": "Season 1 ends 22 October"
     },
     {
-      "detail": "FUT.GG: 81–84 at 650, 85s at 2,000, 86s at 4,000. Biggest fallers are TOTW specials (Stoica 80 −13%, Martinelli 82 −11%). Index figures (116.43, +1.33%) are from an earlier update because FUTBIN returned an error.",
+      "detail": "FUT.GG: 81–84 at 650, 85s at 2,000, 86s at 2,500. Biggest fallers are Hero and TOTW specials (De Rossi 87 −10%, Martinelli 82 −11%). Index figures (116.43, +1.33%) are from an earlier update because FUTBIN returned an error.",
       "kind": "data",
       "source": "FUTBIN · FUT.GG",
       "title": "Market stays calm, specials fall"
@@ -522,11 +522,11 @@
       "url": "https://www.futbin.com/27/squad-building-challenge/22"
     }
   ],
-  "updatedAt": "2026-10-02T10:13:25Z",
+  "updatedAt": "2026-10-02T11:13:10Z",
   "verdict": {
-    "detail": "FUT.GG shows 81–84 at 650, 85s at 2,000 and 86s at 4,000. FUTBIN did not load this run (403 twice), so the index reading (116.43, momentum 49.67, calm) is from an earlier update. Specials keep falling (Stoica TOTW −13%, Martinelli TOTW −11%), and the next demand point is Destined for Glory Team 2 at {{t:2026-10-02T18:00:00+01:00}}.",
-    "headline": "84s at 650 are the cheapest Item Score at about 0.78 coins per point.",
-    "label": "Hold, 84s are the best fodder value",
+    "detail": "FUT.GG shows 81–84 at 650, 85s at 2,000 and 86s at 2,500. FUTBIN did not load this run (403 twice), so the index reading (116.43, momentum 49.67, calm) is from an earlier update. Specials keep falling (Martinelli TOTW −11%, De Rossi Hero −10%), and the next demand point is Destined for Glory Team 2 at {{t:2026-10-02T18:00:00+01:00}}.",
+    "headline": "86s at 2,500 are the cheapest Item Score at about 0.61 coins per point.",
+    "label": "Hold, 86s are the best fodder value right now",
     "tone": "watch"
   }
 }
