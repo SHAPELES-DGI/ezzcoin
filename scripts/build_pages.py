@@ -215,7 +215,7 @@ def head(title, desc, canon, up, image=None):
 
 
 def foot(up):
-    return (f'<footer>Ratings: EA SPORTS FC 27. Prices: FUTBIN. Ezzcoins is a fan-made site and is not affiliated with EA SPORTS, FUTBIN or FUT.GG. '
+    return (f'<footer>Ratings: EA SPORTS FC 27. Prices: FUTBIN (backups: FUT.GG, FUTWIZ, EasySBC). Ezzcoins is a fan-made site and is not affiliated with EA SPORTS, FUTBIN, FUT.GG, FUTWIZ or EasySBC. '
             f'<a href="{up}privacy.html">Privacy and cookies</a></footer></body></html>')
 
 
@@ -274,7 +274,7 @@ def player_page(x, codes, by_club, by_nat, specials_of, credits):
               ".then(r=>r.ok?r.json():null).catch(()=>null);Promise.all([g('prices.json'),g('topprices.json')]).then(([a,b])=>{"
               "const c=[a&&a.players&&a.players[id],b&&b.players&&b.players[id]].filter(p=>p&&p.price>0).sort((x,y)=>Date.parse(y.at)-Date.parse(x.at))[0];"
               "if(!c)return;const m=Math.round((Date.now()-Date.parse(c.at))/6e4),h=Math.floor(m/60),ago=m<1?'just now':m<60?m+' min ago':h<48?h+' h ago':Math.floor(h/24)+' days ago';"
-              "el.innerHTML='<b><i class=\"coin\"></i>'+Number(c.price).toLocaleString('en-US')+'</b><span>Console price from FUTBIN \\u00b7 '+ago+'</span>'})})()</script>"
+              "el.innerHTML='<b><i class=\"coin\"></i>'+Number(c.price).toLocaleString('en-US')+'</b><span>Console price from '+(c.src||'FUTBIN')+' \\u00b7 '+ago+'</span>'})})()</script>"
               ) % json.dumps(str(x["id"]))
     pc = credits.get(str(x["id"]))
     pimg, pcredit = photo(credits, x["id"], x["n"], up)
@@ -322,9 +322,9 @@ def special_page(x, codes, specials, credits):
               "<script>(()=>{const id=%s,key=%s,el=document.getElementById('px'),g=f=>fetch('../../data/'+f+'?t='+Date.now(),{cache:'no-store'})"
               ".then(r=>r.ok?r.json():null).catch(()=>null);Promise.all([g('prices.json'),g('newcards.json')]).then(([a,b])=>{"
               "const n=b&&Array.isArray(b.cards)?b.cards.find(c=>String(c.gid!=null&&c.gid!==''?c.gid:c.fid)===key):null;"
-              "const c=[a&&a.players&&a.players[id],n&&{price:n.price,at:n.priceAt}].filter(p=>p&&p.price>0).sort((x,y)=>Date.parse(y.at)-Date.parse(x.at))[0];"
+              "const c=[a&&a.players&&a.players[id],n&&{price:n.price,at:n.priceAt,src:n.src}].filter(p=>p&&p.price>0).sort((x,y)=>Date.parse(y.at)-Date.parse(x.at))[0];"
               "if(!c)return;const m=Math.round((Date.now()-Date.parse(c.at))/6e4),h=Math.floor(m/60),ago=m<1?'just now':m<60?m+' min ago':h<48?h+' h ago':Math.floor(h/24)+' days ago';"
-              "el.innerHTML='<b><i class=\"coin\"></i>'+Number(c.price).toLocaleString('en-US')+'</b><span>Console price from FUTBIN \\u00b7 '+ago+'</span>'})})()</script>"
+              "el.innerHTML='<b><i class=\"coin\"></i>'+Number(c.price).toLocaleString('en-US')+'</b><span>Console price from '+(c.src||'FUTBIN')+' \\u00b7 '+ago+'</span>'})})()</script>"
               ) % (json.dumps(str(x["id"])), json.dumps(str(x["key"])))
     bid = b["id"] if b else None
     pc = credits.get(str(bid)) if bid else None
