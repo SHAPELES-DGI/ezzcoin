@@ -7,6 +7,7 @@ Prices are not baked in: each page loads the newest price from data/prices.json
 and data/topprices.json in the browser.
 
 Usage: python3 scripts/build_pages.py [site root]   (standard library only)
+GitHub runs it automatically (.github/workflows/player-pages.yml) whenever data/players.json changes.
 """
 import html, json, os, re, shutil, sys, unicodedata
 
