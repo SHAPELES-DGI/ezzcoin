@@ -3,7 +3,8 @@
 
 Writes p/<slug>-<id>/index.html for every player rated MIN_OVR or higher in
 data/players.json, p/<slug>-<version>-<id>/index.html for every new special card in
-data/newcards.json, a list page at p/index.html and sitemap.xml at the site root.
+data/newcards.json, a list page at p/index.html, p/cardnames.json (the name shown on each special card,
+taken from EA's card name of the same player) and sitemap.xml at the site root.
 Prices are not baked in: each page loads the newest price from data/prices.json
 and data/topprices.json in the browser.
 
@@ -123,7 +124,7 @@ CSS = (":root{--bg:#0A0D0C;--surface:#141917;--sunk:#1C2320;--ink:#EEF2EF;--mute
        ".up{color:var(--buy)}.dn{color:var(--sell)}.mtnote{margin:14px 0 0;font-size:.82rem;color:var(--muted);max-width:560px;text-align:left}"
        "@font-face{font-family:'Ezz Sig';src:url(../fonts/allison-sig.woff) format('woff');font-display:swap}"
        ".fcard .fc-name.sig,.card-xl .fc-name.sig{font:400 2.9rem/1 'Ezz Sig','Segoe Script',cursive;text-transform:none;letter-spacing:0;padding:10px 8px 0;margin:auto -8px -9px;"
-       "transform:rotate(-5deg);text-overflow:clip}.card-xl .fc-name.sig.long{font-size:2.5rem}.card-xl .fc-name.sig.xl{font-size:2.15rem}"
+       "transform:rotate(-5deg);text-overflow:clip}.card-xl .fc-name.sig.long{font-size:2.5rem}.card-xl .fc-name.sig.xl{font-size:2.15rem}.card-xl .fc-name.sig.xxl{font-size:1.8rem}"
        "footer{max-width:980px;margin:0 auto;padding:16px 16px 32px;color:var(--muted);font-size:.85rem;border-top:1px solid var(--line)}footer a{color:var(--muted)}"
        "@media(max-width:640px){.hero{grid-template-columns:1fr;justify-items:center;text-align:center}.stats{grid-template-columns:repeat(3,minmax(0,1fr));margin-inline:auto}"
        ".facts{text-align:left}h1{font-size:2.1rem}.kv{justify-content:center}}")
@@ -134,13 +135,15 @@ SIL = ('<svg class="fc-sil" viewBox="0 0 100 110" aria-hidden="true"><ellipse cx
        '<path d="M6 110c3-29 19-45 44-47 25 2 41 18 44 47z"/><path class="collar" d="M39 64l11 13 11-13"/></svg>')
 
 
-def card_variant(version, ovr):
+def card_variant(version, ovr, special=False):
+    """Card colours by version; a special card never gets the gold/silver/bronze look (its version may not be known yet)."""
     v = str(version or "").lower()
     if re.search(r"team of the week|totw", v): return "totw"
     if re.search(r"month|potm", v): return "potm"
     if "icon" in v: return "icon"
     if "hero" in v: return "hero"
     if re.search(r"sbc|objective|evolution|reward", v): return "sbc"
+    if special: return "promo"
     if not v or re.search(r"rare|common|gold|base", v): return "gold" if (ovr or 0) >= 75 else "silver" if (ovr or 0) >= 65 else "bronze"
     return "promo"
 
@@ -175,7 +178,7 @@ def card_name(name):
 
 def big_card(variant, ovr, pos, name, stats, lab, nat_flag, foot_text, pimg, sig=False):
     nm = name or ""
-    size = (" xl" if len(nm) > 11 else " long" if len(nm) > 8 else "") if sig else (" xl" if len(nm) > 14 else " long" if len(nm) > 11 else "")
+    size = (" xxl" if len(nm) > 14 else " xl" if len(nm) > 10 else " long" if len(nm) > 7 else "") if sig else (" xl" if len(nm) > 14 else " long" if len(nm) > 11 else "")
     size = (" sig" if sig else "") + size
     row = ""
     if any(v is not None for v in stats):
@@ -312,7 +315,10 @@ def special_page(x, codes, specials, credits):
              if has else "")
     others = [y for y in specials if y["id"] != x["id"]][:8]
     more = f'<h2>Other new cards</h2>' + card_list(others, codes, up, lambda y: y["ver"]) if others else ""
-    script = ("<script>(()=>{const id=%s,key=%s,el=document.getElementById('px'),g=f=>fetch('../../data/'+f+'?t='+Date.now(),{cache:'no-store'})"
+    script = ("<script>(()=>{const n=document.querySelector('.fc-name.sig'),fit=()=>{if(!n||!n.clientWidth)return;n.style.fontSize='';"
+              "let f=parseFloat(getComputedStyle(n).fontSize);while(n.scrollWidth>n.clientWidth+1&&f>16){f--;n.style.fontSize=f+'px'}};"
+              "fit();document.fonts&&document.fonts.ready.then(fit)})()</script>"
+              "<script>(()=>{const id=%s,key=%s,el=document.getElementById('px'),g=f=>fetch('../../data/'+f+'?t='+Date.now(),{cache:'no-store'})"
               ".then(r=>r.ok?r.json():null).catch(()=>null);Promise.all([g('prices.json'),g('newcards.json')]).then(([a,b])=>{"
               "const n=b&&Array.isArray(b.cards)?b.cards.find(c=>String(c.gid!=null&&c.gid!==''?c.gid:c.fid)===key):null;"
               "const c=[a&&a.players&&a.players[id],n&&{price:n.price,at:n.priceAt}].filter(p=>p&&p.price>0).sort((x,y)=>Date.parse(y.at)-Date.parse(x.at))[0];"
@@ -324,7 +330,7 @@ def special_page(x, codes, specials, credits):
     pimg, pcredit = photo(credits, bid, x["n"], up)
     return (head(title, desc, BASE + "p/" + x["path"], up, BASE + "photos/" + pc["img"] if pc else None) +
             f'<main><div class="crumb"><a href="{up}">Ezzcoins</a> › <a href="{up}p/">Player pages</a> › {e(x["n"])} ({e(ver)})</div>'
-            f'<div class="hero"><div class="side">{big_card(card_variant(x["ver"], x["o"]), x["o"], x["p"], card_name(x["n"]), x["s"], lab, flag(codes, x["nat"], up, True), ver, pimg, sig=card_variant(x["ver"], x["o"]) not in ("gold", "silver", "bronze"))}{pcredit}</div>'
+            f'<div class="hero"><div class="side">{big_card(card_variant(x["ver"], x["o"], True), x["o"], x["p"], x["cn"], x["s"], lab, flag(codes, x["nat"], up, True), ver, pimg, sig=True)}{pcredit}</div>'
             f'<div><div class="tag">{e(ver)}</div><h1>{e(x["n"])}</h1><div class="sub">{x["o"]} {e(x["p"])}' + (f" · {e(where)}" if where else "")
             + (f' · {flag(codes, x["nat"], up)}{e(x["nat"])}' if x["nat"] else "") + '</div>'
             f'<div class="kv"><div class="px" id="px"><span class="none">No console price yet. New cards are priced every hour while FUTBIN can be reached.</span></div>{meta_box(mt, x["o"])}</div>'
@@ -356,7 +362,7 @@ def main():
     credits = {k: v for k, v in credits.items() if os.path.exists(os.path.join(ROOT, "photos", v.get("img", "")))}
     ci = {c: i for i, c in enumerate(data["cols"])}
     get = lambda r, c: r[ci[c]] if c in ci else None
-    players, allp, byname = [], {}, {}
+    players, allp, byname, byfull = [], {}, {}, {}
     for r in data["rows"]:
         o = get(r, "ovr") or 0
         if get(r, "id") is None:
@@ -369,6 +375,8 @@ def main():
         x["path"] = f'{slug(x["n"])}-{x["id"]}/' if x["o"] >= MIN_OVR else ""
         allp[x["id"]] = x
         byname.setdefault(slug(x["n"]), []).append(x)
+        if x["f"]:
+            byfull.setdefault(slug(x["f"]), []).append(x)
         if x["o"] >= MIN_OVR:
             players.append(x)
     players.sort(key=lambda x: (-x["o"], x["n"]))
@@ -390,13 +398,19 @@ def main():
             continue
         b = allp.get(int(c["baseId"])) if str(c.get("baseId") or "").isdigit() else None
         if not b:
-            hits = byname.get(slug(c["name"]), [])
+            # FUTBIN often lists the full legal name ("João Félix Sequeira"), so also match EA's full names.
+            hits = byname.get(slug(c["name"]), []) or byfull.get(slug(c["name"]), [])
             b = next((h for h in hits if c.get("club") and h["c"] == c.get("club")), None) or (max(hits, key=lambda h: h["o"]) if hits else None)
         st = c.get("stats") if isinstance(c.get("stats"), list) and len(c["stats"]) == 6 else [None] * 6
         sx = {"id": SPECIAL + key, "key": key, "n": c["name"], "o": int(c.get("ovr") or 0), "p": c.get("pos") or (b["p"] if b else ""),
               "a": c.get("alt") or "", "c": (b["c"] if b else "") or c.get("club") or "", "l": c.get("league") or (b["l"] if b else ""),
               "nat": c.get("nation") or (b["nat"] if b else ""), "sm": c.get("sm"), "wf": c.get("wf"),
               "s": [None if v in (None, "") else v for v in st], "ver": c.get("version") or "", "added": c.get("added") or "", "base": b}
+        # Name on the card: EA's card name for the same player ("João Félix", "Álex Baena") when the base card is
+        # certainly the same person (linked id, same club, or the only player with that name); else the last word.
+        sure = b is not None and (str(c.get("baseId") or "").isdigit() or (c.get("club") and b["c"] == c.get("club"))
+                                  or len(byname.get(slug(c["name"]), []) or byfull.get(slug(c["name"]), [])) == 1)
+        sx["cn"] = (b["q"] or b["n"]) if sure else card_name(sx["n"])
         sx["path"] = f'{slug(sx["n"])}-{slug(sx["ver"]) if sx["ver"] else "special"}-{sx["id"]}/'
         specials.append(sx)
         if b:
@@ -429,6 +443,8 @@ def main():
         groups[-1][1].append(x)
     with open(os.path.join(out, "index.html"), "w", encoding="utf-8") as fh:
         fh.write(list_page(groups, codes, len(players), specials))
+    with open(os.path.join(out, "cardnames.json"), "w", encoding="utf-8") as fh:
+        json.dump({str(x["id"]): x["cn"] for x in specials}, fh, ensure_ascii=False, separators=(",", ":"))
     urls = [BASE, BASE + "privacy.html", BASE + "p/"] + [BASE + "p/" + x["path"] for x in specials + players]
     with open(os.path.join(ROOT, "sitemap.xml"), "w", encoding="utf-8") as fh:
         fh.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
