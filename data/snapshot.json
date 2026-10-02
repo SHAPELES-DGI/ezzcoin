@@ -1,42 +1,6 @@
 {
   "corrections": [
     {
-      "date": "2026-10-01T05:33:00Z",
-      "section": "Latest market read",
-      "what": "Verdict now says the market has cooled and to hold coins for the 08:59 rewards.",
-      "why": "It said Index 100 was still +25% with momentum 100; FUTBIN now shows 116.43 (+1.3%) and momentum ~50."
-    },
-    {
-      "date": "2026-10-01T05:33:00Z",
-      "section": "What's moving the game",
-      "what": "Replaced \"Market running hot\" with \"Market cools off\".",
-      "why": "FUTBIN's Index 100 and momentum gauge no longer show a spike."
-    },
-    {
-      "date": "2026-10-01T05:33:00Z",
-      "section": "Moves right now",
-      "what": "The pre-rewards move no longer says the index is high.",
-      "why": "Index 100 is up only 1.3% on the day on FUTBIN."
-    },
-    {
-      "date": "2026-10-01T07:29:00Z",
-      "section": "Moves right now",
-      "what": "Replaced \"Keep coins liquid until the rewards\" with a post-rewards move.",
-      "why": "Its window (until 08:59 today) had passed; EA's Rivals rewards are out."
-    },
-    {
-      "date": "2026-10-01T07:29:00Z",
-      "section": "Latest market read",
-      "what": "Verdict now says to buy fodder after the rewards.",
-      "why": "It still told you to wait for the 08:59 rewards, which have already released."
-    },
-    {
-      "date": "2026-10-01T11:28:00Z",
-      "section": "Moves right now",
-      "what": "The 84 fodder move now runs while the 650 floor holds, instead of 09:00–13:00.",
-      "why": "Its 13:00 window had passed; FUT.GG still shows 84s at 650 at 13:28."
-    },
-    {
       "date": "2026-10-01T11:28:00Z",
       "section": "Latest market read",
       "what": "Verdict no longer says to buy fodder until about 13:00.",
@@ -89,6 +53,42 @@
       "section": "Movers",
       "what": "Replaced the fallers list and the first move's examples (Tzolakis, Kayode, Carpenter).",
       "why": "FUT.GG's momentum page now lists Yamal, Dalglish, Wilson and Olise as the biggest fallers; the old names no longer appear."
+    },
+    {
+      "date": "2026-10-01T22:42:00Z",
+      "section": "Movers",
+      "what": "Replaced the fallers list with FUT.GG's current top fallers (Tzolakis, Carpenter, Mbappé, Salah, Harder).",
+      "why": "FUT.GG's momentum page no longer lists Yamal, Dalglish, Wilson and Olise."
+    },
+    {
+      "date": "2026-10-01T23:42:00Z",
+      "section": "Moves right now",
+      "what": "Removed Mbappé DFG −11% and Salah −10% from the first move and the news line.",
+      "why": "FUT.GG's momentum page now shows Salah at −6.4% and no longer lists Mbappé among the top fallers."
+    },
+    {
+      "date": "2026-10-02T00:42:00Z",
+      "section": "Moves right now",
+      "what": "Replaced \"84s are still the cheapest Item Score\" with 85s at 1,500.",
+      "why": "FUT.GG now lists 85s at 1,500 (0.71 per point vs 0.78 for 84s)."
+    },
+    {
+      "date": "2026-10-02T00:42:00Z",
+      "section": "Hot SBCs",
+      "what": "Removed the \"about 22 hours left\" countdowns for DFG Challenge 2 and the other FUTBIN-timed SBCs.",
+      "why": "FUTBIN did not load, so the countdowns could not be rechecked; DFG Challenge 2 still ends at the 18:00 UK Friday release."
+    },
+    {
+      "date": "2026-10-02T02:42:31Z",
+      "section": "Moves right now",
+      "what": "Replaced \"85s at 1,300 are the cheapest Item Score\" with 86s at 3,000.",
+      "why": "FUT.GG now lists 85s at 1,800 (0.86 per point) and 86s at 3,000 (0.73), against 84s at 650 (0.78)."
+    },
+    {
+      "date": "2026-10-02T03:42:43Z",
+      "section": "Moves right now",
+      "what": "Replaced \"86s at 3,000 are the cheapest Item Score\" with 84s at 650.",
+      "why": "FUT.GG now lists 86s at 3,800 (0.93 per point), against 84s at 650 (0.78)."
     }
   ],
   "drops": [
@@ -206,60 +206,39 @@
   ],
   "fallers": [
     {
-      "name": "Lamine Yamal",
-      "ovr": 91,
-      "pct": -13.2,
-      "price": "−186,598",
+      "name": "Konstantinos Tzolakis",
+      "ovr": 81,
+      "pct": -11.76,
+      "price": "−1,294",
       "version": "TOTW"
     },
     {
-      "name": "Dalglish",
-      "ovr": 90,
-      "pct": -7.3,
-      "price": "−128,802",
-      "version": "Base Icon"
+      "name": "Ivan Zamorano",
+      "ovr": 88,
+      "pct": -9.67,
+      "price": "−6,866",
+      "version": "Base Hero"
     },
     {
-      "name": "Wilson",
-      "ovr": 89,
-      "pct": -7.9,
-      "price": "−59,800",
-      "version": "TOTW"
-    },
-    {
-      "name": "Olise",
-      "ovr": 91,
-      "pct": -6.9,
-      "price": "−65,417",
-      "version": "TOTW"
-    },
-    {
-      "name": "Mbappé",
-      "ovr": 91,
-      "pct": -5.8,
-      "price": "−415,151",
-      "version": "Destined for Glory"
-    },
-    {
-      "name": "Kika Nazareth",
+      "name": "Ellie Carpenter",
       "ovr": 86,
-      "pct": -5.5,
-      "price": "−46,281",
-      "version": "Destined for Glory"
+      "pct": -9.33,
+      "price": "−1,656",
+      "version": "TOTW"
     },
     {
-      "name": "Carlos Alberto",
-      "ovr": 91,
-      "pct": -5.5,
-      "price": "−76,450",
-      "version": "Base Icon"
+      "name": "Lucy Bronze",
+      "ovr": 86,
+      "pct": -8.88,
+      "price": "−1,776",
+      "version": "TOTW"
     },
     {
-      "name": "Nuno Mendes",
-      "ovr": 89,
-      "pct": -4.7,
-      "price": "−46,647",
-      "version": "Destined for Glory"
+      "name": "Matvey Safonov",
+      "ovr": 84,
+      "pct": -8.41,
+      "price": "−2,187",
+      "version": "TOTW"
     }
   ],
   "fodder": [
@@ -285,7 +264,7 @@
     },
     {
       "ovr": 85,
-      "price": 1700,
+      "price": 1800,
       "score": 2100
     },
     {
@@ -295,27 +274,27 @@
     },
     {
       "ovr": 87,
-      "price": 5000,
+      "price": 5200,
       "score": 5500
     },
     {
       "ovr": 88,
-      "price": 8200,
+      "price": 8500,
       "score": 8300
     },
     {
       "ovr": 89,
-      "price": 17750,
+      "price": 17000,
       "score": 11000
     },
     {
       "ovr": 90,
-      "price": 27750,
+      "price": 26250,
       "score": 14000
     },
     {
       "ovr": 91,
-      "price": 112000,
+      "price": 114000,
       "score": 19000
     }
   ],
@@ -391,14 +370,14 @@
   "moves": [
     {
       "confidence": "medium",
-      "detail": "FUT.GG's biggest fallers are expensive specials: Yamal TOTW 91 −13%, Olise TOTW 91 −7%, Wilson TOTW 89 −8%, Mbappé DFG 91 −6%. Last week's TOTW cards left packs when TOTW 3 arrived at {{t:2026-09-30T18:00:00+01:00}}. Spend on fodder first.",
+      "detail": "FUT.GG's biggest fallers are TOTW and Hero specials: Zamorano Hero 88 −10%, Carpenter TOTW 86 −9%, Bronze TOTW 86 −9%. Last week's TOTW cards left packs when TOTW 3 arrived at {{t:2026-09-30T18:00:00+01:00}}. Spend on fodder first.",
       "title": "Don't buy TOTW and Destined for Glory specials yet",
       "tone": "hold",
       "when": "Until {{t:2026-10-02T19:00:00+02:00}}"
     },
     {
       "confidence": "medium",
-      "detail": "84s are still at 650 on FUT.GG this update (a few reach 700); an 84 carries 830 Item Score on FUTBIN against 410 for an 83, about 0.78 coins per point. Any 84 works for Streamlined SBCs. Tracked call: entry recorded at 650 (FUT.GG, {{t:2026-10-01T10:29:00+02:00}}); graded at {{t:2026-10-02T17:00:00+02:00}}. Selling only pays above 685 after the 5% tax. Follows the lesson to tie fodder buys to a price level, not a clock time.",
+      "detail": "84s are still at 650 on FUT.GG this update; an 84 carries 830 Item Score on FUTBIN against 410 for an 83, about 0.78 coins per point. Any 84 works for Streamlined SBCs. Tracked call: entry recorded at 650 (FUT.GG, {{t:2026-10-01T10:29:00+02:00}}); graded at {{t:2026-10-02T17:00:00+02:00}}. Selling only pays above 685 after the 5% tax. Follows the lesson to tie fodder buys to a price level, not a clock time.",
       "ledgerId": "c-2026-10-01-84floor",
       "title": "Buy 84-rated fodder at 650",
       "tone": "buy",
@@ -414,8 +393,8 @@
     },
     {
       "confidence": "medium",
-      "detail": "84s at 650 cost 0.78 coins per point, against 0.81 for 85s at 1,700 and 0.93 for 86s at 3,800 (FUT.GG). 85s only beat 84s below about 1,645.",
-      "title": "84s are still the cheapest Item Score",
+      "detail": "84s at 650 cost 0.78 coins per point (FUT.GG, this update), against 0.86 for 85s at 1,800, 0.93 for 86s at 3,800 and 0.95 for 87s at 5,200. 85s only beat 84s below about 1,645.",
+      "title": "84s at 650 are the cheapest Item Score",
       "tone": "watch",
       "when": "Every update"
     }
@@ -452,7 +431,7 @@
       "title": "Season 1 ends 22 October"
     },
     {
-      "detail": "FUT.GG: 81–84 at 650, 85s at 1,700. Biggest fallers are expensive specials (Yamal TOTW 91 −13%, Wilson TOTW 89 −8%). Index figures (116.43, +1.33%) are from an earlier update because FUTBIN returned an error.",
+      "detail": "FUT.GG: 81–84 at 650, 85s at 1,800, 86s at 3,800. Biggest fallers are specials (Zamorano Hero 88 −10%, Carpenter TOTW 86 −9%). Index figures (116.43, +1.33%) are from an earlier update because FUTBIN returned an error.",
       "kind": "data",
       "source": "FUTBIN · FUT.GG",
       "title": "Market stays calm, specials fall"
@@ -465,23 +444,23 @@
       "cost": "1.8K",
       "expires": "Until {{t:2026-10-02T18:00:00+01:00}}",
       "name": "DFG Challenge 2",
-      "note": "Mini Gold Pack, tradeable; FUTBIN shows about 22 hours left"
+      "note": "Mini Gold Pack, tradeable; FUTBIN did not load this run"
     },
     {
       "cost": "14.7K",
-      "expires": "About 6 days left (FUTBIN)",
+      "expires": "Active (expiry from an earlier update)",
       "name": "Marquee Matchups",
       "note": "Jumbo Gold Pack, tradeable, repeatable"
     },
     {
       "cost": "548.6K",
-      "expires": "About 3 weeks left (FUTBIN)",
+      "expires": "Active (expiry from an earlier update)",
       "name": "Bundesliga POTM September (Olise)",
       "note": "700,000 Item Score; 91-rated per FUT.GG"
     },
     {
       "cost": "70.85K",
-      "expires": "About 3 weeks left (FUTBIN)",
+      "expires": "Active (expiry from an earlier update)",
       "name": "Serie A POTM September (Malen)",
       "note": "90,000 Item Score; 85-rated per FUT.GG"
     },
@@ -585,10 +564,10 @@
       "url": "https://www.futbin.com/27/squad-building-challenge/22"
     }
   ],
-  "updatedAt": "2026-10-01T20:50:00Z",
+  "updatedAt": "2026-10-02T03:42:43Z",
   "verdict": {
-    "detail": "FUT.GG shows 81–84 at 650, 85s at 1,700 and 86s at 3,800. FUTBIN did not load this run, so the index reading (116.43, momentum 49.67, calm) is from an earlier update. Expensive specials keep falling (Yamal TOTW −13%), and the next demand point is Destined for Glory Team 2 at {{t:2026-10-02T18:00:00+01:00}}.",
-    "headline": "84s hold at 650 and remain the cheapest Item Score at about 0.78 coins per point.",
+    "detail": "FUT.GG shows 81–84 at 650, 85s at 1,800 and 86s at 3,800. FUTBIN did not load this run (403), so the index reading (116.43, momentum 49.67, calm) is from an earlier update. Specials keep falling (Carpenter TOTW −9%, Zamorano Hero −10%), and the next demand point is Destined for Glory Team 2 at {{t:2026-10-02T18:00:00+01:00}}.",
+    "headline": "84s at 650 are the cheapest Item Score at about 0.78 coins per point.",
     "label": "Buy 84s as fodder, hold the rest",
     "tone": "buy"
   }
