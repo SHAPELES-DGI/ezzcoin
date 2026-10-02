@@ -23,7 +23,7 @@ SLUG_MAP = {"ø": "o", "Ø": "o", "ß": "ss", "ł": "l", "Ł": "l", "æ": "ae", 
             "œ": "oe", "đ": "d", "Đ": "d", "ı": "i", "ð": "d", "þ": "th"}
 ST_OUT = ["PAC", "SHO", "PAS", "DRI", "DEF", "PHY"]
 ST_GK = ["DIV", "HAN", "KIC", "REF", "SPD", "POS"]
-CSS_V = "12"
+CSS_V = "13"
 SPECIAL = 1000000000  # special-card ids on the site: SPECIAL + FUT.GG card id (gid) or FUTBIN card id (fid)
 
 
@@ -121,6 +121,9 @@ CSS = (":root{--bg:#0A0D0C;--surface:#141917;--sunk:#1C2320;--ink:#EEF2EF;--mute
        ".mt b{grid-row:span 2;font:700 2.1rem/1 var(--fd);color:var(--gold)}.mt span{font:700 .78rem var(--fd);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}"
        ".mt i{font-style:normal;font-size:.82rem;color:var(--muted)}.mt i em{font-style:normal;color:var(--ink)}"
        ".up{color:var(--buy)}.dn{color:var(--sell)}.mtnote{margin:14px 0 0;font-size:.82rem;color:var(--muted);max-width:560px;text-align:left}"
+       "@font-face{font-family:'Ezz Sig';src:url(../fonts/allison-sig.woff) format('woff');font-display:swap}"
+       ".fcard .fc-name.sig,.card-xl .fc-name.sig{font:400 2.9rem/1 'Ezz Sig','Segoe Script',cursive;text-transform:none;letter-spacing:0;padding:10px 8px 0;margin:auto -8px -9px;"
+       "transform:rotate(-5deg);text-overflow:clip}.card-xl .fc-name.sig.long{font-size:2.5rem}.card-xl .fc-name.sig.xl{font-size:2.15rem}"
        "footer{max-width:980px;margin:0 auto;padding:16px 16px 32px;color:var(--muted);font-size:.85rem;border-top:1px solid var(--line)}footer a{color:var(--muted)}"
        "@media(max-width:640px){.hero{grid-template-columns:1fr;justify-items:center;text-align:center}.stats{grid-template-columns:repeat(3,minmax(0,1fr));margin-inline:auto}"
        ".facts{text-align:left}h1{font-size:2.1rem}.kv{justify-content:center}}")
@@ -161,9 +164,19 @@ def photo(credits, pid, name, up):
     return img, credit
 
 
-def big_card(variant, ovr, pos, name, stats, lab, nat_flag, foot_text, pimg):
+def card_name(name):
+    """Last word of the name, or the last two when it ends in a suffix such as "Jr." (same rule as cardName() in index.html)."""
+    w = str(name or "").split()
+    if not w:
+        return ""
+    last = w[-1]
+    return " ".join(w[-2:]) if len(w) > 1 and (len(last) <= 3 or re.match(r"^(jr|junior|filho|neto|sr)\.?$", last, re.I)) else last
+
+
+def big_card(variant, ovr, pos, name, stats, lab, nat_flag, foot_text, pimg, sig=False):
     nm = name or ""
-    size = " xl" if len(nm) > 14 else " long" if len(nm) > 11 else ""
+    size = (" xl" if len(nm) > 11 else " long" if len(nm) > 8 else "") if sig else (" xl" if len(nm) > 14 else " long" if len(nm) > 11 else "")
+    size = (" sig" if sig else "") + size
     row = ""
     if any(v is not None for v in stats):
         row = '<div class="fc-stats">' + "".join(f'<div><small>{lab[i]}</small><b>{"–" if v is None else v}</b></div>' for i, v in enumerate(stats)) + "</div>"
@@ -311,7 +324,7 @@ def special_page(x, codes, specials, credits):
     pimg, pcredit = photo(credits, bid, x["n"], up)
     return (head(title, desc, BASE + "p/" + x["path"], up, BASE + "photos/" + pc["img"] if pc else None) +
             f'<main><div class="crumb"><a href="{up}">Ezzcoins</a> › <a href="{up}p/">Player pages</a> › {e(x["n"])} ({e(ver)})</div>'
-            f'<div class="hero"><div class="side">{big_card(card_variant(x["ver"], x["o"]), x["o"], x["p"], x["n"].split(" ")[-1], x["s"], lab, flag(codes, x["nat"], up, True), ver, pimg)}{pcredit}</div>'
+            f'<div class="hero"><div class="side">{big_card(card_variant(x["ver"], x["o"]), x["o"], x["p"], card_name(x["n"]), x["s"], lab, flag(codes, x["nat"], up, True), ver, pimg, sig=card_variant(x["ver"], x["o"]) not in ("gold", "silver", "bronze"))}{pcredit}</div>'
             f'<div><div class="tag">{e(ver)}</div><h1>{e(x["n"])}</h1><div class="sub">{x["o"]} {e(x["p"])}' + (f" · {e(where)}" if where else "")
             + (f' · {flag(codes, x["nat"], up)}{e(x["nat"])}' if x["nat"] else "") + '</div>'
             f'<div class="kv"><div class="px" id="px"><span class="none">No console price yet. New cards are priced every hour while FUTBIN can be reached.</span></div>{meta_box(mt, x["o"])}</div>'

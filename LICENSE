@@ -8,3 +8,7 @@ written permission from the owner.
 Third-party material: the flag images in flags/ are made from flag-icons
 (https://github.com/lipis/flag-icons), MIT License, Copyright (c) 2013
 Panayiotis Lipiridis. See flags/LICENSE-flag-icons.txt.
+
+The signature font in fonts/ is a subset of Allison, Copyright 2020 The Allison
+Project Authors (https://github.com/googlefonts/allison), SIL Open Font License,
+Version 1.1. See fonts/OFL-Allison.txt.

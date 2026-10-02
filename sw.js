@@ -1,6 +1,6 @@
 /* © 2026 Ezzcoins. All rights reserved. */
 // Pages: always from the network, with the last copy as an offline fallback. Live data (data/*.json): never cached here.
-// Flags and icons: from the cache once loaded.
+// Flags, fonts and icons: from the cache once loaded.
 const V = "ezz-1";
 self.addEventListener("install", () => self.skipWaiting());
 self.addEventListener("activate", (e) => e.waitUntil((async () => {
@@ -15,7 +15,7 @@ self.addEventListener("fetch", (e) => {
     e.respondWith(fetch(r).then((res) => keep(r, res)).catch(async () => (await caches.match(r)) || (await caches.match(new URL("./", location).href)) || Response.error()));
     return;
   }
-  if (/\/(flags\/|icon-|favicon|apple-touch-icon|mark\.svg)/.test(u.pathname)) {
+  if (/\/(flags\/|fonts\/|icon-|favicon|apple-touch-icon|mark\.svg)/.test(u.pathname)) {
     e.respondWith(caches.match(r).then((m) => m || fetch(r).then((res) => keep(r, res))));
   }
 });
