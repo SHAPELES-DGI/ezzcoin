@@ -334,7 +334,7 @@ def special_page(x, codes, specials, credits):
             f'<div class="hero"><div class="side">{big_card(card_variant(x["ver"], x["o"], True), x["o"], x["p"], x["cn"], x["s"], lab, flag(codes, x["nat"], up, True), ver, pimg, sig=True)}{pcredit}</div>'
             f'<div><div class="tag">{e(ver)}</div><h1>{e(x["n"])}</h1><div class="sub">{x["o"]} {e(x["p"])}' + (f" · {e(where)}" if where else "")
             + (f' · {flag(codes, x["nat"], up)}{e(x["nat"])}' if x["nat"] else "") + '</div>'
-            f'<div class="kv"><div class="px" id="px"><span class="none">No console price yet. New cards are priced every hour while FUTBIN can be reached.</span></div>{meta_box(mt, x["o"])}</div>'
+            f'<div class="kv"><div class="px" id="px"><span class="none">No console price yet. New cards are priced every half hour while FUTBIN can be reached.</span></div>{meta_box(mt, x["o"])}</div>'
             + (f'<div class="stats">{stats}</div>' if has else '<p class="nostats">This card\'s own stats appear here after one of the next hourly updates.</p>')
             + f'<dl class="facts">{dl}</dl>' + (f'<p class="mtnote">{e(MT_NOTE)}</p>' if mt else "") + f'<a class="btn" href="{up}#q={e(x["n"])}">Watch on Ezzcoins</a></div></div>'
             f'<section class="more">{more}</section></main>{script}' + foot(up))
