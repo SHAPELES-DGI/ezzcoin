@@ -33,7 +33,7 @@
       "exit": null,
       "id": "c-2026-10-02-isak",
       "madeAt": "2026-09-30T18:26:38Z",
-      "note": "609,000 on FUTBIN when the call was made",
+      "note": "609,000 on FUTBIN when the call was made. Entry not recorded: the nearest FUTBIN reading (481,000 at 20:00 UTC) is over 3 hours after the entry time, so it stays pending and is voided if still unreadable 12 hours past due.",
       "ref": {
         "kind": "player",
         "label": "FUTBIN Destined for Glory page, PS price",
@@ -101,6 +101,11 @@
       "date": "2026-10-02T15:14:03Z",
       "kind": "miss",
       "text": "Assumed the 84 floor could rise before exit, but 81–84 all sit at a hard 650 floor, so the 5% tax guarantees a loss; use floor cards as SBC fodder, and only track calls on cards with room to move."
+    },
+    {
+      "date": "2026-10-02T20:14:00Z",
+      "kind": "miss",
+      "text": "The \"cheapest Item Score\" move flipped between 84s, 85s and 86s about ten times in one day because their per-point costs sit within 0.1 of each other. Treat gaps under 0.1 coins per point as a tie and don't log a correction for them."
     }
   ]
 }
