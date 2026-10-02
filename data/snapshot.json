@@ -1,12 +1,6 @@
 {
   "corrections": [
     {
-      "date": "2026-10-01T11:28:00Z",
-      "section": "Latest market read",
-      "what": "Verdict no longer says to buy fodder until about 13:00.",
-      "why": "That time had passed; floors are unchanged on FUT.GG, so the advice now ties to the price instead."
-    },
-    {
       "date": "2026-10-01T15:45:00Z",
       "section": "Moves right now",
       "what": "Rewrote plain clock times in moves, verdict, drops, news and events as local-time tokens.",
@@ -89,6 +83,12 @@
       "section": "Moves right now",
       "what": "Replaced \"86s at 3,000 are the cheapest Item Score\" with 84s at 650.",
       "why": "FUT.GG now lists 86s at 3,800 (0.93 per point), against 84s at 650 (0.78)."
+    },
+    {
+      "date": "2026-10-02T04:45:00Z",
+      "section": "Movers",
+      "what": "Refreshed fallers (Tzolakis, Bronze, Zamorano, Harder, Modrić) and the 85 price to 1,900.",
+      "why": "FUT.GG momentum and cheapest-by-rating pages now show these figures; Carpenter and Safonov are no longer listed."
     }
   ],
   "drops": [
@@ -208,36 +208,36 @@
     {
       "name": "Konstantinos Tzolakis",
       "ovr": 81,
-      "pct": -11.76,
-      "price": "−1,294",
-      "version": "TOTW"
-    },
-    {
-      "name": "Ivan Zamorano",
-      "ovr": 88,
-      "pct": -9.67,
-      "price": "−6,866",
-      "version": "Base Hero"
-    },
-    {
-      "name": "Ellie Carpenter",
-      "ovr": 86,
-      "pct": -9.33,
-      "price": "−1,656",
+      "pct": -10,
+      "price": "−1,100",
       "version": "TOTW"
     },
     {
       "name": "Lucy Bronze",
       "ovr": 86,
-      "pct": -8.88,
-      "price": "−1,776",
+      "pct": -7.77,
+      "price": "−1,612",
       "version": "TOTW"
     },
     {
-      "name": "Matvey Safonov",
-      "ovr": 84,
-      "pct": -8.41,
-      "price": "−2,187",
+      "name": "Ivan Zamorano",
+      "ovr": 88,
+      "pct": -7.09,
+      "price": "−5,105",
+      "version": "Base Hero"
+    },
+    {
+      "name": "Pernille Harder",
+      "ovr": 88,
+      "pct": -6.79,
+      "price": "−5,126",
+      "version": "Destined for Glory"
+    },
+    {
+      "name": "Luka Modrić",
+      "ovr": 86,
+      "pct": -6.54,
+      "price": "−3,188",
       "version": "TOTW"
     }
   ],
@@ -264,7 +264,7 @@
     },
     {
       "ovr": 85,
-      "price": 1800,
+      "price": 1900,
       "score": 2100
     },
     {
@@ -279,22 +279,22 @@
     },
     {
       "ovr": 88,
-      "price": 8500,
+      "price": 8800,
       "score": 8300
     },
     {
       "ovr": 89,
-      "price": 17000,
+      "price": 18500,
       "score": 11000
     },
     {
       "ovr": 90,
-      "price": 26250,
+      "price": 27250,
       "score": 14000
     },
     {
       "ovr": 91,
-      "price": 114000,
+      "price": 111000,
       "score": 19000
     }
   ],
@@ -370,14 +370,14 @@
   "moves": [
     {
       "confidence": "medium",
-      "detail": "FUT.GG's biggest fallers are TOTW and Hero specials: Zamorano Hero 88 −10%, Carpenter TOTW 86 −9%, Bronze TOTW 86 −9%. Last week's TOTW cards left packs when TOTW 3 arrived at {{t:2026-09-30T18:00:00+01:00}}. Spend on fodder first.",
+      "detail": "FUT.GG's biggest fallers are TOTW, Hero and Destined for Glory specials: Bronze TOTW 86 −8%, Zamorano Hero 88 −7%, Harder DFG 88 −7%. Last week's TOTW cards left packs when TOTW 3 arrived at {{t:2026-09-30T18:00:00+01:00}}. Spend on fodder first.",
       "title": "Don't buy TOTW and Destined for Glory specials yet",
       "tone": "hold",
       "when": "Until {{t:2026-10-02T19:00:00+02:00}}"
     },
     {
       "confidence": "medium",
-      "detail": "84s are still at 650 on FUT.GG this update; an 84 carries 830 Item Score on FUTBIN against 410 for an 83, about 0.78 coins per point. Any 84 works for Streamlined SBCs. Tracked call: entry recorded at 650 (FUT.GG, {{t:2026-10-01T10:29:00+02:00}}); graded at {{t:2026-10-02T17:00:00+02:00}}. Selling only pays above 685 after the 5% tax. Follows the lesson to tie fodder buys to a price level, not a clock time.",
+      "detail": "84s are still at 650 on FUT.GG this update (floor unchanged); an 84 carries 830 Item Score on FUTBIN against 410 for an 83, about 0.78 coins per point. Any 84 works for Streamlined SBCs. Tracked call: entry recorded at 650 (FUT.GG, {{t:2026-10-01T10:29:00+02:00}}); graded at {{t:2026-10-02T17:00:00+02:00}}. Selling only pays above 685 after the 5% tax. Follows the lesson to tie fodder buys to a price level, not a clock time.",
       "ledgerId": "c-2026-10-01-84floor",
       "title": "Buy 84-rated fodder at 650",
       "tone": "buy",
@@ -393,7 +393,7 @@
     },
     {
       "confidence": "medium",
-      "detail": "84s at 650 cost 0.78 coins per point (FUT.GG, this update), against 0.86 for 85s at 1,800, 0.93 for 86s at 3,800 and 0.95 for 87s at 5,200. 85s only beat 84s below about 1,645.",
+      "detail": "84s at 650 cost 0.78 coins per point (FUT.GG, this update), against 0.90 for 85s at 1,900, 0.93 for 86s at 3,800 and 0.95 for 87s at 5,200. 85s only beat 84s below about 1,645.",
       "title": "84s at 650 are the cheapest Item Score",
       "tone": "watch",
       "when": "Every update"
@@ -431,7 +431,7 @@
       "title": "Season 1 ends 22 October"
     },
     {
-      "detail": "FUT.GG: 81–84 at 650, 85s at 1,800, 86s at 3,800. Biggest fallers are specials (Zamorano Hero 88 −10%, Carpenter TOTW 86 −9%). Index figures (116.43, +1.33%) are from an earlier update because FUTBIN returned an error.",
+      "detail": "FUT.GG: 81–84 at 650, 85s at 1,900, 86s at 3,800. Biggest fallers are specials (Bronze TOTW 86 −8%, Zamorano Hero 88 −7%). Index figures (116.43, +1.33%) are from an earlier update because FUTBIN returned an error.",
       "kind": "data",
       "source": "FUTBIN · FUT.GG",
       "title": "Market stays calm, specials fall"
@@ -564,9 +564,9 @@
       "url": "https://www.futbin.com/27/squad-building-challenge/22"
     }
   ],
-  "updatedAt": "2026-10-02T03:42:43Z",
+  "updatedAt": "2026-10-02T04:45:00Z",
   "verdict": {
-    "detail": "FUT.GG shows 81–84 at 650, 85s at 1,800 and 86s at 3,800. FUTBIN did not load this run (403), so the index reading (116.43, momentum 49.67, calm) is from an earlier update. Specials keep falling (Carpenter TOTW −9%, Zamorano Hero −10%), and the next demand point is Destined for Glory Team 2 at {{t:2026-10-02T18:00:00+01:00}}.",
+    "detail": "FUT.GG shows 81–84 at 650, 85s at 1,900 and 86s at 3,800. FUTBIN did not load this run (403), so the index reading (116.43, momentum 49.67, calm) is from an earlier update. Specials keep falling (Bronze TOTW −8%, Zamorano Hero −7%), and the next demand point is Destined for Glory Team 2 at {{t:2026-10-02T18:00:00+01:00}}.",
     "headline": "84s at 650 are the cheapest Item Score at about 0.78 coins per point.",
     "label": "Buy 84s as fodder, hold the rest",
     "tone": "buy"
