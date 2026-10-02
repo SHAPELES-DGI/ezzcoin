@@ -4,3 +4,7 @@ This repository is published only so the website can be hosted on GitHub Pages.
 No license is granted. You may not copy, modify, distribute, republish or reuse
 any part of this code, design or content, in whole or in part, without prior
 written permission from the owner.
+
+Third-party material: the flag images in flags/ are made from flag-icons
+(https://github.com/lipis/flag-icons), MIT License, Copyright (c) 2013
+Panayiotis Lipiridis. See flags/LICENSE-flag-icons.txt.
