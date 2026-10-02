@@ -20,7 +20,7 @@ SLUG_MAP = {"ø": "o", "Ø": "o", "ß": "ss", "ł": "l", "Ł": "l", "æ": "ae", 
             "œ": "oe", "đ": "d", "Đ": "d", "ı": "i", "ð": "d", "þ": "th"}
 ST_OUT = ["PAC", "SHO", "PAS", "DRI", "DEF", "PHY"]
 ST_GK = ["DIV", "HAN", "KIC", "REF", "SPD", "POS"]
-CSS_V = "9"
+CSS_V = "11"
 SPECIAL = 1000000000  # special-card ids on the site: SPECIAL + FUT.GG card id (gid) or FUTBIN card id (fid)
 
 
@@ -67,6 +67,21 @@ CSS = (":root{--bg:#0A0D0C;--surface:#141917;--sunk:#1C2320;--ink:#EEF2EF;--mute
        "-webkit-mask-image:linear-gradient(to bottom,#000 58%,transparent 97%),linear-gradient(to right,transparent 0,#000 34%);-webkit-mask-composite:source-in;"
        "mask-image:linear-gradient(to bottom,#000 58%,transparent 97%),linear-gradient(to right,transparent 0,#000 34%);mask-composite:intersect}"
        ".fc-name.long{font-size:1.15rem}.fc-name.xl{font-size:.98rem}"
+       ".side{width:214px}.credit{width:214px}"
+       ".card-xl{width:214px;height:330px;padding:16px 14px 12px;border-radius:20px 20px 40px 40px;text-align:center}"
+       ".card-xl .fc-tl{position:absolute;left:16px;top:16px;z-index:1;text-align:center;line-height:1}"
+       ".card-xl .fc-ovr{font-size:2.9rem}.card-xl .fc-pos{font-size:1.05rem;margin-top:2px}"
+       ".card-xl .fc-photo{left:22%;right:auto;top:6px;width:74%;height:58%;object-position:50% 14%;"
+       "-webkit-mask-image:radial-gradient(ellipse 60% 66% at 50% 40%,#000 50%,transparent 94%);-webkit-mask-composite:source-over;"
+       "mask-image:radial-gradient(ellipse 60% 66% at 50% 40%,#000 50%,transparent 94%);mask-composite:add}"
+       ".card-xl .fc-sil{right:6px;bottom:auto;top:18px;width:150px;height:166px;-webkit-mask-image:linear-gradient(#000 60%,transparent 98%);mask-image:linear-gradient(#000 60%,transparent 98%)}"
+       ".card-xl .fc-name{margin-top:auto;font-size:1.45rem;text-transform:none;letter-spacing:.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}"
+       ".card-xl .fc-name.long{font-size:1.25rem}.card-xl .fc-name.xl{font-size:1.08rem}"
+       ".fc-stats{display:grid;grid-template-columns:repeat(6,1fr);margin-top:6px;padding-top:6px;border-top:1px solid color-mix(in srgb,currentColor 22%,transparent)}"
+       ".fc-stats small{display:block;font:700 .62rem/1.1 var(--fd);letter-spacing:.06em;opacity:.8}.fc-stats b{display:block;font:700 1.12rem/1.15 var(--fd)}"
+       ".fc-foot{display:flex;justify-content:center;align-items:center;gap:8px;margin-top:8px;font:700 .68rem var(--fd);letter-spacing:.06em;text-transform:uppercase;opacity:.85;min-height:16px}"
+       ".fc-foot img{width:22px;height:16px;border-radius:2px;box-shadow:0 0 0 1px rgb(0 0 0/.2)}.fc-foot span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:150px}"
+       "@media(max-width:640px){.side,.credit{width:214px}}"
        ".fcard.has-photo .fc-name,.fcard.has-photo .fc-club{text-shadow:0 1px 6px var(--fc-glow,rgb(255 255 255/.45))}"
        ".v-totw,.v-potm,.v-hero,.v-sbc,.v-promo{--fc-glow:rgb(0 0 0/.6)}"
        ".credit{width:184px;font-size:.72rem;line-height:1.4;color:var(--muted);overflow-wrap:anywhere;text-align:left}"
@@ -136,6 +151,16 @@ def photo(credits, pid, name, up):
     credit = (f'<div class="credit">Photo (cropped): {e(c["author"])} \u00b7 {e(c["licence"])} \u00b7 Wikimedia Commons'
               f'<details><summary>Photo source</summary><p>{e(c["page"])}</p><p>Licence: {e(c["licenceUrl"])}</p></details></div>')
     return img, credit
+
+
+def big_card(variant, ovr, pos, name, stats, lab, nat_flag, foot_text, pimg):
+    nm = name or ""
+    size = " xl" if len(nm) > 14 else " long" if len(nm) > 11 else ""
+    row = ""
+    if any(v is not None for v in stats):
+        row = '<div class="fc-stats">' + "".join(f'<div><small>{lab[i]}</small><b>{"–" if v is None else v}</b></div>' for i, v in enumerate(stats)) + "</div>"
+    return (f'<div class="fcard card-xl v-{variant}{" has-photo" if pimg else ""}"><div class="fc-tl"><div class="fc-ovr">{ovr}</div><div class="fc-pos">{e(pos)}</div></div>'
+            f'{pimg or SIL}<div class="fc-name{size}">{e(nm)}</div>{row}<div class="fc-foot">{nat_flag}<span>{e(foot_text)}</span></div></div>')
 
 
 def head(title, desc, canon, up, image=None):
@@ -213,8 +238,7 @@ def player_page(x, codes, by_club, by_nat, specials_of, credits):
     pimg, pcredit = photo(credits, x["id"], x["n"], up)
     return (head(title, desc, canon, up, BASE + "photos/" + pc["img"] if pc else None) +
             f'<main><div class="crumb"><a href="{up}">Ezzcoins</a> › <a href="{up}p/">Player pages</a> › {e(x["n"])}</div>'
-            f'<div class="hero"><div class="side"><div class="fcard v-{tier}{" has-photo" if pimg else ""}"><div class="fc-ovr">{x["o"]}</div><div class="fc-pos">{e(x["p"])}</div>'
-            f'<div class="fc-flag">{flag(codes, x["nat"], up, True)}</div>{pimg or SIL}<div class="fc-name{" xl" if len(x["q"] or x["n"]) > 13 else " long" if len(x["q"] or x["n"]) > 11 else ""}">{e(x["q"] or x["n"])}</div><div class="fc-club">{e(x["c"])}</div></div>{pcredit}</div>'
+            f'<div class="hero"><div class="side">{big_card(tier, x["o"], x["p"], x["q"] or x["n"], x["s"], lab, flag(codes, x["nat"], up, True), x["c"], pimg)}{pcredit}</div>'
             f'<div><h1>{e(x["n"])}</h1><div class="sub">{x["o"]} {e(x["p"])}' + (f" · {e(where)}" if where else "")
             + (f' · {flag(codes, x["nat"], up)}{e(x["nat"])}' if x["nat"] else "") + '</div>'
             f'<div class="px" id="px"><span class="none">No console price yet. {e(hint)}</span></div>'
@@ -259,8 +283,7 @@ def special_page(x, codes, specials, credits):
     pimg, pcredit = photo(credits, bid, x["n"], up)
     return (head(title, desc, BASE + "p/" + x["path"], up, BASE + "photos/" + pc["img"] if pc else None) +
             f'<main><div class="crumb"><a href="{up}">Ezzcoins</a> › <a href="{up}p/">Player pages</a> › {e(x["n"])} ({e(ver)})</div>'
-            f'<div class="hero"><div class="side"><div class="fcard v-{card_variant(x["ver"], x["o"])}{" has-photo" if pimg else ""}"><div class="fc-ovr">{x["o"]}</div><div class="fc-pos">{e(x["p"])}</div>'
-            f'<div class="fc-flag">{flag(codes, x["nat"], up, True)}</div>{pimg or SIL}<div class="fc-name">{e(x["n"].split(" ")[-1])}</div><div class="fc-club">{e(ver)}</div></div>{pcredit}</div>'
+            f'<div class="hero"><div class="side">{big_card(card_variant(x["ver"], x["o"]), x["o"], x["p"], x["n"].split(" ")[-1], x["s"], lab, flag(codes, x["nat"], up, True), ver, pimg)}{pcredit}</div>'
             f'<div><div class="tag">{e(ver)}</div><h1>{e(x["n"])}</h1><div class="sub">{x["o"]} {e(x["p"])}' + (f" · {e(where)}" if where else "")
             + (f' · {flag(codes, x["nat"], up)}{e(x["nat"])}' if x["nat"] else "") + '</div>'
             f'<div class="px" id="px"><span class="none">No console price yet. New cards are priced every hour while FUTBIN can be reached.</span></div>'
