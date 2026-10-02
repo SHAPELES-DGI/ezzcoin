@@ -1,0 +1,35 @@
+name: Player photos
+on:
+  push:
+    branches: [main]
+    paths: [scripts/fetch_photos.py, .github/workflows/player-photos.yml]
+  schedule:
+    - cron: "17 4 * * 1"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: player-photos
+  cancel-in-progress: false
+jobs:
+  photos:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch freely licensed photos from Wikimedia Commons
+        run: python3 scripts/fetch_photos.py .
+      - name: Rebuild player pages
+        run: python3 scripts/build_pages.py .
+      - name: Commit changes
+        run: |
+          git add -A photos p sitemap.xml
+          if git diff --cached --quiet; then echo "No changes"; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Player photos"
+          for i in 1 2 3; do
+            git pull --rebase origin main && git push origin main && exit 0
+            sleep 5
+          done
+          exit 1

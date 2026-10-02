@@ -20,7 +20,7 @@ SLUG_MAP = {"ø": "o", "Ø": "o", "ß": "ss", "ł": "l", "Ł": "l", "æ": "ae", 
             "œ": "oe", "đ": "d", "Đ": "d", "ı": "i", "ð": "d", "þ": "th"}
 ST_OUT = ["PAC", "SHO", "PAS", "DRI", "DEF", "PHY"]
 ST_GK = ["DIV", "HAN", "KIC", "REF", "SPD", "POS"]
-CSS_V = "4"
+CSS_V = "6"
 SPECIAL = 1000000000  # special-card ids on the site: SPECIAL + FUT.GG card id (gid) or FUTBIN card id (fid)
 
 
@@ -62,6 +62,13 @@ CSS = (":root{--bg:#0A0D0C;--surface:#141917;--sunk:#1C2320;--ink:#EEF2EF;--mute
        ".v-sbc{--fc-bg:linear-gradient(160deg,#26C49A,#0B4D3E 70%);--fc-ink:#fff}.v-promo{--fc-bg:linear-gradient(160deg,#D24C8F,#3A1C6E 70%);--fc-ink:#fff}"
        ".tag{display:inline-block;background:linear-gradient(90deg,#FFDA7A,#E3A93A);color:#15201A;font:700 .8rem var(--fd);letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border-radius:5px;margin-bottom:8px}"
        ".nostats{margin-top:18px;color:var(--muted);font-size:.92rem;max-width:520px}"
+       ".side{display:grid;gap:16px;justify-items:center;width:184px}.photo{margin:0;width:184px}"
+       ".photo img{display:block;width:100%;height:auto;border-radius:14px;border:1px solid var(--line);background:var(--sunk)}"
+       ".photo figcaption{margin-top:6px;font-size:.72rem;line-height:1.4;color:var(--muted);overflow-wrap:anywhere}"
+       ".photo summary{cursor:pointer;margin-top:2px}.photo details p{margin:4px 0 0}"
+       "@media(max-width:640px){.side{display:flex;width:auto;max-width:100%;align-items:flex-start;gap:12px}.side .fcard{width:150px;height:210px;flex:none}"
+       ".side .fc-ovr{font-size:2.5rem}.side .fc-name{font-size:1.2rem}.side .fc-sil{width:112px;height:124px;bottom:44px}"
+       ".photo{width:150px;flex:none;text-align:left}.photo figcaption{font-size:.68rem}}"
        ".fc-ovr{font:italic 800 3rem/1 var(--fd)}.fc-pos{font:700 1.05rem/1 var(--fd);letter-spacing:.06em;margin-top:2px}"
        ".fc-flag{margin-top:8px;line-height:0}.fc-flag img{width:30px;height:22px;border-radius:3px;box-shadow:0 0 0 1px rgb(0 0 0/.2)}"
        ".fc-sil{position:absolute;right:-14px;bottom:52px;z-index:-1;width:140px;height:154px;fill:currentColor;opacity:.3;"
@@ -118,11 +125,20 @@ def day(iso):
     return f"{int(m.group(3))} {MONTHS[int(m.group(2)) - 1]} {m.group(1)}" if m else ""
 
 
-def head(title, desc, canon, up):
+def photo(credits, pid, name, up):
+    c = credits.get(str(pid))
+    if not c:
+        return ""
+    return (f'<figure class="photo"><img src="{up}photos/{e(c["img"])}" alt="Photo of {e(name)}" loading="lazy" width="184">'
+            f'<figcaption>Photo: {e(c["author"])} \u00b7 {e(c["licence"])} \u00b7 Wikimedia Commons'
+            f'<details><summary>Photo source</summary><p>{e(c["page"])}</p><p>Licence: {e(c["licenceUrl"])}</p></details></figcaption></figure>')
+
+
+def head(title, desc, canon, up, image=None):
     return (f'<!doctype html>{BANNER}<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
             f'<title>{e(title)}</title><meta name="description" content="{e(desc)}"><link rel="canonical" href="{e(canon)}">'
             f'<meta property="og:type" content="website"><meta property="og:title" content="{e(title)}"><meta property="og:description" content="{e(desc)}">'
-            f'<meta property="og:url" content="{e(canon)}"><meta property="og:image" content="{e(BASE)}icon-512.png"><meta name="theme-color" content="#0A0D0C">'
+            f'<meta property="og:url" content="{e(canon)}"><meta property="og:image" content="{e(image or BASE + "icon-512.png")}"><meta name="theme-color" content="#0A0D0C">'
             f'<link rel="icon" href="{up}favicon-32.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="{up}apple-touch-icon.png">'
             f'<link rel="manifest" href="{up}manifest.webmanifest">{FONTS}<link rel="stylesheet" href="{up}p/style.css?v={CSS_V}"></head><body>'
             f'<header class="top"><a class="home" href="{up}"><img src="{up}mark.svg" alt="" width="34" height="34"><b>Ezz<span>coins</span></b></a>'
@@ -149,7 +165,7 @@ def card_list(items, codes, up, meta):
     return f"<ul>{lis}</ul>"
 
 
-def player_page(x, codes, by_club, by_nat, specials_of):
+def player_page(x, codes, by_club, by_nat, specials_of, credits):
     up = "../../"
     gk = x["p"] == "GK"
     lab = ST_GK if gk else ST_OUT
@@ -189,10 +205,11 @@ def player_page(x, codes, by_club, by_nat, specials_of):
               "if(!c)return;const m=Math.round((Date.now()-Date.parse(c.at))/6e4),h=Math.floor(m/60),ago=m<1?'just now':m<60?m+' min ago':h<48?h+' h ago':Math.floor(h/24)+' days ago';"
               "el.innerHTML='<b><i class=\"coin\"></i>'+Number(c.price).toLocaleString('en-US')+'</b><span>Console price from FUTBIN \\u00b7 '+ago+'</span>'})})()</script>"
               ) % json.dumps(str(x["id"]))
-    return (head(title, desc, canon, up) +
+    pc = credits.get(str(x["id"]))
+    return (head(title, desc, canon, up, BASE + "photos/" + pc["img"] if pc else None) +
             f'<main><div class="crumb"><a href="{up}">Ezzcoins</a> › <a href="{up}p/">Player pages</a> › {e(x["n"])}</div>'
-            f'<div class="hero"><div class="fcard v-{tier}" aria-hidden="true"><div class="fc-ovr">{x["o"]}</div><div class="fc-pos">{e(x["p"])}</div>'
-            f'<div class="fc-flag">{flag(codes, x["nat"], up, True)}</div>{SIL}<div class="fc-name">{e(x["q"] or x["n"])}</div><div class="fc-club">{e(x["c"])}</div></div>'
+            f'<div class="hero"><div class="side"><div class="fcard v-{tier}" aria-hidden="true"><div class="fc-ovr">{x["o"]}</div><div class="fc-pos">{e(x["p"])}</div>'
+            f'<div class="fc-flag">{flag(codes, x["nat"], up, True)}</div>{SIL}<div class="fc-name">{e(x["q"] or x["n"])}</div><div class="fc-club">{e(x["c"])}</div></div>{photo(credits, x["id"], x["n"], up)}</div>'
             f'<div><h1>{e(x["n"])}</h1><div class="sub">{x["o"]} {e(x["p"])}' + (f" · {e(where)}" if where else "")
             + (f' · {flag(codes, x["nat"], up)}{e(x["nat"])}' if x["nat"] else "") + '</div>'
             f'<div class="px" id="px"><span class="none">No console price yet. {e(hint)}</span></div>'
@@ -201,7 +218,7 @@ def player_page(x, codes, by_club, by_nat, specials_of):
             f'<section class="more">{more}</section></main>{script}' + foot(up))
 
 
-def special_page(x, codes, specials):
+def special_page(x, codes, specials, credits):
     up = "../../"
     lab = ST_GK if x["p"] == "GK" else ST_OUT
     has = any(v is not None for v in x["s"])
@@ -232,10 +249,12 @@ def special_page(x, codes, specials):
               "if(!c)return;const m=Math.round((Date.now()-Date.parse(c.at))/6e4),h=Math.floor(m/60),ago=m<1?'just now':m<60?m+' min ago':h<48?h+' h ago':Math.floor(h/24)+' days ago';"
               "el.innerHTML='<b><i class=\"coin\"></i>'+Number(c.price).toLocaleString('en-US')+'</b><span>Console price from FUTBIN \\u00b7 '+ago+'</span>'})})()</script>"
               ) % (json.dumps(str(x["id"])), json.dumps(str(x["key"])))
-    return (head(title, desc, BASE + "p/" + x["path"], up) +
+    bid = b["id"] if b else None
+    pc = credits.get(str(bid)) if bid else None
+    return (head(title, desc, BASE + "p/" + x["path"], up, BASE + "photos/" + pc["img"] if pc else None) +
             f'<main><div class="crumb"><a href="{up}">Ezzcoins</a> › <a href="{up}p/">Player pages</a> › {e(x["n"])} ({e(ver)})</div>'
-            f'<div class="hero"><div class="fcard v-{card_variant(x["ver"], x["o"])}" aria-hidden="true"><div class="fc-ovr">{x["o"]}</div><div class="fc-pos">{e(x["p"])}</div>'
-            f'<div class="fc-flag">{flag(codes, x["nat"], up, True)}</div>{SIL}<div class="fc-name">{e(x["n"].split(" ")[-1])}</div><div class="fc-club">{e(ver)}</div></div>'
+            f'<div class="hero"><div class="side"><div class="fcard v-{card_variant(x["ver"], x["o"])}" aria-hidden="true"><div class="fc-ovr">{x["o"]}</div><div class="fc-pos">{e(x["p"])}</div>'
+            f'<div class="fc-flag">{flag(codes, x["nat"], up, True)}</div>{SIL}<div class="fc-name">{e(x["n"].split(" ")[-1])}</div><div class="fc-club">{e(ver)}</div></div>{photo(credits, bid, x["n"], up) if bid else ""}</div>'
             f'<div><div class="tag">{e(ver)}</div><h1>{e(x["n"])}</h1><div class="sub">{x["o"]} {e(x["p"])}' + (f" · {e(where)}" if where else "")
             + (f' · {flag(codes, x["nat"], up)}{e(x["nat"])}' if x["nat"] else "") + '</div>'
             f'<div class="px" id="px"><span class="none">No console price yet. New cards are priced every hour while FUTBIN can be reached.</span></div>'
@@ -262,6 +281,9 @@ def list_page(groups, codes, total, specials):
 def main():
     data = json.load(open(os.path.join(ROOT, "data", "players.json"), encoding="utf-8"))
     codes = json.load(open(os.path.join(ROOT, "flags", "codes.json"), encoding="utf-8"))
+    cpath = os.path.join(ROOT, "photos", "credits.json")
+    credits = json.load(open(cpath, encoding="utf-8")) if os.path.exists(cpath) else {}
+    credits = {k: v for k, v in credits.items() if os.path.exists(os.path.join(ROOT, "photos", v.get("img", "")))}
     ci = {c: i for i, c in enumerate(data["cols"])}
     get = lambda r, c: r[ci[c]] if c in ci else None
     players, allp, byname = [], {}, {}
@@ -324,12 +346,12 @@ def main():
         d = os.path.join(out, x["path"])
         os.makedirs(d, exist_ok=True)
         with open(os.path.join(d, "index.html"), "w", encoding="utf-8") as fh:
-            fh.write(player_page(x, codes, by_club, by_nat, specials_of))
+            fh.write(player_page(x, codes, by_club, by_nat, specials_of, credits))
     for x in specials:
         d = os.path.join(out, x["path"])
         os.makedirs(d, exist_ok=True)
         with open(os.path.join(d, "index.html"), "w", encoding="utf-8") as fh:
-            fh.write(special_page(x, codes, specials))
+            fh.write(special_page(x, codes, specials, credits))
     groups = []
     for x in players:
         if not groups or groups[-1][0] != x["o"]:
@@ -341,7 +363,7 @@ def main():
     with open(os.path.join(ROOT, "sitemap.xml"), "w", encoding="utf-8") as fh:
         fh.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
                  + "".join(f"<url><loc>{e(u)}</loc></url>\n" for u in urls) + "</urlset>\n")
-    print(f"OK: {len(players)} player pages, {len(specials)} special card pages, list page and sitemap ({len(urls)} URLs)")
+    print(f"OK: {len(players)} player pages ({sum(1 for x in players if str(x['id']) in credits)} with photos), {len(specials)} special card pages, list page and sitemap ({len(urls)} URLs)")
 
 
 if __name__ == "__main__":
