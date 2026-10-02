@@ -2,7 +2,7 @@ name: Player pages
 on:
   push:
     branches: [main]
-    paths: [data/players.json, scripts/build_pages.py, flags/codes.json]
+    paths: [data/players.json, data/newcards.json, scripts/build_pages.py, flags/codes.json]
   workflow_dispatch:
 permissions:
   contents: write
