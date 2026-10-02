@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-10-02T14:05:46Z",
+ "updatedAt": "2026-10-02T14:36:23Z",
  "source": "FUTBIN",
  "cards": [
   {
@@ -74,7 +74,7 @@
    ],
    "added": "2026-09-30",
    "price": 9900,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23099/milan-iloski"
   },
   {
@@ -99,7 +99,7 @@
    ],
    "added": "2026-09-30",
    "price": 10500,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23098/phillipp-mwene"
   },
   {
@@ -124,7 +124,7 @@
    ],
    "added": "2026-09-30",
    "price": 10250,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23097/shea-charles"
   },
   {
@@ -149,7 +149,7 @@
    ],
    "added": "2026-09-30",
    "price": 13000,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23096/zeki-amdouni"
   },
   {
@@ -174,7 +174,7 @@
    ],
    "added": "2026-09-30",
    "price": 13250,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23095/phillipp-mwene"
   },
   {
@@ -199,7 +199,7 @@
    ],
    "added": "2026-09-30",
    "price": 13250,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23094/sebastian-berhalter"
   },
   {
@@ -224,7 +224,7 @@
    ],
    "added": "2026-09-30",
    "price": 10250,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23093/ayase-ueda"
   },
   {
@@ -249,7 +249,7 @@
    ],
    "added": "2026-09-30",
    "price": 13250,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23092/mexx-meerdink"
   },
   {
@@ -274,7 +274,7 @@
    ],
    "added": "2026-09-30",
    "price": 15750,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23091/shea-charles"
   },
   {
@@ -299,139 +299,307 @@
    ],
    "added": "2026-09-30",
    "price": 10000,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23090/sara-ortega-ruiz"
   },
   {
    "fid": 23089,
    "name": "Milan Iloski",
+   "version": "Team of the Week",
    "ovr": 80,
    "pos": "ST",
+   "alt": "LM, CAM, LW",
    "club": "Philadelphia",
+   "league": "MLS",
+   "nation": "United States",
+   "sm": 3,
+   "wf": 3,
+   "stats": [
+    86,
+    80,
+    70,
+    81,
+    32,
+    66
+   ],
    "added": "2026-09-30",
    "price": 12500,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23089/milan-iloski"
   },
   {
    "fid": 23088,
    "name": "Danny Namaso",
+   "version": "Team of the Week",
    "ovr": 80,
    "pos": "CAM",
+   "alt": "LM, ST, LW",
    "club": "AJ Auxerre",
+   "league": "Ligue 1 McDonald's",
+   "nation": "Cameroon",
+   "sm": 3,
+   "wf": 3,
+   "stats": [
+    86,
+    78,
+    70,
+    84,
+    31,
+    77
+   ],
    "added": "2026-09-30",
    "price": 79500,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23088/danny-namaso"
   },
   {
    "fid": 23087,
    "name": "Ayase Ueda",
+   "version": "Team of the Week",
    "ovr": 80,
    "pos": "ST",
+   "alt": "",
    "club": "LOSC Lille",
+   "league": "Ligue 1 McDonald's",
+   "nation": "Japan",
+   "sm": 3,
+   "wf": 4,
+   "stats": [
+    80,
+    80,
+    66,
+    79,
+    32,
+    77
+   ],
    "added": "2026-09-30",
    "price": 12500,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23087/ayase-ueda"
   },
   {
    "fid": 23086,
    "name": "Sebastian Berhalter",
+   "version": "Team of the Week",
    "ovr": 80,
    "pos": "CDM",
+   "alt": "CM",
    "club": "Middlesbrough",
+   "league": "EFL Championship",
+   "nation": "United States",
+   "sm": 3,
+   "wf": 3,
+   "stats": [
+    77,
+    70,
+    82,
+    75,
+    75,
+    82
+   ],
    "added": "2026-09-30",
    "price": 10000,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23086/sebastian-berhalter"
   },
   {
    "fid": 23085,
    "name": "Chancel Mbemba",
+   "version": "Team of the Week",
    "ovr": 80,
    "pos": "CB",
+   "alt": "",
    "club": "Al Diriyah",
+   "league": "ROSHN Saudi League",
+   "nation": "Congo DR",
+   "sm": 2,
+   "wf": 3,
+   "stats": [
+    75,
+    61,
+    70,
+    72,
+    81,
+    81
+   ],
    "added": "2026-09-30",
    "price": 10250,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23085/chancel-mbemba"
   },
   {
    "fid": 23084,
    "name": "Chancel Mbemba",
+   "version": "Team of the Week",
    "ovr": 80,
    "pos": "CB",
+   "alt": "",
    "club": "Al Diriyah",
+   "league": "ROSHN Saudi League",
+   "nation": "Congo DR",
+   "sm": 2,
+   "wf": 3,
+   "stats": [
+    75,
+    61,
+    70,
+    72,
+    81,
+    81
+   ],
    "added": "2026-09-30",
    "price": 13250,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23084/chancel-mbemba"
   },
   {
    "fid": 23083,
    "name": "Danny Namaso",
+   "version": "Team of the Week",
    "ovr": 80,
    "pos": "CAM",
+   "alt": "LM, ST, LW",
    "club": "AJ Auxerre",
+   "league": "Ligue 1 McDonald's",
+   "nation": "Cameroon",
+   "sm": 3,
+   "wf": 3,
+   "stats": [
+    86,
+    78,
+    70,
+    84,
+    31,
+    77
+   ],
    "added": "2026-09-30",
    "price": 10250,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23083/danny-namaso"
   },
   {
    "fid": 23082,
    "name": "Sara Ortega Ruiz",
+   "version": "Team of the Week",
    "ovr": 80,
    "pos": "LM",
+   "alt": "RB, LB, CDM, RM, CM",
    "club": "Athletic Club",
+   "league": "Liga F Moeve",
+   "nation": "Spain",
+   "sm": 3,
+   "wf": 3,
+   "stats": [
+    85,
+    77,
+    79,
+    83,
+    62,
+    70
+   ],
    "added": "2026-09-30",
    "price": 12000,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23082/sara-ortega-ruiz"
   },
   {
    "fid": 23081,
    "name": "Mexx Meerdink",
+   "version": "Team of the Week",
    "ovr": 80,
    "pos": "ST",
+   "alt": "",
    "club": "AZ",
+   "league": "Eredivisie",
+   "nation": "Netherlands",
+   "sm": 4,
+   "wf": 3,
+   "stats": [
+    78,
+    81,
+    70,
+    80,
+    38,
+    84
+   ],
    "added": "2026-09-30",
    "price": 10000,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23081/mexx-meerdink"
   },
   {
    "fid": 23080,
    "name": "Zeki Amdouni",
+   "version": "Team of the Week",
    "ovr": 80,
    "pos": "ST",
+   "alt": "CAM",
    "club": "Burnley",
+   "league": "EFL Championship",
+   "nation": "Switzerland",
+   "sm": 3,
+   "wf": 4,
+   "stats": [
+    78,
+    82,
+    78,
+    84,
+    52,
+    72
+   ],
    "added": "2026-09-30",
    "price": 10000,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23080/zeki-amdouni"
   },
   {
    "fid": 23079,
    "name": "Henry Martín",
+   "version": "Team of the Week",
    "ovr": 80,
    "pos": "ST",
+   "alt": "",
    "club": "América",
+   "league": "Liga BBVA MX",
+   "nation": "Mexico",
+   "sm": 3,
+   "wf": 3,
+   "stats": [
+    80,
+    82,
+    71,
+    80,
+    47,
+    82
+   ],
    "added": "2026-09-30",
    "price": 10250,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23079/henry-martin"
   },
   {
    "fid": 23078,
    "name": "Henry Martín",
+   "version": "Team of the Week",
    "ovr": 80,
    "pos": "ST",
+   "alt": "",
    "club": "América",
+   "league": "Liga BBVA MX",
+   "nation": "Mexico",
+   "sm": 3,
+   "wf": 3,
+   "stats": [
+    80,
+    82,
+    71,
+    80,
+    47,
+    82
+   ],
    "added": "2026-09-30",
    "price": 12750,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23078/henry-martin"
   },
   {
@@ -442,7 +610,7 @@
    "club": "Hull City",
    "added": "2026-09-30",
    "price": 10500,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23077/konstantinos-tzolakis"
   },
   {
@@ -453,7 +621,7 @@
    "club": "Hull City",
    "added": "2026-09-30",
    "price": 23500,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23076/konstantinos-tzolakis"
   },
   {
@@ -464,7 +632,7 @@
    "club": "NJ/NY Gotham",
    "added": "2026-09-30",
    "price": 12750,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23075/jaedyn-shaw"
   },
   {
@@ -475,7 +643,7 @@
    "club": "NJ/NY Gotham",
    "added": "2026-09-30",
    "price": 10500,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23074/jaedyn-shaw"
   },
   {
@@ -486,7 +654,7 @@
    "club": "Real Madrid",
    "added": "2026-09-30",
    "price": 16250,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23073/felicia-schroder"
   },
   {
@@ -497,7 +665,7 @@
    "club": "Real Madrid",
    "added": "2026-09-30",
    "price": 11000,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23072/felicia-schroder"
   },
   {
@@ -508,7 +676,7 @@
    "club": "LAFC",
    "added": "2026-09-30",
    "price": 38000,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23071/heung-min-son"
   },
   {
@@ -519,7 +687,7 @@
    "club": "Brentford",
    "added": "2026-09-30",
    "price": 129000,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23070/michael-kayode"
   },
   {
@@ -530,7 +698,7 @@
    "club": "Brentford",
    "added": "2026-09-30",
    "price": 27000,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23069/michael-kayode"
   },
   {
@@ -541,7 +709,7 @@
    "club": "LAFC",
    "added": "2026-09-30",
    "price": 69000,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23068/heung-min-son"
   },
   {
@@ -552,7 +720,7 @@
    "club": "Al Nassr",
    "added": "2026-09-30",
    "price": 195000,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23067/joao-felix-sequeira"
   },
   {
@@ -563,7 +731,7 @@
    "club": "Atlético de Madrid",
    "added": "2026-09-30",
    "price": 27000,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23066/alejandro-baena-rodriguez"
   },
   {
@@ -574,7 +742,7 @@
    "club": "Atlético de Madrid",
    "added": "2026-09-30",
    "price": 14250,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23065/alejandro-baena-rodriguez"
   },
   {
@@ -585,7 +753,7 @@
    "club": "Al Nassr",
    "added": "2026-09-30",
    "price": 267000,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23064/joao-felix-sequeira"
   },
   {
@@ -596,7 +764,7 @@
    "club": "Milano FC",
    "added": "2026-09-30",
    "price": 87000,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23063/luka-modric"
   },
   {
@@ -607,7 +775,7 @@
    "club": "Chelsea",
    "added": "2026-09-30",
    "price": 66500,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23062/ellie-carpenter"
   },
   {
@@ -618,7 +786,7 @@
    "club": "Milano FC",
    "added": "2026-09-30",
    "price": 59500,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23061/luka-modric"
   },
   {
@@ -629,7 +797,7 @@
    "club": "Chelsea",
    "added": "2026-09-30",
    "price": 17750,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23060/ellie-carpenter"
   },
   {
@@ -640,7 +808,7 @@
    "club": "Arsenal",
    "added": "2026-09-30",
    "price": 174000,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23059/martin-odegaard"
   },
   {
@@ -651,7 +819,7 @@
    "club": "Arsenal",
    "added": "2026-09-30",
    "price": 118000,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23058/viktor-gyokeres"
   },
   {
@@ -662,7 +830,7 @@
    "club": "Arsenal",
    "added": "2026-09-30",
    "price": 116000,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23057/martin-odegaard"
   },
   {
@@ -673,7 +841,7 @@
    "club": "Arsenal",
    "added": "2026-09-30",
    "price": 60000,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23056/viktor-gyokeres"
   },
   {
@@ -684,7 +852,7 @@
    "club": "KC Current",
    "added": "2026-09-30",
    "price": 671000,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23055/temwa-chawinga"
   },
   {
@@ -695,7 +863,7 @@
    "club": "KC Current",
    "added": "2026-09-30",
    "price": 212000,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23054/temwa-chawinga"
   },
   {
@@ -717,7 +885,7 @@
    "club": "WS Wanderers",
    "added": "2026-09-29",
    "price": 350,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23052/ricky-fransen"
   },
   {
@@ -728,7 +896,7 @@
    "club": "TSG Hoffenheim II",
    "added": "2026-09-29",
    "price": 350,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23051/nico-biedermann"
   },
   {
@@ -739,7 +907,7 @@
    "club": "Stockport",
    "added": "2026-09-29",
    "price": 350,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23050/che-gardner"
   },
   {
@@ -750,7 +918,7 @@
    "club": "FC Alverca",
    "added": "2026-09-29",
    "price": 350,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23049/samy-merheg"
   },
   {
@@ -761,7 +929,7 @@
    "club": "Burton Albion",
    "added": "2026-09-29",
    "price": 350,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23048/sulyman-krubally"
   },
   {
@@ -772,7 +940,7 @@
    "club": "Carrarese Calcio",
    "added": "2026-09-29",
    "price": 350,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23047/david-vujevic"
   },
   {
@@ -783,7 +951,7 @@
    "club": "WSG Tirol",
    "added": "2026-09-29",
    "price": 350,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23046/salko-hamzic"
   },
   {
@@ -794,7 +962,7 @@
    "club": "SV Zulte Waregem",
    "added": "2026-09-29",
    "price": 350,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23045/hemsley-akpa-chukwu"
   },
   {
@@ -805,7 +973,7 @@
    "club": "Crawley Town",
    "added": "2026-09-29",
    "price": 350,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23044/ade-adeyemo"
   },
   {
@@ -816,7 +984,7 @@
    "club": "Peterborough",
    "added": "2026-09-29",
    "price": 350,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23043/josh-feeney"
   },
   {
@@ -827,7 +995,7 @@
    "club": "FC Vaduz",
    "added": "2026-09-29",
    "price": 450,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23042/denis-simani"
   },
   {
@@ -838,7 +1006,7 @@
    "club": "Millonarios",
    "added": "2026-09-29",
    "price": 450,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23041/sebastian-viveros"
   },
   {
@@ -849,7 +1017,7 @@
    "club": "Cagliari",
    "added": "2026-09-29",
    "price": 550,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23040/alessandro-romano"
   },
   {
@@ -860,7 +1028,7 @@
    "club": "Le Mans FC",
    "added": "2026-09-29",
    "price": 350,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23039/adil-bourabaa"
   },
   {
@@ -871,7 +1039,7 @@
    "club": "FC Vaduz",
    "added": "2026-09-29",
    "price": 450,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23038/dejan-sorgic"
   },
   {
@@ -882,7 +1050,7 @@
    "club": "Lecce",
    "added": "2026-09-29",
    "price": 450,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23037/konan-ndri"
   },
   {
@@ -893,7 +1061,7 @@
    "club": "Karlsruher SC",
    "added": "2026-09-29",
    "price": 550,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23036/louey-ben-farhat"
   },
   {
@@ -904,7 +1072,7 @@
    "club": "Lecce",
    "added": "2026-09-29",
    "price": 450,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23035/mohamed-kaba"
   },
   {
@@ -915,7 +1083,7 @@
    "club": "Slavia Praha",
    "added": "2026-09-29",
    "price": 350,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23034/danijel-sturm"
   },
   {
@@ -926,7 +1094,7 @@
    "club": "Servette FC",
    "added": "2026-09-29",
    "price": 500,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23033/lilian-njoh"
   },
   {
@@ -937,7 +1105,7 @@
    "club": "FC Augsburg",
    "added": "2026-09-29",
    "price": 700,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23032/noahkai-banks"
   },
   {
@@ -948,7 +1116,7 @@
    "club": "FC Schalke 04",
    "added": "2026-09-29",
    "price": 600,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23031/soufiane-el-faouzi"
   },
   {
@@ -959,7 +1127,7 @@
    "club": "Valencia CF",
    "added": "2026-09-29",
    "price": 350,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23030/danielle-marcano"
   },
   {
@@ -970,7 +1138,7 @@
    "club": "Athletic Club",
    "added": "2026-09-29",
    "price": 450,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23029/alvaro-djalo-dias-fernandes"
   },
   {
@@ -981,7 +1149,7 @@
    "club": "Olympiacos FC",
    "added": "2026-09-29",
    "price": 450,
-   "priceAt": "2026-10-02T14:03:25Z",
+   "priceAt": "2026-10-02T14:28:44Z",
    "url": "https://www.futbin.com/27/player/23028/nair-tiknizyan"
   },
   {
