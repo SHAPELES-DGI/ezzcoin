@@ -21,17 +21,21 @@ jobs:
         run: python3 -m pip install --quiet pillow
       - name: Fetch freely licensed photos from Wikimedia Commons
         run: python3 scripts/fetch_photos.py .
-      - name: Rebuild player pages
-        run: python3 scripts/build_pages.py .
-      - name: Commit changes
+      - name: Rebuild player pages and commit
         run: |
-          git add -A photos p sitemap.xml
-          if git diff --cached --quiet; then echo "No changes"; exit 0; fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "Player photos"
-          for i in 1 2 3; do
-            git pull --rebase origin main && git push origin main && exit 0
-            sleep 5
+          # Keep the new photos aside, then build on top of the newest main (other jobs push prices and pages) and retry.
+          mkdir -p /tmp/photos && cp -a photos/. /tmp/photos/
+          for i in 1 2 3 4 5; do
+            git fetch -q origin main
+            git reset -q --hard origin/main
+            rm -rf photos && mkdir -p photos && cp -a /tmp/photos/. photos/
+            python3 scripts/build_pages.py .
+            git add -A photos p sitemap.xml
+            if git diff --cached --quiet; then echo "No changes"; exit 0; fi
+            git commit -q -m "Player photos"
+            git push origin HEAD:main && exit 0
+            sleep $((i * 7))
           done
           exit 1
