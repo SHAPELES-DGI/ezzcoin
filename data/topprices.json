@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-10-02T14:39:33Z",
+ "updatedAt": "2026-10-02T16:06:10Z",
  "source": "FUTBIN",
  "minOvr": 84,
  "players": {
@@ -722,6 +722,126 @@
    "prev": null,
    "at": "2026-10-02T14:39:25Z",
    "url": "https://www.futbin.com/27/player/548/julian-alvarez"
+  },
+  "259532": {
+   "name": "Joan García",
+   "ovr": 86,
+   "price": 38250,
+   "prev": null,
+   "at": "2026-10-02T16:04:30Z",
+   "url": "https://www.futbin.com/27/player/551/joan-garcia-pons"
+  },
+  "265239": {
+   "name": "Katie McCabe",
+   "ovr": 86,
+   "price": 4200,
+   "prev": null,
+   "at": "2026-10-02T16:04:30Z",
+   "url": "https://www.futbin.com/27/player/116/katie-mccabe"
+  },
+  "231432": {
+   "name": "Lindsey Heaps",
+   "ovr": 86,
+   "price": 4300,
+   "prev": null,
+   "at": "2026-10-02T16:04:30Z",
+   "url": "https://www.futbin.com/27/player/740/lindsey-heaps"
+  },
+  "252154": {
+   "name": "Marco Carnesecchi",
+   "ovr": 86,
+   "price": 4000,
+   "prev": null,
+   "at": "2026-10-02T16:04:30Z",
+   "url": "https://www.futbin.com/27/player/460/marco-carnesecchi"
+  },
+  "246272": {
+   "name": "Marie Katoto",
+   "ovr": 86,
+   "price": 4000,
+   "prev": null,
+   "at": "2026-10-02T16:04:30Z",
+   "url": "https://www.futbin.com/27/player/625/marie-katoto"
+  },
+  "222665": {
+   "name": "Martin Ødegaard",
+   "ovr": 86,
+   "price": 4900,
+   "prev": null,
+   "at": "2026-10-02T16:04:30Z",
+   "url": "https://www.futbin.com/27/player/243/martin-odegaard"
+  },
+  "256079": {
+   "name": "Moisés Caicedo",
+   "ovr": 86,
+   "price": 14250,
+   "prev": null,
+   "at": "2026-10-02T16:04:30Z",
+   "url": "https://www.futbin.com/27/player/251/moises-caicedo"
+  },
+  "278046": {
+   "name": "Pau Cubarsí",
+   "ovr": 86,
+   "price": 5100,
+   "prev": null,
+   "at": "2026-10-02T16:06:00Z",
+   "url": "https://www.futbin.com/27/player/549/pau-cubarsi-paredes"
+  },
+  "251570": {
+   "name": "Rayan Cherki",
+   "ovr": 86,
+   "price": 48750,
+   "prev": null,
+   "at": "2026-10-02T16:06:00Z",
+   "url": "https://www.futbin.com/27/player/256/rayan-cherki"
+  },
+  "237238": {
+   "name": "Scott McTominay",
+   "ovr": 86,
+   "price": 4200,
+   "prev": null,
+   "at": "2026-10-02T16:06:00Z",
+   "url": "https://www.futbin.com/27/player/457/scott-mctominay"
+  },
+  "265674": {
+   "name": "Selma Bacha",
+   "ovr": 86,
+   "price": 18000,
+   "prev": null,
+   "at": "2026-10-02T16:06:00Z",
+   "url": "https://www.futbin.com/27/player/623/selma-bacha"
+  },
+  "241651": {
+   "name": "Viktor Gyökeres",
+   "ovr": 86,
+   "price": 10250,
+   "prev": null,
+   "at": "2026-10-02T16:06:00Z",
+   "url": "https://www.futbin.com/27/player/252/viktor-gyokeres"
+  },
+  "227310": {
+   "name": "Ada Hegerberg",
+   "ovr": 85,
+   "price": 2000,
+   "prev": null,
+   "at": "2026-10-02T16:06:00Z",
+   "url": "https://www.futbin.com/27/player/626/ada-hegerberg"
+  },
+  "210008": {
+   "name": "Adrien Rabiot",
+   "ovr": 85,
+   "price": 2100,
+   "prev": null,
+   "at": "2026-10-02T16:06:00Z",
+   "url": "https://www.futbin.com/27/player/465/adrien-rabiot"
+  },
+  "227254": {
+   "name": "Alex Greenwood",
+   "ovr": 85,
+   "price": 1900,
+   "prev": null,
+   "at": "2026-10-02T16:06:00Z",
+   "url": "https://www.futbin.com/27/player/151/alex-greenwood"
   }
  }
 }
