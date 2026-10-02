@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Fetch freely licensed player photos from Wikimedia Commons for Ezzcoins player pages.
 
-For every player rated MIN_OVR+ in data/players.json it looks for the player's Wikidata item,
+For every player rated MIN_OVR+ in data/players.json, and the base player of every new special card in
+data/newcards.json (when it is surely the same person), it looks for the player's Wikidata item,
 takes the item's main image (P18), checks the file's licence on Commons (public domain, CC0,
 CC BY or CC BY-SA only), downloads a 360 px thumbnail to photos/<EA id>.<ext> and records the
 credit in photos/credits.json. Wrong-person matches are avoided: the Commons file name must
@@ -145,11 +146,47 @@ def shrink(blob, path):
         return False
 
 
+def new_card_bases(rows, ci):
+    """EA ids of the base players of the cards in data/newcards.json: the linked id, or a name match that is surely
+    the same person (same club, or the only player with that name). Same rule as scripts/build_pages.py."""
+    path = os.path.join(ROOT, "data", "newcards.json")
+    try:
+        cards = json.load(open(path, encoding="utf-8")).get("cards") or []
+    except (OSError, ValueError, AttributeError):
+        return set()
+    ids = {int(r[ci["id"]]) for r in rows}
+    byname, byfull = {}, {}
+    for r in rows:
+        byname.setdefault(norm(r[ci["name"]]), []).append(r)
+        if r[ci["full"]]:
+            byfull.setdefault(norm(r[ci["full"]]), []).append(r)
+    out = set()
+    for c in cards:
+        if str(c.get("baseId") or "").isdigit() and int(c["baseId"]) in ids:
+            out.add(int(c["baseId"]))
+            continue
+        hits = byname.get(norm(c.get("name")), []) or byfull.get(norm(c.get("name")), [])
+        same = [r for r in hits if c.get("club") and r[ci["club"]] == c.get("club")]
+        if same:
+            out.add(int(same[0][ci["id"]]))
+        elif len(hits) == 1:
+            out.add(int(hits[0][ci["id"]]))
+    return out
+
+
 def main():
     data = json.load(open(os.path.join(ROOT, "data", "players.json"), encoding="utf-8"))
     ci = {c: i for i, c in enumerate(data["cols"])}
+    rows = [r for r in data["rows"] if r[ci["id"]] is not None]
     players = [{"id": int(r[ci["id"]]), "n": r[ci["name"]] or "", "f": r[ci["full"]] or ""}
-               for r in data["rows"] if (r[ci["ovr"]] or 0) >= MIN_OVR and r[ci["id"]] is not None]
+               for r in rows if (r[ci["ovr"]] or 0) >= MIN_OVR]
+    # Base players of new special cards (often rated below MIN_OVR), so those cards get a photo too.
+    have = {x["id"] for x in players}
+    for pid in new_card_bases(rows, ci):
+        r = next((r for r in rows if int(r[ci["id"]]) == pid), None)
+        if r and pid not in have:
+            players.append({"id": pid, "n": r[ci["name"]] or "", "f": r[ci["full"]] or ""})
+            have.add(pid)
     pdir = os.path.join(ROOT, "photos")
     os.makedirs(pdir, exist_ok=True)
     cpath = os.path.join(pdir, "credits.json")

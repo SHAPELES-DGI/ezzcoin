@@ -24,7 +24,7 @@ SLUG_MAP = {"ø": "o", "Ø": "o", "ß": "ss", "ł": "l", "Ł": "l", "æ": "ae", 
             "œ": "oe", "đ": "d", "Đ": "d", "ı": "i", "ð": "d", "þ": "th"}
 ST_OUT = ["PAC", "SHO", "PAS", "DRI", "DEF", "PHY"]
 ST_GK = ["DIV", "HAN", "KIC", "REF", "SPD", "POS"]
-CSS_V = "13"
+CSS_V = "14"
 SPECIAL = 1000000000  # special-card ids on the site: SPECIAL + FUT.GG card id (gid) or FUTBIN card id (fid)
 
 
@@ -125,6 +125,8 @@ CSS = (":root{--bg:#0A0D0C;--surface:#141917;--sunk:#1C2320;--ink:#EEF2EF;--mute
        "@font-face{font-family:'Ezz Sig';src:url(../fonts/allison-sig.woff) format('woff');font-display:swap}"
        ".fcard .fc-name.sig,.card-xl .fc-name.sig{font:400 2.9rem/1 'Ezz Sig','Segoe Script',cursive;text-transform:none;letter-spacing:0;padding:10px 8px 0;margin:auto -8px -9px;"
        "transform:rotate(-5deg);text-overflow:clip}.card-xl .fc-name.sig.long{font-size:2.5rem}.card-xl .fc-name.sig.xl{font-size:2.15rem}.card-xl .fc-name.sig.xxl{font-size:1.8rem}"
+       ".credits{list-style:none;padding:0;margin:18px 0 0;display:grid;gap:8px;font-size:.9rem}.credits li{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 12px;overflow-wrap:anywhere}"
+       ".credits summary{cursor:pointer;color:var(--muted);font-size:.82rem}.credits details p{margin:4px 0 0;color:var(--muted);font-size:.8rem}"
        "footer{max-width:980px;margin:0 auto;padding:16px 16px 32px;color:var(--muted);font-size:.85rem;border-top:1px solid var(--line)}footer a{color:var(--muted)}"
        "@media(max-width:640px){.hero{grid-template-columns:1fr;justify-items:center;text-align:center}.stats{grid-template-columns:repeat(3,minmax(0,1fr));margin-inline:auto}"
        ".facts{text-align:left}h1{font-size:2.1rem}.kv{justify-content:center}}")
@@ -216,7 +218,7 @@ def head(title, desc, canon, up, image=None):
 
 def foot(up):
     return (f'<footer>Ratings: EA SPORTS FC 27. Prices: FUTBIN (backups: FUT.GG, FUTWIZ, EasySBC). Ezzcoins is a fan-made site and is not affiliated with EA SPORTS, FUTBIN, FUT.GG, FUTWIZ or EasySBC. '
-            f'<a href="{up}privacy.html">Privacy and cookies</a></footer></body></html>')
+            f'<a href="{up}p/credits/">Photo credits</a> · <a href="{up}privacy.html">Privacy and cookies</a></footer></body></html>')
 
 
 def flag(codes, nation, up, big=False):
@@ -326,7 +328,7 @@ def special_page(x, codes, specials, credits):
               "if(!c)return;const m=Math.round((Date.now()-Date.parse(c.at))/6e4),h=Math.floor(m/60),ago=m<1?'just now':m<60?m+' min ago':h<48?h+' h ago':Math.floor(h/24)+' days ago';"
               "el.innerHTML='<b><i class=\"coin\"></i>'+Number(c.price).toLocaleString('en-US')+'</b><span>Console price from '+(c.src||'FUTBIN')+' \\u00b7 '+ago+'</span>'})})()</script>"
               ) % (json.dumps(str(x["id"])), json.dumps(str(x["key"])))
-    bid = b["id"] if b else None
+    bid = x.get("pid")
     pc = credits.get(str(bid)) if bid else None
     pimg, pcredit = photo(credits, bid, x["n"], up)
     return (head(title, desc, BASE + "p/" + x["path"], up, BASE + "photos/" + pc["img"] if pc else None) +
@@ -338,6 +340,26 @@ def special_page(x, codes, specials, credits):
             + (f'<div class="stats">{stats}</div>' if has else '<p class="nostats">This card\'s own stats appear here after one of the next hourly updates.</p>')
             + f'<dl class="facts">{dl}</dl>' + (f'<p class="mtnote">{e(MT_NOTE)}</p>' if mt else "") + f'<a class="btn" href="{up}#q={e(x["n"])}">Watch on Ezzcoins</a></div></div>'
             f'<section class="more">{more}</section></main>{script}' + foot(up))
+
+
+def credits_page(credits, allp):
+    up = "../../"
+    rows = []
+    for pid, c in sorted(credits.items(), key=lambda kv: (allp.get(int(kv[0]), {}).get("n") or "")):
+        x = allp.get(int(pid))
+        if not x:
+            continue
+        name = f'<a href="{up}p/{x["path"]}">{e(x["n"])}</a>' if x.get("path") else e(x["n"])
+        rows.append(f'<li><b>{name}</b> \u00b7 {e(c["author"])} \u00b7 {e(c["licence"])} \u00b7 Wikimedia Commons'
+                    f'<details><summary>Source</summary><p>{e(c["page"])}</p><p>Licence: {e(c["licenceUrl"])}</p></details></li>')
+    title = "Photo credits | Ezzcoins"
+    desc = "Authors and licences of the player photos used on Ezzcoins."
+    return (head(title, desc, BASE + "p/credits/", up) +
+            f'<main><div class="crumb"><a href="{up}">Ezzcoins</a> \u203a Photo credits</div><h1>Photo credits</h1>'
+            f'<p class="sub">Player photos come from Wikimedia Commons under free licences (public domain, CC0, CC BY or CC BY-SA). '
+            f'They are cropped and faded into the card design; under CC BY-SA the cropped versions are shared under the same licence. '
+            f'Ezzcoins is not affiliated with the photographers or the players.</p>'
+            f'<ul class="credits">{"".join(rows)}</ul></main>' + foot(up))
 
 
 def list_page(groups, codes, total, specials):
@@ -416,6 +438,7 @@ def main():
         sure = b is not None and (str(c.get("baseId") or "").isdigit() or (c.get("club") and b["c"] == c.get("club"))
                                   or len(byname.get(slug(c["name"]), []) or byfull.get(slug(c["name"]), [])) == 1)
         sx["cn"] = (b["q"] or b["n"]) if sure else card_name(sx["n"])
+        sx["pid"] = b["id"] if sure and str(b["id"]) in credits else None  # photo of the same player
         sx["path"] = f'{slug(sx["n"])}-{slug(sx["ver"]) if sx["ver"] else "special"}-{sx["id"]}/'
         specials.append(sx)
         if b:
@@ -449,8 +472,15 @@ def main():
     with open(os.path.join(out, "index.html"), "w", encoding="utf-8") as fh:
         fh.write(list_page(groups, codes, len(players), specials))
     with open(os.path.join(out, "cardnames.json"), "w", encoding="utf-8") as fh:
-        json.dump({str(x["id"]): {"n": x["cn"], "nat": x["nat"]} for x in specials}, fh, ensure_ascii=False, separators=(",", ":"))
-    urls = [BASE, BASE + "privacy.html", BASE + "p/"] + [BASE + "p/" + x["path"] for x in specials + players]
+        json.dump({str(x["id"]): dict({"n": x["cn"], "nat": x["nat"]}, **({"ph": x["pid"]} if x["pid"] else {})) for x in specials},
+                  fh, ensure_ascii=False, separators=(",", ":"))
+    # Short photo credits for the cards on the home page, and a page listing every photo's author, licence and source.
+    with open(os.path.join(out, "photos.json"), "w", encoding="utf-8") as fh:
+        json.dump({k: f'{v["author"]} \u00b7 {v["licence"]}' for k, v in credits.items()}, fh, ensure_ascii=False, separators=(",", ":"))
+    os.makedirs(os.path.join(out, "credits"), exist_ok=True)
+    with open(os.path.join(out, "credits", "index.html"), "w", encoding="utf-8") as fh:
+        fh.write(credits_page(credits, allp))
+    urls = [BASE, BASE + "privacy.html", BASE + "p/", BASE + "p/credits/"] + [BASE + "p/" + x["path"] for x in specials + players]
     with open(os.path.join(ROOT, "sitemap.xml"), "w", encoding="utf-8") as fh:
         fh.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
                  + "".join(f"<url><loc>{e(u)}</loc></url>\n" for u in urls) + "</urlset>\n")

@@ -15,7 +15,7 @@ self.addEventListener("fetch", (e) => {
     e.respondWith(fetch(r).then((res) => keep(r, res)).catch(async () => (await caches.match(r)) || (await caches.match(new URL("./", location).href)) || Response.error()));
     return;
   }
-  if (/\/(flags\/|fonts\/|icon-|favicon|apple-touch-icon|mark\.svg)/.test(u.pathname)) {
+  if (/\/(flags\/|fonts\/|photos\/|icon-|favicon|apple-touch-icon|mark\.svg)/.test(u.pathname)) {
     e.respondWith(caches.match(r).then((m) => m || fetch(r).then((res) => keep(r, res))));
   }
 });
