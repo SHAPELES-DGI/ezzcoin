@@ -20,7 +20,7 @@ SLUG_MAP = {"ø": "o", "Ø": "o", "ß": "ss", "ł": "l", "Ł": "l", "æ": "ae", 
             "œ": "oe", "đ": "d", "Đ": "d", "ı": "i", "ð": "d", "þ": "th"}
 ST_OUT = ["PAC", "SHO", "PAS", "DRI", "DEF", "PHY"]
 ST_GK = ["DIV", "HAN", "KIC", "REF", "SPD", "POS"]
-CSS_V = "6"
+CSS_V = "9"
 SPECIAL = 1000000000  # special-card ids on the site: SPECIAL + FUT.GG card id (gid) or FUTBIN card id (fid)
 
 
@@ -62,13 +62,15 @@ CSS = (":root{--bg:#0A0D0C;--surface:#141917;--sunk:#1C2320;--ink:#EEF2EF;--mute
        ".v-sbc{--fc-bg:linear-gradient(160deg,#26C49A,#0B4D3E 70%);--fc-ink:#fff}.v-promo{--fc-bg:linear-gradient(160deg,#D24C8F,#3A1C6E 70%);--fc-ink:#fff}"
        ".tag{display:inline-block;background:linear-gradient(90deg,#FFDA7A,#E3A93A);color:#15201A;font:700 .8rem var(--fd);letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border-radius:5px;margin-bottom:8px}"
        ".nostats{margin-top:18px;color:var(--muted);font-size:.92rem;max-width:520px}"
-       ".side{display:grid;gap:16px;justify-items:center;width:184px}.photo{margin:0;width:184px}"
-       ".photo img{display:block;width:100%;height:auto;border-radius:14px;border:1px solid var(--line);background:var(--sunk)}"
-       ".photo figcaption{margin-top:6px;font-size:.72rem;line-height:1.4;color:var(--muted);overflow-wrap:anywhere}"
-       ".photo summary{cursor:pointer;margin-top:2px}.photo details p{margin:4px 0 0}"
-       "@media(max-width:640px){.side{display:flex;width:auto;max-width:100%;align-items:flex-start;gap:12px}.side .fcard{width:150px;height:210px;flex:none}"
-       ".side .fc-ovr{font-size:2.5rem}.side .fc-name{font-size:1.2rem}.side .fc-sil{width:112px;height:124px;bottom:44px}"
-       ".photo{width:150px;flex:none;text-align:left}.photo figcaption{font-size:.68rem}}"
+       ".side{display:grid;gap:10px;justify-items:center;width:184px}"
+       ".fcard{text-align:left}.fc-photo{position:absolute;z-index:-1;top:0;right:0;width:76%;height:80%;object-fit:cover;object-position:50% 14%;"
+       "-webkit-mask-image:linear-gradient(to bottom,#000 58%,transparent 97%),linear-gradient(to right,transparent 0,#000 34%);-webkit-mask-composite:source-in;"
+       "mask-image:linear-gradient(to bottom,#000 58%,transparent 97%),linear-gradient(to right,transparent 0,#000 34%);mask-composite:intersect}"
+       ".fc-name.long{font-size:1.15rem}.fc-name.xl{font-size:.98rem}"
+       ".fcard.has-photo .fc-name,.fcard.has-photo .fc-club{text-shadow:0 1px 6px var(--fc-glow,rgb(255 255 255/.45))}"
+       ".v-totw,.v-potm,.v-hero,.v-sbc,.v-promo{--fc-glow:rgb(0 0 0/.6)}"
+       ".credit{width:184px;font-size:.72rem;line-height:1.4;color:var(--muted);overflow-wrap:anywhere;text-align:left}"
+       ".credit summary{cursor:pointer;margin-top:2px}.credit details p{margin:4px 0 0}"
        ".fc-ovr{font:italic 800 3rem/1 var(--fd)}.fc-pos{font:700 1.05rem/1 var(--fd);letter-spacing:.06em;margin-top:2px}"
        ".fc-flag{margin-top:8px;line-height:0}.fc-flag img{width:30px;height:22px;border-radius:3px;box-shadow:0 0 0 1px rgb(0 0 0/.2)}"
        ".fc-sil{position:absolute;right:-14px;bottom:52px;z-index:-1;width:140px;height:154px;fill:currentColor;opacity:.3;"
@@ -126,12 +128,14 @@ def day(iso):
 
 
 def photo(credits, pid, name, up):
-    c = credits.get(str(pid))
+    """(image for inside the card, credit line for under it) or ("", "") when there is no photo."""
+    c = credits.get(str(pid)) if pid is not None else None
     if not c:
-        return ""
-    return (f'<figure class="photo"><img src="{up}photos/{e(c["img"])}" alt="Photo of {e(name)}" loading="lazy" width="184">'
-            f'<figcaption>Photo: {e(c["author"])} \u00b7 {e(c["licence"])} \u00b7 Wikimedia Commons'
-            f'<details><summary>Photo source</summary><p>{e(c["page"])}</p><p>Licence: {e(c["licenceUrl"])}</p></details></figcaption></figure>')
+        return "", ""
+    img = f'<img class="fc-photo" src="{up}photos/{e(c["img"])}" alt="Photo of {e(name)}" width="155" height="205">'
+    credit = (f'<div class="credit">Photo (cropped): {e(c["author"])} \u00b7 {e(c["licence"])} \u00b7 Wikimedia Commons'
+              f'<details><summary>Photo source</summary><p>{e(c["page"])}</p><p>Licence: {e(c["licenceUrl"])}</p></details></div>')
+    return img, credit
 
 
 def head(title, desc, canon, up, image=None):
@@ -206,10 +210,11 @@ def player_page(x, codes, by_club, by_nat, specials_of, credits):
               "el.innerHTML='<b><i class=\"coin\"></i>'+Number(c.price).toLocaleString('en-US')+'</b><span>Console price from FUTBIN \\u00b7 '+ago+'</span>'})})()</script>"
               ) % json.dumps(str(x["id"]))
     pc = credits.get(str(x["id"]))
+    pimg, pcredit = photo(credits, x["id"], x["n"], up)
     return (head(title, desc, canon, up, BASE + "photos/" + pc["img"] if pc else None) +
             f'<main><div class="crumb"><a href="{up}">Ezzcoins</a> › <a href="{up}p/">Player pages</a> › {e(x["n"])}</div>'
-            f'<div class="hero"><div class="side"><div class="fcard v-{tier}" aria-hidden="true"><div class="fc-ovr">{x["o"]}</div><div class="fc-pos">{e(x["p"])}</div>'
-            f'<div class="fc-flag">{flag(codes, x["nat"], up, True)}</div>{SIL}<div class="fc-name">{e(x["q"] or x["n"])}</div><div class="fc-club">{e(x["c"])}</div></div>{photo(credits, x["id"], x["n"], up)}</div>'
+            f'<div class="hero"><div class="side"><div class="fcard v-{tier}{" has-photo" if pimg else ""}"><div class="fc-ovr">{x["o"]}</div><div class="fc-pos">{e(x["p"])}</div>'
+            f'<div class="fc-flag">{flag(codes, x["nat"], up, True)}</div>{pimg or SIL}<div class="fc-name{" xl" if len(x["q"] or x["n"]) > 13 else " long" if len(x["q"] or x["n"]) > 11 else ""}">{e(x["q"] or x["n"])}</div><div class="fc-club">{e(x["c"])}</div></div>{pcredit}</div>'
             f'<div><h1>{e(x["n"])}</h1><div class="sub">{x["o"]} {e(x["p"])}' + (f" · {e(where)}" if where else "")
             + (f' · {flag(codes, x["nat"], up)}{e(x["nat"])}' if x["nat"] else "") + '</div>'
             f'<div class="px" id="px"><span class="none">No console price yet. {e(hint)}</span></div>'
@@ -251,10 +256,11 @@ def special_page(x, codes, specials, credits):
               ) % (json.dumps(str(x["id"])), json.dumps(str(x["key"])))
     bid = b["id"] if b else None
     pc = credits.get(str(bid)) if bid else None
+    pimg, pcredit = photo(credits, bid, x["n"], up)
     return (head(title, desc, BASE + "p/" + x["path"], up, BASE + "photos/" + pc["img"] if pc else None) +
             f'<main><div class="crumb"><a href="{up}">Ezzcoins</a> › <a href="{up}p/">Player pages</a> › {e(x["n"])} ({e(ver)})</div>'
-            f'<div class="hero"><div class="side"><div class="fcard v-{card_variant(x["ver"], x["o"])}" aria-hidden="true"><div class="fc-ovr">{x["o"]}</div><div class="fc-pos">{e(x["p"])}</div>'
-            f'<div class="fc-flag">{flag(codes, x["nat"], up, True)}</div>{SIL}<div class="fc-name">{e(x["n"].split(" ")[-1])}</div><div class="fc-club">{e(ver)}</div></div>{photo(credits, bid, x["n"], up) if bid else ""}</div>'
+            f'<div class="hero"><div class="side"><div class="fcard v-{card_variant(x["ver"], x["o"])}{" has-photo" if pimg else ""}"><div class="fc-ovr">{x["o"]}</div><div class="fc-pos">{e(x["p"])}</div>'
+            f'<div class="fc-flag">{flag(codes, x["nat"], up, True)}</div>{pimg or SIL}<div class="fc-name">{e(x["n"].split(" ")[-1])}</div><div class="fc-club">{e(ver)}</div></div>{pcredit}</div>'
             f'<div><div class="tag">{e(ver)}</div><h1>{e(x["n"])}</h1><div class="sub">{x["o"]} {e(x["p"])}' + (f" · {e(where)}" if where else "")
             + (f' · {flag(codes, x["nat"], up)}{e(x["nat"])}' if x["nat"] else "") + '</div>'
             f'<div class="px" id="px"><span class="none">No console price yet. New cards are priced every hour while FUTBIN can be reached.</span></div>'
