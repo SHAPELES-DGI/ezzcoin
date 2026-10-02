@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-10-02T15:59:59Z",
+ "updatedAt": "2026-10-02T19:03:52Z",
  "source": "FUTBIN",
  "cards": [
   {
@@ -24,8 +24,9 @@
    ],
    "added": "2026-10-01",
    "price": null,
-   "priceAt": null,
-   "url": "https://www.futbin.com/27/player/23101/michael-olise"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23101/michael-olise",
+   "src": "FUTBIN"
   },
   {
    "fid": 23100,
@@ -49,8 +50,9 @@
    ],
    "added": "2026-10-01",
    "price": null,
-   "priceAt": null,
-   "url": "https://www.futbin.com/27/player/23100/donyell-malen"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23100/donyell-malen",
+   "src": "FUTBIN"
   },
   {
    "fid": 23099,
@@ -74,8 +76,9 @@
    ],
    "added": "2026-09-30",
    "price": 9900,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23099/milan-iloski"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23099/milan-iloski",
+   "src": "FUTBIN"
   },
   {
    "fid": 23098,
@@ -99,8 +102,9 @@
    ],
    "added": "2026-09-30",
    "price": 10500,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23098/phillipp-mwene"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23098/phillipp-mwene",
+   "src": "FUTBIN"
   },
   {
    "fid": 23097,
@@ -124,8 +128,9 @@
    ],
    "added": "2026-09-30",
    "price": 10250,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23097/shea-charles"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23097/shea-charles",
+   "src": "FUTBIN"
   },
   {
    "fid": 23096,
@@ -149,8 +154,9 @@
    ],
    "added": "2026-09-30",
    "price": 13000,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23096/zeki-amdouni"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23096/zeki-amdouni",
+   "src": "FUTBIN"
   },
   {
    "fid": 23095,
@@ -174,8 +180,9 @@
    ],
    "added": "2026-09-30",
    "price": 13250,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23095/phillipp-mwene"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23095/phillipp-mwene",
+   "src": "FUTBIN"
   },
   {
    "fid": 23094,
@@ -199,8 +206,9 @@
    ],
    "added": "2026-09-30",
    "price": 13250,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23094/sebastian-berhalter"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23094/sebastian-berhalter",
+   "src": "FUTBIN"
   },
   {
    "fid": 23093,
@@ -224,8 +232,9 @@
    ],
    "added": "2026-09-30",
    "price": 10250,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23093/ayase-ueda"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23093/ayase-ueda",
+   "src": "FUTBIN"
   },
   {
    "fid": 23092,
@@ -249,8 +258,9 @@
    ],
    "added": "2026-09-30",
    "price": 13250,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23092/mexx-meerdink"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23092/mexx-meerdink",
+   "src": "FUTBIN"
   },
   {
    "fid": 23091,
@@ -274,8 +284,9 @@
    ],
    "added": "2026-09-30",
    "price": 15750,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23091/shea-charles"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23091/shea-charles",
+   "src": "FUTBIN"
   },
   {
    "fid": 23090,
@@ -299,8 +310,9 @@
    ],
    "added": "2026-09-30",
    "price": 10000,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23090/sara-ortega-ruiz"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23090/sara-ortega-ruiz",
+   "src": "FUTBIN"
   },
   {
    "fid": 23089,
@@ -324,8 +336,9 @@
    ],
    "added": "2026-09-30",
    "price": 12500,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23089/milan-iloski"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23089/milan-iloski",
+   "src": "FUTBIN"
   },
   {
    "fid": 23088,
@@ -349,8 +362,9 @@
    ],
    "added": "2026-09-30",
    "price": 79500,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23088/danny-namaso"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23088/danny-namaso",
+   "src": "FUTBIN"
   },
   {
    "fid": 23087,
@@ -374,8 +388,9 @@
    ],
    "added": "2026-09-30",
    "price": 12500,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23087/ayase-ueda"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23087/ayase-ueda",
+   "src": "FUTBIN"
   },
   {
    "fid": 23086,
@@ -399,8 +414,9 @@
    ],
    "added": "2026-09-30",
    "price": 10000,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23086/sebastian-berhalter"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23086/sebastian-berhalter",
+   "src": "FUTBIN"
   },
   {
    "fid": 23085,
@@ -424,8 +440,9 @@
    ],
    "added": "2026-09-30",
    "price": 10250,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23085/chancel-mbemba"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23085/chancel-mbemba",
+   "src": "FUTBIN"
   },
   {
    "fid": 23084,
@@ -449,8 +466,9 @@
    ],
    "added": "2026-09-30",
    "price": 13250,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23084/chancel-mbemba"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23084/chancel-mbemba",
+   "src": "FUTBIN"
   },
   {
    "fid": 23083,
@@ -474,8 +492,9 @@
    ],
    "added": "2026-09-30",
    "price": 10250,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23083/danny-namaso"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23083/danny-namaso",
+   "src": "FUTBIN"
   },
   {
    "fid": 23082,
@@ -499,8 +518,9 @@
    ],
    "added": "2026-09-30",
    "price": 12000,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23082/sara-ortega-ruiz"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23082/sara-ortega-ruiz",
+   "src": "FUTBIN"
   },
   {
    "fid": 23081,
@@ -524,8 +544,9 @@
    ],
    "added": "2026-09-30",
    "price": 10000,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23081/mexx-meerdink"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23081/mexx-meerdink",
+   "src": "FUTBIN"
   },
   {
    "fid": 23080,
@@ -549,8 +570,9 @@
    ],
    "added": "2026-09-30",
    "price": 10000,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23080/zeki-amdouni"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23080/zeki-amdouni",
+   "src": "FUTBIN"
   },
   {
    "fid": 23079,
@@ -574,8 +596,9 @@
    ],
    "added": "2026-09-30",
    "price": 10250,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23079/henry-martin"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23079/henry-martin",
+   "src": "FUTBIN"
   },
   {
    "fid": 23078,
@@ -599,8 +622,9 @@
    ],
    "added": "2026-09-30",
    "price": 12750,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23078/henry-martin"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23078/henry-martin",
+   "src": "FUTBIN"
   },
   {
    "fid": 23077,
@@ -624,8 +648,9 @@
    ],
    "added": "2026-09-30",
    "price": 10500,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23077/konstantinos-tzolakis"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23077/konstantinos-tzolakis",
+   "src": "FUTBIN"
   },
   {
    "fid": 23076,
@@ -649,8 +674,9 @@
    ],
    "added": "2026-09-30",
    "price": 23500,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23076/konstantinos-tzolakis"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23076/konstantinos-tzolakis",
+   "src": "FUTBIN"
   },
   {
    "fid": 23075,
@@ -674,8 +700,9 @@
    ],
    "added": "2026-09-30",
    "price": 12750,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23075/jaedyn-shaw"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23075/jaedyn-shaw",
+   "src": "FUTBIN"
   },
   {
    "fid": 23074,
@@ -699,8 +726,9 @@
    ],
    "added": "2026-09-30",
    "price": 10500,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23074/jaedyn-shaw"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23074/jaedyn-shaw",
+   "src": "FUTBIN"
   },
   {
    "fid": 23073,
@@ -724,8 +752,9 @@
    ],
    "added": "2026-09-30",
    "price": 16250,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23073/felicia-schroder"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23073/felicia-schroder",
+   "src": "FUTBIN"
   },
   {
    "fid": 23072,
@@ -749,8 +778,9 @@
    ],
    "added": "2026-09-30",
    "price": 11000,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23072/felicia-schroder"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23072/felicia-schroder",
+   "src": "FUTBIN"
   },
   {
    "fid": 23071,
@@ -774,8 +804,9 @@
    ],
    "added": "2026-09-30",
    "price": 38000,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23071/heung-min-son"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23071/heung-min-son",
+   "src": "FUTBIN"
   },
   {
    "fid": 23070,
@@ -799,8 +830,9 @@
    ],
    "added": "2026-09-30",
    "price": 129000,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23070/michael-kayode"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23070/michael-kayode",
+   "src": "FUTBIN"
   },
   {
    "fid": 23069,
@@ -824,8 +856,9 @@
    ],
    "added": "2026-09-30",
    "price": 27000,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23069/michael-kayode"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23069/michael-kayode",
+   "src": "FUTBIN"
   },
   {
    "fid": 23068,
@@ -849,8 +882,9 @@
    ],
    "added": "2026-09-30",
    "price": 69000,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23068/heung-min-son"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23068/heung-min-son",
+   "src": "FUTBIN"
   },
   {
    "fid": 23067,
@@ -874,8 +908,9 @@
    ],
    "added": "2026-09-30",
    "price": 195000,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23067/joao-felix-sequeira"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23067/joao-felix-sequeira",
+   "src": "FUTBIN"
   },
   {
    "fid": 23066,
@@ -899,8 +934,9 @@
    ],
    "added": "2026-09-30",
    "price": 27000,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23066/alejandro-baena-rodriguez"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23066/alejandro-baena-rodriguez",
+   "src": "FUTBIN"
   },
   {
    "fid": 23065,
@@ -924,8 +960,9 @@
    ],
    "added": "2026-09-30",
    "price": 14250,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23065/alejandro-baena-rodriguez"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23065/alejandro-baena-rodriguez",
+   "src": "FUTBIN"
   },
   {
    "fid": 23064,
@@ -949,8 +986,9 @@
    ],
    "added": "2026-09-30",
    "price": 267000,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23064/joao-felix-sequeira"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23064/joao-felix-sequeira",
+   "src": "FUTBIN"
   },
   {
    "fid": 23063,
@@ -974,8 +1012,9 @@
    ],
    "added": "2026-09-30",
    "price": 87000,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23063/luka-modric"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23063/luka-modric",
+   "src": "FUTBIN"
   },
   {
    "fid": 23062,
@@ -999,8 +1038,9 @@
    ],
    "added": "2026-09-30",
    "price": 66500,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23062/ellie-carpenter"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23062/ellie-carpenter",
+   "src": "FUTBIN"
   },
   {
    "fid": 23061,
@@ -1024,8 +1064,9 @@
    ],
    "added": "2026-09-30",
    "price": 59500,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23061/luka-modric"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23061/luka-modric",
+   "src": "FUTBIN"
   },
   {
    "fid": 23060,
@@ -1049,8 +1090,9 @@
    ],
    "added": "2026-09-30",
    "price": 17750,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23060/ellie-carpenter"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23060/ellie-carpenter",
+   "src": "FUTBIN"
   },
   {
    "fid": 23059,
@@ -1074,8 +1116,9 @@
    ],
    "added": "2026-09-30",
    "price": 174000,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23059/martin-odegaard"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23059/martin-odegaard",
+   "src": "FUTBIN"
   },
   {
    "fid": 23058,
@@ -1099,8 +1142,9 @@
    ],
    "added": "2026-09-30",
    "price": 118000,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23058/viktor-gyokeres"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23058/viktor-gyokeres",
+   "src": "FUTBIN"
   },
   {
    "fid": 23057,
@@ -1124,8 +1168,9 @@
    ],
    "added": "2026-09-30",
    "price": 116000,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23057/martin-odegaard"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23057/martin-odegaard",
+   "src": "FUTBIN"
   },
   {
    "fid": 23056,
@@ -1149,8 +1194,9 @@
    ],
    "added": "2026-09-30",
    "price": 60000,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23056/viktor-gyokeres"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23056/viktor-gyokeres",
+   "src": "FUTBIN"
   },
   {
    "fid": 23055,
@@ -1174,8 +1220,9 @@
    ],
    "added": "2026-09-30",
    "price": 671000,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23055/temwa-chawinga"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23055/temwa-chawinga",
+   "src": "FUTBIN"
   },
   {
    "fid": 23054,
@@ -1199,8 +1246,9 @@
    ],
    "added": "2026-09-30",
    "price": 212000,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23054/temwa-chawinga"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23054/temwa-chawinga",
+   "src": "FUTBIN"
   },
   {
    "fid": 23053,
@@ -1210,8 +1258,24 @@
    "club": "Latium",
    "added": "2026-09-29",
    "price": null,
-   "priceAt": null,
-   "url": "https://www.futbin.com/27/player/23053/davide-frattesi"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23053/davide-frattesi",
+   "src": "FUTBIN",
+   "version": "Destined for Glory",
+   "nation": "Italy",
+   "league": "Serie A TIM",
+   "sm": 3,
+   "wf": 4,
+   "alt": "CAM",
+   "ps": "Pinged Pass+, Inventive+, Technical+",
+   "stats": [
+    84,
+    81,
+    81,
+    84,
+    77,
+    78
+   ]
   },
   {
    "fid": 23052,
@@ -1221,8 +1285,24 @@
    "club": "WS Wanderers",
    "added": "2026-09-29",
    "price": 350,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23052/ricky-fransen"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23052/ricky-fransen",
+   "src": "FUTBIN",
+   "version": "Bronze Non Rare",
+   "nation": "New Zealand",
+   "league": "Isuzu UTE A League",
+   "sm": 2,
+   "wf": 2,
+   "alt": "",
+   "ps": "",
+   "stats": [
+    58,
+    28,
+    38,
+    41,
+    53,
+    69
+   ]
   },
   {
    "fid": 23051,
@@ -1232,8 +1312,24 @@
    "club": "TSG Hoffenheim II",
    "added": "2026-09-29",
    "price": 350,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23051/nico-biedermann"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23051/nico-biedermann",
+   "src": "FUTBIN",
+   "version": "Bronze Non Rare",
+   "nation": "Germany",
+   "league": "3. Liga",
+   "sm": 1,
+   "wf": 2,
+   "alt": "",
+   "ps": "",
+   "stats": [
+    61,
+    60,
+    59,
+    53,
+    24,
+    53
+   ]
   },
   {
    "fid": 23050,
@@ -1243,8 +1339,24 @@
    "club": "Stockport",
    "added": "2026-09-29",
    "price": 350,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23050/che-gardner"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23050/che-gardner",
+   "src": "FUTBIN",
+   "version": "Bronze Non Rare",
+   "nation": "Jamaica",
+   "league": "EFL League One",
+   "sm": 2,
+   "wf": 3,
+   "alt": "RB,CM,CAM,RW",
+   "ps": "",
+   "stats": [
+    75,
+    55,
+    48,
+    59,
+    42,
+    39
+   ]
   },
   {
    "fid": 23049,
@@ -1254,8 +1366,24 @@
    "club": "FC Alverca",
    "added": "2026-09-29",
    "price": 350,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23049/samy-merheg"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23049/samy-merheg",
+   "src": "FUTBIN",
+   "version": "Bronze Non Rare",
+   "nation": "Lebanon",
+   "league": "Liga Portugal",
+   "sm": 2,
+   "wf": 3,
+   "alt": "",
+   "ps": "",
+   "stats": [
+    60,
+    59,
+    50,
+    61,
+    20,
+    57
+   ]
   },
   {
    "fid": 23048,
@@ -1265,8 +1393,24 @@
    "club": "Burton Albion",
    "added": "2026-09-29",
    "price": 350,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23048/sulyman-krubally"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23048/sulyman-krubally",
+   "src": "FUTBIN",
+   "version": "Bronze Non Rare",
+   "nation": "Spain",
+   "league": "EFL League One",
+   "sm": 2,
+   "wf": 2,
+   "alt": "CDM",
+   "ps": "",
+   "stats": [
+    67,
+    53,
+    59,
+    62,
+    56,
+    56
+   ]
   },
   {
    "fid": 23047,
@@ -1276,8 +1420,9 @@
    "club": "Carrarese Calcio",
    "added": "2026-09-29",
    "price": 350,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23047/david-vujevic"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23047/david-vujevic",
+   "src": "FUTBIN"
   },
   {
    "fid": 23046,
@@ -1287,8 +1432,9 @@
    "club": "WSG Tirol",
    "added": "2026-09-29",
    "price": 350,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23046/salko-hamzic"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23046/salko-hamzic",
+   "src": "FUTBIN"
   },
   {
    "fid": 23045,
@@ -1298,8 +1444,9 @@
    "club": "SV Zulte Waregem",
    "added": "2026-09-29",
    "price": 350,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23045/hemsley-akpa-chukwu"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23045/hemsley-akpa-chukwu",
+   "src": "FUTBIN"
   },
   {
    "fid": 23044,
@@ -1309,8 +1456,9 @@
    "club": "Crawley Town",
    "added": "2026-09-29",
    "price": 350,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23044/ade-adeyemo"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23044/ade-adeyemo",
+   "src": "FUTBIN"
   },
   {
    "fid": 23043,
@@ -1320,8 +1468,9 @@
    "club": "Peterborough",
    "added": "2026-09-29",
    "price": 350,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23043/josh-feeney"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23043/josh-feeney",
+   "src": "FUTBIN"
   },
   {
    "fid": 23042,
@@ -1331,8 +1480,9 @@
    "club": "FC Vaduz",
    "added": "2026-09-29",
    "price": 450,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23042/denis-simani"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23042/denis-simani",
+   "src": "FUTBIN"
   },
   {
    "fid": 23041,
@@ -1342,8 +1492,9 @@
    "club": "Millonarios",
    "added": "2026-09-29",
    "price": 450,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23041/sebastian-viveros"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23041/sebastian-viveros",
+   "src": "FUTBIN"
   },
   {
    "fid": 23040,
@@ -1353,8 +1504,9 @@
    "club": "Cagliari",
    "added": "2026-09-29",
    "price": 550,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23040/alessandro-romano"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23040/alessandro-romano",
+   "src": "FUTBIN"
   },
   {
    "fid": 23039,
@@ -1364,8 +1516,9 @@
    "club": "Le Mans FC",
    "added": "2026-09-29",
    "price": 350,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23039/adil-bourabaa"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23039/adil-bourabaa",
+   "src": "FUTBIN"
   },
   {
    "fid": 23038,
@@ -1375,8 +1528,9 @@
    "club": "FC Vaduz",
    "added": "2026-09-29",
    "price": 450,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23038/dejan-sorgic"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23038/dejan-sorgic",
+   "src": "FUTBIN"
   },
   {
    "fid": 23037,
@@ -1386,8 +1540,9 @@
    "club": "Lecce",
    "added": "2026-09-29",
    "price": 450,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23037/konan-ndri"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23037/konan-ndri",
+   "src": "FUTBIN"
   },
   {
    "fid": 23036,
@@ -1397,8 +1552,9 @@
    "club": "Karlsruher SC",
    "added": "2026-09-29",
    "price": 550,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23036/louey-ben-farhat"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23036/louey-ben-farhat",
+   "src": "FUTBIN"
   },
   {
    "fid": 23035,
@@ -1408,8 +1564,9 @@
    "club": "Lecce",
    "added": "2026-09-29",
    "price": 450,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23035/mohamed-kaba"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23035/mohamed-kaba",
+   "src": "FUTBIN"
   },
   {
    "fid": 23034,
@@ -1419,8 +1576,9 @@
    "club": "Slavia Praha",
    "added": "2026-09-29",
    "price": 350,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23034/danijel-sturm"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23034/danijel-sturm",
+   "src": "FUTBIN"
   },
   {
    "fid": 23033,
@@ -1430,8 +1588,9 @@
    "club": "Servette FC",
    "added": "2026-09-29",
    "price": 500,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23033/lilian-njoh"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23033/lilian-njoh",
+   "src": "FUTBIN"
   },
   {
    "fid": 23032,
@@ -1441,8 +1600,9 @@
    "club": "FC Augsburg",
    "added": "2026-09-29",
    "price": 700,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23032/noahkai-banks"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23032/noahkai-banks",
+   "src": "FUTBIN"
   },
   {
    "fid": 23031,
@@ -1452,8 +1612,9 @@
    "club": "FC Schalke 04",
    "added": "2026-09-29",
    "price": 600,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23031/soufiane-el-faouzi"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23031/soufiane-el-faouzi",
+   "src": "FUTBIN"
   },
   {
    "fid": 23030,
@@ -1463,8 +1624,9 @@
    "club": "Valencia CF",
    "added": "2026-09-29",
    "price": 350,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23030/danielle-marcano"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23030/danielle-marcano",
+   "src": "FUTBIN"
   },
   {
    "fid": 23029,
@@ -1474,8 +1636,9 @@
    "club": "Athletic Club",
    "added": "2026-09-29",
    "price": 450,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23029/alvaro-djalo-dias-fernandes"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23029/alvaro-djalo-dias-fernandes",
+   "src": "FUTBIN"
   },
   {
    "fid": 23028,
@@ -1485,8 +1648,9 @@
    "club": "Olympiacos FC",
    "added": "2026-09-29",
    "price": 450,
-   "priceAt": "2026-10-02T15:58:30Z",
-   "url": "https://www.futbin.com/27/player/23028/nair-tiknizyan"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23028/nair-tiknizyan",
+   "src": "FUTBIN"
   },
   {
    "fid": 23027,
@@ -1496,8 +1660,9 @@
    "club": "Villarreal CF",
    "added": "2026-09-27",
    "price": null,
-   "priceAt": null,
-   "url": "https://www.futbin.com/27/player/23027/renato-palma-veiga"
+   "priceAt": "2026-10-02T18:58:45Z",
+   "url": "https://www.futbin.com/27/player/23027/renato-palma-veiga",
+   "src": "FUTBIN"
   }
  ]
 }
