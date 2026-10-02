@@ -297,7 +297,7 @@ def special_page(x, codes, specials, credits):
     ver = x["ver"] or "Special card"
     stats_txt = ", ".join(f"{lab[i]} {v}" for i, v in enumerate(x["s"]) if v is not None)
     title = f'{x["n"]} {ver} FC 27 – {x["o"]} {x["p"]} stats & price | Ezzcoins'
-    mt = meta(x["p"], x["a"], x["s"], x["sm"], x["wf"]) if has else {}
+    mt = meta(x["p"], x["a"], x["s"], x["sm"], x["wf"], x["ps"]) if has else {}
     mt_txt = f'. Meta rating {next(iter(mt.values()))} ({next(iter(mt))})' if mt else ""
     desc = (f'{x["n"]}\'s {ver} card in EA SPORTS FC 27 Ultimate Team: {x["o"]}-rated {x["p"]}'
             + (f' for {x["c"]}' if x["c"] else "") + (f', {x["nat"]}' if x["nat"] else "")
@@ -306,7 +306,8 @@ def special_page(x, codes, specials, credits):
     facts = [("Card", ver), ("Added", day(x["added"])),
              ("Position", x["p"] + (f' (also {", ".join(t.strip() for t in x["a"].split(","))})' if x["a"] else "")),
              ("Club", x["c"]), ("League", x["l"]), ("Nation", x["nat"]),
-             ("Skill moves", f'{x["sm"]}★' if x["sm"] else ""), ("Weak foot", f'{x["wf"]}★' if x["wf"] else "")]
+             ("Skill moves", f'{x["sm"]}★' if x["sm"] else ""), ("Weak foot", f'{x["wf"]}★' if x["wf"] else ""),
+             ("PlayStyles+", ", ".join(t.strip() for t in x["ps"].split(",") if t.strip()))]
     dl = "".join(f"<dt>{e(k)}</dt><dd>{e(v)}</dd>" for k, v in facts if v not in ("", None))
     if b:
         base_txt = f'{b["o"]} {b["p"]}'
@@ -406,6 +407,10 @@ def main():
               "a": c.get("alt") or "", "c": (b["c"] if b else "") or c.get("club") or "", "l": c.get("league") or (b["l"] if b else ""),
               "nat": c.get("nation") or (b["nat"] if b else ""), "sm": c.get("sm"), "wf": c.get("wf"),
               "s": [None if v in (None, "") else v for v in st], "ver": c.get("version") or "", "added": c.get("added") or "", "base": b}
+        # PlayStyles+: the card's own when the price runs read them, else the base card's (special cards keep them),
+        # but only when the base card is surely the same player (linked id or same club). Same rule as index.html.
+        sx["ps"] = (str(c["ps"]) if c.get("ps") is not None else
+                    b["ps"] if b and (str(c.get("baseId") or "").isdigit() or (c.get("club") and b["c"] == c.get("club"))) else "")
         # Name on the card: EA's card name for the same player ("João Félix", "Álex Baena") when the base card is
         # certainly the same person (linked id, same club, or the only player with that name); else the last word.
         sure = b is not None and (str(c.get("baseId") or "").isdigit() or (c.get("club") and b["c"] == c.get("club"))
