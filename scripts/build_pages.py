@@ -3,8 +3,8 @@
 
 Writes p/<slug>-<id>/index.html for every player rated MIN_OVR or higher in
 data/players.json, p/<slug>-<version>-<id>/index.html for every new special card in
-data/newcards.json, a list page at p/index.html, p/cardnames.json (the name shown on each special card,
-taken from EA's card name of the same player) and sitemap.xml at the site root.
+data/newcards.json, a list page at p/index.html, p/cardnames.json (the name and nation shown on each special card,
+taken from EA's card of the same player) and sitemap.xml at the site root.
 Prices are not baked in: each page loads the newest price from data/prices.json
 and data/topprices.json in the browser.
 
@@ -444,7 +444,7 @@ def main():
     with open(os.path.join(out, "index.html"), "w", encoding="utf-8") as fh:
         fh.write(list_page(groups, codes, len(players), specials))
     with open(os.path.join(out, "cardnames.json"), "w", encoding="utf-8") as fh:
-        json.dump({str(x["id"]): x["cn"] for x in specials}, fh, ensure_ascii=False, separators=(",", ":"))
+        json.dump({str(x["id"]): {"n": x["cn"], "nat": x["nat"]} for x in specials}, fh, ensure_ascii=False, separators=(",", ":"))
     urls = [BASE, BASE + "privacy.html", BASE + "p/"] + [BASE + "p/" + x["path"] for x in specials + players]
     with open(os.path.join(ROOT, "sitemap.xml"), "w", encoding="utf-8") as fh:
         fh.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
