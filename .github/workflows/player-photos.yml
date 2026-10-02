@@ -17,6 +17,8 @@ jobs:
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
+      - name: Install Pillow (to shrink photos)
+        run: python3 -m pip install --quiet pillow
       - name: Fetch freely licensed photos from Wikimedia Commons
         run: python3 scripts/fetch_photos.py .
       - name: Rebuild player pages

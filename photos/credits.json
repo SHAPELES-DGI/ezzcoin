@@ -32,7 +32,7 @@
 "page": "https://commons.wikimedia.org/wiki/File:Luka_Modric_Croatia_v_Portugal_2_July_2026-055.jpg"
 },
 "177683": {
-"author": "Steindy (talk) 14:48, 25 November 2015 (UTC)",
+"author": "Steindy",
 "file": "Yann Sommer (cropped).jpg",
 "img": "177683.jpg",
 "licence": "CC BY-SA 3.0",
@@ -58,7 +58,7 @@
 "186153": {
 "author": "La Gazzetta dello Sport",
 "file": "Wojciech Szczęsny.png",
-"img": "186153.png",
+"img": "186153.jpg",
 "licence": "CC BY 3.0",
 "licenceUrl": "https://creativecommons.org/licenses/by/3.0",
 "page": "https://commons.wikimedia.org/wiki/File:Wojciech_Szcz%C4%99sny.png"
@@ -442,7 +442,7 @@
 "210413": {
 "author": "Hadoken75",
 "file": "Alessio Romagnoli Luglio 2022.png",
-"img": "210413.png",
+"img": "210413.jpg",
 "licence": "CC BY-SA 4.0",
 "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.en",
 "page": "https://commons.wikimedia.org/wiki/File:Alessio_Romagnoli_Luglio_2022.png"
@@ -554,7 +554,7 @@
 "213648": {
 "author": "Paté kroute",
 "file": "Højbjerg asse om 2425.png",
-"img": "213648.png",
+"img": "213648.jpg",
 "licence": "CC0",
 "licenceUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
 "page": "https://commons.wikimedia.org/wiki/File:H%C3%B8jbjerg_asse_om_2425.png"
@@ -674,7 +674,7 @@
 "219683": {
 "author": "Paté kroute",
 "file": "Tolisso asse ol 2425.png",
-"img": "219683.png",
+"img": "219683.jpg",
 "licence": "CC0",
 "licenceUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
 "page": "https://commons.wikimedia.org/wiki/File:Tolisso_asse_ol_2425.png"
@@ -778,7 +778,7 @@
 "223874": {
 "author": "Paté kroute",
 "file": "Rongier asse om 2425.png",
-"img": "223874.png",
+"img": "223874.jpg",
 "licence": "CC0",
 "licenceUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
 "page": "https://commons.wikimedia.org/wiki/File:Rongier_asse_om_2425.png"
@@ -1178,7 +1178,7 @@
 "229261": {
 "author": "Paté kroute",
 "file": "Zakaria asse asm 2425.png",
-"img": "229261.png",
+"img": "229261.jpg",
 "licence": "CC0",
 "licenceUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
 "page": "https://commons.wikimedia.org/wiki/File:Zakaria_asse_asm_2425.png"
@@ -1450,7 +1450,7 @@
 "233662": {
 "author": "Unknown author",
 "file": "Tête à tête avec une Bleue - Sakina Karchaoui 5-42 screenshot.png",
-"img": "233662.png",
+"img": "233662.jpg",
 "licence": "CC BY 3.0",
 "licenceUrl": "https://creativecommons.org/licenses/by/3.0",
 "page": "https://commons.wikimedia.org/wiki/File:T%C3%AAte_%C3%A0_t%C3%AAte_avec_une_Bleue_-_Sakina_Karchaoui_5-42_screenshot.png"
@@ -1530,7 +1530,7 @@
 "234579": {
 "author": "Selección Nacional de México",
 "file": "Julián Quiñones.png",
-"img": "234579.png",
+"img": "234579.jpg",
 "licence": "CC BY 3.0",
 "licenceUrl": "https://creativecommons.org/licenses/by/3.0",
 "page": "https://commons.wikimedia.org/wiki/File:Juli%C3%A1n_Qui%C3%B1ones.png"
@@ -1850,7 +1850,7 @@
 "240091": {
 "author": "AFC Bournemouth",
 "file": "Guglielmo Vicario.png",
-"img": "240091.png",
+"img": "240091.jpg",
 "licence": "CC BY 4.0",
 "licenceUrl": "https://creativecommons.org/licenses/by/4.0",
 "page": "https://commons.wikimedia.org/wiki/File:Guglielmo_Vicario.png"
@@ -1866,7 +1866,7 @@
 "240225": {
 "author": "Paté kroute",
 "file": "Safonov asse psg 2425.png",
-"img": "240225.png",
+"img": "240225.jpg",
 "licence": "CC0",
 "licenceUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
 "page": "https://commons.wikimedia.org/wiki/File:Safonov_asse_psg_2425.png"
@@ -2034,7 +2034,7 @@
 "242201": {
 "author": "El Pantera",
 "file": "Luis Milla.png",
-"img": "242201.png",
+"img": "242201.jpg",
 "licence": "CC BY-SA 4.0",
 "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
 "page": "https://commons.wikimedia.org/wiki/File:Luis_Milla.png"
@@ -2090,7 +2090,7 @@
 "243014": {
 "author": "AFC Bournemouth",
 "file": "Bryan Mbeumo 00-02-31.18.png",
-"img": "243014.png",
+"img": "243014.jpg",
 "licence": "CC BY 3.0",
 "licenceUrl": "https://creativecommons.org/licenses/by/3.0",
 "page": "https://commons.wikimedia.org/wiki/File:Bryan_Mbeumo_00-02-31.18.png"
@@ -2594,7 +2594,7 @@
 "253109": {
 "author": "VVV-Venlo",
 "file": "Joey Veerman sc Heerenveen.png",
-"img": "253109.png",
+"img": "253109.jpg",
 "licence": "CC BY 4.0",
 "licenceUrl": "https://creativecommons.org/licenses/by/4.0",
 "page": "https://commons.wikimedia.org/wiki/File:Joey_Veerman_sc_Heerenveen.png"
@@ -2674,7 +2674,7 @@
 "255565": {
 "author": "AFC Bournemouth",
 "file": "Kaoru Mitoma 00-01-48.01.png",
-"img": "255565.png",
+"img": "255565.jpg",
 "licence": "CC BY 3.0",
 "licenceUrl": "https://creativecommons.org/licenses/by/3.0",
 "page": "https://commons.wikimedia.org/wiki/File:Kaoru_Mitoma_00-01-48.01.png"
@@ -2818,7 +2818,7 @@
 "258498": {
 "author": "AFC Bournemouth",
 "file": "Bart Verbruggen.png",
-"img": "258498.png",
+"img": "258498.jpg",
 "licence": "CC BY 4.0",
 "licenceUrl": "https://creativecommons.org/licenses/by/4.0",
 "page": "https://commons.wikimedia.org/wiki/File:Bart_Verbruggen.png"
@@ -2906,7 +2906,7 @@
 "260908": {
 "author": "AFC Bournemouth",
 "file": "Milot Kerkez (cropped).png",
-"img": "260908.png",
+"img": "260908.jpg",
 "licence": "CC BY 3.0",
 "licenceUrl": "https://creativecommons.org/licenses/by/3.0",
 "page": "https://commons.wikimedia.org/wiki/File:Milot_Kerkez_(cropped).png"
@@ -2946,7 +2946,7 @@
 "261843": {
 "author": "Agencia LUSA",
 "file": "Andreia Jacinto 2023 07.png",
-"img": "261843.png",
+"img": "261843.jpg",
 "licence": "CC BY 3.0",
 "licenceUrl": "https://creativecommons.org/licenses/by/3.0",
 "page": "https://commons.wikimedia.org/wiki/File:Andreia_Jacinto_2023_07.png"
@@ -2962,7 +2962,7 @@
 "262138": {
 "author": "ESTAC Troyes",
 "file": "Castello Lukeba in 2022.png",
-"img": "262138.png",
+"img": "262138.jpg",
 "licence": "CC BY-SA 3.0",
 "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
 "page": "https://commons.wikimedia.org/wiki/File:Castello_Lukeba_in_2022.png"
@@ -3218,7 +3218,7 @@
 "265849": {
 "author": "MHSC TV - Montpellier Hérault Sport Club",
 "file": "Maelle Lakrar 2024.png",
-"img": "265849.png",
+"img": "265849.jpg",
 "licence": "CC BY 3.0",
 "licenceUrl": "https://creativecommons.org/licenses/by/3.0",
 "page": "https://commons.wikimedia.org/wiki/File:Maelle_Lakrar_2024.png"
@@ -3370,7 +3370,7 @@
 "268804": {
 "author": "Nuță Lucian from Cluj-Napoca, Romania",
 "file": "CFR Cluj - Lazio 0-0 (52708190375) (Mario Gila).png",
-"img": "268804.png",
+"img": "268804.jpg",
 "licence": "CC BY-SA 2.0",
 "licenceUrl": "https://creativecommons.org/licenses/by-sa/2.0",
 "page": "https://commons.wikimedia.org/wiki/File:CFR_Cluj_-_Lazio_0-0_(52708190375)_(Mario_Gila).png"
@@ -3442,7 +3442,7 @@
 "270857": {
 "author": "Agência Lusa",
 "file": "Mateus Fernandes (Agência Lusa) cropped.png",
-"img": "270857.png",
+"img": "270857.jpg",
 "licence": "CC BY 3.0",
 "licenceUrl": "https://creativecommons.org/licenses/by/3.0",
 "page": "https://commons.wikimedia.org/wiki/File:Mateus_Fernandes_(Ag%C3%AAncia_Lusa)_cropped.png"
@@ -3562,7 +3562,7 @@
 "273946": {
 "author": "Doha News",
 "file": "Korbin Albert (PSG in Qatar) 01.png",
-"img": "273946.png",
+"img": "273946.jpg",
 "licence": "CC BY 3.0",
 "licenceUrl": "https://creativecommons.org/licenses/by/3.0",
 "page": "https://commons.wikimedia.org/wiki/File:Korbin_Albert_(PSG_in_Qatar)_01.png"
@@ -3578,7 +3578,7 @@
 "275029": {
 "author": "Shawarmael7alouin",
 "file": "Ibrahim Maza 27 mars 2026.png",
-"img": "275029.png",
+"img": "275029.jpg",
 "licence": "CC0",
 "licenceUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
 "page": "https://commons.wikimedia.org/wiki/File:Ibrahim_Maza_27_mars_2026.png"
@@ -3658,7 +3658,7 @@
 "277909": {
 "author": "AFC Bournemouth",
 "file": "Eli Kroupi Jr.png",
-"img": "277909.png",
+"img": "277909.jpg",
 "licence": "CC BY 3.0",
 "licenceUrl": "https://creativecommons.org/licenses/by/3.0",
 "page": "https://commons.wikimedia.org/wiki/File:Eli_Kroupi_Jr.png"

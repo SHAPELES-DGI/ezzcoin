@@ -115,6 +115,36 @@ def commons_info(files):
     return info
 
 
+def clean_author(a):
+    """Drop wiki signature leftovers such as '(talk) 14:48, 25 November 2015 (UTC)'."""
+    a = re.sub(r"\s*\((talk|discussion|disc|diskussion)\b.*$", "", a, flags=re.I)
+    a = re.sub(r"\s*\d{1,2}:\d{2},?\s+\d{1,2}\s+\w+\s+\d{4}.*$", "", a)
+    return a.strip(" ,;-") or "Unknown author"
+
+
+def shrink(blob, path):
+    """Save a small JPEG (320 px wide, quality 78). Falls back to the original bytes without Pillow."""
+    try:
+        from PIL import Image
+        import io
+        im = Image.open(io.BytesIO(blob))
+        if im.mode in ("RGBA", "LA", "P"):
+            im = im.convert("RGBA")
+            bg = Image.new("RGB", im.size, (28, 35, 32))
+            bg.paste(im, mask=im.split()[-1])
+            im = bg
+        else:
+            im = im.convert("RGB")
+        if im.width > 320:
+            im = im.resize((320, round(im.height * 320 / im.width)), Image.LANCZOS)
+        im.save(path, "JPEG", quality=78, optimize=True, progressive=True)
+        return True
+    except Exception:
+        with open(path, "wb") as fh:
+            fh.write(blob)
+        return False
+
+
 def main():
     data = json.load(open(os.path.join(ROOT, "data", "players.json"), encoding="utf-8"))
     ci = {c: i for i, c in enumerate(data["cols"])}
@@ -142,8 +172,7 @@ def main():
         meta = info.get(f)
         if not meta or not meta["thumb"] or not OK_LICENCE.match(meta["licence"] or "") or meta["mime"] not in ("image/jpeg", "image/png"):
             continue
-        ext = "png" if meta["mime"] == "image/png" else "jpg"
-        name = f"{pid}.{ext}"
+        name = f"{pid}.jpg"
         old = credits.get(str(pid))
         if old and old.get("file") == f and os.path.exists(os.path.join(pdir, old.get("img", ""))):
             kept += 1
@@ -151,12 +180,13 @@ def main():
         blob = http(meta["thumb"])
         if len(blob) < 2000:
             continue
-        with open(os.path.join(pdir, name), "wb") as fh:
-            fh.write(blob)
-        credits[str(pid)] = {"img": name, "file": f, "page": meta["page"], "author": meta["author"],
+        shrink(blob, os.path.join(pdir, name))
+        credits[str(pid)] = {"img": name, "file": f, "page": meta["page"], "author": clean_author(meta["author"]),
                              "licence": meta["licence"], "licenceUrl": meta["licenceUrl"]}
         added += 1
         time.sleep(0.3)
+    for v in credits.values():
+        v["author"] = clean_author(v.get("author", ""))
     # drop photos of players who no longer have a page
     keep = {str(x["id"]) for x in players}
     for pid in [k for k in credits if k not in keep]:
