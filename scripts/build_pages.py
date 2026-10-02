@@ -12,6 +12,9 @@ GitHub runs it automatically (.github/workflows/player-pages.yml) whenever data/
 """
 import html, json, os, re, shutil, sys, unicodedata
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from meta import meta  # noqa: E402  (same folder)
+
 ROOT = sys.argv[1] if len(sys.argv) > 1 else "."
 BASE = os.environ.get("EZZ_BASE", "https://shapeles-dgi.github.io/ezzcoin/")
 MIN_OVR = 80
@@ -20,7 +23,7 @@ SLUG_MAP = {"ø": "o", "Ø": "o", "ß": "ss", "ł": "l", "Ł": "l", "æ": "ae", 
             "œ": "oe", "đ": "d", "Đ": "d", "ı": "i", "ð": "d", "þ": "th"}
 ST_OUT = ["PAC", "SHO", "PAS", "DRI", "DEF", "PHY"]
 ST_GK = ["DIV", "HAN", "KIC", "REF", "SPD", "POS"]
-CSS_V = "11"
+CSS_V = "12"
 SPECIAL = 1000000000  # special-card ids on the site: SPECIAL + FUT.GG card id (gid) or FUTBIN card id (fid)
 
 
@@ -67,7 +70,7 @@ CSS = (":root{--bg:#0A0D0C;--surface:#141917;--sunk:#1C2320;--ink:#EEF2EF;--mute
        "-webkit-mask-image:linear-gradient(to bottom,#000 58%,transparent 97%),linear-gradient(to right,transparent 0,#000 34%);-webkit-mask-composite:source-in;"
        "mask-image:linear-gradient(to bottom,#000 58%,transparent 97%),linear-gradient(to right,transparent 0,#000 34%);mask-composite:intersect}"
        ".fc-name.long{font-size:1.15rem}.fc-name.xl{font-size:.98rem}"
-       ".side{width:214px}.credit{width:214px}"
+       ".side{width:214px}.credit{width:214px}.hero{grid-template-columns:214px minmax(0,1fr)}"
        ".card-xl{width:214px;height:330px;padding:16px 14px 12px;border-radius:20px 20px 40px 40px;text-align:center}"
        ".card-xl .fc-tl{position:absolute;left:16px;top:16px;z-index:1;text-align:center;line-height:1}"
        ".card-xl .fc-ovr{font-size:2.9rem}.card-xl .fc-pos{font-size:1.05rem;margin-top:2px}"
@@ -113,9 +116,14 @@ CSS = (":root{--bg:#0A0D0C;--surface:#141917;--sunk:#1C2320;--ink:#EEF2EF;--mute
        ".more .o{font:700 1.15rem var(--fd);color:var(--gold);width:26px;flex:none}.more .n{flex:1 1 0;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}"
        ".more .m{color:var(--muted);font-size:.82rem;flex:0 0 auto;max-width:46%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}"
        ".find{width:100%;max-width:420px;margin:4px 0 18px;background:var(--sunk);border:1px solid var(--line);border-radius:999px;padding:10px 16px;color:var(--ink);font:inherit}"
+       ".kv{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px;align-items:stretch}.kv .px{margin-top:0}"
+       ".mt{display:grid;grid-template-columns:auto 1fr;column-gap:12px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:8px 14px;text-align:left}"
+       ".mt b{grid-row:span 2;font:700 2.1rem/1 var(--fd);color:var(--gold)}.mt span{font:700 .78rem var(--fd);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}"
+       ".mt i{font-style:normal;font-size:.82rem;color:var(--muted)}.mt i em{font-style:normal;color:var(--ink)}"
+       ".up{color:var(--buy)}.dn{color:var(--sell)}.mtnote{margin:14px 0 0;font-size:.82rem;color:var(--muted);max-width:560px;text-align:left}"
        "footer{max-width:980px;margin:0 auto;padding:16px 16px 32px;color:var(--muted);font-size:.85rem;border-top:1px solid var(--line)}footer a{color:var(--muted)}"
        "@media(max-width:640px){.hero{grid-template-columns:1fr;justify-items:center;text-align:center}.stats{grid-template-columns:repeat(3,minmax(0,1fr));margin-inline:auto}"
-       ".facts{text-align:left}h1{font-size:2.1rem}}")
+       ".facts{text-align:left}h1{font-size:2.1rem}.kv{justify-content:center}}")
 
 FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
          '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;1,800&family=Barlow:wght@400;600&family=IBM+Plex+Mono:wght@500&display=swap">')
@@ -163,6 +171,22 @@ def big_card(variant, ovr, pos, name, stats, lab, nat_flag, foot_text, pimg):
             f'{pimg or SIL}<div class="fc-name{size}">{e(nm)}</div>{row}<div class="fc-foot">{nat_flag}<span>{e(foot_text)}</span></div></div>')
 
 
+MT_NOTE = ("Meta rating: Ezzcoins' own estimate of how well this card plays in game, worked out from its stats for each position it can play, "
+           "its skill moves, weak foot and PlayStyle+. An average card scores about its overall rating; higher means it plays above its rating.")
+
+
+def meta_box(mt, ovr):
+    """Meta rating panel next to the price, or "" when the card has no stats yet."""
+    if not mt:
+        return ""
+    (bp, bv), rest = next(iter(mt.items())), list(mt.items())[1:]
+    d = bv - (ovr or 0)
+    delta = f' <em class="{"up" if d > 0 else "dn"}">{"+" if d > 0 else "−"}{abs(d)} vs overall</em>' if d else " <em>same as overall</em>"
+    other = " · ".join(f"{p} {v}" for p, v in rest[:4])
+    return (f'<div class="mt" title="{e(MT_NOTE)}"><b>{bv}</b><span>Meta rating · {e(bp)}</span>'
+            f'<i>{delta}{" · " + e(other) if other else ""}</i></div>')
+
+
 def head(title, desc, canon, up, image=None):
     return (f'<!doctype html>{BANNER}<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
             f'<title>{e(title)}</title><meta name="description" content="{e(desc)}"><link rel="canonical" href="{e(canon)}">'
@@ -202,9 +226,11 @@ def player_page(x, codes, by_club, by_nat, specials_of, credits):
     where = " · ".join(v for v in (x["c"], x["l"]) if v)
     stats_txt = ", ".join(f"{lab[i]} {v}" for i, v in enumerate(x["s"]) if v is not None)
     title = f'{x["n"]} FC 27 – {x["o"]} {x["p"]} stats & price | Ezzcoins'
+    mt = meta(x["p"], x["a"], x["s"], x["sm"], x["wf"], x["ps"])
+    mt_txt = f'. Meta rating {next(iter(mt.values()))} ({next(iter(mt))})' if mt else ""
     desc = (f'{x["n"]}\'s EA SPORTS FC 27 Ultimate Team card: {x["o"]}-rated {x["p"]}'
             + (f' for {x["c"]}' if x["c"] else "") + (f' ({x["l"]})' if x["l"] else "") + (f', {x["nat"]}' if x["nat"] else "")
-            + (f". {stats_txt}" if stats_txt else "") + ". Console price on Ezzcoins.")
+            + (f". {stats_txt}" if stats_txt else "") + mt_txt + ". Console price on Ezzcoins.")
     canon = BASE + "p/" + x["path"]
     facts = [("Position", x["p"] + (f' (also {", ".join(x["a"].split(","))})' if x["a"] else "")),
              ("Club", x["c"]), ("League", x["l"]), ("Nation", x["nat"]),
@@ -241,8 +267,8 @@ def player_page(x, codes, by_club, by_nat, specials_of, credits):
             f'<div class="hero"><div class="side">{big_card(tier, x["o"], x["p"], x["q"] or x["n"], x["s"], lab, flag(codes, x["nat"], up, True), x["c"], pimg)}{pcredit}</div>'
             f'<div><h1>{e(x["n"])}</h1><div class="sub">{x["o"]} {e(x["p"])}' + (f" · {e(where)}" if where else "")
             + (f' · {flag(codes, x["nat"], up)}{e(x["nat"])}' if x["nat"] else "") + '</div>'
-            f'<div class="px" id="px"><span class="none">No console price yet. {e(hint)}</span></div>'
-            f'<div class="stats">{stats}</div><dl class="facts">{dl}</dl>'
+            f'<div class="kv"><div class="px" id="px"><span class="none">No console price yet. {e(hint)}</span></div>{meta_box(mt, x["o"])}</div>'
+            f'<div class="stats">{stats}</div><dl class="facts">{dl}</dl>' + (f'<p class="mtnote">{e(MT_NOTE)}</p>' if mt else "") +
             f'<a class="btn" href="{up}#q={e(x["n"])}">Watch on Ezzcoins</a></div></div>'
             f'<section class="more">{more}</section></main>{script}' + foot(up))
 
@@ -255,9 +281,11 @@ def special_page(x, codes, specials, credits):
     ver = x["ver"] or "Special card"
     stats_txt = ", ".join(f"{lab[i]} {v}" for i, v in enumerate(x["s"]) if v is not None)
     title = f'{x["n"]} {ver} FC 27 – {x["o"]} {x["p"]} stats & price | Ezzcoins'
+    mt = meta(x["p"], x["a"], x["s"], x["sm"], x["wf"]) if has else {}
+    mt_txt = f'. Meta rating {next(iter(mt.values()))} ({next(iter(mt))})' if mt else ""
     desc = (f'{x["n"]}\'s {ver} card in EA SPORTS FC 27 Ultimate Team: {x["o"]}-rated {x["p"]}'
             + (f' for {x["c"]}' if x["c"] else "") + (f', {x["nat"]}' if x["nat"] else "")
-            + (f". {stats_txt}" if stats_txt else "") + ". Console price on Ezzcoins.")
+            + (f". {stats_txt}" if stats_txt else "") + mt_txt + ". Console price on Ezzcoins.")
     b = x["base"]
     facts = [("Card", ver), ("Added", day(x["added"])),
              ("Position", x["p"] + (f' (also {", ".join(t.strip() for t in x["a"].split(","))})' if x["a"] else "")),
@@ -286,9 +314,9 @@ def special_page(x, codes, specials, credits):
             f'<div class="hero"><div class="side">{big_card(card_variant(x["ver"], x["o"]), x["o"], x["p"], x["n"].split(" ")[-1], x["s"], lab, flag(codes, x["nat"], up, True), ver, pimg)}{pcredit}</div>'
             f'<div><div class="tag">{e(ver)}</div><h1>{e(x["n"])}</h1><div class="sub">{x["o"]} {e(x["p"])}' + (f" · {e(where)}" if where else "")
             + (f' · {flag(codes, x["nat"], up)}{e(x["nat"])}' if x["nat"] else "") + '</div>'
-            f'<div class="px" id="px"><span class="none">No console price yet. New cards are priced every hour while FUTBIN can be reached.</span></div>'
+            f'<div class="kv"><div class="px" id="px"><span class="none">No console price yet. New cards are priced every hour while FUTBIN can be reached.</span></div>{meta_box(mt, x["o"])}</div>'
             + (f'<div class="stats">{stats}</div>' if has else '<p class="nostats">This card\'s own stats appear here after one of the next hourly updates.</p>')
-            + f'<dl class="facts">{dl}</dl><a class="btn" href="{up}#q={e(x["n"])}">Watch on Ezzcoins</a></div></div>'
+            + f'<dl class="facts">{dl}</dl>' + (f'<p class="mtnote">{e(MT_NOTE)}</p>' if mt else "") + f'<a class="btn" href="{up}#q={e(x["n"])}">Watch on Ezzcoins</a></div></div>'
             f'<section class="more">{more}</section></main>{script}' + foot(up))
 
 
