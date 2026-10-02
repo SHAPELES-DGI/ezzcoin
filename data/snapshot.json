@@ -1,12 +1,6 @@
 {
   "corrections": [
     {
-      "date": "2026-10-01T16:42:00Z",
-      "section": "Moves right now",
-      "what": "Said 84s are no longer at 650 and that 85s are now the cheapest Item Score.",
-      "why": "FUT.GG now lists 84s at 700 and 85s at 1,500 (0.71 coins per point vs 0.84 for 84s)."
-    },
-    {
       "date": "2026-10-01T17:42:00Z",
       "section": "Moves right now",
       "what": "Replaced \"85s are now the cheapest Item Score\" with 84s at 650.",
@@ -89,6 +83,12 @@
       "section": "Moves right now",
       "what": "Replaced \"84s at 650 are the cheapest Item Score\" with 86s at 3,000 and marked the 84 buy as no longer at the floor.",
       "why": "FUT.GG now lists 84s at 750 (0.90 per point) and 86s at 3,000 (0.73)."
+    },
+    {
+      "date": "2026-10-02T08:13:13Z",
+      "section": "Moves right now",
+      "what": "Replaced \"86s at 3,000 are the cheapest Item Score\" with 84s at 650.",
+      "why": "FUT.GG now lists 86s at 3,800 (0.93 per point) and 84s at 650 (0.78)."
     }
   ],
   "drops": [
@@ -206,39 +206,39 @@
   ],
   "fallers": [
     {
+      "name": "Gabriel Martinelli",
+      "ovr": 82,
+      "pct": -9.23,
+      "price": "−1,361",
+      "version": "TOTW"
+    },
+    {
+      "name": "Raphinha",
+      "ovr": 89,
+      "pct": -8.74,
+      "price": "−123,147",
+      "version": "TOTW"
+    },
+    {
       "name": "Peter Crouch",
       "ovr": 85,
-      "pct": -11.11,
-      "price": "−6,555",
+      "pct": -8.14,
+      "price": "−5,047",
       "version": "Base Hero"
-    },
-    {
-      "name": "Konstantinos Tzolakis",
-      "ovr": 81,
-      "pct": -8.33,
-      "price": "−958",
-      "version": "TOTW"
-    },
-    {
-      "name": "Marquinhos",
-      "ovr": 88,
-      "pct": -6.31,
-      "price": "−12,935",
-      "version": "TOTW"
     },
     {
       "name": "Sophia Wilson",
       "ovr": 89,
-      "pct": -6.09,
-      "price": "−45,005",
+      "pct": -8.14,
+      "price": "−58,771",
       "version": "TOTW"
     },
     {
-      "name": "Diego Forlán",
-      "ovr": 88,
-      "pct": -6.06,
-      "price": "−18,786",
-      "version": "Base Hero"
+      "name": "Álvaro Carreras",
+      "ovr": 83,
+      "pct": -6.7,
+      "price": "−29,815",
+      "version": "TOTW"
     }
   ],
   "fodder": [
@@ -259,27 +259,27 @@
     },
     {
       "ovr": 84,
-      "price": 750,
+      "price": 650,
       "score": 830
     },
     {
       "ovr": 85,
-      "price": 1900,
+      "price": 2000,
       "score": 2100
     },
     {
       "ovr": 86,
-      "price": 3000,
+      "price": 3800,
       "score": 4100
     },
     {
       "ovr": 87,
-      "price": 5600,
+      "price": 5500,
       "score": 5500
     },
     {
       "ovr": 88,
-      "price": 8000,
+      "price": 9000,
       "score": 8300
     },
     {
@@ -289,7 +289,7 @@
     },
     {
       "ovr": 90,
-      "price": 28000,
+      "price": 27000,
       "score": 14000
     },
     {
@@ -370,16 +370,16 @@
   "moves": [
     {
       "confidence": "medium",
-      "detail": "FUT.GG's biggest fallers are TOTW and Hero specials: Crouch Hero 85 −11%, Tzolakis TOTW 81 −8%, Marquinhos TOTW 88 −6%, Wilson TOTW 89 −6%. Last week's TOTW cards left packs when TOTW 3 arrived at {{t:2026-09-30T18:00:00+01:00}}. Spend on fodder first.",
+      "detail": "FUT.GG's biggest fallers are TOTW and Hero specials: Raphinha TOTW 89 −9%, Martinelli TOTW 82 −9%, Crouch Hero 85 −8%, Wilson TOTW 89 −8%. Last week's TOTW cards left packs when TOTW 3 arrived at {{t:2026-09-30T18:00:00+01:00}}. Spend on fodder first.",
       "title": "Don't buy TOTW and Destined for Glory specials yet",
       "tone": "hold",
       "when": "Until {{t:2026-10-02T19:00:00+02:00}}"
     },
     {
       "confidence": "low",
-      "detail": "The cheapest 84 on FUT.GG is now Kamara at 750, up from 650, while 81–83s stay at 650. The tracked call entered at 650 (FUT.GG, {{t:2026-10-01T10:29:00+02:00}}) and is graded at {{t:2026-10-02T17:00:00+02:00}}; selling only pays above 685 after the 5% tax. Buying new 84s at 750 is no longer the cheapest route per Item Score.",
+      "detail": "FUT.GG lists the cheapest 84 at 650 again, same as 81–83. The tracked call entered at 650 (FUT.GG, {{t:2026-10-01T10:29:00+02:00}}) and is graded at {{t:2026-10-02T17:00:00+02:00}}; selling only pays above 685 after the 5% tax, so using them in SBCs is the safer route.",
       "ledgerId": "c-2026-10-01-84floor",
-      "title": "84s are no longer the 650 floor",
+      "title": "84s are back at the 650 floor",
       "tone": "watch",
       "when": "Until {{t:2026-10-02T17:00:00+02:00}}"
     },
@@ -393,8 +393,8 @@
     },
     {
       "confidence": "medium",
-      "detail": "FUT.GG this update: 86s at 3,000 cost 0.73 coins per point, against 0.90 for 84s at 750, 0.90 for 85s at 1,900 and 1.02 for 87s at 5,600. Prefer 86s when an SBC needs a big Item Score.",
-      "title": "86s at 3,000 are the cheapest Item Score",
+      "detail": "FUT.GG this update: 84s at 650 cost 0.78 coins per point, against 0.95 for 85s at 2,000, 1.00 for 87s at 5,500 and 0.93 for 86s at 3,800. Prefer 84s when an SBC needs a big Item Score.",
+      "title": "84s at 650 are the cheapest Item Score",
       "tone": "watch",
       "when": "Every update"
     }
@@ -431,7 +431,7 @@
       "title": "Season 1 ends 22 October"
     },
     {
-      "detail": "FUT.GG: 81–83 at 650, 84s at 750, 85s at 1,900, 86s at 3,000. Biggest fallers are specials (Crouch Hero 85 −11%, Tzolakis TOTW 81 −8%). Index figures (116.43, +1.33%) are from an earlier update because FUTBIN returned an error.",
+      "detail": "FUT.GG: 81–84 at 650, 85s at 2,000, 86s at 3,800. Biggest fallers are specials (Raphinha TOTW 89 −9%, Martinelli TOTW 82 −9%). Index figures (116.43, +1.33%) are from an earlier update because FUTBIN returned an error.",
       "kind": "data",
       "source": "FUTBIN · FUT.GG",
       "title": "Market stays calm, specials fall"
@@ -522,11 +522,11 @@
       "url": "https://www.futbin.com/27/squad-building-challenge/22"
     }
   ],
-  "updatedAt": "2026-10-02T07:13:18Z",
+  "updatedAt": "2026-10-02T08:13:13Z",
   "verdict": {
-    "detail": "FUT.GG shows 81–83 at 650, 84s at 750, 85s at 1,900 and 86s at 3,000. FUTBIN did not load this run (403 twice), so the index reading (116.43, momentum 49.67, calm) is from an earlier update. Specials keep falling (Crouch Hero −11%, Tzolakis TOTW −8%), and the next demand point is Destined for Glory Team 2 at {{t:2026-10-02T18:00:00+01:00}}.",
-    "headline": "86s at 3,000 are now the cheapest Item Score at about 0.73 coins per point.",
-    "label": "Hold, 86s are the best fodder value",
+    "detail": "FUT.GG shows 81–84 at 650, 85s at 2,000 and 86s at 3,800. FUTBIN did not load this run (403 twice), so the index reading (116.43, momentum 49.67, calm) is from an earlier update. Specials keep falling (Raphinha TOTW −9%, Crouch Hero −8%), and the next demand point is Destined for Glory Team 2 at {{t:2026-10-02T18:00:00+01:00}}.",
+    "headline": "84s at 650 are the cheapest Item Score at about 0.78 coins per point.",
+    "label": "Hold, 84s are the best fodder value",
     "tone": "watch"
   }
 }
