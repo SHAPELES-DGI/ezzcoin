@@ -1,12 +1,6 @@
 {
   "corrections": [
     {
-      "date": "2026-10-01T22:42:00Z",
-      "section": "Movers",
-      "what": "Replaced the fallers list with FUT.GG's current top fallers (Tzolakis, Carpenter, Mbappé, Salah, Harder).",
-      "why": "FUT.GG's momentum page no longer lists Yamal, Dalglish, Wilson and Olise."
-    },
-    {
       "date": "2026-10-01T23:42:00Z",
       "section": "Moves right now",
       "what": "Removed Mbappé DFG −11% and Salah −10% from the first move and the news line.",
@@ -89,6 +83,12 @@
       "section": "Moves right now",
       "what": "Replaced 86s at 2,900 as cheapest Item Score with 84s at 650.",
       "why": "FUT.GG now lists 84s at 650 (0.78 per point), 85s at 1,900 and 86s at 3,500."
+    },
+    {
+      "date": "2026-10-02T14:13:46Z",
+      "section": "Moves right now",
+      "what": "Replaced Dunk, Stoica and Hoeneß in the first move, fallers list and news with Makaay, Di Natale and McManaman; updated 85 to 1,800 and 86 to 3,800.",
+      "why": "FUT.GG's momentum page no longer lists Dunk, Stoica or Hoeneß; cheapest-by-rating shows 85s at 1,800 and 86s at 3,800."
     }
   ],
   "drops": [
@@ -206,6 +206,20 @@
   ],
   "fallers": [
     {
+      "name": "Roy Makaay",
+      "ovr": 87,
+      "pct": -12.09,
+      "price": "−13,299",
+      "version": "Base Hero"
+    },
+    {
+      "name": "Luka Modrić",
+      "ovr": 86,
+      "pct": -10.71,
+      "price": "−5,409",
+      "version": "TOTW"
+    },
+    {
       "name": "Gabriel Martinelli",
       "ovr": 82,
       "pct": -9.23,
@@ -213,31 +227,17 @@
       "version": "TOTW"
     },
     {
-      "name": "Lewis Dunk",
-      "ovr": 80,
-      "pct": -9.09,
-      "price": "−977",
-      "version": "TOTW"
+      "name": "Antonio Di Natale",
+      "ovr": 88,
+      "pct": -8.18,
+      "price": "−98,160",
+      "version": "Base Hero"
     },
     {
-      "name": "Luka Modrić",
-      "ovr": 86,
-      "pct": -8.92,
-      "price": "−4,460",
-      "version": "TOTW"
-    },
-    {
-      "name": "Ianis Stoica",
-      "ovr": 80,
-      "pct": -8.69,
-      "price": "−1,021",
-      "version": "TOTW"
-    },
-    {
-      "name": "Ulrich Hoeneß",
-      "ovr": 86,
-      "pct": -8.12,
-      "price": "−21,356",
+      "name": "Steve McManaman",
+      "ovr": 87,
+      "pct": -7.69,
+      "price": "−9,228",
       "version": "Base Hero"
     }
   ],
@@ -264,12 +264,12 @@
     },
     {
       "ovr": 85,
-      "price": 1900,
+      "price": 1800,
       "score": 2100
     },
     {
       "ovr": 86,
-      "price": 3500,
+      "price": 3800,
       "score": 4100
     },
     {
@@ -279,7 +279,7 @@
     },
     {
       "ovr": 88,
-      "price": 8300,
+      "price": 8800,
       "score": 8300
     },
     {
@@ -289,12 +289,12 @@
     },
     {
       "ovr": 90,
-      "price": 28500,
+      "price": 28250,
       "score": 14000
     },
     {
       "ovr": 91,
-      "price": 112000,
+      "price": 110000,
       "score": 19000
     }
   ],
@@ -370,7 +370,7 @@
   "moves": [
     {
       "confidence": "medium",
-      "detail": "FUT.GG's biggest fallers: Martinelli TOTW 82 −9%, Dunk TOTW 80 −9%, Modrić TOTW 86 −9%, Hoeneß Hero 86 −8%. Last week's TOTW cards left packs when TOTW 3 arrived at {{t:2026-09-30T18:00:00+01:00}}. Spend on fodder first.",
+      "detail": "FUT.GG's biggest fallers: Makaay Hero 87 −12%, Modrić TOTW 86 −11%, Martinelli TOTW 82 −9%, Di Natale Hero 88 −8%. Last week's TOTW cards left packs when TOTW 3 arrived at {{t:2026-09-30T18:00:00+01:00}}. Spend on fodder first.",
       "title": "Don't buy Hero, TOTW and Destined for Glory specials yet",
       "tone": "hold",
       "when": "Until {{t:2026-10-02T19:00:00+02:00}}"
@@ -393,7 +393,7 @@
     },
     {
       "confidence": "low",
-      "detail": "FUT.GG this update: 84s at 650 cost 0.78 coins per point, against 0.90 for 85s at 1,900, 0.85 for 86s at 3,500 and 0.91 for 87s at 5,000. Prefer 84s for small scores; 86 floors swung between 2,500 and 4,000 today, so check the price before buying.",
+      "detail": "FUT.GG this update: 84s at 650 cost 0.78 coins per point, against 0.86 for 85s at 1,800, 0.93 for 86s at 3,800 and 0.91 for 87s at 5,000. Prefer 84s for small scores; 86 floors swung between 2,500 and 4,000 today, so check the price before buying.",
       "title": "84s at 650 are the cheapest Item Score",
       "tone": "watch",
       "when": "Every update"
@@ -431,7 +431,7 @@
       "title": "Season 1 ends 22 October"
     },
     {
-      "detail": "FUT.GG: 81–84 at 650, 85s at 1,900, 86s at 3,500. Biggest fallers are TOTW and Hero specials (Martinelli −9%, Modrić −9%). Index figures (116.43, +1.33%) are from an earlier update because FUTBIN returned an error.",
+      "detail": "FUT.GG: 81–84 at 650, 85s at 1,800, 86s at 3,800. Biggest fallers are Hero and TOTW specials (Makaay −12%, Modrić −11%). Index figures (116.43, +1.33%) are from an earlier update because FUTBIN returned an error.",
       "kind": "data",
       "source": "FUTBIN · FUT.GG",
       "title": "Market stays calm, specials fall"
@@ -444,7 +444,7 @@
       "cost": "1.8K",
       "expires": "Until {{t:2026-10-02T18:00:00+01:00}}",
       "name": "DFG Challenge 2",
-      "note": "Mini Gold Pack, tradeable; list is from FUT.GG because FUTBIN did not load (costs from an earlier update)"
+      "note": "Mini Gold Pack, tradeable; SBC list is from an earlier update because FUTBIN did not load (costs from FUT.GG at an earlier update)"
     },
     {
       "cost": "–",
@@ -568,9 +568,9 @@
       "url": "https://www.fut.gg/sbc/category/players/"
     }
   ],
-  "updatedAt": "2026-10-02T13:13:45Z",
+  "updatedAt": "2026-10-02T14:13:46Z",
   "verdict": {
-    "detail": "FUT.GG shows 81–84 at 650, 85s at 1,900 and 86s at 3,500. FUTBIN did not load this run (403 twice), so the index reading (116.43, momentum 49.67, calm) is from an earlier update. TOTW specials keep falling (Martinelli −9%, Modrić −9%), and the next demand point is Destined for Glory Team 2 at {{t:2026-10-02T18:00:00+01:00}}.",
+    "detail": "FUT.GG shows 81–84 at 650, 85s at 1,800 and 86s at 3,800. FUTBIN did not load this run (403 twice), so the index reading (116.43, momentum 49.67, calm) is from an earlier update. TOTW and Hero specials keep falling (Makaay −12%, Modrić −11%), and the next demand point is Destined for Glory Team 2 at {{t:2026-10-02T18:00:00+01:00}}.",
     "headline": "84s are back at the 650 floor; 84s are the cheapest Item Score at about 0.78 coins per point.",
     "label": "Hold, 84s at the floor are the best fodder value",
     "tone": "watch"
