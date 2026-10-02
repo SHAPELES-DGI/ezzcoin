@@ -213,31 +213,31 @@
       "version": "TOTW"
     },
     {
-      "name": "Raphinha",
-      "ovr": 89,
-      "pct": -8.74,
-      "price": "−123,147",
-      "version": "TOTW"
-    },
-    {
-      "name": "Peter Crouch",
+      "name": "Crouch",
       "ovr": 85,
-      "pct": -8.14,
-      "price": "−5,047",
+      "pct": -7.4,
+      "price": "−4,847",
       "version": "Base Hero"
     },
     {
-      "name": "Sophia Wilson",
-      "ovr": 89,
-      "pct": -8.14,
-      "price": "−58,771",
+      "name": "Miguel Gutiérrez",
+      "ovr": 82,
+      "pct": -6.52,
+      "price": "−782",
       "version": "TOTW"
     },
     {
-      "name": "Álvaro Carreras",
-      "ovr": 83,
-      "pct": -6.7,
-      "price": "−29,815",
+      "name": "Konstantinos Tzolakis",
+      "ovr": 81,
+      "pct": -6.52,
+      "price": "−685",
+      "version": "TOTW"
+    },
+    {
+      "name": "Raphinha",
+      "ovr": 89,
+      "pct": -6.29,
+      "price": "−94,287",
       "version": "TOTW"
     }
   ],
@@ -269,7 +269,7 @@
     },
     {
       "ovr": 86,
-      "price": 3800,
+      "price": 4000,
       "score": 4100
     },
     {
@@ -279,17 +279,17 @@
     },
     {
       "ovr": 88,
-      "price": 9000,
+      "price": 8800,
       "score": 8300
     },
     {
       "ovr": 89,
-      "price": 18250,
+      "price": 18500,
       "score": 11000
     },
     {
       "ovr": 90,
-      "price": 27000,
+      "price": 28250,
       "score": 14000
     },
     {
@@ -370,7 +370,7 @@
   "moves": [
     {
       "confidence": "medium",
-      "detail": "FUT.GG's biggest fallers are TOTW and Hero specials: Raphinha TOTW 89 −9%, Martinelli TOTW 82 −9%, Crouch Hero 85 −8%, Wilson TOTW 89 −8%. Last week's TOTW cards left packs when TOTW 3 arrived at {{t:2026-09-30T18:00:00+01:00}}. Spend on fodder first.",
+      "detail": "FUT.GG's biggest fallers are TOTW and Hero specials: Martinelli TOTW 82 −9%, Crouch Hero 85 −7%, Gutiérrez TOTW 82 −7%, Raphinha TOTW 89 −6%. Last week's TOTW cards left packs when TOTW 3 arrived at {{t:2026-09-30T18:00:00+01:00}}. Spend on fodder first.",
       "title": "Don't buy TOTW and Destined for Glory specials yet",
       "tone": "hold",
       "when": "Until {{t:2026-10-02T19:00:00+02:00}}"
@@ -393,7 +393,7 @@
     },
     {
       "confidence": "medium",
-      "detail": "FUT.GG this update: 84s at 650 cost 0.78 coins per point, against 0.95 for 85s at 2,000, 1.00 for 87s at 5,500 and 0.93 for 86s at 3,800. Prefer 84s when an SBC needs a big Item Score.",
+      "detail": "FUT.GG this update: 84s at 650 cost 0.78 coins per point, against 0.95 for 85s at 2,000, 0.98 for 86s at 4,000 and 1.00 for 87s at 5,500. Prefer 84s when an SBC needs a big Item Score.",
       "title": "84s at 650 are the cheapest Item Score",
       "tone": "watch",
       "when": "Every update"
@@ -431,7 +431,7 @@
       "title": "Season 1 ends 22 October"
     },
     {
-      "detail": "FUT.GG: 81–84 at 650, 85s at 2,000, 86s at 3,800. Biggest fallers are specials (Raphinha TOTW 89 −9%, Martinelli TOTW 82 −9%). Index figures (116.43, +1.33%) are from an earlier update because FUTBIN returned an error.",
+      "detail": "FUT.GG: 81–84 at 650, 85s at 2,000, 86s at 4,000. Biggest fallers are specials (Martinelli TOTW 82 −9%, Crouch Hero 85 −7%). Index figures (116.43, +1.33%) are from an earlier update because FUTBIN returned an error.",
       "kind": "data",
       "source": "FUTBIN · FUT.GG",
       "title": "Market stays calm, specials fall"
@@ -522,9 +522,9 @@
       "url": "https://www.futbin.com/27/squad-building-challenge/22"
     }
   ],
-  "updatedAt": "2026-10-02T08:13:13Z",
+  "updatedAt": "2026-10-02T09:13:25Z",
   "verdict": {
-    "detail": "FUT.GG shows 81–84 at 650, 85s at 2,000 and 86s at 3,800. FUTBIN did not load this run (403 twice), so the index reading (116.43, momentum 49.67, calm) is from an earlier update. Specials keep falling (Raphinha TOTW −9%, Crouch Hero −8%), and the next demand point is Destined for Glory Team 2 at {{t:2026-10-02T18:00:00+01:00}}.",
+    "detail": "FUT.GG shows 81–84 at 650, 85s at 2,000 and 86s at 4,000. FUTBIN did not load this run (403 twice), so the index reading (116.43, momentum 49.67, calm) is from an earlier update. Specials keep falling (Martinelli TOTW −9%, Crouch Hero −7%), and the next demand point is Destined for Glory Team 2 at {{t:2026-10-02T18:00:00+01:00}}.",
     "headline": "84s at 650 are the cheapest Item Score at about 0.78 coins per point.",
     "label": "Hold, 84s are the best fodder value",
     "tone": "watch"
