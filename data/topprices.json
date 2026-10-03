@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-10-03T17:43:51Z",
+ "updatedAt": "2026-10-03T18:14:33Z",
  "source": "FUTBIN",
  "minOvr": 84,
  "players": {
@@ -1680,27 +1680,27 @@
   "241461": {
    "name": "Ferran Torres",
    "ovr": 84,
-   "price": 3600,
-   "prev": null,
-   "at": "2026-10-02T19:32:10Z",
+   "price": 4300,
+   "prev": 3600,
+   "at": "2026-10-03T18:14:33Z",
    "src": "FUTBIN",
    "url": "https://www.futbin.com/27/player/654/ferran-torres-garcia"
   },
   "272094": {
    "name": "Fiamma Benítez",
    "ovr": 84,
-   "price": 650,
-   "prev": null,
-   "at": "2026-10-02T19:32:10Z",
+   "price": 950,
+   "prev": 650,
+   "at": "2026-10-03T18:10:00Z",
    "src": "FUTBIN",
    "url": "https://www.futbin.com/27/player/513/fiamma-benitez-ianuzzi"
   },
   "227013": {
    "name": "Fridolina Rolfö",
    "ovr": 84,
-   "price": 850,
-   "prev": null,
-   "at": "2026-10-02T19:32:10Z",
+   "price": 1200,
+   "prev": 850,
+   "at": "2026-10-03T18:10:00Z",
    "src": "FUTBIN",
    "url": "https://www.futbin.com/27/player/748/fridolina-rolfo"
   },
@@ -1977,9 +1977,9 @@
   "223848": {
    "name": "Sergej Milinković-Savić",
    "ovr": 84,
-   "price": 800,
-   "prev": null,
-   "at": "2026-10-02T19:33:17Z",
+   "price": 900,
+   "prev": 800,
+   "at": "2026-10-03T18:14:33Z",
    "src": "FUTBIN",
    "url": "https://www.futbin.com/27/player/567/sergej-milinkovic-savic"
   },
@@ -1995,27 +1995,27 @@
   "240638": {
    "name": "Tijjani Reijnders",
    "ovr": 84,
-   "price": 800,
-   "prev": null,
-   "at": "2026-10-02T19:33:17Z",
+   "price": 950,
+   "prev": 800,
+   "at": "2026-10-03T18:14:33Z",
    "src": "FUTBIN",
    "url": "https://www.futbin.com/27/player/759/tijjani-reijnders"
   },
   "231281": {
    "name": "Trent Alexander-Arnold",
    "ovr": 84,
-   "price": 850,
-   "prev": null,
-   "at": "2026-10-02T19:33:35Z",
+   "price": 900,
+   "prev": 850,
+   "at": "2026-10-03T18:14:33Z",
    "src": "FUTBIN",
    "url": "https://www.futbin.com/27/player/681/trent-alexander-arnold"
   },
   "271446": {
    "name": "Vicky López",
    "ovr": 84,
-   "price": 16000,
-   "prev": null,
-   "at": "2026-10-02T19:33:35Z",
+   "price": 17500,
+   "prev": 16000,
+   "at": "2026-10-03T18:14:33Z",
    "src": "FUTBIN",
    "url": "https://www.futbin.com/27/player/514/victoria-lopez-serrano-felix"
   },
@@ -2023,8 +2023,8 @@
    "name": "Waldemar Anton",
    "ovr": 84,
    "price": 950,
-   "prev": null,
-   "at": "2026-10-02T19:33:35Z",
+   "prev": 950,
+   "at": "2026-10-03T18:14:33Z",
    "src": "FUTBIN",
    "url": "https://www.futbin.com/27/player/336/waldemar-anton"
   },
@@ -2032,17 +2032,17 @@
    "name": "Wendie Renard",
    "ovr": 84,
    "price": 850,
-   "prev": null,
-   "at": "2026-10-02T19:33:35Z",
+   "prev": 850,
+   "at": "2026-10-03T18:14:33Z",
    "src": "FUTBIN",
    "url": "https://www.futbin.com/27/player/629/wendie-renard"
   },
   "210676": {
    "name": "Wladimiro Falcone",
    "ovr": 84,
-   "price": 800,
-   "prev": null,
-   "at": "2026-10-02T19:33:35Z",
+   "price": 850,
+   "prev": 800,
+   "at": "2026-10-03T18:14:33Z",
    "src": "FUTBIN",
    "url": "https://www.futbin.com/27/player/473/wladimiro-falcone"
   },

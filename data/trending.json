@@ -1,7 +1,7 @@
 {
- "updatedAt": "2026-10-03T17:35:23Z",
+ "updatedAt": "2026-10-03T18:03:41Z",
  "source": "FUTBIN",
- "at": "2026-10-03T17:34:30Z",
+ "at": "2026-10-03T18:03:41Z",
  "cards": [
   {
    "rank": 1,
@@ -138,12 +138,12 @@
   {
    "rank": 13,
    "name": "Groß",
-   "ovr": 84,
+   "ovr": 87,
    "pos": "CDM",
-   "version": "Premier League POTM",
+   "version": null,
    "price": 61000,
-   "url": "https://www.futbin.com/27/player/23103/pascal-gro",
-   "fid": 23103,
+   "url": "",
+   "fid": null,
    "src": "FUTBIN"
   },
   {
