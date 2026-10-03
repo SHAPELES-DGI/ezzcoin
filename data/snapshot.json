@@ -1,12 +1,6 @@
 {
   "corrections": [
     {
-      "date": "2026-10-02T14:13:46Z",
-      "section": "Moves right now",
-      "what": "Replaced Dunk, Stoica and Hoeneß in the first move, fallers list and news with Makaay, Di Natale and McManaman; updated 85 to 1,800 and 86 to 3,800.",
-      "why": "FUT.GG's momentum page no longer lists Dunk, Stoica or Hoeneß; cheapest-by-rating shows 85s at 1,800 and 86s at 3,800."
-    },
-    {
       "date": "2026-10-02T15:14:03Z",
       "section": "Moves right now",
       "what": "Replaced the 84-floor move tied to the Friday 17:00 call with a Rivals-rewards wait move; refreshed fallers and 87–91 fodder.",
@@ -89,6 +83,12 @@
       "section": "Moves right now",
       "what": "Replaced the \"Until 18:00 UK\" wait on Team 2 cards with a new window, and swapped the cheapest-fodder move to 85s at 750.",
       "why": "The old window had passed; FUT.GG now lists 85s at 750 (0.36 per point) against 84s at 700 (0.84) and 86s at 3,300 (0.80)."
+    },
+    {
+      "date": "2026-10-03T19:12:28Z",
+      "section": "Moves right now",
+      "what": "Replaced \"85s at 750 are the cheapest Item Score\" with 84s at 650, and updated 86/87 prices in the Rivals move.",
+      "why": "FUT.GG now lists 85s at 2,000 (0.95 per point) against 84s at 650 (0.78); the 750 reading was gone."
     }
   ],
   "drops": [
@@ -208,43 +208,36 @@
     {
       "name": "Robin Gosens",
       "ovr": 85,
-      "pct": -30.5,
-      "price": "−19,812",
+      "pct": -32.4,
+      "price": "−19,764",
       "version": "Destined for Glory"
     },
     {
       "name": "Charlie Cresswell",
       "ovr": 85,
-      "pct": -27.7,
-      "price": "−5,603",
+      "pct": -24.3,
+      "price": "−4,919",
       "version": "Destined for Glory"
     },
     {
       "name": "Ibrahim Maza",
       "ovr": 85,
-      "pct": -24.5,
-      "price": "−6,548",
-      "version": "Destined for Glory"
-    },
-    {
-      "name": "Marc Cucurella",
-      "ovr": 88,
-      "pct": -16.9,
-      "price": "−36,378",
+      "pct": -23.1,
+      "price": "−6,344",
       "version": "Destined for Glory"
     },
     {
       "name": "Anthony Gordon",
       "ovr": 86,
-      "pct": -14.6,
-      "price": "−46,962",
+      "pct": -14.1,
+      "price": "−44,337",
       "version": "Destined for Glory"
     },
     {
-      "name": "Erling Haaland",
-      "ovr": 91,
-      "pct": -12.3,
-      "price": "−190,340",
+      "name": "Marc Cucurella",
+      "ovr": 88,
+      "pct": -13.7,
+      "price": "−30,047",
       "version": "Destined for Glory"
     }
   ],
@@ -266,42 +259,42 @@
     },
     {
       "ovr": 84,
-      "price": 700,
+      "price": 650,
       "score": 830
     },
     {
       "ovr": 85,
-      "price": 750,
+      "price": 2000,
       "score": 2100
     },
     {
       "ovr": 86,
-      "price": 3300,
+      "price": 3800,
       "score": 4100
     },
     {
       "ovr": 87,
-      "price": 5000,
+      "price": 5500,
       "score": 5500
     },
     {
       "ovr": 88,
-      "price": 8400,
+      "price": 8500,
       "score": 8300
     },
     {
       "ovr": 89,
-      "price": 16000,
+      "price": 16500,
       "score": 11000
     },
     {
       "ovr": 90,
-      "price": 24750,
+      "price": 25500,
       "score": 14000
     },
     {
       "ovr": 91,
-      "price": 115000,
+      "price": 117000,
       "score": 19000
     }
   ],
@@ -314,7 +307,7 @@
     "idx86": 60.45,
     "momentum": 56.28,
     "momentumLabel": "The market is starting to wake up",
-    "note": "Read from FUTBIN's market page {{t:2026-10-03T17:34:00+00:00}}. FUTBIN's live page did not load this run (403 twice), so this is the saved reading."
+    "note": "Read from FUTBIN's market page {{t:2026-10-03T18:03:23+00:00}}."
   },
   "meta": [
     {
@@ -377,22 +370,22 @@
   "moves": [
     {
       "confidence": "low",
-      "detail": "Team 2 went live at {{t:2026-10-02T18:00:00+01:00}}. FUT.GG fallers are still Destined for Glory cards: Gosens 85 −30%, Cresswell 85 −28%, Maza 85 −24%, Cucurella 88 −17%, Gordon 86 −15%. Fresh specials usually keep falling while packs are opened, so let prices settle first.",
+      "detail": "Team 2 went live at {{t:2026-10-02T18:00:00+01:00}}. FUT.GG fallers are still Destined for Glory cards: Gosens 85 −32%, Cresswell 85 −24%, Maza 85 −23%, Gordon 86 −14%, Cucurella 88 −14%. Fresh specials usually keep falling while packs are opened, so let prices settle first.",
       "title": "Wait before buying Destined for Glory Team 2 cards",
       "tone": "hold",
       "when": "Until {{t:2026-10-04T18:00:00+01:00}}"
     },
     {
       "confidence": "low",
-      "detail": "Division Rivals rewards pay out at {{t:2026-10-08T06:59:00+00:00}} (EA Help) and add fodder and sub-85 cards. FUT.GG lists 86s at 3,300 and 87s at 5,000 now, so hold off on 86+ fodder until then.",
+      "detail": "Division Rivals rewards pay out at {{t:2026-10-08T06:59:00+00:00}} (EA Help) and add fodder and sub-85 cards. FUT.GG lists 86s at 3,800 and 87s at 5,500 now, so hold off on 86+ fodder until then.",
       "title": "Wait for Rivals rewards before buying 86+ fodder",
       "tone": "watch",
       "when": "Until {{t:2026-10-08T06:59:00+00:00}}"
     },
     {
       "confidence": "low",
-      "detail": "FUT.GG this update: 85s at 750 cost 0.36 coins per point, 84s at 700 0.84, 86s at 3,300 0.80 and 87s at 5,000 0.91. The 85 gap is well over 0.1. Use fodder in SBCs, don't trade it: selling costs the 5% tax.",
-      "title": "Fodder: 85s are the cheapest Item Score",
+      "detail": "FUT.GG this update: 84s at 650 cost 0.78 coins per point, 85s at 2,000 0.95, 86s at 3,800 0.93 and 87s at 5,500 1.00. The 84 gap is over 0.1. Use fodder in SBCs, don't trade it: selling costs the 5% tax.",
+      "title": "Fodder: 84s are the cheapest Item Score",
       "tone": "watch",
       "when": "Every update"
     },
@@ -406,7 +399,7 @@
   ],
   "news": [
     {
-      "detail": "Released at {{t:2026-10-02T18:00:00+01:00}} with Haaland 91 on top. Team 2 cards fall hardest in the first hours: Gosens −30%, Cresswell −28%, Maza −24% on FUT.GG.",
+      "detail": "Released at {{t:2026-10-02T18:00:00+01:00}} with Haaland 91 on top. Team 2 cards fall hardest in the first hours: Gosens −32%, Cresswell −24%, Maza −23% on FUT.GG.",
       "kind": "data",
       "source": "FUTBIN · FUT.GG",
       "title": "Destined for Glory Team 2 is live"
@@ -430,7 +423,7 @@
       "title": "Streamlined SBCs mostly skip minimum ratings"
     },
     {
-      "detail": "FUT.GG: 81–83 at 650, 84s at 700, 85s at 750, 86s at 3,300, 87s at 5,000. FUTBIN's Index 100 was 105.33 (−3.06%) when read {{t:2026-10-03T17:34:00+00:00}}; FUTBIN's market and SBC pages did not load this run (403 twice), so the SBC list is from FUT.GG.",
+      "detail": "FUT.GG: 81–84 at 650, 85s at 2,000, 86s at 3,800, 87s at 5,500. FUTBIN's Index 100 was 105.33 (−3.06%) when read {{t:2026-10-03T18:03:23+00:00}}; FUTBIN's SBC page did not load this run (403 twice), so the SBC list is from FUT.GG.",
       "kind": "data",
       "source": "FUT.GG · FUTBIN",
       "title": "Fodder: 84–87 cost about 1 coin per point"
@@ -557,9 +550,9 @@
       "url": "https://x.com/FutSheriff/status/2104296397529104395"
     }
   ],
-  "updatedAt": "2026-10-03T18:13:17Z",
+  "updatedAt": "2026-10-03T19:12:28Z",
   "verdict": {
-    "detail": "FUT.GG shows 81–83 at 650, 84s at 700, 85s at 750, 86s at 3,300 and 87s at 5,000. Fallers are Destined for Glory cards (Gosens −30%, Cresswell −28%, Maza −24%, Cucurella −17%). FUTBIN's Index 100 was 105.33 (−3.06%) and momentum 56.28 when read {{t:2026-10-03T17:34:00+00:00}}. Next supply point is Rivals rewards at {{t:2026-10-08T06:59:00+00:00}}.",
+    "detail": "FUT.GG shows 81–84 at 650, 85s at 2,000, 86s at 3,800 and 87s at 5,500. Fallers are Destined for Glory cards (Gosens −32%, Cresswell −24%, Maza −23%, Gordon −14%). FUTBIN's Index 100 was 105.33 (−3.06%) and momentum 56.28 when read {{t:2026-10-03T18:03:23+00:00}}. Next supply point is Rivals rewards at {{t:2026-10-08T06:59:00+00:00}}.",
     "headline": "Destined for Glory Team 2 cards are still falling; wait for them to settle.",
     "label": "Hold, specials are still falling",
     "tone": "watch"
