@@ -6,8 +6,10 @@ data/newcards.json (when it is surely the same person), and every Icon and Hero 
 is known (saved under the card's own id, 1000000000 + FUT.GG or FUTBIN card id), it looks for the player's Wikidata item,
 takes the item's main image (P18), checks the file's licence on Commons (public domain, CC0,
 CC BY or CC BY-SA only), downloads a 360 px thumbnail to photos/<EA id>.<ext> and records the
-credit in photos/credits.json. Wrong-person matches are avoided: the Commons file name must
-contain one of the player's names, and a name-only match must be unique among footballers.
+credit in photos/credits.json. Items are found by EA id (P1469) or by name (English label or alias).
+Wrong-person matches are avoided: a name match must be a single footballer, or a single one once
+club, nationality and birth year are compared. photos/report.json lists why a
+player rated 85+ (or a new card's base player) still has no photo.
 
 Usage: python3 scripts/fetch_photos.py [site root]   (standard library only; runs on GitHub)
 """
@@ -74,26 +76,91 @@ def by_id(players):
     return out
 
 
+COUNTRY_ALIASES = {"korea republic": "south korea", "korea dpr": "north korea", "usa": "united states",
+                   "united states of america": "united states", "holland": "netherlands", "kingdom of the netherlands": "netherlands",
+                   "cote d ivoire": "ivory coast", "turkiye": "turkey", "china pr": "people s republic of china",
+                   "republic of ireland": "ireland", "czechia": "czech republic", "cabo verde": "cape verde",
+                   "congo dr": "democratic republic of the congo", "dr congo": "democratic republic of the congo",
+                   "bosnia herzegovina": "bosnia and herzegovina", "north macedonia": "north macedonia"}
+SEASON_YEAR = 2026
+
+
+def country_key(s):
+    k = norm(s)
+    return COUNTRY_ALIASES.get(k, k)
+
+
+CLUB_NOISE = {"fc", "cf", "ac", "sc", "afc", "sv", "ss", "as", "us", "rc", "cd", "ud", "sd", "club", "de", "the", "football", "futbol",
+              "calcio", "women", "ladies", "w", "fk", "nk", "sk", "if", "bk", "and", "city", "united"}
+
+
+def club_words(s):
+    """Distinctive words of a club name ("FC Barcelona" -> {"barcelona"}), for comparing EA and Wikidata names."""
+    return frozenset(w for w in norm(s).split() if len(w) > 2 and w not in CLUB_NOISE)
+
+
 def by_name(players):
-    """Footballers whose English label equals the player's name; kept only when exactly one matches."""
-    out = {}
+    """Footballers whose English label or alias equals the player's name or full name. Kept when exactly one
+    footballer matches, or exactly one is left after comparing birth year (from the player's age) and nationality."""
     names = {}
     for x in players:
         for n in {x["f"], x["n"]} - {""}:
             names.setdefault(n, set()).add(x["id"])
     keys = [n for n, v in names.items() if len(v) == 1]
-    for i in range(0, len(keys), 100):
-        q = ("SELECT ?label ?item ?image WHERE { VALUES ?label { " + " ".join(lit(n) + "@en" for n in keys[i:i + 100]) + " } "
-             "?item rdfs:label ?label; wdt:P106 wd:Q937857; wdt:P18 ?image. }")
-        found = {}
-        for b in sparql(q):
-            found.setdefault(b["label"]["value"], {}).setdefault(b["item"]["value"], set()).add(file_of(b["image"]["value"]))
-        for label, items in found.items():
-            if len(items) == 1:
-                pid = next(iter(names[label]))
-                out.setdefault(pid, set()).update(next(iter(items.values())))
+    items = {}  # item uri -> {"files", "years", "countries", "labels"}
+    for i in range(0, len(keys), 60):
+        q = ("SELECT ?label ?item (GROUP_CONCAT(DISTINCT STR(?image); separator=\"|\") AS ?imgs) "
+             "(GROUP_CONCAT(DISTINCT STR(YEAR(?dob)); separator=\"|\") AS ?ys) (GROUP_CONCAT(DISTINCT ?cl; separator=\"|\") AS ?cls) "
+             "(GROUP_CONCAT(DISTINCT ?tl; separator=\"|\") AS ?tls) WHERE { VALUES ?label { " + " ".join(lit(n) + "@en" for n in keys[i:i + 60]) + " } "
+             "?item rdfs:label|skos:altLabel ?label; wdt:P106 wd:Q937857; wdt:P18 ?image. "
+             "OPTIONAL { ?item wdt:P569 ?dob } OPTIONAL { ?item wdt:P27 ?c . ?c rdfs:label ?cl FILTER(LANG(?cl) = \"en\") } "
+             "OPTIONAL { ?item wdt:P54 ?t . ?t rdfs:label ?tl FILTER(LANG(?tl) = \"en\") } } GROUP BY ?label ?item")
+        try:
+            rows = sparql(q)
+        except RuntimeError as e:  # one slow batch shouldn't stop the whole job
+            print("by_name batch skipped:", e)
+            continue
+        parts = lambda b, k: [v for v in (b.get(k, {}).get("value") or "").split("|") if v]
+        for b in rows:
+            it = items.setdefault(b["item"]["value"], {"files": set(), "years": set(), "countries": set(), "teams": set(), "labels": set()})
+            it["files"].update(file_of(v) for v in parts(b, "imgs"))
+            it["labels"].add(b["label"]["value"])
+            it["years"].update(int(v) for v in parts(b, "ys") if v.isdigit())
+            it["countries"].update(country_key(v) for v in parts(b, "cls"))
+            it["teams"].update(club_words(v) for v in parts(b, "tls"))
         time.sleep(1)
-    return out
+    by_label = {}
+    for uri, it in items.items():
+        for lab in it["labels"]:
+            by_label.setdefault(lab, set()).add(uri)
+    out, why = {}, {}
+    for x in players:
+        cands = set()
+        for n in {x["f"], x["n"]} - {""}:
+            if len(names.get(n, ())) == 1:
+                cands |= by_label.get(n, set())
+        if not cands:
+            why[x["id"]] = "no Wikidata footballer with this name and a photo"
+            continue
+        if len(cands) > 1 and x.get("club"):
+            mine = club_words(x["club"])
+            same = {u for u in cands if mine and any(mine & t for t in items[u]["teams"])}
+            if same:
+                cands = same
+        if len(cands) > 1 and x.get("age"):
+            want = SEASON_YEAR - int(x["age"])
+            near = {u for u in cands if any(abs(y - want) <= 1 for y in items[u]["years"])}
+            if near:
+                cands = near
+        if len(cands) > 1 and x.get("nat"):
+            same = {u for u in cands if country_key(x["nat"]) in items[u]["countries"]}
+            if same:
+                cands = same
+        if len(cands) == 1:
+            out[x["id"]] = items[next(iter(cands))]["files"]
+        else:
+            why[x["id"]] = f"{len(cands)} footballers with this name"
+    return out, why
 
 
 def commons_info(files):
@@ -180,14 +247,16 @@ def main():
     data = json.load(open(os.path.join(ROOT, "data", "players.json"), encoding="utf-8"))
     ci = {c: i for i, c in enumerate(data["cols"])}
     rows = [r for r in data["rows"] if r[ci["id"]] is not None]
-    players = [{"id": int(r[ci["id"]]), "n": r[ci["name"]] or "", "f": r[ci["full"]] or ""}
-               for r in rows if (r[ci["ovr"]] or 0) >= MIN_OVR]
+    info_of = lambda r: {"id": int(r[ci["id"]]), "n": r[ci["name"]] or "", "f": r[ci["full"]] or "", "o": r[ci["ovr"]] or 0,
+                         "age": r[ci["age"]] if "age" in ci else None, "nat": r[ci["nation"]] if "nation" in ci else "",
+                         "club": r[ci["club"]] if "club" in ci else ""}
+    players = [info_of(r) for r in rows if (r[ci["ovr"]] or 0) >= MIN_OVR]
     # Base players of new special cards (often rated below MIN_OVR), so those cards get a photo too.
     have = {x["id"] for x in players}
     for pid in new_card_bases(rows, ci):
         r = next((r for r in rows if int(r[ci["id"]]) == pid), None)
         if r and pid not in have:
-            players.append({"id": pid, "n": r[ci["name"]] or "", "f": r[ci["full"]] or ""})
+            players.append(dict(info_of(r), base=True))
             have.add(pid)
     # Icons and Heroes: only once their full name is known (a short card name alone could match the wrong person).
     try:
@@ -200,7 +269,9 @@ def main():
         except (TypeError, ValueError):
             continue
         if c.get("full") and pid not in have:
-            players.append({"id": pid, "n": c.get("name") or "", "f": c["full"]})
+            players.append({"id": pid, "n": c.get("name") or "", "f": c["full"], "o": c.get("ovr") or 0, "age": None,
+                            "nat": c.get("nation") or "", "club": "" if str(c.get("club") or "").upper() == "ICON" else c.get("club") or "",
+                            "base": True})
             have.add(pid)
     pdir = os.path.join(ROOT, "photos")
     os.makedirs(pdir, exist_ok=True)
@@ -208,29 +279,40 @@ def main():
     credits = json.load(open(cpath, encoding="utf-8")) if os.path.exists(cpath) else {}
 
     cand = by_id(players)
-    for pid, files in by_name([x for x in players if x["id"] not in cand]).items():
+    named, why = by_name([x for x in players if x["id"] not in cand])
+    for pid, files in named.items():
         cand.setdefault(pid, set()).update(files)
     byid = {x["id"]: x for x in players}
-    # keep only files whose name contains one of the player's names
+    # The item's main photo is that person's photo; when it has several, prefer one whose file name carries the name.
     chosen = {}
     for pid, files in cand.items():
         toks = tokens(byid[pid])
-        good = sorted(f for f in files if toks & set(norm(f).split()))
-        if good:
-            chosen[pid] = good[0]
+        chosen[pid] = sorted(files, key=lambda f: (not (toks & set(norm(f).split())), f))[0]
     info = commons_info(set(chosen.values()))
     added = kept = 0
     for pid, f in sorted(chosen.items()):
         meta = info.get(f)
-        if not meta or not meta["thumb"] or not OK_LICENCE.match(meta["licence"] or "") or meta["mime"] not in ("image/jpeg", "image/png"):
+        if not meta or not meta["thumb"]:
+            why[pid] = "photo not found on Commons"
+            continue
+        if not OK_LICENCE.match(meta["licence"] or ""):
+            why[pid] = "licence not allowed: " + (meta["licence"] or "none")
+            continue
+        if meta["mime"] not in ("image/jpeg", "image/png"):
+            why[pid] = "not a JPEG or PNG"
             continue
         name = f"{pid}.jpg"
         old = credits.get(str(pid))
         if old and old.get("file") == f and os.path.exists(os.path.join(pdir, old.get("img", ""))):
             kept += 1
             continue
-        blob = http(meta["thumb"])
+        try:
+            blob = http(meta["thumb"])
+        except RuntimeError:
+            why[pid] = "download failed"
+            continue
         if len(blob) < 2000:
+            why[pid] = "download too small"
             continue
         shrink(blob, os.path.join(pdir, name))
         credits[str(pid)] = {"img": name, "file": f, "page": meta["page"], "author": clean_author(meta["author"]),
@@ -249,6 +331,14 @@ def main():
         del credits[pid]
     with open(cpath, "w", encoding="utf-8") as fh:
         json.dump(credits, fh, ensure_ascii=False, indent=0, sort_keys=True)
+    # Why the players people look for most still have no photo (rated 85+, or the base of a new card).
+    missing = {}
+    for x in players:
+        if str(x["id"]) in credits or not ((x.get("o") or 0) >= 85 or x.get("base")):
+            continue
+        missing[str(x["id"])] = {"name": x["f"] or x["n"], "ovr": x.get("o"), "why": why.get(x["id"], "no Wikidata item with this EA id or name")}
+    with open(os.path.join(pdir, "report.json"), "w", encoding="utf-8") as fh:
+        json.dump({"photos": len(credits), "players": len(players), "missing": missing}, fh, ensure_ascii=False, indent=0, sort_keys=True)
     print(f"OK: {len(credits)} player photos ({added} new, {kept} unchanged) for {len(players)} players; "
           f"{len(cand)} candidates, {len(chosen)} with matching file names")
 
