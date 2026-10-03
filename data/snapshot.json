@@ -208,36 +208,29 @@
     {
       "name": "Charlie Cresswell",
       "ovr": 85,
-      "pct": -35.71,
-      "price": "−7,231",
+      "pct": -33.6,
+      "price": "−6,804",
       "version": "Destined for Glory"
     },
     {
       "name": "Robin Gosens",
       "ovr": 85,
-      "pct": -27.45,
-      "price": "−20,313",
+      "pct": -29,
+      "price": "−20,735",
       "version": "Destined for Glory"
     },
     {
       "name": "Ibrahim Maza",
       "ovr": 85,
-      "pct": -21.15,
-      "price": "−6,451",
-      "version": "Destined for Glory"
-    },
-    {
-      "name": "Jakub Kiwior",
-      "ovr": 86,
-      "pct": -18.18,
-      "price": "−3,681",
+      "pct": -20.77,
+      "price": "−6,179",
       "version": "Destined for Glory"
     },
     {
       "name": "Anthony Gordon",
       "ovr": 86,
-      "pct": -14.36,
-      "price": "−46,670",
+      "pct": -16.09,
+      "price": "−52,132",
       "version": "Destined for Glory"
     }
   ],
@@ -264,37 +257,37 @@
     },
     {
       "ovr": 85,
-      "price": 1800,
+      "price": 2000,
       "score": 2100
     },
     {
       "ovr": 86,
-      "price": 3800,
+      "price": 4100,
       "score": 4100
     },
     {
       "ovr": 87,
-      "price": 5800,
+      "price": 5300,
       "score": 5500
     },
     {
       "ovr": 88,
-      "price": 8700,
+      "price": 8400,
       "score": 8300
     },
     {
       "ovr": 89,
-      "price": 16000,
+      "price": 16500,
       "score": 11000
     },
     {
       "ovr": 90,
-      "price": 25750,
+      "price": 25250,
       "score": 14000
     },
     {
       "ovr": 91,
-      "price": 121000,
+      "price": 117000,
       "score": 19000
     }
   ],
@@ -370,21 +363,21 @@
   "moves": [
     {
       "confidence": "medium",
-      "detail": "Team 2 went live at {{t:2026-10-02T18:00:00+01:00}}. FUT.GG fallers are Destined for Glory cards: Cresswell 85 −36%, Gosens 85 −27%, Maza 85 −21%, Kiwior 86 −18%. Fresh specials usually keep falling while packs are opened, so let prices settle first.",
+      "detail": "Team 2 went live at {{t:2026-10-02T18:00:00+01:00}}. FUT.GG fallers are Destined for Glory cards: Cresswell 85 −34%, Gosens 85 −29%, Maza 85 −21%, Gordon 86 −16%. Fresh specials usually keep falling while packs are opened, so let prices settle first.",
       "title": "Wait before buying Destined for Glory Team 2 cards",
       "tone": "hold",
       "when": "Until {{t:2026-10-03T18:00:00+01:00}}"
     },
     {
       "confidence": "low",
-      "detail": "Division Rivals rewards pay out at {{t:2026-10-08T06:59:00+00:00}} (EA Help) and add fodder and sub-85 cards. FUT.GG lists 85s at 1,800 and 87s at 5,800 now, so hold off on 85+ fodder until then.",
+      "detail": "Division Rivals rewards pay out at {{t:2026-10-08T06:59:00+00:00}} (EA Help) and add fodder and sub-85 cards. FUT.GG lists 85s at 2,000 and 87s at 5,300 now, so hold off on 85+ fodder until then.",
       "title": "Wait for Rivals rewards before buying 86+ fodder",
       "tone": "watch",
       "when": "Until {{t:2026-10-08T06:59:00+00:00}}"
     },
     {
       "confidence": "low",
-      "detail": "FUT.GG this update: 84s at 700 cost 0.84 coins per point, 85s at 1,800 0.86, 86s at 3,800 0.93 and 87s at 5,800 1.05. The gaps are under 0.1 for 84 and 85, so treat them as a tie. Use fodder in SBCs, don't trade it: selling costs the 5% tax.",
+      "detail": "FUT.GG this update: 84s at 700 cost 0.84 coins per point, 85s at 2,000 0.95, 86s at 4,100 1.00 and 87s at 5,300 0.96. The gaps are about 0.1 or less, so treat them as a near tie. Use fodder in SBCs, don't trade it: selling costs the 5% tax.",
       "title": "Fodder: all ratings cost about the same per point",
       "tone": "watch",
       "when": "Every update"
@@ -399,7 +392,7 @@
   ],
   "news": [
     {
-      "detail": "Released at {{t:2026-10-02T18:00:00+01:00}} with Haaland 91 on top. Team 2 cards fall hardest in the first hours: Cresswell −36%, Gosens −27%, Maza −21% on FUT.GG.",
+      "detail": "Released at {{t:2026-10-02T18:00:00+01:00}} with Haaland 91 on top. Team 2 cards fall hardest in the first hours: Cresswell −34%, Gosens −29%, Maza −21% on FUT.GG.",
       "kind": "data",
       "source": "FUTBIN · FUT.GG",
       "title": "Destined for Glory Team 2 is live"
@@ -423,7 +416,7 @@
       "title": "Streamlined SBCs mostly skip minimum ratings"
     },
     {
-      "detail": "FUT.GG: 81–83 at 650, 84s at 700, 85s at 1,800, 86s at 3,800, 87s at 5,800. FUTBIN's Index 100 was 105.33 (−3.06%) when read {{t:2026-10-03T11:04:23+00:00}}; FUTBIN's SBC page did not load this run (403 twice), so the SBC list is from FUT.GG.",
+      "detail": "FUT.GG: 81–83 at 650, 84s at 700, 85s at 2,000, 86s at 4,100, 87s at 5,300. FUTBIN's Index 100 was 105.33 (−3.06%) when read {{t:2026-10-03T11:04:23+00:00}}; FUTBIN's market and SBC pages did not load this run (403 twice), so the SBC list is from FUT.GG.",
       "kind": "data",
       "source": "FUT.GG · FUTBIN",
       "title": "Fodder: 84–87 cost about 1 coin per point"
@@ -550,9 +543,9 @@
       "url": "https://x.com/FutSheriff/status/2104296397529104395"
     }
   ],
-  "updatedAt": "2026-10-03T15:13:06Z",
+  "updatedAt": "2026-10-03T16:13:15Z",
   "verdict": {
-    "detail": "FUT.GG shows 81–83 at 650, 84s at 700, 85s at 1,800, 86s at 3,800 and 87s at 5,800. The top fallers are Destined for Glory cards (Cresswell −36%, Gosens −27%, Maza −21%, Kiwior −18%). FUTBIN did not load this run (403 twice); its market page, read {{t:2026-10-03T11:04:23+00:00}}, showed Index 100 at 105.33 (−3.06%) and momentum 56.28. Next supply point is Rivals rewards at {{t:2026-10-08T06:59:00+00:00}}.",
+    "detail": "FUT.GG shows 81–83 at 650, 84s at 700, 85s at 2,000, 86s at 4,100 and 87s at 5,300. The top fallers are Destined for Glory cards (Cresswell −34%, Gosens −29%, Maza −21%, Gordon −16%). FUTBIN did not load this run (403 twice); its market page, read {{t:2026-10-03T11:04:23+00:00}}, showed Index 100 at 105.33 (−3.06%) and momentum 56.28. Next supply point is Rivals rewards at {{t:2026-10-08T06:59:00+00:00}}.",
     "headline": "Destined for Glory Team 2 cards are still falling; wait for them to settle.",
     "label": "Hold, specials are falling",
     "tone": "watch"
