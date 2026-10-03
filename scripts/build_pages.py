@@ -467,7 +467,7 @@ def main():
     seen = {y["id"] for y in specials}
     for c in lcards:
         try:
-            key = int(c.get("fid"))
+            key = int(c.get("gid") if c.get("gid") not in (None, "") else c.get("fid"))
         except (TypeError, ValueError):
             continue
         leg = "icon" if c.get("league") == "Icons" else "hero" if c.get("league") == "Heroes" else ""

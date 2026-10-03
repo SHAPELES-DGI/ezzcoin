@@ -3,7 +3,7 @@
 
 For every player rated MIN_OVR+ in data/players.json, the base player of every new special card in
 data/newcards.json (when it is surely the same person), and every Icon and Hero in data/legends.json whose full name
-is known (saved under the card's own id, 1000000000 + FUTBIN id), it looks for the player's Wikidata item,
+is known (saved under the card's own id, 1000000000 + FUT.GG or FUTBIN card id), it looks for the player's Wikidata item,
 takes the item's main image (P18), checks the file's licence on Commons (public domain, CC0,
 CC BY or CC BY-SA only), downloads a 360 px thumbnail to photos/<EA id>.<ext> and records the
 credit in photos/credits.json. Wrong-person matches are avoided: the Commons file name must
@@ -196,7 +196,7 @@ def main():
         lcards = []
     for c in lcards:
         try:
-            pid = SPECIAL + int(c.get("fid"))
+            pid = SPECIAL + int(c.get("gid") if c.get("gid") not in (None, "") else c.get("fid"))
         except (TypeError, ValueError):
             continue
         if c.get("full") and pid not in have:
