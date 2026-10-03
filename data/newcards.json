@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-10-03T06:03:09Z",
+ "updatedAt": "2026-10-03T06:30:57Z",
  "source": "FUTBIN",
  "cards": [
   {
@@ -35,18 +35,26 @@
    "version": "FUT Champions",
    "ovr": 80,
    "pos": "CM",
-   "alt": "",
+   "alt": "CDM",
    "club": "Fulham",
-   "league": null,
-   "nation": null,
-   "sm": null,
-   "wf": null,
-   "ps": null,
+   "league": "Premier League",
+   "nation": "Northern Ireland",
+   "sm": 3,
+   "wf": 3,
+   "ps": "Press Proven+",
    "added": "2026-10-02",
    "price": null,
    "priceAt": null,
    "src": "FUTBIN",
-   "url": "https://www.futbin.com/27/player/23158/shea-charles"
+   "url": "https://www.futbin.com/27/player/23158/shea-charles",
+   "stats": [
+    74,
+    71,
+    80,
+    78,
+    77,
+    83
+   ]
   },
   {
    "fid": 23157,
@@ -54,18 +62,26 @@
    "version": "FUT Champions",
    "ovr": 80,
    "pos": "LM",
-   "alt": "",
+   "alt": "RB, LB, CDM, RM, CM",
    "club": "Athletic Club",
-   "league": null,
-   "nation": null,
-   "sm": null,
-   "wf": null,
-   "ps": null,
+   "league": "Liga F Moeve",
+   "nation": "Spain",
+   "sm": 3,
+   "wf": 3,
+   "ps": "Rapid+",
    "added": "2026-10-02",
    "price": null,
    "priceAt": null,
    "src": "FUTBIN",
-   "url": "https://www.futbin.com/27/player/23157/sara-ortega-ruiz"
+   "url": "https://www.futbin.com/27/player/23157/sara-ortega-ruiz",
+   "stats": [
+    85,
+    77,
+    79,
+    83,
+    62,
+    70
+   ]
   },
   {
    "fid": 23156,
@@ -75,16 +91,24 @@
    "pos": "ST",
    "alt": "",
    "club": "AZ",
-   "league": null,
-   "nation": null,
-   "sm": null,
-   "wf": null,
-   "ps": null,
+   "league": "Eredivisie",
+   "nation": "Netherlands",
+   "sm": 4,
+   "wf": 3,
+   "ps": "Power Shot+, Acrobatic+, Gamechanger+, First Touch+, Enforcer+",
    "added": "2026-10-02",
    "price": null,
    "priceAt": null,
    "src": "FUTBIN",
-   "url": "https://www.futbin.com/27/player/23156/mexx-meerdink"
+   "url": "https://www.futbin.com/27/player/23156/mexx-meerdink",
+   "stats": [
+    78,
+    81,
+    70,
+    80,
+    38,
+    84
+   ]
   },
   {
    "fid": 23155,
@@ -92,18 +116,26 @@
    "version": "FUT Champions",
    "ovr": 80,
    "pos": "ST",
-   "alt": "",
+   "alt": "CAM",
    "club": "Burnley",
-   "league": null,
-   "nation": null,
-   "sm": null,
-   "wf": null,
-   "ps": null,
+   "league": "EFL Championship",
+   "nation": "Switzerland",
+   "sm": 3,
+   "wf": 4,
+   "ps": "Low Driven Shot+, Incisive Pass+, Technical+",
    "added": "2026-10-02",
    "price": null,
    "priceAt": null,
    "src": "FUTBIN",
-   "url": "https://www.futbin.com/27/player/23155/zeki-amdouni"
+   "url": "https://www.futbin.com/27/player/23155/zeki-amdouni",
+   "stats": [
+    78,
+    82,
+    78,
+    84,
+    52,
+    72
+   ]
   },
   {
    "fid": 23154,
@@ -727,6 +759,33 @@
    "url": "https://www.futbin.com/27/player/23129/weston-mckennie"
   },
   {
+   "fid": 23127,
+   "name": "Maghnes Akliouche",
+   "version": "Destined for Glory",
+   "ovr": 85,
+   "pos": "CAM",
+   "alt": "RM, CM, RW",
+   "club": "Paris SG",
+   "league": "Ligue 1 McDonald's",
+   "nation": "France",
+   "sm": 4,
+   "wf": 3,
+   "ps": "Low Driven Shot+, Pinged Pass+, Inventive+, Technical+",
+   "stats": [
+    84,
+    83,
+    86,
+    89,
+    55,
+    70
+   ],
+   "added": "2026-10-02",
+   "price": null,
+   "priceAt": null,
+   "src": "FUTBIN",
+   "url": "https://www.futbin.com/27/player/23127/maghnes-akliouche"
+  },
+  {
    "fid": 23125,
    "name": "Mateus Gonçalo Espanha Fernandes",
    "version": "Destined for Glory",
@@ -856,8 +915,8 @@
     75
    ],
    "added": "2026-10-02",
-   "price": 415000,
-   "priceAt": "2026-10-02T19:58:30Z",
+   "price": 390000,
+   "priceAt": "2026-10-03T06:29:50Z",
    "src": "FUTBIN",
    "url": "https://www.futbin.com/27/player/23120/anthony-gordon"
   },
@@ -2792,10 +2851,24 @@
    "pos": "CDM",
    "club": "",
    "added": "2026-09-23",
-   "price": 10500,
-   "priceAt": "2026-10-02T19:29:00Z",
+   "price": 10750,
+   "priceAt": "2026-10-03T06:30:30Z",
    "src": "FUTBIN",
-   "url": "https://www.futbin.com/27/player/22992/chiara-hahn"
+   "url": "https://www.futbin.com/27/player/22992/chiara-hahn",
+   "alt": "RB, RM, CM",
+   "league": "GPFBL",
+   "nation": "Germany",
+   "sm": 3,
+   "wf": 3,
+   "ps": "Power Shot+, Pinged Pass+, Press Proven+",
+   "stats": [
+    82,
+    75,
+    76,
+    81,
+    75,
+    71
+   ]
   },
   {
    "fid": 22991,
@@ -2805,10 +2878,24 @@
    "pos": "ST",
    "club": "",
    "added": "2026-09-23",
-   "price": 10500,
-   "priceAt": "2026-10-02T19:29:00Z",
+   "price": 10250,
+   "priceAt": "2026-10-03T06:30:30Z",
    "src": "FUTBIN",
-   "url": "https://www.futbin.com/27/player/22991/salomon-rodriguez"
+   "url": "https://www.futbin.com/27/player/22991/salomon-rodriguez",
+   "alt": "",
+   "league": "Sudamericana",
+   "nation": "Uruguay",
+   "sm": 3,
+   "wf": 3,
+   "ps": "Enforcer+",
+   "stats": [
+    78,
+    82,
+    70,
+    75,
+    43,
+    80
+   ]
   },
   {
    "fid": 22990,
@@ -2818,10 +2905,24 @@
    "pos": "RW",
    "club": "",
    "added": "2026-09-23",
-   "price": 11000,
-   "priceAt": "2026-10-02T19:29:00Z",
+   "price": 10500,
+   "priceAt": "2026-10-03T06:30:50Z",
    "src": "FUTBIN",
-   "url": "https://www.futbin.com/27/player/22990/anis-hadj-moussa"
+   "url": "https://www.futbin.com/27/player/22990/anis-hadj-moussa",
+   "alt": "RM",
+   "league": "Eredivisie",
+   "nation": "Algeria",
+   "sm": 5,
+   "wf": 3,
+   "ps": "",
+   "stats": [
+    82,
+    78,
+    74,
+    88,
+    34,
+    65
+   ]
   },
   {
    "fid": 22988,
@@ -2831,10 +2932,24 @@
    "pos": "CB",
    "club": "",
    "added": "2026-09-23",
-   "price": 11000,
-   "priceAt": "2026-10-02T19:29:00Z",
+   "price": 10750,
+   "priceAt": "2026-10-03T06:30:50Z",
    "src": "FUTBIN",
-   "url": "https://www.futbin.com/27/player/22988/bella-andersson"
+   "url": "https://www.futbin.com/27/player/22988/bella-andersson",
+   "alt": "",
+   "league": "Liga F Moeve",
+   "nation": "Sweden",
+   "sm": 2,
+   "wf": 3,
+   "ps": "",
+   "stats": [
+    72,
+    30,
+    62,
+    66,
+    80,
+    84
+   ]
   },
   {
    "fid": 22985,
@@ -2844,10 +2959,24 @@
    "pos": "CAM",
    "club": "",
    "added": "2026-09-23",
-   "price": 10500,
-   "priceAt": "2026-10-02T19:29:00Z",
+   "price": 10250,
+   "priceAt": "2026-10-03T06:30:50Z",
    "src": "FUTBIN",
-   "url": "https://www.futbin.com/27/player/22985/jack-moylan"
+   "url": "https://www.futbin.com/27/player/22985/jack-moylan",
+   "alt": "CDM, CM, LM, LW",
+   "league": "EFL Championship",
+   "nation": "Republic of Ireland",
+   "sm": 3,
+   "wf": 3,
+   "ps": "Low Driven Shot+, Gamechanger+, Quick Step+",
+   "stats": [
+    84,
+    80,
+    79,
+    81,
+    57,
+    75
+   ]
   },
   {
    "fid": 22984,
@@ -2857,10 +2986,24 @@
    "pos": "CAM",
    "club": "",
    "added": "2026-09-23",
-   "price": 10500,
-   "priceAt": "2026-10-02T19:29:00Z",
+   "price": 11000,
+   "priceAt": "2026-10-03T06:30:50Z",
    "src": "FUTBIN",
-   "url": "https://www.futbin.com/27/player/22984/marco-reus"
+   "url": "https://www.futbin.com/27/player/22984/marco-reus",
+   "alt": "CDM, CM",
+   "league": "MLS",
+   "nation": "Germany",
+   "sm": 4,
+   "wf": 4,
+   "ps": "Gamechanger+",
+   "stats": [
+    72,
+    83,
+    83,
+    82,
+    55,
+    65
+   ]
   },
   {
    "fid": 22983,
@@ -2870,10 +3013,24 @@
    "pos": "RB",
    "club": "",
    "added": "2026-09-23",
-   "price": 11250,
-   "priceAt": "2026-10-02T19:29:00Z",
+   "price": 10750,
+   "priceAt": "2026-10-03T06:30:50Z",
    "src": "FUTBIN",
-   "url": "https://www.futbin.com/27/player/22983/dujon-sterling"
+   "url": "https://www.futbin.com/27/player/22983/dujon-sterling",
+   "alt": "CB, LB, RM, LM",
+   "league": "Scottish Premiership",
+   "nation": "England",
+   "sm": 3,
+   "wf": 3,
+   "ps": "",
+   "stats": [
+    80,
+    58,
+    74,
+    77,
+    79,
+    83
+   ]
   },
   {
    "fid": 22980,
@@ -2883,10 +3040,24 @@
    "pos": "CB",
    "club": "",
    "added": "2026-09-23",
-   "price": 10750,
-   "priceAt": "2026-10-02T19:29:00Z",
+   "price": 10250,
+   "priceAt": "2026-10-03T06:30:50Z",
    "src": "FUTBIN",
-   "url": "https://www.futbin.com/27/player/22980/hannes-delcroix"
+   "url": "https://www.futbin.com/27/player/22980/hannes-delcroix",
+   "alt": "LB, CDM",
+   "league": "Swiss Super League",
+   "nation": "Haiti",
+   "sm": 2,
+   "wf": 3,
+   "ps": "Aerial Fortress+, Bruiser+",
+   "stats": [
+    77,
+    46,
+    72,
+    71,
+    80,
+    82
+   ]
   },
   {
    "fid": 22975,
@@ -2896,10 +3067,24 @@
    "pos": "CDM",
    "club": "",
    "added": "2026-09-23",
-   "price": 10750,
-   "priceAt": "2026-10-02T19:29:00Z",
+   "price": 11000,
+   "priceAt": "2026-10-03T06:30:40Z",
    "src": "FUTBIN",
-   "url": "https://www.futbin.com/27/player/22975/pablo-rosario"
+   "url": "https://www.futbin.com/27/player/22975/pablo-rosario",
+   "alt": "CB, CM",
+   "league": "Liga Portugal",
+   "nation": "Dominican Republic",
+   "sm": 3,
+   "wf": 3,
+   "ps": "Intercept+, Relentless+, Bruiser+",
+   "stats": [
+    73,
+    66,
+    72,
+    77,
+    80,
+    84
+   ]
   },
   {
    "fid": 22973,
@@ -2909,10 +3094,24 @@
    "pos": "LM",
    "club": "",
    "added": "2026-09-23",
-   "price": 10250,
-   "priceAt": "2026-10-02T19:29:00Z",
+   "price": 10500,
+   "priceAt": "2026-10-03T06:30:40Z",
    "src": "FUTBIN",
-   "url": "https://www.futbin.com/27/player/22973/olivia-holdt"
+   "url": "https://www.futbin.com/27/player/22973/olivia-holdt",
+   "alt": "CM, CAM, LW",
+   "league": "Barclays WSL",
+   "nation": "Denmark",
+   "sm": 4,
+   "wf": 2,
+   "ps": "Press Proven+",
+   "stats": [
+    78,
+    76,
+    77,
+    81,
+    59,
+    77
+   ]
   },
   {
    "fid": 22971,
@@ -2923,9 +3122,23 @@
    "club": "",
    "added": "2026-09-23",
    "price": 11750,
-   "priceAt": "2026-10-02T19:29:00Z",
+   "priceAt": "2026-10-03T06:30:40Z",
    "src": "FUTBIN",
-   "url": "https://www.futbin.com/27/player/22971/pascal-gro"
+   "url": "https://www.futbin.com/27/player/22971/pascal-gro",
+   "alt": "CM",
+   "league": "Premier League",
+   "nation": "Germany",
+   "sm": 3,
+   "wf": 4,
+   "ps": "Dead Ball+, Incisive Pass+, Long Ball Pass+, Tiki Taka+",
+   "stats": [
+    70,
+    76,
+    86,
+    81,
+    73,
+    75
+   ]
   },
   {
    "fid": 22968,
@@ -2935,10 +3148,24 @@
    "pos": "ST",
    "club": "",
    "added": "2026-09-23",
-   "price": 13750,
-   "priceAt": "2026-10-02T19:29:00Z",
+   "price": 14000,
+   "priceAt": "2026-10-03T06:30:40Z",
    "src": "FUTBIN",
-   "url": "https://www.futbin.com/27/player/22968/jonathan-david"
+   "url": "https://www.futbin.com/27/player/22968/jonathan-david",
+   "alt": "",
+   "league": "LALIGA EA SPORTS",
+   "nation": "Canada",
+   "sm": 3,
+   "wf": 5,
+   "ps": "",
+   "stats": [
+    82,
+    83,
+    74,
+    81,
+    40,
+    75
+   ]
   },
   {
    "fid": 22967,
@@ -2948,23 +3175,24 @@
    "pos": "LB",
    "club": "",
    "added": "2026-09-23",
-   "price": 11750,
-   "priceAt": "2026-10-02T19:29:00Z",
-   "src": "FUTBIN",
-   "url": "https://www.futbin.com/27/player/22967/miguel-gutierrez-ortega"
-  },
-  {
-   "fid": 22965,
-   "name": "Lorenzo Palmisani",
-   "version": "Team of the Week",
-   "ovr": 82,
-   "pos": "GK",
-   "club": "",
-   "added": "2026-09-23",
    "price": 11000,
-   "priceAt": "2026-10-02T19:29:00Z",
+   "priceAt": "2026-10-03T06:30:40Z",
    "src": "FUTBIN",
-   "url": "https://www.futbin.com/27/player/22965/lorenzo-palmisani"
+   "url": "https://www.futbin.com/27/player/22967/miguel-gutierrez-ortega",
+   "alt": "LM",
+   "league": "Bundesliga",
+   "nation": "Spain",
+   "sm": 2,
+   "wf": 3,
+   "ps": "",
+   "stats": [
+    83,
+    74,
+    82,
+    80,
+    80,
+    74
+   ]
   }
  ]
 }

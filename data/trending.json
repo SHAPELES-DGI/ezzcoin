@@ -1,7 +1,7 @@
 {
- "updatedAt": "2026-10-03T06:07:08Z",
+ "updatedAt": "2026-10-03T06:33:47Z",
  "source": "FUTBIN",
- "at": "2026-10-03T05:58:15Z",
+ "at": "2026-10-03T06:28:20Z",
  "cards": [
   {
    "rank": 1,
@@ -215,7 +215,7 @@
   {
    "rank": 20,
    "name": "Lamine Yamal",
-   "ovr": 89,
+   "ovr": 90,
    "pos": "RW",
    "version": null,
    "price": 157000,
@@ -226,7 +226,7 @@
   {
    "rank": 21,
    "name": "Pajor",
-   "ovr": 88,
+   "ovr": 89,
    "pos": "ST",
    "version": null,
    "price": 198000,
@@ -237,7 +237,7 @@
   {
    "rank": 22,
    "name": "Patri Guijarro",
-   "ovr": 84,
+   "ovr": 88,
    "pos": "CDM",
    "version": null,
    "price": 27000,
