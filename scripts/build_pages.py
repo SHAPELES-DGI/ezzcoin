@@ -24,7 +24,7 @@ SLUG_MAP = {"ø": "o", "Ø": "o", "ß": "ss", "ł": "l", "Ł": "l", "æ": "ae", 
             "œ": "oe", "đ": "d", "Đ": "d", "ı": "i", "ð": "d", "þ": "th"}
 ST_OUT = ["PAC", "SHO", "PAS", "DRI", "DEF", "PHY"]
 ST_GK = ["DIV", "HAN", "KIC", "REF", "SPD", "POS"]
-CSS_V = "14"
+CSS_V = "15"
 SPECIAL = 1000000000  # special-card ids on the site: SPECIAL + FUT.GG card id (gid) or FUTBIN card id (fid)
 
 
@@ -128,7 +128,20 @@ CSS = (":root{--bg:#0A0D0C;--surface:#141917;--sunk:#1C2320;--ink:#EEF2EF;--mute
        ".credits{list-style:none;padding:0;margin:18px 0 0;display:grid;gap:8px;font-size:.9rem}.credits li{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 12px;overflow-wrap:anywhere}"
        ".credits summary{cursor:pointer;color:var(--muted);font-size:.82rem}.credits details p{margin:4px 0 0;color:var(--muted);font-size:.8rem}"
        "footer{max-width:980px;margin:0 auto;padding:16px 16px 32px;color:var(--muted);font-size:.85rem;border-top:1px solid var(--line)}footer a{color:var(--muted)}"
-       "@media(max-width:640px){.hero{grid-template-columns:1fr;justify-items:center;text-align:center}.stats{grid-template-columns:repeat(3,minmax(0,1fr));margin-inline:auto}"
+       ".st i{display:block;font:500 .7rem/1.2 var(--fm);color:var(--buy);font-style:normal;min-height:1.2em}"
+       ".chem{margin-top:20px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;max-width:560px;text-align:left}"
+       ".chem h2{font:700 1.1rem var(--fd);text-transform:uppercase;letter-spacing:.04em;margin:0 0 8px}"
+       ".chem-top{display:flex;flex-wrap:wrap;gap:10px;align-items:center}.chem-sel{display:flex;align-items:center;gap:8px;flex:1 1 220px;min-width:0}"
+       ".chem-sel span{font:700 .78rem var(--fd);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}"
+       ".chem select{flex:1;min-width:0;background:var(--sunk);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:8px 10px;font:inherit}"
+       ".chem-lv{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}"
+       ".chem-lv button{background:var(--sunk);color:var(--muted);border:0;border-left:1px solid var(--line);padding:8px 11px;font:700 .85rem var(--fd);letter-spacing:.04em;text-transform:uppercase;cursor:pointer}"
+       ".chem-lv button:first-child{border-left:0}.chem-lv button[aria-pressed=true]{background:linear-gradient(90deg,#FFDA7A,#E3A93A);color:#15201A}"
+       ".chem-best{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;font-size:.84rem;color:var(--muted);align-items:center}"
+       ".chem-best button{background:var(--sunk);border:1px solid var(--line);color:var(--ink);border-radius:999px;padding:4px 11px;font:600 .82rem var(--fb);cursor:pointer}"
+       ".chem-best button b{color:var(--gold);font:700 .95rem var(--fd);margin-left:3px}.chem-best button[aria-pressed=true]{border-color:var(--gold);background:color-mix(in srgb,var(--gold) 14%,var(--sunk))}"
+       ".chem-boost{margin:10px 0 0;font-size:.84rem}.chem-note{margin:8px 0 0;font-size:.78rem;color:var(--muted)}"
+       "@media(max-width:640px){.hero{grid-template-columns:1fr;justify-items:center;text-align:center}.stats{grid-template-columns:repeat(3,minmax(0,1fr));margin-inline:auto}.chem{margin-inline:auto}"
        ".facts{text-align:left}h1{font-size:2.1rem}.kv{justify-content:center}}")
 
 FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
@@ -201,8 +214,19 @@ def meta_box(mt, ovr):
     d = bv - (ovr or 0)
     delta = f' <em class="{"up" if d > 0 else "dn"}">{"+" if d > 0 else "−"}{abs(d)} vs overall</em>' if d else " <em>same as overall</em>"
     other = " · ".join(f"{p} {v}" for p, v in rest[:4])
-    return (f'<div class="mt" title="{e(MT_NOTE)}"><b>{bv}</b><span>Meta rating · {e(bp)}</span>'
+    return (f'<div class="mt" id="mt" title="{e(MT_NOTE)}"><b>{bv}</b><span>Meta rating · {e(bp)}</span>'
             f'<i>{delta}{" · " + e(other) if other else ""}</i></div>')
+
+
+def chem_box(x, up):
+    """Chemistry style picker (filled in by p/chem.js), or "" when the card has no stats yet."""
+    if any(v is None for v in x["s"]):
+        return ""
+    data = json.dumps([int(v) for v in x["s"]])
+    return (f'<section class="chem" id="chem" data-s="{e(data)}" data-pos="{e(x["p"])}" data-alt="{e(x["a"] or "")}" data-ovr="{x["o"]}" '
+            f'data-sm="{e(x["sm"] or "")}" data-wf="{e(x["wf"] or "")}" data-ps="{e(x["ps"] or "")}"><h2>Chemistry style</h2>'
+            f'<p class="chem-note">Turn on JavaScript to see this card with each chemistry style.</p></section>'
+            f'<script src="{up}p/chem.js?v={CSS_V}" defer></script>')
 
 
 def head(title, desc, canon, up, image=None):
@@ -286,9 +310,17 @@ def player_page(x, codes, by_club, by_nat, specials_of, credits):
             f'<div><h1>{e(x["n"])}</h1><div class="sub">{x["o"]} {e(x["p"])}' + (f" · {e(where)}" if where else "")
             + (f' · {flag(codes, x["nat"], up)}{e(x["nat"])}' if x["nat"] else "") + '</div>'
             f'<div class="kv"><div class="px" id="px"><span class="none">No console price yet. {e(hint)}</span></div>{meta_box(mt, x["o"])}</div>'
-            f'<div class="stats">{stats}</div><dl class="facts">{dl}</dl>' + (f'<p class="mtnote">{e(MT_NOTE)}</p>' if mt else "") +
+            f'<div class="stats">{stats}</div>{chem_box(x, up)}<dl class="facts">{dl}</dl>' + (f'<p class="mtnote">{e(MT_NOTE)}</p>' if mt else "") +
             f'<a class="btn" href="{up}#q={e(x["n"])}">Watch on Ezzcoins</a></div></div>'
             f'<section class="more">{more}</section></main>{script}' + foot(up))
+
+
+def ps_text(x):
+    """PlayStyles+ line for a special card: its own once checked, else the base card's, marked as such."""
+    own = ", ".join(t.strip() for t in str(x.get("ps") or "").split(",") if t.strip())
+    if x.get("leg") or x.get("psChk"):
+        return own or ("None" if x.get("psChk") else "")
+    return f"{own} (base card; this card's are being checked)" if own else "Being checked"
 
 
 def special_page(x, codes, specials, credits):
@@ -310,7 +342,7 @@ def special_page(x, codes, specials, credits):
              ("Position", x["p"] + (f' (also {", ".join(t.strip() for t in x["a"].split(","))})' if x["a"] else "")),
              ("Club", x["c"]), ("League", x["l"]), ("Nation", x["nat"]),
              ("Skill moves", f'{x["sm"]}★' if x["sm"] else ""), ("Weak foot", f'{x["wf"]}★' if x["wf"] else ""),
-             ("PlayStyles+", ", ".join(t.strip() for t in x["ps"].split(",") if t.strip()))]
+             ("PlayStyles+", ps_text(x)), ("PlayStyles", ", ".join(t.strip() for t in str(x.get("pls") or "").split(",") if t.strip()))]
     dl = "".join(f"<dt>{e(k)}</dt><dd>{e(v)}</dd>" for k, v in facts if v not in ("", None))
     if b:
         base_txt = f'{b["o"]} {b["p"]}'
@@ -342,7 +374,7 @@ def special_page(x, codes, specials, credits):
             f'<div><div class="tag">{e(ver)}</div><h1>{e(x["n"])}</h1><div class="sub">{x["o"]} {e(x["p"])}' + (f" · {e(where)}" if where else "")
             + (f' · {flag(codes, x["nat"], up)}{e(x["nat"])}' if x["nat"] else "") + '</div>'
             f'<div class="kv"><div class="px" id="px"><span class="none">No console price yet. {"Icons and Heroes are" if leg else "New cards are"} priced every half hour while FUTBIN can be reached.</span></div>{meta_box(mt, x["o"])}</div>'
-            + (f'<div class="stats">{stats}</div>' if has else '<p class="nostats">This card\'s own stats appear here after one of the next ' + ("price" if leg else "hourly") + ' updates.</p>')
+            + (f'<div class="stats">{stats}</div>{chem_box(x, up)}' if has else '<p class="nostats">This card\'s own stats appear here after one of the next ' + ("price" if leg else "hourly") + ' updates.</p>')
             + f'<dl class="facts">{dl}</dl>' + (f'<p class="mtnote">{e(MT_NOTE)}</p>' if mt else "") + f'<a class="btn" href="{up}#q={e(x["n"])}">Watch on Ezzcoins</a></div></div>'
             f'<section class="more">{more}</section></main>{script}' + foot(up))
 
@@ -440,9 +472,11 @@ def main():
               "a": c.get("alt") or "", "c": (b["c"] if b else "") or c.get("club") or "", "l": c.get("league") or (b["l"] if b else ""),
               "nat": c.get("nation") or (b["nat"] if b else ""), "sm": c.get("sm"), "wf": c.get("wf"),
               "s": [None if v in (None, "") else v for v in st], "ver": c.get("version") or "", "added": c.get("added") or "", "base": b}
-        # PlayStyles+: the card's own when the price runs read them, else the base card's (special cards keep them),
-        # but only when the base card is surely the same player (linked id or same club). Same rule as index.html.
-        sx["ps"] = (str(c["ps"]) if c.get("ps") is not None else
+        # PlayStyles+: the card's own once a price run has checked them on a page that marks them ("psAt"); until then the
+        # base card's, shown as such, when the base card is surely the same player (linked id or same club). Same rule as index.html.
+        sx["psChk"] = bool(c.get("psAt"))
+        sx["pls"] = str(c.get("pls") or "") if sx["psChk"] else ""
+        sx["ps"] = (str(c.get("ps") or "") if sx["psChk"] else
                     b["ps"] if b and (str(c.get("baseId") or "").isdigit() or (c.get("club") and b["c"] == c.get("club"))) else "")
         # Name on the card: EA's card name for the same player ("João Félix", "Álex Baena") when the base card is
         # certainly the same person (linked id, same club, or the only player with that name); else the last word.
@@ -494,6 +528,9 @@ def main():
     os.makedirs(out)
     with open(os.path.join(out, "style.css"), "w", encoding="utf-8") as fh:
         fh.write("/* \u00a9 2026 Ezzcoins. All rights reserved. */\n" + CSS)
+    chem_src = os.path.join(os.path.dirname(os.path.abspath(__file__)), "chem.min.js")
+    if os.path.exists(chem_src):
+        shutil.copyfile(chem_src, os.path.join(out, "chem.js"))
     for x in players:
         d = os.path.join(out, x["path"])
         os.makedirs(d, exist_ok=True)
