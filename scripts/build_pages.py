@@ -363,7 +363,7 @@ def credits_page(credits, allp, legends_by_id=None):
     desc = "Authors and licences of the player photos used on Ezzcoins."
     return (head(title, desc, BASE + "p/credits/", up) +
             f'<main><div class="crumb"><a href="{up}">Ezzcoins</a> \u203a Photo credits</div><h1>Photo credits</h1>'
-            f'<p class="sub">Player photos come from Wikimedia Commons under free licences (public domain, CC0, CC BY or CC BY-SA). '
+            f'<p class="sub">Player photos come from Wikimedia Commons under free licences (public domain, CC0, CC BY, CC BY-SA or Attribution). '
             f'They are cropped and faded into the card design; under CC BY-SA the cropped versions are shared under the same licence. '
             f'Ezzcoins is not affiliated with the photographers or the players.</p>'
             f'<ul class="credits">{"".join(rows)}</ul></main>' + foot(up))

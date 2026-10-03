@@ -5,7 +5,7 @@ For every player rated MIN_OVR+ in data/players.json, the base player of every n
 data/newcards.json (when it is surely the same person), and every Icon and Hero in data/legends.json whose full name
 is known (saved under the card's own id, 1000000000 + FUT.GG or FUTBIN card id), it looks for the player's Wikidata item,
 takes the item's main image (P18), checks the file's licence on Commons (public domain, CC0,
-CC BY or CC BY-SA only), downloads a 360 px thumbnail to photos/<EA id>.<ext> and records the
+CC BY, CC BY-SA or Attribution only), downloads a 360 px thumbnail to photos/<EA id>.<ext> and records the
 credit in photos/credits.json. Items are found by EA id (P1469) or by name (English label or alias).
 Wrong-person matches are avoided: a name match must be a single footballer, or a single one once
 club, nationality and birth year are compared. photos/report.json lists why a
@@ -22,7 +22,8 @@ WIDTH = 360
 UA = "EzzcoinsPhotoBot/1.0 (https://shapeles-dgi.github.io/ezzcoin/; https://github.com/SHAPELES-DGI/ezzcoin)"
 SPARQL = "https://query.wikidata.org/sparql"
 COMMONS = "https://commons.wikimedia.org/w/api.php"
-OK_LICENCE = re.compile(r"^(cc0( 1\.0)?|public domain|pd[- ].*|cc[- ]by(-sa)?[- ]\d\.\d( [a-z-]+)?|cc[- ]by(-sa)?[- ]\d\.\d)$", re.I)
+# Free licences only: public domain, CC0, CC BY, CC BY-SA, and Commons' plain "Attribution" licence (credit the author).
+OK_LICENCE = re.compile(r"^(cc0( 1\.0)?|public domain|pd[- ].*|attribution|cc[- ]by(-sa)?[- ]\d\.\d( [a-z-]+)?|cc[- ]by(-sa)?[- ]\d\.\d)$", re.I)
 SLUG_MAP = {"ø": "o", "Ø": "o", "ß": "ss", "ł": "l", "Ł": "l", "æ": "ae", "Æ": "ae",
             "œ": "oe", "đ": "d", "Đ": "d", "ı": "i", "ð": "d", "þ": "th"}
 
