@@ -1,7 +1,7 @@
 {
- "updatedAt": "2026-10-03T18:03:41Z",
+ "updatedAt": "2026-10-03T20:05:15Z",
  "source": "FUTBIN",
- "at": "2026-10-03T18:03:41Z",
+ "at": "2026-10-03T20:05:15Z",
  "cards": [
   {
    "rank": 1,
@@ -138,7 +138,7 @@
   {
    "rank": 13,
    "name": "Groß",
-   "ovr": 87,
+   "ovr": 84,
    "pos": "CDM",
    "version": null,
    "price": 61000,
@@ -193,23 +193,23 @@
   {
    "rank": 18,
    "name": "Karchaoui",
-   "ovr": 87,
+   "ovr": 89,
    "pos": "CM",
    "version": null,
    "price": 99000,
-   "url": "https://www.futbin.com/27/player/59/sakina-karchaoui",
-   "fid": 59,
+   "url": "",
+   "fid": null,
    "src": "FUTBIN"
   },
   {
    "rank": 19,
    "name": "Mariona",
-   "ovr": 89,
+   "ovr": 90,
    "pos": "CM",
    "version": null,
    "price": 255000,
-   "url": "https://www.futbin.com/27/player/17/maria-francesca-caldentey-oliver",
-   "fid": 17,
+   "url": "",
+   "fid": null,
    "src": "FUTBIN"
   },
   {
