@@ -1,12 +1,6 @@
 {
   "corrections": [
     {
-      "date": "2026-10-02T03:42:43Z",
-      "section": "Moves right now",
-      "what": "Replaced \"86s at 3,000 are the cheapest Item Score\" with 84s at 650.",
-      "why": "FUT.GG now lists 86s at 3,800 (0.93 per point), against 84s at 650 (0.78)."
-    },
-    {
       "date": "2026-10-02T04:45:00Z",
       "section": "Movers",
       "what": "Refreshed fallers (Tzolakis, Bronze, Zamorano, Harder, Modrić) and the 85 price to 1,900.",
@@ -89,6 +83,12 @@
       "section": "Moves right now",
       "what": "Replaced \"86s at 3,100 are the cheapest Item Score\" with 84s at 750.",
       "why": "FUT.GG now lists 84s at 750 (0.90 per point) and 86s at 4,000 (0.98)."
+    },
+    {
+      "date": "2026-10-03T00:13:02Z",
+      "section": "Moves right now",
+      "what": "Replaced \"84s at 750 are the cheapest Item Score\" with 85s at 850, and dropped \"85s are 2,000\" from the Rivals move.",
+      "why": "FUT.GG now lists 85s at 850 (0.40 per point) against 84s at 700 (0.84); the gap is well over 0.1."
     }
   ],
   "drops": [
@@ -189,38 +189,45 @@
   ],
   "fallers": [
     {
+      "name": "Charlie Cresswell",
+      "ovr": 85,
+      "pct": -27.6,
+      "price": "−9,591",
+      "version": "Destined for Glory"
+    },
+    {
       "name": "Ibrahim Maza",
       "ovr": 85,
-      "pct": -34.19,
-      "price": "−17,095",
+      "pct": -27.31,
+      "price": "−10,514",
+      "version": "Destined for Glory"
+    },
+    {
+      "name": "Kadidiatou Diani",
+      "ovr": 88,
+      "pct": -27.13,
+      "price": "−262,618",
       "version": "Destined for Glory"
     },
     {
       "name": "Jakub Kiwior",
       "ovr": 86,
-      "pct": -31.89,
-      "price": "−10,205",
+      "pct": -26.98,
+      "price": "−6,340",
       "version": "Destined for Glory"
     },
     {
-      "name": "Charlie Cresswell",
-      "ovr": 85,
-      "pct": -21.66,
-      "price": "−10,938",
+      "name": "Nico Paz",
+      "ovr": 87,
+      "pct": -24.06,
+      "price": "−43,549",
       "version": "Destined for Glory"
     },
     {
-      "name": "Mateus Fernandes",
-      "ovr": 85,
-      "pct": -21.34,
-      "price": "−26,675",
-      "version": "Destined for Glory"
-    },
-    {
-      "name": "Weston McKennie",
-      "ovr": 85,
-      "pct": -20.39,
-      "price": "−32,216",
+      "name": "Erling Haaland",
+      "ovr": 91,
+      "pct": -21.95,
+      "price": "−366,784",
       "version": "Destined for Glory"
     }
   ],
@@ -242,42 +249,42 @@
     },
     {
       "ovr": 84,
-      "price": 750,
+      "price": 700,
       "score": 830
     },
     {
       "ovr": 85,
-      "price": 2000,
+      "price": 850,
       "score": 2100
     },
     {
       "ovr": 86,
-      "price": 4000,
+      "price": 4200,
       "score": 4100
     },
     {
       "ovr": 87,
-      "price": 5600,
+      "price": 5300,
       "score": 5500
     },
     {
       "ovr": 88,
-      "price": 8800,
+      "price": 8000,
       "score": 8300
     },
     {
       "ovr": 89,
-      "price": 11250,
+      "price": 16750,
       "score": 11000
     },
     {
       "ovr": 90,
-      "price": 27500,
+      "price": 26500,
       "score": 14000
     },
     {
       "ovr": 91,
-      "price": 128000,
+      "price": 117000,
       "score": 19000
     }
   ],
@@ -290,7 +297,7 @@
     "idx86": 60.6,
     "momentum": 47.47,
     "momentumLabel": "The market is chillin",
-    "note": "Read from FUTBIN's market page {{t:2026-10-02T19:58:10+00:00}}."
+    "note": "From an earlier update: FUTBIN's market page did not load this run (403). Last read {{t:2026-10-02T19:58:10+00:00}}."
   },
   "meta": [
     {
@@ -353,28 +360,28 @@
   "moves": [
     {
       "confidence": "medium",
-      "detail": "Team 2 went live at {{t:2026-10-02T18:00:00+01:00}}. FUT.GG fallers are all Destined for Glory cards: Maza 85 −34%, Kiwior 86 −32%, Cresswell 85 −22%, Fernandes 85 −21%. Fresh specials usually keep falling while packs are opened, so let prices settle first.",
+      "detail": "Team 2 went live at {{t:2026-10-02T18:00:00+01:00}}. FUT.GG fallers are all Destined for Glory cards: Cresswell 85 −28%, Maza 85 −27%, Diani 88 −27%, Kiwior 86 −27%, Haaland 91 −22%. Fresh specials usually keep falling while packs are opened, so let prices settle first.",
       "title": "Wait before buying Destined for Glory Team 2 cards",
       "tone": "hold",
       "when": "Until {{t:2026-10-03T18:00:00+01:00}}"
     },
     {
       "confidence": "low",
-      "detail": "Division Rivals rewards pay out at {{t:2026-10-08T06:59:00+00:00}} (EA Help) and add fodder and sub-85 cards. 85s are 2,000 on FUT.GG now (0.95 coins per point), so waiting is cheaper unless an SBC needs them.",
-      "title": "Wait for Rivals rewards before buying 85 fodder",
+      "detail": "Division Rivals rewards pay out at {{t:2026-10-08T06:59:00+00:00}} (EA Help) and add fodder and sub-85 cards. 85s are only 850 on FUT.GG now, so there is little to gain by waiting for them; 86s at 4,200 are the ones to hold off on.",
+      "title": "Wait for Rivals rewards before buying 86+ fodder",
       "tone": "watch",
       "when": "Until {{t:2026-10-08T06:59:00+00:00}}"
     },
     {
       "confidence": "low",
-      "detail": "FUT.GG this update: 84s at 750 cost 0.90 coins per point, against 0.95 for 85s at 2,000, 0.98 for 86s at 4,000 and 1.02 for 87s at 5,600. The gaps are small, so use them in SBCs, don't trade them. Follows the miss lesson on floor-buy calls.",
-      "title": "84s at 750 are the cheapest Item Score",
+      "detail": "FUT.GG this update: 85s at 850 cost 0.40 coins per point, against 0.84 for 84s at 700, 1.02 for 86s at 4,200 and 0.96 for 87s at 5,300. The 85 gap is large, so use them in SBCs, don't trade them. Follows the miss lesson on floor-buy calls.",
+      "title": "85s at 850 are the cheapest Item Score",
       "tone": "watch",
       "when": "Every update"
     },
     {
       "confidence": "low",
-      "detail": "TOTW 3 cards are already falling (Martinelli and Modrić were −10% earlier today). TOTW 4 is due {{t:2026-10-07T18:00:00+01:00}} (FUTBIN dates so far: 16, 23 and 30 Sep) and pushes last week's cards down further. Spares only, per the tip rule: selling and rebuying costs the 5% tax.",
+      "detail": "TOTW 3 cards are still falling (FUT.GG: Félix about −15%, Modrić about −15%). TOTW 4 is due {{t:2026-10-07T18:00:00+01:00}} (FUTBIN dates so far: 16, 23 and 30 Sep) and pushes last week's cards down further. Spares only, per the tip rule: selling and rebuying costs the 5% tax.",
       "title": "Sell spare TOTW 3 cards before TOTW 4",
       "tone": "sell",
       "when": "Before {{t:2026-10-07T18:00:00+01:00}}"
@@ -382,7 +389,7 @@
   ],
   "news": [
     {
-      "detail": "Released at {{t:2026-10-02T18:00:00+01:00}} with Haaland 91 on top. Team 2 cards fall hardest in the first hours: Maza −34%, Kiwior −32% on FUT.GG.",
+      "detail": "Released at {{t:2026-10-02T18:00:00+01:00}} with Haaland 91 on top. Team 2 cards fall hardest in the first hours: Cresswell −28%, Maza −27%, Haaland −22% on FUT.GG.",
       "kind": "data",
       "source": "FUTBIN · FUT.GG",
       "title": "Destined for Glory Team 2 is live"
@@ -412,10 +419,10 @@
       "title": "Season 1 ends 22 October"
     },
     {
-      "detail": "FUT.GG: 81–83 at 650, 84s at 750, 85s at 2,000, 86s at 4,000. FUTBIN's Index 100 is 104.78 (−0.79%), read {{t:2026-10-02T19:58:10+00:00}}.",
+      "detail": "FUT.GG: 81–83 at 650, 84s at 700, 85s at 850, 86s at 4,200. FUTBIN's Index 100 was 104.78 (−0.79%) at the last read, {{t:2026-10-02T19:58:10+00:00}}; FUTBIN did not load this run.",
       "kind": "data",
       "source": "FUT.GG",
-      "title": "Fodder: 84s are the best value per point"
+      "title": "Fodder: 85s are the best value per point"
     }
   ],
   "platform": "console",
@@ -545,10 +552,10 @@
       "url": "https://x.com/FutSheriff/status/2104296397529104395"
     }
   ],
-  "updatedAt": "2026-10-02T20:14:00Z",
+  "updatedAt": "2026-10-03T00:13:02Z",
   "verdict": {
-    "detail": "FUT.GG shows 81–83 at 650, 84s at 750, 85s at 2,000 and 86s at 4,000. The top fallers are all Destined for Glory cards (Maza −34%, Kiwior −32%). FUTBIN's market index was read {{t:2026-10-02T19:58:10+00:00}}: Index 100 at 104.78 (−0.79%), momentum 47.47, calm. Next supply point is Rivals rewards at {{t:2026-10-08T06:59:00+00:00}}.",
-    "headline": "Destined for Glory Team 2 cards are still falling; 84s at 750 are the cheapest fodder per point.",
+    "detail": "FUT.GG shows 81–83 at 650, 84s at 700, 85s at 850 and 86s at 4,200. The top fallers are all Destined for Glory cards (Cresswell −28%, Maza −27%, Diani −27%). FUTBIN's market index is from an earlier update, read {{t:2026-10-02T19:58:10+00:00}}: Index 100 at 104.78, momentum 47.47, calm. Next supply point is Rivals rewards at {{t:2026-10-08T06:59:00+00:00}}.",
+    "headline": "Destined for Glory Team 2 cards are still falling; 85s at 850 are the cheapest fodder per point.",
     "label": "Hold, specials are falling",
     "tone": "watch"
   }
