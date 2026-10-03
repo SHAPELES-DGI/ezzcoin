@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Fetch freely licensed player photos from Wikimedia Commons for Ezzcoins player pages.
 
-For every player rated MIN_OVR+ in data/players.json, and the base player of every new special card in
-data/newcards.json (when it is surely the same person), it looks for the player's Wikidata item,
+For every player rated MIN_OVR+ in data/players.json, the base player of every new special card in
+data/newcards.json (when it is surely the same person), and every Icon and Hero in data/legends.json whose full name
+is known (saved under the card's own id, 1000000000 + FUTBIN id), it looks for the player's Wikidata item,
 takes the item's main image (P18), checks the file's licence on Commons (public domain, CC0,
 CC BY or CC BY-SA only), downloads a 360 px thumbnail to photos/<EA id>.<ext> and records the
 credit in photos/credits.json. Wrong-person matches are avoided: the Commons file name must
@@ -14,6 +15,7 @@ import html, json, os, re, sys, time, unicodedata, urllib.parse, urllib.request
 
 ROOT = sys.argv[1] if len(sys.argv) > 1 else "."
 MIN_OVR = 80
+SPECIAL = 1000000000  # Icons and Heroes are keyed SPECIAL + FUTBIN id, like special cards on the site
 WIDTH = 360
 UA = "EzzcoinsPhotoBot/1.0 (https://shapeles-dgi.github.io/ezzcoin/; https://github.com/SHAPELES-DGI/ezzcoin)"
 SPARQL = "https://query.wikidata.org/sparql"
@@ -62,7 +64,7 @@ def tokens(x):
 def by_id(players):
     """Wikidata items whose 'FIFA player ID' (P1469, the EA/SoFIFA id) equals the EA id."""
     out = {}
-    ids = [str(x["id"]) for x in players]
+    ids = [str(x["id"]) for x in players if x["id"] < SPECIAL]  # EA ids only
     for i in range(0, len(ids), 150):
         q = ("SELECT ?id ?image WHERE { VALUES ?id { " + " ".join(lit(v) for v in ids[i:i + 150]) + " } "
              "?item wdt:P1469 ?id; wdt:P18 ?image. }")
@@ -186,6 +188,19 @@ def main():
         r = next((r for r in rows if int(r[ci["id"]]) == pid), None)
         if r and pid not in have:
             players.append({"id": pid, "n": r[ci["name"]] or "", "f": r[ci["full"]] or ""})
+            have.add(pid)
+    # Icons and Heroes: only once their full name is known (a short card name alone could match the wrong person).
+    try:
+        lcards = json.load(open(os.path.join(ROOT, "data", "legends.json"), encoding="utf-8")).get("cards") or []
+    except (OSError, ValueError, AttributeError):
+        lcards = []
+    for c in lcards:
+        try:
+            pid = SPECIAL + int(c.get("fid"))
+        except (TypeError, ValueError):
+            continue
+        if c.get("full") and pid not in have:
+            players.append({"id": pid, "n": c.get("name") or "", "f": c["full"]})
             have.add(pid)
     pdir = os.path.join(ROOT, "photos")
     os.makedirs(pdir, exist_ok=True)

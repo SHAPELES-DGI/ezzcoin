@@ -293,9 +293,10 @@ def player_page(x, codes, by_club, by_nat, specials_of, credits):
 
 def special_page(x, codes, specials, credits):
     up = "../../"
+    leg = x.get("leg")
     lab = ST_GK if x["p"] == "GK" else ST_OUT
     has = any(v is not None for v in x["s"])
-    where = " · ".join(v for v in (x["c"], x["l"]) if v)
+    where = " · ".join(v for v in (x["c"], x["l"]) if v and not (leg and str(v).upper() == "ICON"))
     ver = x["ver"] or "Special card"
     stats_txt = ", ".join(f"{lab[i]} {v}" for i, v in enumerate(x["s"]) if v is not None)
     title = f'{x["n"]} {ver} FC 27 – {x["o"]} {x["p"]} stats & price | Ezzcoins'
@@ -305,7 +306,7 @@ def special_page(x, codes, specials, credits):
             + (f' for {x["c"]}' if x["c"] else "") + (f', {x["nat"]}' if x["nat"] else "")
             + (f". {stats_txt}" if stats_txt else "") + mt_txt + ". Console price on Ezzcoins.")
     b = x["base"]
-    facts = [("Card", ver), ("Added", day(x["added"])),
+    facts = [("Card", ver), ("Full name", x.get("full") if x.get("full") and x.get("full") != x["n"] else ""), ("Added", day(x["added"])),
              ("Position", x["p"] + (f' (also {", ".join(t.strip() for t in x["a"].split(","))})' if x["a"] else "")),
              ("Club", x["c"]), ("League", x["l"]), ("Nation", x["nat"]),
              ("Skill moves", f'{x["sm"]}★' if x["sm"] else ""), ("Weak foot", f'{x["wf"]}★' if x["wf"] else ""),
@@ -316,18 +317,22 @@ def special_page(x, codes, specials, credits):
         dl += f'<dt>Base card</dt><dd>' + (f'<a href="{up}p/{b["path"]}">{e(base_txt)} ›</a>' if b.get("path") else e(base_txt)) + '</dd>'
     stats = ("".join(f'<div class="st"><small>{lab[i]}</small><b class="{q(v)}">{"–" if v is None else v}</b></div>' for i, v in enumerate(x["s"]))
              if has else "")
-    others = [y for y in specials if y["id"] != x["id"]][:8]
-    more = f'<h2>Other new cards</h2>' + card_list(others, codes, up, lambda y: y["ver"]) if others else ""
+    if leg:
+        others = sorted((y for y in specials if y.get("leg") == leg and y["id"] != x["id"]), key=lambda y: -y["o"])[:8]
+        more = (f'<h2>More {"Icons" if leg == "icon" else "Heroes"}</h2>' + card_list(others, codes, up, lambda y: f'{y["p"]} · {y["c"] or y["l"]}')) if others else ""
+    else:
+        others = [y for y in specials if y["id"] != x["id"] and not y.get("leg")][:8]
+        more = f'<h2>Other new cards</h2>' + card_list(others, codes, up, lambda y: y["ver"]) if others else ""
     script = ("<script>(()=>{const n=document.querySelector('.fc-name.sig'),fit=()=>{if(!n||!n.clientWidth)return;n.style.fontSize='';"
               "let f=parseFloat(getComputedStyle(n).fontSize);while(n.scrollWidth>n.clientWidth+1&&f>16){f--;n.style.fontSize=f+'px'}};"
               "fit();document.fonts&&document.fonts.ready.then(fit)})()</script>"
               "<script>(()=>{const id=%s,key=%s,el=document.getElementById('px'),g=f=>fetch('../../data/'+f+'?t='+Date.now(),{cache:'no-store'})"
-              ".then(r=>r.ok?r.json():null).catch(()=>null);Promise.all([g('prices.json'),g('newcards.json')]).then(([a,b])=>{"
+              ".then(r=>r.ok?r.json():null).catch(()=>null);Promise.all([g('prices.json'),g(%s)]).then(([a,b])=>{"
               "const n=b&&Array.isArray(b.cards)?b.cards.find(c=>String(c.gid!=null&&c.gid!==''?c.gid:c.fid)===key):null;"
               "const c=[a&&a.players&&a.players[id],n&&{price:n.price,at:n.priceAt,src:n.src}].filter(p=>p&&p.price>0).sort((x,y)=>Date.parse(y.at)-Date.parse(x.at))[0];"
               "if(!c)return;const m=Math.round((Date.now()-Date.parse(c.at))/6e4),h=Math.floor(m/60),ago=m<1?'just now':m<60?m+' min ago':h<48?h+' h ago':Math.floor(h/24)+' days ago';"
               "el.innerHTML='<b><i class=\"coin\"></i>'+Number(c.price).toLocaleString('en-US')+'</b><span>Console price from '+(c.src||'FUTBIN')+' \\u00b7 '+ago+'</span>'})})()</script>"
-              ) % (json.dumps(str(x["id"])), json.dumps(str(x["key"])))
+              ) % (json.dumps(str(x["id"])), json.dumps(str(x["key"])), json.dumps("legends.json" if leg else "newcards.json"))
     bid = x.get("pid")
     pc = credits.get(str(bid)) if bid else None
     pimg, pcredit = photo(credits, bid, x["n"], up)
@@ -336,17 +341,19 @@ def special_page(x, codes, specials, credits):
             f'<div class="hero"><div class="side">{big_card(card_variant(x["ver"], x["o"], True), x["o"], x["p"], x["cn"], x["s"], lab, flag(codes, x["nat"], up, True), ver, pimg, sig=True)}{pcredit}</div>'
             f'<div><div class="tag">{e(ver)}</div><h1>{e(x["n"])}</h1><div class="sub">{x["o"]} {e(x["p"])}' + (f" · {e(where)}" if where else "")
             + (f' · {flag(codes, x["nat"], up)}{e(x["nat"])}' if x["nat"] else "") + '</div>'
-            f'<div class="kv"><div class="px" id="px"><span class="none">No console price yet. New cards are priced every half hour while FUTBIN can be reached.</span></div>{meta_box(mt, x["o"])}</div>'
-            + (f'<div class="stats">{stats}</div>' if has else '<p class="nostats">This card\'s own stats appear here after one of the next hourly updates.</p>')
+            f'<div class="kv"><div class="px" id="px"><span class="none">No console price yet. {"Icons and Heroes are" if leg else "New cards are"} priced every half hour while FUTBIN can be reached.</span></div>{meta_box(mt, x["o"])}</div>'
+            + (f'<div class="stats">{stats}</div>' if has else '<p class="nostats">This card\'s own stats appear here after one of the next ' + ("price" if leg else "hourly") + ' updates.</p>')
             + f'<dl class="facts">{dl}</dl>' + (f'<p class="mtnote">{e(MT_NOTE)}</p>' if mt else "") + f'<a class="btn" href="{up}#q={e(x["n"])}">Watch on Ezzcoins</a></div></div>'
             f'<section class="more">{more}</section></main>{script}' + foot(up))
 
 
-def credits_page(credits, allp):
+def credits_page(credits, allp, legends_by_id=None):
     up = "../../"
     rows = []
-    for pid, c in sorted(credits.items(), key=lambda kv: (allp.get(int(kv[0]), {}).get("n") or "")):
-        x = allp.get(int(pid))
+    look = dict(allp)
+    look.update(legends_by_id or {})
+    for pid, c in sorted(credits.items(), key=lambda kv: (look.get(int(kv[0]), {}).get("n") or "")):
+        x = look.get(int(pid))
         if not x:
             continue
         name = f'<a href="{up}p/{x["path"]}">{e(x["n"])}</a>' if x.get("path") else e(x["n"])
@@ -362,11 +369,15 @@ def credits_page(credits, allp):
             f'<ul class="credits">{"".join(rows)}</ul></main>' + foot(up))
 
 
-def list_page(groups, codes, total, specials):
+def list_page(groups, codes, total, specials, legends=()):
     up = "../"
     title = "FC 27 player pages: stats and prices | Ezzcoins"
     desc = f"Stats, PlayStyles and console prices for all {total} EA SPORTS FC 27 Ultimate Team players rated {MIN_OVR} or higher."
     body = (f'<h2>New special cards</h2>' + card_list(specials, codes, up, lambda y: y["ver"]) if specials else "")
+    for leg, label in (("icon", "Icons"), ("hero", "Heroes")):
+        items = sorted((y for y in legends if y.get("leg") == leg), key=lambda y: (-y["o"], y["n"]))
+        if items:
+            body += f'<h2>{label}</h2>' + card_list(items, codes, up, lambda y: f'{y["p"]} · {y["c"] or y["l"]}')
     body += "".join(f'<h2>{ovr} rated</h2>' + card_list(items, codes, up, lambda y: f'{y["p"]} · {y["c"]}') for ovr, items in groups)
     script = ("<script>(()=>{const f=document.getElementById('find'),k=s=>s.normalize('NFD').replace(/\\p{M}/gu,'').toLowerCase();"
               "f.addEventListener('input',()=>{const t=k(f.value.trim());for(const li of document.querySelectorAll('.more li'))li.hidden=!!t&&!k(li.textContent).includes(t);"
@@ -444,6 +455,35 @@ def main():
         if b:
             specials_of.setdefault(b["id"], []).append(sx)
     specials.sort(key=lambda y: (str(y["added"]), y["o"]), reverse=True)
+    # Icons and Heroes (data/legends.json, filled by the price runs): special-card pages of their own, kept for good.
+    legends = []
+    lpath = os.path.join(ROOT, "data", "legends.json")
+    lcards = []
+    if os.path.exists(lpath):
+        try:
+            lcards = json.load(open(lpath, encoding="utf-8")).get("cards") or []
+        except (ValueError, AttributeError):
+            lcards = []
+    seen = {y["id"] for y in specials}
+    for c in lcards:
+        try:
+            key = int(c.get("fid"))
+        except (TypeError, ValueError):
+            continue
+        leg = "icon" if c.get("league") == "Icons" else "hero" if c.get("league") == "Heroes" else ""
+        if not c.get("name") or not leg or SPECIAL + key in seen:
+            continue
+        seen.add(SPECIAL + key)
+        st = c.get("stats") if isinstance(c.get("stats"), list) and len(c["stats"]) == 6 else [None] * 6
+        ver = c.get("version") or ("Icon" if leg == "icon" else "Hero")
+        lx = {"id": SPECIAL + key, "key": key, "leg": leg, "n": c["name"], "full": c.get("full") or "", "o": int(c.get("ovr") or 0),
+              "p": c.get("pos") or "", "a": c.get("alt") or "", "c": c.get("club") or "", "l": c["league"], "nat": c.get("nation") or "",
+              "sm": c.get("sm"), "wf": c.get("wf"), "s": [None if v in (None, "") else v for v in st], "ver": ver, "added": "",
+              "base": None, "ps": str(c["ps"]) if c.get("ps") else "", "cn": card_name(c["name"]) if len(c["name"]) > 14 else c["name"]}
+        lx["pid"] = lx["id"] if str(lx["id"]) in credits else None  # photo saved under the card's own id
+        lx["path"] = f'{slug(lx["n"])}-{slug(ver)}-{lx["id"]}/'
+        legends.append(lx)
+    legends.sort(key=lambda y: (-y["o"], y["n"]))
     by_club, by_nat = {}, {}
     for x in players:
         by_club.setdefault(x["c"], []).append(x)
@@ -464,27 +504,32 @@ def main():
         os.makedirs(d, exist_ok=True)
         with open(os.path.join(d, "index.html"), "w", encoding="utf-8") as fh:
             fh.write(special_page(x, codes, specials, credits))
+    for x in legends:
+        d = os.path.join(out, x["path"])
+        os.makedirs(d, exist_ok=True)
+        with open(os.path.join(d, "index.html"), "w", encoding="utf-8") as fh:
+            fh.write(special_page(x, codes, legends, credits))
     groups = []
     for x in players:
         if not groups or groups[-1][0] != x["o"]:
             groups.append((x["o"], []))
         groups[-1][1].append(x)
     with open(os.path.join(out, "index.html"), "w", encoding="utf-8") as fh:
-        fh.write(list_page(groups, codes, len(players), specials))
+        fh.write(list_page(groups, codes, len(players), specials, legends))
     with open(os.path.join(out, "cardnames.json"), "w", encoding="utf-8") as fh:
-        json.dump({str(x["id"]): dict({"n": x["cn"], "nat": x["nat"]}, **({"ph": x["pid"]} if x["pid"] else {})) for x in specials},
+        json.dump({str(x["id"]): dict({"n": x["cn"], "nat": x["nat"]}, **({"ph": x["pid"]} if x["pid"] else {})) for x in specials + legends},
                   fh, ensure_ascii=False, separators=(",", ":"))
     # Short photo credits for the cards on the home page, and a page listing every photo's author, licence and source.
     with open(os.path.join(out, "photos.json"), "w", encoding="utf-8") as fh:
         json.dump({k: f'{v["author"]} \u00b7 {v["licence"]}' for k, v in credits.items()}, fh, ensure_ascii=False, separators=(",", ":"))
     os.makedirs(os.path.join(out, "credits"), exist_ok=True)
     with open(os.path.join(out, "credits", "index.html"), "w", encoding="utf-8") as fh:
-        fh.write(credits_page(credits, allp))
-    urls = [BASE, BASE + "privacy.html", BASE + "p/", BASE + "p/credits/"] + [BASE + "p/" + x["path"] for x in specials + players]
+        fh.write(credits_page(credits, allp, {x["id"]: x for x in legends}))
+    urls = [BASE, BASE + "privacy.html", BASE + "p/", BASE + "p/credits/"] + [BASE + "p/" + x["path"] for x in specials + legends + players]
     with open(os.path.join(ROOT, "sitemap.xml"), "w", encoding="utf-8") as fh:
         fh.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
                  + "".join(f"<url><loc>{e(u)}</loc></url>\n" for u in urls) + "</urlset>\n")
-    print(f"OK: {len(players)} player pages ({sum(1 for x in players if str(x['id']) in credits)} with photos), {len(specials)} special card pages, list page and sitemap ({len(urls)} URLs)")
+    print(f"OK: {len(players)} player pages ({sum(1 for x in players if str(x['id']) in credits)} with photos), {len(specials)} special card pages, {len(legends)} Icon and Hero pages, list page and sitemap ({len(urls)} URLs)")
 
 
 if __name__ == "__main__":
