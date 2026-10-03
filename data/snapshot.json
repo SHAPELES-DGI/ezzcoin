@@ -189,52 +189,45 @@
   ],
   "fallers": [
     {
-      "name": "Ibrahim Maza",
-      "ovr": 85,
-      "pct": -35.78,
-      "price": "−12,970",
-      "version": "Destined for Glory"
-    },
-    {
       "name": "Charlie Cresswell",
       "ovr": 85,
-      "pct": -31.52,
-      "price": "−9,614",
+      "pct": -31.63,
+      "price": "−9,410",
       "version": "Destined for Glory"
     },
     {
       "name": "Robin Gosens",
       "ovr": 85,
-      "pct": -26.57,
-      "price": "−27,633",
+      "pct": -29.85,
+      "price": "−28,059",
       "version": "Destined for Glory"
     },
     {
-      "name": "Jakub Kiwior",
+      "name": "Ibrahim Maza",
+      "ovr": 85,
+      "pct": -28.71,
+      "price": "−9,905",
+      "version": "Destined for Glory"
+    },
+    {
+      "name": "Mateus Fernandes",
+      "ovr": 85,
+      "pct": -20.47,
+      "price": "−20,470",
+      "version": "Destined for Glory"
+    },
+    {
+      "name": "Ademola Lookman",
       "ovr": 86,
-      "pct": -26.44,
-      "price": "−5,949",
-      "version": "Destined for Glory"
-    },
-    {
-      "name": "Nico Paz",
-      "ovr": 87,
-      "pct": -25.32,
-      "price": "−42,538",
-      "version": "Destined for Glory"
-    },
-    {
-      "name": "Kadidiatou Diani",
-      "ovr": 88,
-      "pct": -25.13,
-      "price": "−231,196",
+      "pct": -19.94,
+      "price": "−61,814",
       "version": "Destined for Glory"
     },
     {
       "name": "Erling Haaland",
       "ovr": 91,
-      "pct": -14.11,
-      "price": "−237,048",
+      "pct": -7.59,
+      "price": "−133,812",
       "version": "Destined for Glory"
     }
   ],
@@ -256,7 +249,7 @@
     },
     {
       "ovr": 84,
-      "price": 650,
+      "price": 750,
       "score": 830
     },
     {
@@ -271,12 +264,12 @@
     },
     {
       "ovr": 87,
-      "price": 5500,
+      "price": 5400,
       "score": 5500
     },
     {
       "ovr": 88,
-      "price": 8300,
+      "price": 8600,
       "score": 8300
     },
     {
@@ -286,12 +279,12 @@
     },
     {
       "ovr": 90,
-      "price": 26250,
+      "price": 27000,
       "score": 14000
     },
     {
       "ovr": 91,
-      "price": 117000,
+      "price": 116000,
       "score": 19000
     }
   ],
@@ -367,7 +360,7 @@
   "moves": [
     {
       "confidence": "medium",
-      "detail": "Team 2 went live at {{t:2026-10-02T18:00:00+01:00}}. FUT.GG fallers are all Destined for Glory cards: Maza 85 −36%, Cresswell 85 −32%, Gosens 85 −27%, Kiwior 86 −26%, Haaland 91 −14%. Fresh specials usually keep falling while packs are opened, so let prices settle first.",
+      "detail": "Team 2 went live at {{t:2026-10-02T18:00:00+01:00}}. FUT.GG fallers are all Destined for Glory cards: Cresswell 85 −32%, Gosens 85 −30%, Maza 85 −29%, Lookman 86 −20%, Haaland 91 −8%. Fresh specials usually keep falling while packs are opened, so let prices settle first.",
       "title": "Wait before buying Destined for Glory Team 2 cards",
       "tone": "hold",
       "when": "Until {{t:2026-10-03T18:00:00+01:00}}"
@@ -381,8 +374,8 @@
     },
     {
       "confidence": "low",
-      "detail": "FUT.GG this update: 84s at 650 cost 0.78 coins per point, against 0.95 for 85s at 2,000, 0.93 for 86s at 3,800 and 1.00 for 87s at 5,500. Use them in SBCs, don't trade them: 81–84 sit at a hard 650 floor. Follows the miss lesson on floor-buy calls.",
-      "title": "84s at 650 are the cheapest Item Score",
+      "detail": "FUT.GG this update: 84s at 750 cost 0.90 coins per point, against 0.95 for 85s at 2,000, 0.93 for 86s at 3,800 and 0.98 for 87s at 5,400. These are within 0.1 of each other, so treat them as a tie. Use them in SBCs, don't trade them: 81–83 sit at a hard 650 floor. Follows the miss lesson on floor-buy calls.",
+      "title": "84s to 87s cost about the same per Item Score point",
       "tone": "watch",
       "when": "Every update"
     },
@@ -396,7 +389,7 @@
   ],
   "news": [
     {
-      "detail": "Released at {{t:2026-10-02T18:00:00+01:00}} with Haaland 91 on top. Team 2 cards fall hardest in the first hours: Maza −36%, Cresswell −32%, Haaland −14% on FUT.GG.",
+      "detail": "Released at {{t:2026-10-02T18:00:00+01:00}} with Haaland 91 on top. Team 2 cards fall hardest in the first hours: Cresswell −32%, Gosens −30%, Maza −29%, Haaland −8% on FUT.GG.",
       "kind": "data",
       "source": "FUTBIN · FUT.GG",
       "title": "Destined for Glory Team 2 is live"
@@ -426,10 +419,10 @@
       "title": "Season 1 ends 22 October"
     },
     {
-      "detail": "FUT.GG: 81–84 at 650, 85s at 2,000, 86s at 3,800. FUTBIN's Index 100 was 104.78 (−0.79%) at the last read, {{t:2026-10-02T19:58:10+00:00}}; FUTBIN did not load this run (403).",
+      "detail": "FUT.GG: 81–83 at 650, 84s at 750, 85s at 2,000, 86s at 3,800. FUTBIN's Index 100 was 104.78 (−0.79%) at the last read, {{t:2026-10-02T19:58:10+00:00}}; FUTBIN did not load this run (403).",
       "kind": "data",
       "source": "FUT.GG",
-      "title": "Fodder: 84s are the best value per point"
+      "title": "Fodder: 84s to 87s cost about the same per point"
     }
   ],
   "platform": "console",
@@ -559,10 +552,10 @@
       "url": "https://x.com/FutSheriff/status/2104296397529104395"
     }
   ],
-  "updatedAt": "2026-10-03T01:13:10Z",
+  "updatedAt": "2026-10-03T02:18:27Z",
   "verdict": {
-    "detail": "FUT.GG shows 81–84 at 650, 85s at 2,000 and 86s at 3,800. The top fallers are all Destined for Glory cards (Maza −36%, Cresswell −32%, Gosens −27%). FUTBIN's market index is from an earlier update, read {{t:2026-10-02T19:58:10+00:00}}: Index 100 at 104.78, momentum 47.47, calm. Next supply point is Rivals rewards at {{t:2026-10-08T06:59:00+00:00}}.",
-    "headline": "Destined for Glory Team 2 cards are still falling; 84s at 650 are the cheapest fodder per point.",
+    "detail": "FUT.GG shows 81–83 at 650, 84s at 750, 85s at 2,000 and 86s at 3,800. The top fallers are all Destined for Glory cards (Cresswell −32%, Gosens −30%, Maza −29%). FUTBIN's market index is from an earlier update, read {{t:2026-10-02T19:58:10+00:00}}: Index 100 at 104.78, momentum 47.47, calm. Next supply point is Rivals rewards at {{t:2026-10-08T06:59:00+00:00}}.",
+    "headline": "Destined for Glory Team 2 cards are still falling; wait for them to settle.",
     "label": "Hold, specials are falling",
     "tone": "watch"
   }
