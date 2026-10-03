@@ -1,7 +1,7 @@
 {
- "updatedAt": "2026-10-03T20:05:15Z",
+ "updatedAt": "2026-10-03T20:29:27Z",
  "source": "FUTBIN",
- "at": "2026-10-03T20:05:15Z",
+ "at": "2026-10-03T20:29:27Z",
  "cards": [
   {
    "rank": 1,
@@ -193,7 +193,7 @@
   {
    "rank": 18,
    "name": "Karchaoui",
-   "ovr": 89,
+   "ovr": 87,
    "pos": "CM",
    "version": null,
    "price": 99000,
@@ -204,7 +204,7 @@
   {
    "rank": 19,
    "name": "Mariona",
-   "ovr": 90,
+   "ovr": 89,
    "pos": "CM",
    "version": null,
    "price": 255000,
