@@ -315,6 +315,25 @@ def player_page(x, codes, by_club, by_nat, specials_of, credits):
             f'<section class="more">{more}</section></main>{script}' + foot(up))
 
 
+# PlayStyle names in EA's spelling (FUTWIZ writes some as one word, e.g. "Quickstep", "GameChanger", "Deadball", "Precision").
+PS_NAMES = ["Finesse Shot", "Chip Shot", "Power Shot", "Dead Ball", "Precision Header", "Low Driven Shot", "Gamechanger", "Acrobatic",
+            "Incisive Pass", "Pinged Pass", "Long Ball Pass", "Tiki Taka", "Whipped Pass", "Inventive", "Technical", "Rapid", "Flair", "First Touch",
+            "Trickster", "Press Proven", "Quick Step", "Relentless", "Long Throw", "Bruiser", "Enforcer", "Jockey", "Block", "Intercept", "Anticipate",
+            "Slide Tackle", "Aerial Fortress", "Far Throw", "Footwork", "Cross Claimer", "Rush Out", "Far Reach", "Deflector"]
+PS_KEY = {re.sub(r"[^a-z]", "", n.lower()): n for n in PS_NAMES}
+PS_KEY.update({"precision": "Precision Header", "powerheader": "Precision Header"})
+
+
+def ps_norm(lst, plus):
+    out = []
+    for s in (t.strip() for t in str(lst or "").split(",")):
+        if not s:
+            continue
+        n = PS_KEY.get(re.sub(r"[^a-z]", "", re.sub(r"plus$", "", s.lower())), s.rstrip("+").strip())
+        out.append(n + "+" if plus else n)
+    return ", ".join(out)
+
+
 def ps_text(x):
     """PlayStyles+ line for a special card: its own once checked, else the base card's, marked as such."""
     own = ", ".join(t.strip() for t in str(x.get("ps") or "").split(",") if t.strip())
@@ -475,8 +494,8 @@ def main():
         # PlayStyles+: the card's own once a price run has checked them on a page that marks them ("psAt"); until then the
         # base card's, shown as such, when the base card is surely the same player (linked id or same club). Same rule as index.html.
         sx["psChk"] = bool(c.get("psAt"))
-        sx["pls"] = str(c.get("pls") or "") if sx["psChk"] else ""
-        sx["ps"] = (str(c.get("ps") or "") if sx["psChk"] else
+        sx["pls"] = ps_norm(c.get("pls"), False) if sx["psChk"] else ""
+        sx["ps"] = (ps_norm(c.get("ps"), True) if sx["psChk"] else
                     b["ps"] if b and (str(c.get("baseId") or "").isdigit() or (c.get("club") and b["c"] == c.get("club"))) else "")
         # Name on the card: EA's card name for the same player ("João Félix", "Álex Baena") when the base card is
         # certainly the same person (linked id, same club, or the only player with that name); else the last word.
@@ -513,7 +532,7 @@ def main():
         lx = {"id": SPECIAL + key, "key": key, "leg": leg, "n": c["name"], "full": c.get("full") or "", "o": int(c.get("ovr") or 0),
               "p": c.get("pos") or "", "a": c.get("alt") or "", "c": c.get("club") or "", "l": c["league"], "nat": c.get("nation") or "",
               "sm": c.get("sm"), "wf": c.get("wf"), "s": [None if v in (None, "") else v for v in st], "ver": ver, "added": "",
-              "base": None, "ps": str(c["ps"]) if c.get("ps") else "", "cn": card_name(c["name"]) if len(c["name"]) > 14 else c["name"]}
+              "base": None, "ps": ps_norm(c["ps"], True) if c.get("ps") else "", "cn": card_name(c["name"]) if len(c["name"]) > 14 else c["name"]}
         lx["pid"] = lx["id"] if str(lx["id"]) in credits else None  # photo saved under the card's own id
         lx["path"] = f'{slug(lx["n"])}-{slug(ver)}-{lx["id"]}/'
         legends.append(lx)
