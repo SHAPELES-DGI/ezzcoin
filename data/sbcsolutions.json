@@ -1,0 +1,39 @@
+{
+ "updatedAt": "2026-10-03T22:37:40Z",
+ "sbcs": {
+  "Renato Veiga (Destined for Glory)": {
+   "name": "Renato Veiga (Destined for Glory)",
+   "url": "https://www.futbin.com/27/squad-building-challenge/1000009",
+   "src": "FUTBIN",
+   "at": "2026-10-03T22:37:40Z",
+   "cost": 24600,
+   "segments": [
+    {
+     "name": "Destined for Glory Renato Veiga",
+     "req": "Item Score: 25,000",
+     "score": 25000,
+     "cost": 24600,
+     "squadUrl": "https://www.futbin.com/27/streamlined-sbc/1000012/Destined%20for%20Glory%20Renato%20Veiga",
+     "players": []
+    }
+   ]
+  },
+  "Akliouche (Destined for Glory)": {
+   "name": "Akliouche (Destined for Glory)",
+   "url": "https://www.futbin.com/27/squad-building-challenge/1000015",
+   "src": "FUTBIN",
+   "at": "2026-10-03T22:37:40Z",
+   "cost": 65600,
+   "segments": [
+    {
+     "name": "Akliouche",
+     "req": "Item Score: 68,000",
+     "score": 68000,
+     "cost": 65600,
+     "squadUrl": "https://www.futbin.com/27/streamlined-sbc/1000018/Akliouche",
+     "players": []
+    }
+   ]
+  }
+ }
+}

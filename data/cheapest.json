@@ -1,0 +1,293 @@
+{
+ "updatedAt": "2026-10-03T22:37:14Z",
+ "source": "FUTBIN",
+ "at": "2026-10-03T22:37:00Z",
+ "ratings": {
+  "81": [
+   {
+    "name": "Lepaul",
+    "ovr": 81,
+    "pos": "ST",
+    "price": 650,
+    "fid": 664,
+    "url": "https://www.futbin.com/27/player/664/esteban-lepaul"
+   },
+   {
+    "name": "Ainhoa Marín",
+    "ovr": 81,
+    "pos": "RW",
+    "price": 650,
+    "fid": 894,
+    "url": "https://www.futbin.com/27/player/894/ainhoa-marin-martin"
+   },
+   {
+    "name": "Dudinha",
+    "ovr": 81,
+    "pos": "LM",
+    "price": 650,
+    "fid": 876,
+    "url": "https://www.futbin.com/27/player/876/maria-eduarda-rodrigues-silva"
+   }
+  ],
+  "82": [
+   {
+    "name": "Di María",
+    "ovr": 82,
+    "pos": "RW",
+    "price": 650,
+    "fid": 864,
+    "url": "https://www.futbin.com/27/player/864/angel-di-maria"
+   },
+   {
+    "name": "Budimir",
+    "ovr": 82,
+    "pos": "ST",
+    "price": 650,
+    "fid": 840,
+    "url": "https://www.futbin.com/27/player/840/ante-budimir"
+   },
+   {
+    "name": "ter Stegen",
+    "ovr": 82,
+    "pos": "GK",
+    "price": 650,
+    "fid": 804,
+    "url": "https://www.futbin.com/27/player/804/marc-andre-ter-stegen"
+   }
+  ],
+  "83": [
+   {
+    "name": "Gnabry",
+    "ovr": 83,
+    "pos": "CAM",
+    "price": 650,
+    "fid": 359,
+    "url": "https://www.futbin.com/27/player/359/serge-gnabry"
+   },
+   {
+    "name": "Toney",
+    "ovr": 83,
+    "pos": "ST",
+    "price": 650,
+    "fid": 574,
+    "url": "https://www.futbin.com/27/player/574/ivan-toney"
+   },
+   {
+    "name": "Mittelstädt",
+    "ovr": 83,
+    "pos": "LB",
+    "price": 650,
+    "fid": 370,
+    "url": "https://www.futbin.com/27/player/370/maximilian-mittelstadt"
+   }
+  ],
+  "84": [
+   {
+    "name": "Lewandowski",
+    "ovr": 84,
+    "pos": "ST",
+    "price": 850,
+    "fid": 722,
+    "url": "https://www.futbin.com/27/player/722/robert-lewandowski"
+   },
+   {
+    "name": "Falcone",
+    "ovr": 84,
+    "pos": "GK",
+    "price": 850,
+    "fid": 473,
+    "url": "https://www.futbin.com/27/player/473/wladimiro-falcone"
+   },
+   {
+    "name": "Bernardo Silva",
+    "ovr": 84,
+    "pos": "CM",
+    "price": 850,
+    "fid": 679,
+    "url": "https://www.futbin.com/27/player/679/bernardo-mota-carvalho-e-silva"
+   }
+  ],
+  "85": [
+   {
+    "name": "Undav",
+    "ovr": 85,
+    "pos": "ST",
+    "price": 2100,
+    "fid": 316,
+    "url": "https://www.futbin.com/27/player/316/deniz-undav"
+   },
+   {
+    "name": "Dali",
+    "ovr": 85,
+    "pos": "CDM",
+    "price": 2200,
+    "fid": 698,
+    "url": "https://www.futbin.com/27/player/698/kenza-dali"
+   },
+   {
+    "name": "Xhaka",
+    "ovr": 85,
+    "pos": "CDM",
+    "price": 2300,
+    "fid": 242,
+    "url": "https://www.futbin.com/27/player/242/granit-xhaka"
+   }
+  ],
+  "86": [
+   {
+    "name": "Dimarco",
+    "ovr": 86,
+    "pos": "LB",
+    "price": 4100,
+    "fid": 458,
+    "url": "https://www.futbin.com/27/player/458/federico-dimarco"
+   },
+   {
+    "name": "Heaps",
+    "ovr": 86,
+    "pos": "CM",
+    "price": 4100,
+    "fid": 740,
+    "url": "https://www.futbin.com/27/player/740/lindsey-heaps"
+   },
+   {
+    "name": "McCabe",
+    "ovr": 86,
+    "pos": "LB",
+    "price": 4100,
+    "fid": 116,
+    "url": "https://www.futbin.com/27/player/116/katie-mccabe"
+   }
+  ],
+  "87": [
+   {
+    "name": "Saka",
+    "ovr": 87,
+    "pos": "RW",
+    "price": 5700,
+    "fid": 228,
+    "url": "https://www.futbin.com/27/player/228/bukayo-saka"
+   },
+   {
+    "name": "Tah",
+    "ovr": 87,
+    "pos": "CB",
+    "price": 5800,
+    "fid": 337,
+    "url": "https://www.futbin.com/27/player/337/jonathan-tah"
+   },
+   {
+    "name": "Harder",
+    "ovr": 87,
+    "pos": "CAM",
+    "price": 5800,
+    "fid": 73,
+    "url": "https://www.futbin.com/27/player/73/pernille-harder"
+   }
+  ],
+  "88": [
+   {
+    "name": "Hasegawa",
+    "ovr": 88,
+    "pos": "CDM",
+    "price": 8700,
+    "fid": 24,
+    "url": "https://www.futbin.com/27/player/24/yui-hasegawa"
+   },
+   {
+    "name": "Bühl",
+    "ovr": 88,
+    "pos": "LM",
+    "price": 8800,
+    "fid": 29,
+    "url": "https://www.futbin.com/27/player/29/klara-buhl"
+   },
+   {
+    "name": "Kimmich",
+    "ovr": 88,
+    "pos": "CDM",
+    "price": 8900,
+    "fid": 85,
+    "url": "https://www.futbin.com/27/player/85/joshua-kimmich"
+   }
+  ],
+  "89": [
+   {
+    "name": "Gabriel",
+    "ovr": 89,
+    "pos": "CB",
+    "price": 16750,
+    "fid": 78,
+    "url": "https://www.futbin.com/27/player/78/gabriel-dos-s-magalhaes"
+   },
+   {
+    "name": "Bruno Fernandes",
+    "ovr": 89,
+    "pos": "CAM",
+    "price": 17000,
+    "fid": 53,
+    "url": "https://www.futbin.com/27/player/53/bruno-miguel-borges-fernandes"
+   },
+   {
+    "name": "Messi",
+    "ovr": 89,
+    "pos": "CAM",
+    "price": 21500,
+    "fid": 22,
+    "url": "https://www.futbin.com/27/player/22/lionel-messi"
+   }
+  ],
+  "90": [
+   {
+    "name": "Shaw",
+    "ovr": 90,
+    "pos": "ST",
+    "price": 26000,
+    "fid": 7,
+    "url": "https://www.futbin.com/27/player/7/khadija-shaw"
+   },
+   {
+    "name": "Rodri",
+    "ovr": 90,
+    "pos": "CDM",
+    "price": 27000,
+    "fid": 13,
+    "url": "https://www.futbin.com/27/player/13/rodrigo-hernandez-cascante"
+   },
+   {
+    "name": "Kane",
+    "ovr": 90,
+    "pos": "ST",
+    "price": 27500,
+    "fid": 55,
+    "url": "https://www.futbin.com/27/player/55/harry-kane"
+   }
+  ],
+  "91": [
+   {
+    "name": "Haaland",
+    "ovr": 91,
+    "pos": "ST",
+    "price": 122000,
+    "fid": 1,
+    "url": "https://www.futbin.com/27/player/1/erling-haaland"
+   },
+   {
+    "name": "Baresi",
+    "ovr": 91,
+    "pos": "CB",
+    "price": 369000,
+    "fid": 21524,
+    "url": "https://www.futbin.com/27/player/21524/baresi"
+   },
+   {
+    "name": "Baresi",
+    "ovr": 91,
+    "pos": "CB",
+    "price": 371000,
+    "fid": 21537,
+    "url": "https://www.futbin.com/27/player/21537/baresi"
+   }
+  ]
+ }
+}
