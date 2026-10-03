@@ -208,36 +208,36 @@
     {
       "name": "Charlie Cresswell",
       "ovr": 85,
-      "pct": -36.64,
-      "price": "−7,603",
+      "pct": -35.71,
+      "price": "−7,231",
       "version": "Destined for Glory"
     },
     {
       "name": "Robin Gosens",
       "ovr": 85,
-      "pct": -26.19,
-      "price": "−20,166",
+      "pct": -27.45,
+      "price": "−20,313",
       "version": "Destined for Glory"
     },
     {
       "name": "Ibrahim Maza",
       "ovr": 85,
-      "pct": -22.01,
-      "price": "−6,658",
+      "pct": -21.15,
+      "price": "−6,451",
       "version": "Destined for Glory"
     },
     {
       "name": "Jakub Kiwior",
       "ovr": 86,
-      "pct": -20.58,
-      "price": "−4,167",
+      "pct": -18.18,
+      "price": "−3,681",
       "version": "Destined for Glory"
     },
     {
       "name": "Anthony Gordon",
       "ovr": 86,
-      "pct": -13.95,
-      "price": "−45,895",
+      "pct": -14.36,
+      "price": "−46,670",
       "version": "Destined for Glory"
     }
   ],
@@ -279,17 +279,17 @@
     },
     {
       "ovr": 88,
-      "price": 7800,
+      "price": 8700,
       "score": 8300
     },
     {
       "ovr": 89,
-      "price": 16500,
+      "price": 16000,
       "score": 11000
     },
     {
       "ovr": 90,
-      "price": 26000,
+      "price": 25750,
       "score": 14000
     },
     {
@@ -370,7 +370,7 @@
   "moves": [
     {
       "confidence": "medium",
-      "detail": "Team 2 went live at {{t:2026-10-02T18:00:00+01:00}}. FUT.GG fallers are Destined for Glory cards: Cresswell 85 −37%, Gosens 85 −26%, Maza 85 −22%, Kiwior 86 −21%. Fresh specials usually keep falling while packs are opened, so let prices settle first.",
+      "detail": "Team 2 went live at {{t:2026-10-02T18:00:00+01:00}}. FUT.GG fallers are Destined for Glory cards: Cresswell 85 −36%, Gosens 85 −27%, Maza 85 −21%, Kiwior 86 −18%. Fresh specials usually keep falling while packs are opened, so let prices settle first.",
       "title": "Wait before buying Destined for Glory Team 2 cards",
       "tone": "hold",
       "when": "Until {{t:2026-10-03T18:00:00+01:00}}"
@@ -399,7 +399,7 @@
   ],
   "news": [
     {
-      "detail": "Released at {{t:2026-10-02T18:00:00+01:00}} with Haaland 91 on top. Team 2 cards fall hardest in the first hours: Cresswell −37%, Gosens −26%, Maza −22% on FUT.GG.",
+      "detail": "Released at {{t:2026-10-02T18:00:00+01:00}} with Haaland 91 on top. Team 2 cards fall hardest in the first hours: Cresswell −36%, Gosens −27%, Maza −21% on FUT.GG.",
       "kind": "data",
       "source": "FUTBIN · FUT.GG",
       "title": "Destined for Glory Team 2 is live"
@@ -550,9 +550,9 @@
       "url": "https://x.com/FutSheriff/status/2104296397529104395"
     }
   ],
-  "updatedAt": "2026-10-03T14:13:17Z",
+  "updatedAt": "2026-10-03T15:13:06Z",
   "verdict": {
-    "detail": "FUT.GG shows 81–83 at 650, 84s at 700, 85s at 1,800, 86s at 3,800 and 87s at 5,800. The top fallers are Destined for Glory cards (Cresswell −37%, Gosens −26%, Maza −22%, Kiwior −21%). FUTBIN did not load this run (403 twice); its market page, read {{t:2026-10-03T11:04:23+00:00}}, showed Index 100 at 105.33 (−3.06%) and momentum 56.28. Next supply point is Rivals rewards at {{t:2026-10-08T06:59:00+00:00}}.",
+    "detail": "FUT.GG shows 81–83 at 650, 84s at 700, 85s at 1,800, 86s at 3,800 and 87s at 5,800. The top fallers are Destined for Glory cards (Cresswell −36%, Gosens −27%, Maza −21%, Kiwior −18%). FUTBIN did not load this run (403 twice); its market page, read {{t:2026-10-03T11:04:23+00:00}}, showed Index 100 at 105.33 (−3.06%) and momentum 56.28. Next supply point is Rivals rewards at {{t:2026-10-08T06:59:00+00:00}}.",
     "headline": "Destined for Glory Team 2 cards are still falling; wait for them to settle.",
     "label": "Hold, specials are falling",
     "tone": "watch"
