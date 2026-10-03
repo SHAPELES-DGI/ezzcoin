@@ -1,0 +1,271 @@
+{
+ "updatedAt": "2026-10-03T06:07:08Z",
+ "source": "FUTBIN",
+ "at": "2026-10-03T05:58:15Z",
+ "cards": [
+  {
+   "rank": 1,
+   "name": "Akliouche",
+   "ovr": 85,
+   "pos": "CAM",
+   "version": null,
+   "price": 79000,
+   "url": "",
+   "fid": null,
+   "src": "FUTBIN"
+  },
+  {
+   "rank": 2,
+   "name": "Kika Nazareth",
+   "ovr": 83,
+   "pos": "CM",
+   "version": null,
+   "price": 409000,
+   "url": "",
+   "fid": null,
+   "src": "FUTBIN"
+  },
+  {
+   "rank": 3,
+   "name": "Gordon",
+   "ovr": 86,
+   "pos": "LW",
+   "version": null,
+   "price": 45250,
+   "url": "",
+   "fid": null,
+   "src": "FUTBIN"
+  },
+  {
+   "rank": 4,
+   "name": "Stanway",
+   "ovr": 86,
+   "pos": "CDM",
+   "version": null,
+   "price": 267000,
+   "url": "",
+   "fid": null,
+   "src": "FUTBIN"
+  },
+  {
+   "rank": 5,
+   "name": "Salma Paralluelo",
+   "ovr": 87,
+   "pos": "LW",
+   "version": null,
+   "price": 1300000,
+   "url": "",
+   "fid": null,
+   "src": "FUTBIN"
+  },
+  {
+   "rank": 6,
+   "name": "Raphinha",
+   "ovr": 89,
+   "pos": "ST",
+   "version": null,
+   "price": 730000,
+   "url": "",
+   "fid": null,
+   "src": "FUTBIN"
+  },
+  {
+   "rank": 7,
+   "name": "Mbeumo",
+   "ovr": 86,
+   "pos": "RM",
+   "version": null,
+   "price": 268000,
+   "url": "",
+   "fid": null,
+   "src": "FUTBIN"
+  },
+  {
+   "rank": 8,
+   "name": "Aitana Bonmatí",
+   "ovr": 90,
+   "pos": "CM",
+   "version": null,
+   "price": 18000,
+   "url": "",
+   "fid": null,
+   "src": "FUTBIN"
+  },
+  {
+   "rank": 9,
+   "name": "Vicky López",
+   "ovr": 84,
+   "pos": "RW",
+   "version": null,
+   "price": 565000,
+   "url": "",
+   "fid": null,
+   "src": "FUTBIN"
+  },
+  {
+   "rank": 10,
+   "name": "Raphinha",
+   "ovr": 88,
+   "pos": "LW",
+   "version": null,
+   "price": 218000,
+   "url": "",
+   "fid": null,
+   "src": "FUTBIN"
+  },
+  {
+   "rank": 11,
+   "name": "Pedri",
+   "ovr": 90,
+   "pos": "CM",
+   "version": null,
+   "price": 200000,
+   "url": "",
+   "fid": null,
+   "src": "FUTBIN"
+  },
+  {
+   "rank": 12,
+   "name": "Nico Paz",
+   "ovr": 87,
+   "pos": "CAM",
+   "version": null,
+   "price": 18950,
+   "url": "",
+   "fid": null,
+   "src": "FUTBIN"
+  },
+  {
+   "rank": 13,
+   "name": "Groß",
+   "ovr": 84,
+   "pos": "CDM",
+   "version": null,
+   "price": 61000,
+   "url": "",
+   "fid": null,
+   "src": "FUTBIN"
+  },
+  {
+   "rank": 14,
+   "name": "Diani",
+   "ovr": 87,
+   "pos": "RM",
+   "version": null,
+   "price": 409000,
+   "url": "",
+   "fid": null,
+   "src": "FUTBIN"
+  },
+  {
+   "rank": 15,
+   "name": "Lookman",
+   "ovr": 86,
+   "pos": "ST",
+   "version": null,
+   "price": 62500,
+   "url": "",
+   "fid": null,
+   "src": "FUTBIN"
+  },
+  {
+   "rank": 16,
+   "name": "Barcola",
+   "ovr": 85,
+   "pos": "LW",
+   "version": null,
+   "price": 1280000,
+   "url": "",
+   "fid": null,
+   "src": "FUTBIN"
+  },
+  {
+   "rank": 17,
+   "name": "Upamecano",
+   "ovr": 89,
+   "pos": "CB",
+   "version": null,
+   "price": 87000,
+   "url": "",
+   "fid": null,
+   "src": "FUTBIN"
+  },
+  {
+   "rank": 18,
+   "name": "Karchaoui",
+   "ovr": 87,
+   "pos": "CM",
+   "version": null,
+   "price": 99000,
+   "url": "",
+   "fid": null,
+   "src": "FUTBIN"
+  },
+  {
+   "rank": 19,
+   "name": "Mariona",
+   "ovr": 89,
+   "pos": "CM",
+   "version": null,
+   "price": 255000,
+   "url": "",
+   "fid": null,
+   "src": "FUTBIN"
+  },
+  {
+   "rank": 20,
+   "name": "Lamine Yamal",
+   "ovr": 89,
+   "pos": "RW",
+   "version": null,
+   "price": 157000,
+   "url": "",
+   "fid": null,
+   "src": "FUTBIN"
+  },
+  {
+   "rank": 21,
+   "name": "Pajor",
+   "ovr": 88,
+   "pos": "ST",
+   "version": null,
+   "price": 198000,
+   "url": "",
+   "fid": null,
+   "src": "FUTBIN"
+  },
+  {
+   "rank": 22,
+   "name": "Patri Guijarro",
+   "ovr": 84,
+   "pos": "CDM",
+   "version": null,
+   "price": 27000,
+   "url": "",
+   "fid": null,
+   "src": "FUTBIN"
+  },
+  {
+   "rank": 23,
+   "name": "Mbeumo",
+   "ovr": 82,
+   "pos": "RM",
+   "version": null,
+   "price": 47000,
+   "url": "",
+   "fid": null,
+   "src": "FUTBIN"
+  },
+  {
+   "rank": 24,
+   "name": "Adeyemi",
+   "ovr": 85,
+   "pos": "RM",
+   "version": null,
+   "price": 44000,
+   "url": "",
+   "fid": null,
+   "src": "FUTBIN"
+  }
+ ]
+}
