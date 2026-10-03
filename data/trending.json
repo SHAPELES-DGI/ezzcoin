@@ -1,7 +1,7 @@
 {
- "updatedAt": "2026-10-03T11:13:36Z",
+ "updatedAt": "2026-10-03T17:04:31Z",
  "source": "FUTBIN",
- "at": "2026-10-03T11:04:40Z",
+ "at": "2026-10-03T17:03:30Z",
  "cards": [
   {
    "rank": 1,
@@ -43,8 +43,8 @@
    "pos": "CDM",
    "version": null,
    "price": 267000,
-   "url": "",
-   "fid": null,
+   "url": "https://www.futbin.com/27/player/115/georgia-stanway",
+   "fid": 115,
    "src": "FUTBIN"
   },
   {
@@ -54,8 +54,8 @@
    "pos": "LW",
    "version": null,
    "price": 1300000,
-   "url": "",
-   "fid": null,
+   "url": "https://www.futbin.com/27/player/621/salma-celeste-paralluelo-ayingono",
+   "fid": 621,
    "src": "FUTBIN"
   },
   {
@@ -87,8 +87,8 @@
    "pos": "CM",
    "version": null,
    "price": 18000,
-   "url": "",
-   "fid": null,
+   "url": "https://www.futbin.com/27/player/6/aitana-bonmati-conca",
+   "fid": 6,
    "src": "FUTBIN"
   },
   {
@@ -98,8 +98,8 @@
    "pos": "RW",
    "version": null,
    "price": 565000,
-   "url": "",
-   "fid": null,
+   "url": "https://www.futbin.com/27/player/514/victoria-lopez-serrano-felix",
+   "fid": 514,
    "src": "FUTBIN"
   },
   {
@@ -109,8 +109,8 @@
    "pos": "LW",
    "version": null,
    "price": 218000,
-   "url": "",
-   "fid": null,
+   "url": "https://www.futbin.com/27/player/546/raphael-dias-belloli",
+   "fid": 546,
    "src": "FUTBIN"
   },
   {
@@ -120,8 +120,8 @@
    "pos": "CM",
    "version": null,
    "price": 200000,
-   "url": "",
-   "fid": null,
+   "url": "https://www.futbin.com/27/player/69/pedro-gonzalez-lopez",
+   "fid": 69,
    "src": "FUTBIN"
   },
   {
@@ -131,19 +131,19 @@
    "pos": "CAM",
    "version": "Destined for Glory",
    "price": 18950,
-   "url": "https://www.futbin.com/27/player/23116/nicolas-paz-martinez",
-   "fid": 23116,
+   "url": "https://www.futbin.com/27/player/23115/nicolas-paz-martinez",
+   "fid": 23115,
    "src": "FUTBIN"
   },
   {
    "rank": 13,
    "name": "Groß",
-   "ovr": 87,
+   "ovr": 84,
    "pos": "CDM",
-   "version": null,
+   "version": "Premier League POTM",
    "price": 61000,
-   "url": "",
-   "fid": null,
+   "url": "https://www.futbin.com/27/player/23103/pascal-gro",
+   "fid": 23103,
    "src": "FUTBIN"
   },
   {
@@ -153,8 +153,8 @@
    "pos": "RM",
    "version": null,
    "price": 409000,
-   "url": "",
-   "fid": null,
+   "url": "https://www.futbin.com/27/player/52/kadidiatou-diani",
+   "fid": 52,
    "src": "FUTBIN"
   },
   {
@@ -175,8 +175,8 @@
    "pos": "LW",
    "version": null,
    "price": 1280000,
-   "url": "",
-   "fid": null,
+   "url": "https://www.futbin.com/27/player/21977/bradley-barcola",
+   "fid": 21977,
    "src": "FUTBIN"
   },
   {
@@ -193,23 +193,23 @@
   {
    "rank": 18,
    "name": "Karchaoui",
-   "ovr": 89,
+   "ovr": 87,
    "pos": "CM",
    "version": null,
    "price": 99000,
-   "url": "",
-   "fid": null,
+   "url": "https://www.futbin.com/27/player/59/sakina-karchaoui",
+   "fid": 59,
    "src": "FUTBIN"
   },
   {
    "rank": 19,
    "name": "Mariona",
-   "ovr": 90,
+   "ovr": 89,
    "pos": "CM",
    "version": null,
    "price": 255000,
-   "url": "",
-   "fid": null,
+   "url": "https://www.futbin.com/27/player/17/maria-francesca-caldentey-oliver",
+   "fid": 17,
    "src": "FUTBIN"
   },
   {
