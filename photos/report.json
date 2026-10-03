@@ -5,20 +5,10 @@
 "ovr": 85,
 "why": "no Wikidata footballer with this name and a photo"
 },
-"227190": {
-"name": "Irene Paredes Hernández",
-"ovr": 87,
-"why": "licence not allowed: Attribution"
-},
 "231866": {
 "name": "Rodrigo Hernández Cascante",
 "ovr": 90,
 "why": "2 footballers with this name"
-},
-"236479": {
-"name": "María Pilar León Cebrián",
-"ovr": 88,
-"why": "licence not allowed: Attribution"
 },
 "237288": {
 "name": "María Francesca Caldentey Oliver",
@@ -65,11 +55,6 @@
 "ovr": 74,
 "why": "no Wikidata footballer with this name and a photo"
 },
-"269404": {
-"name": "Salma Celeste Paralluelo Ayingono",
-"ovr": 87,
-"why": "licence not allowed: Attribution"
-},
 "272137": {
 "name": "Sara Ortega Ruiz",
 "ovr": 73,
@@ -91,6 +76,6 @@
 "why": "no Wikidata footballer with this name and a photo"
 }
 },
-"photos": 726,
+"photos": 731,
 "players": 823
 }
