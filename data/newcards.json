@@ -1,6 +1,6 @@
 {
- "updatedAt": "2026-10-03T11:13:36Z",
- "source": "FUTBIN",
+ "updatedAt": "2026-10-03T16:44:33Z",
+ "source": "FUT.GG",
  "cards": [
   {
    "fid": 23159,
@@ -675,7 +675,9 @@
    "price": 54500,
    "priceAt": "2026-10-02T19:58:30Z",
    "src": "FUTBIN",
-   "url": "https://www.futbin.com/27/player/23135/ibrahim-maza"
+   "url": "https://www.futbin.com/27/player/23135/ibrahim-maza",
+   "gid": 50606677,
+   "baseId": 275029
   },
   {
    "fid": 23134,
@@ -702,7 +704,9 @@
    "price": 157000,
    "priceAt": "2026-10-02T19:58:30Z",
    "src": "FUTBIN",
-   "url": "https://www.futbin.com/27/player/23134/robin-gosens"
+   "url": "https://www.futbin.com/27/player/23134/robin-gosens",
+   "gid": 50555345,
+   "baseId": 223697
   },
   {
    "fid": 23132,
@@ -729,7 +733,9 @@
    "price": 51500,
    "priceAt": "2026-10-02T19:58:30Z",
    "src": "FUTBIN",
-   "url": "https://www.futbin.com/27/player/23132/charlie-cresswell"
+   "url": "https://www.futbin.com/27/player/23132/charlie-cresswell",
+   "gid": 50585769,
+   "baseId": 254121
   },
   {
    "fid": 23129,
@@ -756,7 +762,9 @@
    "price": 168000,
    "priceAt": "2026-10-02T19:58:30Z",
    "src": "FUTBIN",
-   "url": "https://www.futbin.com/27/player/23129/weston-mckennie"
+   "url": "https://www.futbin.com/27/player/23129/weston-mckennie",
+   "gid": 50570392,
+   "baseId": 238744
   },
   {
    "fid": 23127,
@@ -810,7 +818,9 @@
    "price": 128000,
    "priceAt": "2026-10-02T19:58:30Z",
    "src": "FUTBIN",
-   "url": "https://www.futbin.com/27/player/23125/mateus-goncalo-espanha-fernandes"
+   "url": "https://www.futbin.com/27/player/23125/mateus-goncalo-espanha-fernandes",
+   "gid": 50602505,
+   "baseId": 270857
   },
   {
    "fid": 23124,
@@ -837,7 +847,9 @@
    "price": 850000,
    "priceAt": "2026-10-02T19:58:30Z",
    "src": "FUTBIN",
-   "url": "https://www.futbin.com/27/player/23124/bryan-mbeumo"
+   "url": "https://www.futbin.com/27/player/23124/bryan-mbeumo",
+   "gid": 50574662,
+   "baseId": 243014
   },
   {
    "fid": 23123,
@@ -864,7 +876,9 @@
    "price": 31500,
    "priceAt": "2026-10-02T19:58:30Z",
    "src": "FUTBIN",
-   "url": "https://www.futbin.com/27/player/23123/jakub-kiwior"
+   "url": "https://www.futbin.com/27/player/23123/jakub-kiwior",
+   "gid": 50597341,
+   "baseId": 265693
   },
   {
    "fid": 23122,
@@ -891,7 +905,9 @@
    "price": 374000,
    "priceAt": "2026-10-02T19:58:30Z",
    "src": "FUTBIN",
-   "url": "https://www.futbin.com/27/player/23122/ademola-lookman"
+   "url": "https://www.futbin.com/27/player/23122/ademola-lookman",
+   "gid": 50562547,
+   "baseId": 230899
   },
   {
    "fid": 23120,
@@ -918,7 +934,9 @@
    "price": 390000,
    "priceAt": "2026-10-03T11:12:00Z",
    "src": "FUTBIN",
-   "url": "https://www.futbin.com/27/player/23120/anthony-gordon"
+   "url": "https://www.futbin.com/27/player/23120/anthony-gordon",
+   "gid": 50574612,
+   "baseId": 242964
   },
   {
    "fid": 23116,
@@ -945,7 +963,9 @@
    "price": 249000,
    "priceAt": "2026-10-02T19:58:30Z",
    "src": "FUTBIN",
-   "url": "https://www.futbin.com/27/player/23116/nicolas-paz-martinez"
+   "url": "https://www.futbin.com/27/player/23116/nicolas-paz-martinez",
+   "gid": 50609494,
+   "baseId": 277846
   },
   {
    "fid": 23113,
@@ -972,7 +992,9 @@
    "price": 620000,
    "priceAt": "2026-10-02T19:58:30Z",
    "src": "FUTBIN",
-   "url": "https://www.futbin.com/27/player/23113/linda-caicedo"
+   "url": "https://www.futbin.com/27/player/23113/linda-caicedo",
+   "gid": 50604801,
+   "baseId": 273153
   },
   {
    "fid": 23111,
@@ -999,7 +1021,9 @@
    "price": 318000,
    "priceAt": "2026-10-02T19:58:30Z",
    "src": "FUTBIN",
-   "url": "https://www.futbin.com/27/player/23111/marc-cucurella-saseta"
+   "url": "https://www.futbin.com/27/player/23111/marc-cucurella-saseta",
+   "gid": 50570879,
+   "baseId": 239231
   },
   {
    "fid": 23110,
@@ -1026,7 +1050,9 @@
    "price": 1850000,
    "priceAt": "2026-10-02T19:58:30Z",
    "src": "FUTBIN",
-   "url": "https://www.futbin.com/27/player/23110/kadidiatou-diani"
+   "url": "https://www.futbin.com/27/player/23110/kadidiatou-diani",
+   "gid": 50559009,
+   "baseId": 227361
   },
   {
    "fid": 23108,
@@ -1053,7 +1079,9 @@
    "price": 1350000,
    "priceAt": "2026-10-02T19:58:30Z",
    "src": "FUTBIN",
-   "url": "https://www.futbin.com/27/player/23108/dayot-upamecano"
+   "url": "https://www.futbin.com/27/player/23108/dayot-upamecano",
+   "gid": 50561206,
+   "baseId": 229558
   },
   {
    "fid": 23106,
@@ -1080,7 +1108,9 @@
    "price": 1780000,
    "priceAt": "2026-10-03T05:59:55Z",
    "src": "FUTBIN",
-   "url": "https://www.futbin.com/27/player/23106/erling-haaland"
+   "url": "https://www.futbin.com/27/player/23106/erling-haaland",
+   "gid": 50570733,
+   "baseId": 239085
   },
   {
    "fid": 23104,
