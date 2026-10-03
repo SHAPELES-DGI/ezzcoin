@@ -1,20 +1,24 @@
 {
- "updatedAt": "2026-10-03T06:33:47Z",
+ "updatedAt": "2026-10-03T11:13:36Z",
  "source": "FUTBIN",
  "players": {
   "278046": {
    "name": "Pau Cubarsí",
    "ovr": 86,
    "version": "",
-   "price": 5100,
-   "prev": null,
-   "at": "2026-10-03T06:29:50Z",
+   "price": 5900,
+   "prev": 5100,
+   "at": "2026-10-03T11:05:40Z",
    "src": "FUTBIN",
    "url": "https://www.futbin.com/27/player/549/pau-cubarsi-paredes",
    "hist": [
     [
      "2026-10-03T06:29:50Z",
      5100
+    ],
+    [
+     "2026-10-03T11:05:40Z",
+     5900
     ]
    ]
   },
@@ -23,13 +27,17 @@
    "ovr": 86,
    "version": "Destined for Glory",
    "price": 390000,
-   "prev": null,
-   "at": "2026-10-03T06:29:50Z",
+   "prev": 390000,
+   "at": "2026-10-03T11:12:00Z",
    "src": "FUTBIN",
    "url": "https://www.futbin.com/27/player/23120/anthony-gordon",
    "hist": [
     [
      "2026-10-03T06:29:50Z",
+     390000
+    ],
+    [
+     "2026-10-03T11:12:00Z",
      390000
     ]
    ]
