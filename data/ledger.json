@@ -33,7 +33,7 @@
       "exit": null,
       "id": "c-2026-10-02-isak",
       "madeAt": "2026-09-30T18:26:38Z",
-      "note": "609,000 on FUTBIN when the call was made. Entry not recorded: the nearest FUTBIN reading (481,000 at 20:00 UTC) is over 3 hours after the entry time, so it stays pending and is voided if still unreadable 12 hours past due.",
+      "note": "609,000 on FUTBIN when the call was made. Entry not recorded: the nearest FUTBIN reading (481,000 at 20:00 UTC) is over 3 hours after the entry time, so it stays pending and is voided if still unreadable 12 hours past due. Voided 2026-10-03T03:13:12Z: entry still unreadable 12 hours past due (FUTBIN blocked).",
       "ref": {
         "kind": "player",
         "label": "FUTBIN Destined for Glory page, PS price",
@@ -45,7 +45,7 @@
       },
       "result": null,
       "rule": "sell_lower",
-      "status": "pending",
+      "status": "void",
       "title": "Sell DFG Isak (88) before the Friday 19:00 promo",
       "tone": "sell"
     }
