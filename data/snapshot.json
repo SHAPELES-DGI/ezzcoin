@@ -208,23 +208,37 @@
     {
       "name": "Robin Gosens",
       "ovr": 85,
-      "pct": -32.32,
-      "price": "−14,297",
+      "pct": -29.72,
+      "price": "−11,739",
       "version": "Destined for Glory"
     },
     {
-      "name": "Mateus Fernandes",
-      "ovr": 85,
-      "pct": -10.67,
-      "price": "−9,654",
+      "name": "Kadidiatou Diani",
+      "ovr": 88,
+      "pct": -12.37,
+      "price": "−88,445",
       "version": "Destined for Glory"
     },
     {
       "name": "Gabriel Martinelli",
       "ovr": 82,
       "pct": -10.6,
-      "price": "–",
-      "version": ""
+      "price": "−1,563",
+      "version": "Team of the Week"
+    },
+    {
+      "name": "Son Heung-Min",
+      "ovr": 83,
+      "pct": -10.15,
+      "price": "−2,969",
+      "version": "Team of the Week"
+    },
+    {
+      "name": "Thierry Henry",
+      "ovr": 91,
+      "pct": -10.11,
+      "price": "−349,806",
+      "version": "Base Icon"
     }
   ],
   "fodder": [
@@ -250,7 +264,7 @@
     },
     {
       "ovr": 85,
-      "price": 2100,
+      "price": 1600,
       "score": 2100
     },
     {
@@ -265,22 +279,22 @@
     },
     {
       "ovr": 88,
-      "price": 9100,
+      "price": 8800,
       "score": 8300
     },
     {
       "ovr": 89,
-      "price": 17500,
+      "price": 17000,
       "score": 11000
     },
     {
       "ovr": 90,
-      "price": 26250,
+      "price": 26500,
       "score": 14000
     },
     {
       "ovr": 91,
-      "price": 126000,
+      "price": 129000,
       "score": 19000
     }
   ],
@@ -356,7 +370,7 @@
   "moves": [
     {
       "confidence": "low",
-      "detail": "Team 2 went live at {{t:2026-10-02T18:00:00+01:00}}. FUT.GG fallers are still Destined for Glory cards: Gosens 85 −32%, Fernandes 85 −11%, Martinelli 82 −11%. The falls are slowing, but fresh specials usually keep dropping while packs are opened, so let prices settle first.",
+      "detail": "Team 2 went live at {{t:2026-10-02T18:00:00+01:00}}. FUT.GG fallers are still Destined for Glory cards: Gosens 85 −30%, Diani 88 −12%, plus TOTW cards Martinelli and Son. The falls are slowing, but fresh specials usually keep dropping while packs are opened, so let prices settle first.",
       "title": "Wait before buying Destined for Glory Team 2 cards",
       "tone": "hold",
       "when": "Until {{t:2026-10-04T18:00:00+01:00}}"
@@ -370,14 +384,14 @@
     },
     {
       "confidence": "low",
-      "detail": "FUT.GG this update: 84s sit at 650 (0.78 coins per point), 85s at 2,000 (0.95), 86s at 4,000 (0.95) and 87s at 5,600 (1.02). Use fodder in SBCs, don't trade it: selling costs the 5% tax.",
-      "title": "Fodder: 84s are the cheapest Item Score",
+      "detail": "FUT.GG this update: 84s sit at 650 (0.78 coins per point), 85s at 1,600 (0.76), 86s at 4,000 (0.95) and 87s at 5,600 (1.02). 84s and 85s are a tie. Use fodder in SBCs, don't trade it: selling costs the 5% tax.",
+      "title": "Fodder: 84s and 85s cost about the same per point",
       "tone": "watch",
       "when": "Every update"
     },
     {
       "confidence": "low",
-      "detail": "Last week's specials are still falling on FUT.GG. TOTW 4 is due {{t:2026-10-07T18:00:00+01:00}} (FUTBIN dates so far: 16, 23 and 30 Sep) and pushes last week's TOTW cards down further. Spares only, per the tip rule: selling and rebuying costs the 5% tax.",
+      "detail": "Last week's specials are still falling on FUT.GG (Martinelli and Son TOTW cards both about −10%). TOTW 4 is due {{t:2026-10-07T18:00:00+01:00}} (FUTBIN dates so far: 16, 23 and 30 Sep) and pushes last week's TOTW cards down further. Spares only, per the tip rule: selling and rebuying costs the 5% tax.",
       "title": "Sell spare TOTW cards before TOTW 4",
       "tone": "sell",
       "when": "Before {{t:2026-10-07T18:00:00+01:00}}"
@@ -385,7 +399,7 @@
   ],
   "news": [
     {
-      "detail": "Released at {{t:2026-10-02T18:00:00+01:00}} with Haaland 91 on top. Team 2 cards keep falling on FUT.GG: Gosens −37%, Fernandes −12%, Maza −11%.",
+      "detail": "Released at {{t:2026-10-02T18:00:00+01:00}} with Haaland 91 on top. Team 2 cards keep falling on FUT.GG: Gosens −30%, Diani −12%.",
       "kind": "data",
       "source": "FUTBIN · FUT.GG",
       "title": "Destined for Glory Team 2 is live"
@@ -409,7 +423,7 @@
       "title": "Streamlined SBCs mostly skip minimum ratings"
     },
     {
-      "detail": "FUT.GG: 81–84 at 650, 85s at 2,100, 86s at 4,000, 87s at 5,500. FUTBIN's Index 100 was 106.68 (−1.81%) when last read {{t:2026-10-03T22:33:58+00:00}}; FUTBIN's market and SBC pages returned 403 this run (twice), so the SBC list is from FUT.GG.",
+      "detail": "FUT.GG: 81–84 at 650, 85s at 1,600, 86s at 4,000, 87s at 5,600. FUTBIN's Index 100 was 106.68 (−1.81%) when last read {{t:2026-10-03T22:33:58+00:00}}; FUTBIN's market and SBC pages returned 403 this run (twice), so the SBC list is from FUT.GG.",
       "kind": "data",
       "source": "FUT.GG · FUTBIN",
       "title": "Fodder: 81–84 sit at the 650 floor"
@@ -536,9 +550,9 @@
       "url": "https://x.com/FutSheriff/status/2104296397529104395"
     }
   ],
-  "updatedAt": "2026-10-04T11:13:45Z",
+  "updatedAt": "2026-10-04T12:13:40Z",
   "verdict": {
-    "detail": "FUT.GG: 81–84 at 650, 85s at 2,100, 86s at 4,000 and 87s at 5,600. Fallers are Destined for Glory cards (Gosens 85 −32%, Fernandes 85 −11%, Martinelli 82 −11%). FUTBIN's Index 100 was 106.68 (−1.81%) and momentum 65.51 when last read {{t:2026-10-03T22:33:58+00:00}}; FUTBIN returned 403 this run (twice again). Next supply point is Rivals rewards at {{t:2026-10-08T06:59:00+00:00}}.",
+    "detail": "FUT.GG: 81–84 at 650, 85s at 1,600, 86s at 4,000 and 87s at 5,600. Fallers are Destined for Glory cards (Gosens 85 −30%, Diani 88 −12%). FUTBIN's Index 100 was 106.68 (−1.81%) and momentum 65.51 when last read {{t:2026-10-03T22:33:58+00:00}}; FUTBIN returned 403 this run (twice again). Next supply point is Rivals rewards at {{t:2026-10-08T06:59:00+00:00}}.",
     "headline": "Destined for Glory Team 2 cards are still falling, but more slowly; wait for them to settle.",
     "label": "Hold, specials are still falling",
     "tone": "watch"
