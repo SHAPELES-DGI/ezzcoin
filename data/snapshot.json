@@ -208,57 +208,36 @@
     {
       "name": "Robin Gosens",
       "ovr": 85,
-      "pct": -39.92,
-      "price": "−16,168",
-      "version": "Destined for Glory"
-    },
-    {
-      "name": "Weston McKennie",
-      "ovr": 85,
-      "pct": -24.62,
-      "price": "−24,497",
+      "pct": -40.87,
+      "price": "−16,552",
       "version": "Destined for Glory"
     },
     {
       "name": "Ibrahim Maza",
       "ovr": 85,
-      "pct": -22.68,
-      "price": "−4,990",
+      "pct": -28.81,
+      "price": "−6,410",
       "version": "Destined for Glory"
     },
     {
-      "name": "Mateus Fernandes",
+      "name": "Weston McKennie",
       "ovr": 85,
-      "pct": -21.76,
-      "price": "−16,429",
+      "pct": -20.61,
+      "price": "−21,434",
       "version": "Destined for Glory"
     },
     {
       "name": "Nico Paz",
       "ovr": 87,
-      "pct": -17.9,
-      "price": "−23,986",
+      "pct": -18.01,
+      "price": "–",
       "version": "Destined for Glory"
     },
     {
-      "name": "Michael Olise",
+      "name": "Erling Haaland",
       "ovr": 91,
-      "pct": -11.67,
-      "price": "−96,277",
-      "version": "Team of the Week"
-    },
-    {
-      "name": "Ademola Lookman",
-      "ovr": 86,
-      "pct": -11.38,
-      "price": "−32,774",
-      "version": "Destined for Glory"
-    },
-    {
-      "name": "Linda Caicedo",
-      "ovr": 87,
-      "pct": -10.82,
-      "price": "−45,444",
+      "pct": -7.8,
+      "price": "–",
       "version": "Destined for Glory"
     }
   ],
@@ -280,7 +259,7 @@
     },
     {
       "ovr": 84,
-      "price": 650,
+      "price": 750,
       "score": 830
     },
     {
@@ -290,17 +269,17 @@
     },
     {
       "ovr": 86,
-      "price": 3900,
+      "price": 4000,
       "score": 4100
     },
     {
       "ovr": 87,
-      "price": 5000,
+      "price": 5500,
       "score": 5500
     },
     {
       "ovr": 88,
-      "price": 8000,
+      "price": 8700,
       "score": 8300
     },
     {
@@ -310,12 +289,12 @@
     },
     {
       "ovr": 90,
-      "price": 24000,
+      "price": 24250,
       "score": 14000
     },
     {
       "ovr": 91,
-      "price": 115000,
+      "price": 116000,
       "score": 19000
     }
   ],
@@ -391,28 +370,28 @@
   "moves": [
     {
       "confidence": "low",
-      "detail": "Team 2 went live at {{t:2026-10-02T18:00:00+01:00}}. FUT.GG fallers are still Destined for Glory cards: Gosens 85 −40%, McKennie 85 −25%, Maza 85 −23%, Fernandes 85 −22%, Paz 87 −18%. Fresh specials usually keep falling while packs are opened, so let prices settle first.",
+      "detail": "Team 2 went live at {{t:2026-10-02T18:00:00+01:00}}. FUT.GG fallers are still Destined for Glory cards: Gosens 85 −41%, Maza 85 −29%, McKennie 85 −21%, Paz 87 −18%. Fresh specials usually keep falling while packs are opened, so let prices settle first.",
       "title": "Wait before buying Destined for Glory Team 2 cards",
       "tone": "hold",
       "when": "Until {{t:2026-10-04T18:00:00+01:00}}"
     },
     {
       "confidence": "low",
-      "detail": "Division Rivals rewards pay out at {{t:2026-10-08T06:59:00+00:00}} (EA Help) and add fodder and sub-85 cards. FUT.GG lists 86s at 3,900 and 87s at 5,000 now, so hold off on 86+ fodder until then.",
+      "detail": "Division Rivals rewards pay out at {{t:2026-10-08T06:59:00+00:00}} (EA Help) and add fodder and sub-85 cards. FUT.GG lists 86s at 4,000 and 87s at 5,500 now, so hold off on 86+ fodder until then.",
       "title": "Wait for Rivals rewards before buying 86+ fodder",
       "tone": "watch",
       "when": "Until {{t:2026-10-08T06:59:00+00:00}}"
     },
     {
       "confidence": "low",
-      "detail": "FUT.GG this update: 84s sit at 650 (0.78 coins per point), 85s at 2,000 (0.95), 86s at 3,900 (0.95) and 87s at 5,000 (0.91). 84s are cheapest per point; 85+ costs more. Use fodder in SBCs, don't trade it: selling costs the 5% tax.",
-      "title": "Fodder: 84s are the cheapest Item Score",
+      "detail": "FUT.GG this update: 84s sit at 750 (0.90 coins per point), 85s at 2,000 (0.95), 86s at 4,000 (0.98) and 87s at 5,500 (1.00). The gaps are under 0.1, so treat them as a tie. Use fodder in SBCs, don't trade it: selling costs the 5% tax.",
+      "title": "Fodder: 84–86 cost about the same per point",
       "tone": "watch",
       "when": "Every update"
     },
     {
       "confidence": "low",
-      "detail": "Last week's specials are still falling on FUT.GG, including Olise 91 TOTW −12%. TOTW 4 is due {{t:2026-10-07T18:00:00+01:00}} (FUTBIN dates so far: 16, 23 and 30 Sep) and pushes last week's TOTW cards down further. Spares only, per the tip rule: selling and rebuying costs the 5% tax.",
+      "detail": "Last week's specials are still falling on FUT.GG. TOTW 4 is due {{t:2026-10-07T18:00:00+01:00}} (FUTBIN dates so far: 16, 23 and 30 Sep) and pushes last week's TOTW cards down further. Spares only, per the tip rule: selling and rebuying costs the 5% tax.",
       "title": "Sell spare TOTW cards before TOTW 4",
       "tone": "sell",
       "when": "Before {{t:2026-10-07T18:00:00+01:00}}"
@@ -420,7 +399,7 @@
   ],
   "news": [
     {
-      "detail": "Released at {{t:2026-10-02T18:00:00+01:00}} with Haaland 91 on top. Team 2 cards keep falling on FUT.GG: Gosens −40%, McKennie −25%, Maza −23%.",
+      "detail": "Released at {{t:2026-10-02T18:00:00+01:00}} with Haaland 91 on top. Team 2 cards keep falling on FUT.GG: Gosens −41%, Maza −29%, McKennie −21%.",
       "kind": "data",
       "source": "FUTBIN · FUT.GG",
       "title": "Destined for Glory Team 2 is live"
@@ -444,10 +423,10 @@
       "title": "Streamlined SBCs mostly skip minimum ratings"
     },
     {
-      "detail": "FUT.GG: 81–84 at 650, 85s at 2,000, 86s at 3,900, 87s at 5,000. FUTBIN's Index 100 was 106.68 (−1.81%) when last read {{t:2026-10-03T22:33:58+00:00}}; FUTBIN's market and SBC pages returned 403 this run (twice), so the SBC list is from FUT.GG.",
+      "detail": "FUT.GG: 81–83 at 650, 84s at 750, 85s at 2,000, 86s at 4,000, 87s at 5,500. FUTBIN's Index 100 was 106.68 (−1.81%) when last read {{t:2026-10-03T22:33:58+00:00}}; FUTBIN's market and SBC pages returned 403 this run (twice), so the SBC list is from FUT.GG.",
       "kind": "data",
       "source": "FUT.GG · FUTBIN",
-      "title": "Fodder: 81–84 sit at the 650 floor"
+      "title": "Fodder: 81–83 sit at the 650 floor"
     }
   ],
   "platform": "console",
@@ -571,9 +550,9 @@
       "url": "https://x.com/FutSheriff/status/2104296397529104395"
     }
   ],
-  "updatedAt": "2026-10-04T04:13:14Z",
+  "updatedAt": "2026-10-04T05:14:00Z",
   "verdict": {
-    "detail": "FUT.GG: 81–84 at 650, 85s at 2,000, 86s at 3,900 and 87s at 5,000. Fallers are Destined for Glory cards (Gosens −40%, McKennie −25%, Maza −23%, Fernandes −22%, Paz −18%). FUTBIN's Index 100 was 106.68 (−1.81%) and momentum 65.51 when last read {{t:2026-10-03T22:33:58+00:00}}; FUTBIN returned 403 this run (twice). Next supply point is Rivals rewards at {{t:2026-10-08T06:59:00+00:00}}.",
+    "detail": "FUT.GG: 81–83 at 650, 84s at 750, 85s at 2,000, 86s at 4,000 and 87s at 5,500. Fallers are Destined for Glory cards (Gosens −41%, Maza −29%, McKennie −21%, Paz −18%). FUTBIN's Index 100 was 106.68 (−1.81%) and momentum 65.51 when last read {{t:2026-10-03T22:33:58+00:00}}; FUTBIN returned 403 this run (twice). Next supply point is Rivals rewards at {{t:2026-10-08T06:59:00+00:00}}.",
     "headline": "Destined for Glory Team 2 cards are still falling; wait for them to settle.",
     "label": "Hold, specials are still falling",
     "tone": "watch"
