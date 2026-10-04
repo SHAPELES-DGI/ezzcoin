@@ -208,36 +208,36 @@
     {
       "name": "Robin Gosens",
       "ovr": 85,
-      "pct": -39.23,
-      "price": "−15,496",
+      "pct": -36.8,
+      "price": "−14,444",
       "version": "Destined for Glory"
     },
     {
       "name": "Mateus Fernandes",
       "ovr": 85,
-      "pct": -22.58,
-      "price": "−16,483",
-      "version": "Destined for Glory"
-    },
-    {
-      "name": "Nico Paz",
-      "ovr": 87,
-      "pct": -15.28,
-      "price": "−20,322",
-      "version": "Destined for Glory"
-    },
-    {
-      "name": "Ibrahim Maza",
-      "ovr": 85,
-      "pct": -15.04,
-      "price": "−3,610",
+      "pct": -18.13,
+      "price": "−13,416",
       "version": "Destined for Glory"
     },
     {
       "name": "Weston McKennie",
       "ovr": 85,
-      "pct": -14.06,
-      "price": "−15,747",
+      "pct": -12.69,
+      "price": "−14,086",
+      "version": "Destined for Glory"
+    },
+    {
+      "name": "Ibrahim Maza",
+      "ovr": 85,
+      "pct": -10.81,
+      "price": "−2,621",
+      "version": "Destined for Glory"
+    },
+    {
+      "name": "Nico Paz",
+      "ovr": 87,
+      "pct": -10.32,
+      "price": "−14,345",
       "version": "Destined for Glory"
     }
   ],
@@ -269,32 +269,32 @@
     },
     {
       "ovr": 86,
-      "price": 4100,
+      "price": 3900,
       "score": 4100
     },
     {
       "ovr": 87,
-      "price": 5700,
+      "price": 5500,
       "score": 5500
     },
     {
       "ovr": 88,
-      "price": 8200,
+      "price": 8700,
       "score": 8300
     },
     {
       "ovr": 89,
-      "price": 5300,
+      "price": 17000,
       "score": 11000
     },
     {
       "ovr": 90,
-      "price": 25000,
+      "price": 26500,
       "score": 14000
     },
     {
       "ovr": 91,
-      "price": 125000,
+      "price": 127000,
       "score": 19000
     }
   ],
@@ -370,21 +370,21 @@
   "moves": [
     {
       "confidence": "low",
-      "detail": "Team 2 went live at {{t:2026-10-02T18:00:00+01:00}}. FUT.GG fallers are still Destined for Glory cards: Gosens 85 −39%, Fernandes 85 −23%, Paz 87 −15%, Maza 85 −15%. Fresh specials usually keep falling while packs are opened, so let prices settle first.",
+      "detail": "Team 2 went live at {{t:2026-10-02T18:00:00+01:00}}. FUT.GG fallers are still Destined for Glory cards: Gosens 85 −37%, Fernandes 85 −18%, McKennie 85 −13%, Maza 85 −11%, Paz 87 −10%. The falls are slowing, but fresh specials usually keep dropping while packs are opened, so let prices settle first.",
       "title": "Wait before buying Destined for Glory Team 2 cards",
       "tone": "hold",
       "when": "Until {{t:2026-10-04T18:00:00+01:00}}"
     },
     {
       "confidence": "low",
-      "detail": "Division Rivals rewards pay out at {{t:2026-10-08T06:59:00+00:00}} (EA Help) and add fodder and sub-85 cards. FUT.GG lists 86s at 4,100 and 87s at 5,700 now, so hold off on 86+ fodder until then.",
+      "detail": "Division Rivals rewards pay out at {{t:2026-10-08T06:59:00+00:00}} (EA Help) and add fodder and sub-85 cards. FUT.GG lists 86s at 3,900 and 87s at 5,500 now, so hold off on 86+ fodder until then.",
       "title": "Wait for Rivals rewards before buying 86+ fodder",
       "tone": "watch",
       "when": "Until {{t:2026-10-08T06:59:00+00:00}}"
     },
     {
       "confidence": "low",
-      "detail": "FUT.GG this update: 84s sit at 650 (0.78 coins per point), 85s at 2,000 (0.95), 86s at 4,100 (1.00) and 87s at 5,700 (1.04). Use fodder in SBCs, don't trade it: selling costs the 5% tax.",
+      "detail": "FUT.GG this update: 84s sit at 650 (0.78 coins per point), 85s at 2,000 (0.95), 86s at 3,900 (0.95) and 87s at 5,500 (1.00). Use fodder in SBCs, don't trade it: selling costs the 5% tax.",
       "title": "Fodder: 84s are the cheapest Item Score",
       "tone": "watch",
       "when": "Every update"
@@ -399,7 +399,7 @@
   ],
   "news": [
     {
-      "detail": "Released at {{t:2026-10-02T18:00:00+01:00}} with Haaland 91 on top. Team 2 cards keep falling on FUT.GG: Gosens −39%, Fernandes −23%, Paz −15%.",
+      "detail": "Released at {{t:2026-10-02T18:00:00+01:00}} with Haaland 91 on top. Team 2 cards keep falling on FUT.GG: Gosens −37%, Fernandes −18%, McKennie −13%.",
       "kind": "data",
       "source": "FUTBIN · FUT.GG",
       "title": "Destined for Glory Team 2 is live"
@@ -423,7 +423,7 @@
       "title": "Streamlined SBCs mostly skip minimum ratings"
     },
     {
-      "detail": "FUT.GG: 81–84 at 650, 85s at 2,000, 86s at 4,100, 87s at 5,700. FUTBIN's Index 100 was 106.68 (−1.81%) when last read {{t:2026-10-03T22:33:58+00:00}}; FUTBIN's market and SBC pages returned 403 this run (twice), so the SBC list is from FUT.GG.",
+      "detail": "FUT.GG: 81–84 at 650, 85s at 2,000, 86s at 3,900, 87s at 5,500. FUTBIN's Index 100 was 106.68 (−1.81%) when last read {{t:2026-10-03T22:33:58+00:00}}; FUTBIN's market and SBC pages returned 403 this run (twice), so the SBC list is from FUT.GG.",
       "kind": "data",
       "source": "FUT.GG · FUTBIN",
       "title": "Fodder: 81–84 sit at the 650 floor"
@@ -550,10 +550,10 @@
       "url": "https://x.com/FutSheriff/status/2104296397529104395"
     }
   ],
-  "updatedAt": "2026-10-04T08:12:56Z",
+  "updatedAt": "2026-10-04T09:12:51Z",
   "verdict": {
-    "detail": "FUT.GG: 81–84 at 650, 85s at 2,000, 86s at 4,100 and 87s at 5,700. Fallers are Destined for Glory cards (Gosens 85 −39%, Fernandes 85 −23%, Paz 87 −15%, Maza 85 −15%). FUTBIN's Index 100 was 106.68 (−1.81%) and momentum 65.51 when last read {{t:2026-10-03T22:33:58+00:00}}; FUTBIN returned 403 this run (twice). Next supply point is Rivals rewards at {{t:2026-10-08T06:59:00+00:00}}.",
-    "headline": "Destined for Glory Team 2 cards are still falling; wait for them to settle.",
+    "detail": "FUT.GG: 81–84 at 650, 85s at 2,000, 86s at 3,900 and 87s at 5,500. Fallers are Destined for Glory cards (Gosens 85 −37%, Fernandes 85 −18%, McKennie 85 −13%, Maza 85 −11%). FUTBIN's Index 100 was 106.68 (−1.81%) and momentum 65.51 when last read {{t:2026-10-03T22:33:58+00:00}}; FUTBIN returned 403 this run (twice). Next supply point is Rivals rewards at {{t:2026-10-08T06:59:00+00:00}}.",
+    "headline": "Destined for Glory Team 2 cards are still falling, but more slowly; wait for them to settle.",
     "label": "Hold, specials are still falling",
     "tone": "watch"
   }
