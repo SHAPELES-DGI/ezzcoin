@@ -1,12 +1,6 @@
 {
   "corrections": [
     {
-      "date": "2026-10-03T01:13:10Z",
-      "section": "Moves right now",
-      "what": "Replaced \"85s at 850 are the cheapest Item Score\" with 84s at 650, and the 85 price with 2,000.",
-      "why": "FUT.GG now lists 84s at 650 (0.78 per point) and 85s at 2,000 (0.95); the 850 reading was gone."
-    },
-    {
       "date": "2026-10-03T03:13:12Z",
       "section": "Movers",
       "what": "Replaced Félix in the TOTW 3 faller move with Modrić −20%, and refreshed the fallers list.",
@@ -89,6 +83,12 @@
       "section": "Moves right now",
       "what": "Replaced \"84–87 cost about the same per point\" with 84s at 650 being cheapest, and refreshed 85–91 prices and the fallers list.",
       "why": "FUT.GG now lists 84s at 650 (0.78 per point) against 85s at 2,000 (0.95); the 1,900 reading is gone."
+    },
+    {
+      "date": "2026-10-04T11:13:45Z",
+      "section": "Movers",
+      "what": "Replaced Maza, Lookman and Figo in the fallers list with Martinelli; updated 85–91 fodder prices.",
+      "why": "FUT.GG's momentum page no longer lists Maza, Lookman or Figo; it now lists Gosens (−32%), Fernandes (−11%) and Martinelli 82 (−11%)."
     }
   ],
   "drops": [
@@ -208,37 +208,23 @@
     {
       "name": "Robin Gosens",
       "ovr": 85,
-      "pct": -36.66,
+      "pct": -32.32,
       "price": "−14,297",
       "version": "Destined for Glory"
     },
     {
       "name": "Mateus Fernandes",
       "ovr": 85,
-      "pct": -12.22,
+      "pct": -10.67,
       "price": "−9,654",
       "version": "Destined for Glory"
     },
     {
-      "name": "Ibrahim Maza",
-      "ovr": 85,
-      "pct": -11,
-      "price": "−2,695",
-      "version": "Destined for Glory"
-    },
-    {
-      "name": "Ademola Lookman",
-      "ovr": 86,
-      "pct": -10.25,
-      "price": "−29,520",
-      "version": "Destined for Glory"
-    },
-    {
-      "name": "Luís Figo",
-      "ovr": 90,
-      "pct": -9.25,
-      "price": "−53,557",
-      "version": "Base Icon"
+      "name": "Gabriel Martinelli",
+      "ovr": 82,
+      "pct": -10.6,
+      "price": "–",
+      "version": ""
     }
   ],
   "fodder": [
@@ -274,7 +260,7 @@
     },
     {
       "ovr": 87,
-      "price": 5500,
+      "price": 5600,
       "score": 5500
     },
     {
@@ -284,17 +270,17 @@
     },
     {
       "ovr": 89,
-      "price": 17250,
+      "price": 17500,
       "score": 11000
     },
     {
       "ovr": 90,
-      "price": 26500,
+      "price": 26250,
       "score": 14000
     },
     {
       "ovr": 91,
-      "price": 128000,
+      "price": 126000,
       "score": 19000
     }
   ],
@@ -370,21 +356,21 @@
   "moves": [
     {
       "confidence": "low",
-      "detail": "Team 2 went live at {{t:2026-10-02T18:00:00+01:00}}. FUT.GG fallers are still Destined for Glory cards: Gosens 85 −37%, Fernandes 85 −12%, Maza 85 −11%, Lookman 86 −10%. The falls are slowing, but fresh specials usually keep dropping while packs are opened, so let prices settle first.",
+      "detail": "Team 2 went live at {{t:2026-10-02T18:00:00+01:00}}. FUT.GG fallers are still Destined for Glory cards: Gosens 85 −32%, Fernandes 85 −11%, Martinelli 82 −11%. The falls are slowing, but fresh specials usually keep dropping while packs are opened, so let prices settle first.",
       "title": "Wait before buying Destined for Glory Team 2 cards",
       "tone": "hold",
       "when": "Until {{t:2026-10-04T18:00:00+01:00}}"
     },
     {
       "confidence": "low",
-      "detail": "Division Rivals rewards pay out at {{t:2026-10-08T06:59:00+00:00}} (EA Help) and add fodder and sub-85 cards. FUT.GG lists 86s at 4,000 and 87s at 5,500 now, so hold off on 86+ fodder until then.",
+      "detail": "Division Rivals rewards pay out at {{t:2026-10-08T06:59:00+00:00}} (EA Help) and add fodder and sub-85 cards. FUT.GG lists 86s at 4,000 and 87s at 5,600 now, so hold off on 86+ fodder until then.",
       "title": "Wait for Rivals rewards before buying 86+ fodder",
       "tone": "watch",
       "when": "Until {{t:2026-10-08T06:59:00+00:00}}"
     },
     {
       "confidence": "low",
-      "detail": "FUT.GG this update: 84s sit at 650 (0.78 coins per point), 85s at 2,000 (0.95), 86s at 4,000 (0.95) and 87s at 5,500 (1.00). Use fodder in SBCs, don't trade it: selling costs the 5% tax.",
+      "detail": "FUT.GG this update: 84s sit at 650 (0.78 coins per point), 85s at 2,000 (0.95), 86s at 4,000 (0.95) and 87s at 5,600 (1.02). Use fodder in SBCs, don't trade it: selling costs the 5% tax.",
       "title": "Fodder: 84s are the cheapest Item Score",
       "tone": "watch",
       "when": "Every update"
@@ -550,9 +536,9 @@
       "url": "https://x.com/FutSheriff/status/2104296397529104395"
     }
   ],
-  "updatedAt": "2026-10-04T10:12:53Z",
+  "updatedAt": "2026-10-04T11:13:45Z",
   "verdict": {
-    "detail": "FUT.GG: 81–84 at 650, 85s at 2,100, 86s at 4,000 and 87s at 5,500. Fallers are Destined for Glory cards (Gosens 85 −37%, Fernandes 85 −12%, Maza 85 −11%, Lookman 86 −10%). FUTBIN's Index 100 was 106.68 (−1.81%) and momentum 65.51 when last read {{t:2026-10-03T22:33:58+00:00}}; FUTBIN returned 403 this run (twice again). Next supply point is Rivals rewards at {{t:2026-10-08T06:59:00+00:00}}.",
+    "detail": "FUT.GG: 81–84 at 650, 85s at 2,100, 86s at 4,000 and 87s at 5,600. Fallers are Destined for Glory cards (Gosens 85 −32%, Fernandes 85 −11%, Martinelli 82 −11%). FUTBIN's Index 100 was 106.68 (−1.81%) and momentum 65.51 when last read {{t:2026-10-03T22:33:58+00:00}}; FUTBIN returned 403 this run (twice again). Next supply point is Rivals rewards at {{t:2026-10-08T06:59:00+00:00}}.",
     "headline": "Destined for Glory Team 2 cards are still falling, but more slowly; wait for them to settle.",
     "label": "Hold, specials are still falling",
     "tone": "watch"
