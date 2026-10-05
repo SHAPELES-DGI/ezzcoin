@@ -188,8 +188,8 @@
     {
       "name": "Robin Gosens",
       "ovr": 85,
-      "pct": -20.8,
-      "price": "−6,188",
+      "pct": -18.91,
+      "price": "−5,673",
       "version": "Destined for Glory"
     },
     {
@@ -200,25 +200,25 @@
       "version": "Team of the Week"
     },
     {
-      "name": "Ibrahim Maza",
-      "ovr": 85,
-      "pct": -11.82,
-      "price": "−2,482",
-      "version": "Destined for Glory"
+      "name": "Dirk Kuyt",
+      "ovr": 86,
+      "pct": -12.71,
+      "price": "−13,091",
+      "version": "Base Hero"
     },
     {
       "name": "Jürgen Köhler",
       "ovr": 89,
       "pct": -11.2,
-      "price": "−12,544",
+      "price": "−12,656",
       "version": "Base Hero"
     },
     {
-      "name": "Jill Scott",
-      "ovr": 85,
-      "pct": -11.19,
-      "price": "−13,092",
-      "version": "Base Hero"
+      "name": "Corentin Tolisso",
+      "ovr": 84,
+      "pct": -9.85,
+      "price": "−1,748",
+      "version": "Team of the Week"
     }
   ],
   "fodder": [
@@ -249,7 +249,7 @@
     },
     {
       "ovr": 86,
-      "price": 4000,
+      "price": 4100,
       "score": 4100
     },
     {
@@ -259,22 +259,22 @@
     },
     {
       "ovr": 88,
-      "price": 8200,
+      "price": 9000,
       "score": 8300
     },
     {
       "ovr": 89,
-      "price": 16250,
+      "price": 16500,
       "score": 11000
     },
     {
       "ovr": 90,
-      "price": 26000,
+      "price": 27000,
       "score": 14000
     },
     {
       "ovr": 91,
-      "price": 121000,
+      "price": 122000,
       "score": 19000
     }
   ],
@@ -350,28 +350,28 @@
   "moves": [
     {
       "confidence": "low",
-      "detail": "Team 2 went live at {{t:2026-10-02T18:00:00+01:00}}. FUT.GG fallers are still led by Gosens 85 (Destined for Glory, −20.8%) and Maza 85 (Destined for Glory, −11.8%). The falls are not slowing, so let prices settle first.",
+      "detail": "Team 2 went live at {{t:2026-10-02T18:00:00+01:00}}. FUT.GG fallers are still led by Gosens 85 (Destined for Glory, −18.9%). The falls are not slowing, so let prices settle first.",
       "title": "Wait before buying Destined for Glory Team 2 cards",
       "tone": "hold",
       "when": "Until the fallers slow below 5%"
     },
     {
       "confidence": "low",
-      "detail": "Division Rivals rewards pay out at {{t:2026-10-08T06:59:00+00:00}} (EA Help) and add fodder and sub-85 cards. FUT.GG lists 86s at 4,000 and 87s at 5,700 now, so hold off on 87+ fodder until then.",
+      "detail": "Division Rivals rewards pay out at {{t:2026-10-08T06:59:00+00:00}} (EA Help) and add fodder and sub-85 cards. FUT.GG lists 86s at 4,100 and 87s at 5,700 now, so hold off on 87+ fodder until then.",
       "title": "Wait for Rivals rewards before buying 87+ fodder",
       "tone": "watch",
       "when": "Until {{t:2026-10-08T06:59:00+00:00}}"
     },
     {
       "confidence": "low",
-      "detail": "FUT.GG this update: 84s sit at 650 (0.78 coins per point), 85s at 1,800 (0.86), 86s at 4,000 (0.98), 87s at 5,700 (1.04), 88s at 8,200 (0.99). Use fodder in SBCs, don't trade it: selling costs the 5% tax.",
+      "detail": "FUT.GG this update: 84s sit at 650 (0.78 coins per point), 85s at 1,800 (0.86), 86s at 4,100 (1.00), 87s at 5,700 (1.04), 88s at 9,000 (1.08). Use fodder in SBCs, don't trade it: selling costs the 5% tax.",
       "title": "Fodder: 84s and 85s are the cheapest Item Score",
       "tone": "watch",
       "when": "Every update"
     },
     {
       "confidence": "low",
-      "detail": "Last week's specials are still falling on FUT.GG (Martinelli TOTW −13.2%). TOTW 4 is due {{t:2026-10-07T18:00:00+01:00}} (FUTBIN dates so far: 16, 23 and 30 Sep) and pushes last week's TOTW cards down further. Spares only, per the tip rule: selling and rebuying costs the 5% tax.",
+      "detail": "Last week's specials are still falling on FUT.GG (Martinelli TOTW −13.2%, Tolisso TOTW −9.9%). TOTW 4 is due {{t:2026-10-07T18:00:00+01:00}} (FUTBIN dates so far: 16, 23 and 30 Sep) and pushes last week's TOTW cards down further. Spares only, per the tip rule: selling and rebuying costs the 5% tax.",
       "title": "Sell spare TOTW cards before TOTW 4",
       "tone": "sell",
       "when": "Before {{t:2026-10-07T18:00:00+01:00}}"
@@ -403,7 +403,7 @@
       "title": "Streamlined SBCs mostly skip minimum ratings"
     },
     {
-      "detail": "FUT.GG: 81–83 at 650, 84s at 650, 85s at 1,800, 86s at 4,000, 87s at 5,700. FUTBIN's market and SBC pages returned 403 this run (twice) and its saved index is over 24 hours old, so the SBC list is from FUT.GG.",
+      "detail": "FUT.GG: 81–84 at 650, 85s at 1,800, 86s at 4,100, 87s at 5,700. FUTBIN's market and SBC pages returned 403 this run (twice) and its saved index is over 24 hours old, so the SBC list is from an earlier FUT.GG update.",
       "kind": "data",
       "source": "FUT.GG · FUTBIN",
       "title": "Fodder: 81–83 sit at the 650 floor"
@@ -416,7 +416,7 @@
       "cost": "18.8K",
       "expires": "",
       "name": "Tarciane",
-      "note": "Special card, cheapest solution on FUT.GG. This run's SBC list comes from FUT.GG because FUTBIN did not load"
+      "note": "Special card, cheapest solution on FUT.GG. FUTBIN did not load; this SBC list is from an earlier FUT.GG update (Frattesi still on FUT.GG's expiring-soon page this run)"
     },
     {
       "cost": "68K",
@@ -524,9 +524,9 @@
       "url": "https://www.fut.gg/sbc/category/players/"
     }
   ],
-  "updatedAt": "2026-10-05T04:12:58Z",
+  "updatedAt": "2026-10-05T05:13:23Z",
   "verdict": {
-    "detail": "FUT.GG: 81–84 at 650, 85s at 1,800, 86s at 4,000 and 87s at 5,700. Fallers are Destined for Glory Gosens and Maza and last week's TOTW cards (Gosens 85 −20.8%, Martinelli 82 −13.2%, Maza 85 −11.8%). FUTBIN's Index 100 was 106.68 (−1.81%) and momentum 65.51 when last read {{t:2026-10-03T22:33:58+00:00}}; FUTBIN returned 403 this run (twice) and its saved copy is over 24 hours old. Next supply point is Rivals rewards at {{t:2026-10-08T06:59:00+00:00}}.",
+    "detail": "FUT.GG: 81–84 at 650, 85s at 1,800, 86s at 4,100 and 87s at 5,700. Fallers are Destined for Glory Gosens (−18.9%) and last week's TOTW cards (Martinelli 82 −13.2%, Tolisso 84 −9.9%). FUTBIN's Index 100 was 106.68 (−1.81%) and momentum 65.51 when last read {{t:2026-10-03T22:33:58+00:00}}; FUTBIN returned 403 this run (twice) and its saved copy is over 24 hours old. Next supply point is Rivals rewards at {{t:2026-10-08T06:59:00+00:00}}.",
     "headline": "Destined for Glory Team 2 cards are still falling; wait for them to settle.",
     "label": "Hold, specials are still falling",
     "tone": "watch"
