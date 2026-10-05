@@ -1,6 +1,12 @@
 {
   "corrections": [
     {
+      "date": "2026-10-05T07:13:57Z",
+      "section": "Moves right now",
+      "what": "Replaced \"Until the fallers slow below 5%\" with a wait until Team 3, and made 87s the cheapest fodder (3,100).",
+      "why": "FUT.GG's biggest faller is now −4.2% (Olise), so the condition was met; cheapest-by-rating shows 87s at 3,100 (0.56 per point)."
+    },
+    {
       "date": "2026-10-05T03:13:02Z",
       "section": "Movers",
       "what": "Replaced Jonathan David in the fallers list with Hadj Moussa and Meerdink; refreshed fodder (84 700, 85 2,000, 87 5,500, 88 8,300, 89 16,250).",
@@ -83,12 +89,6 @@
       "section": "Movers",
       "what": "Replaced Sophia Wilson 89 TOTW and Fernandes in the fallers list and TOTW move with Diani, Upamecano and Henry.",
       "why": "FUT.GG's momentum page no longer lists Sophia Wilson or Fernandes; it now lists Diani 88 (−14%), Upamecano 89 (−7%) and Henry 91 Icon (−7%)."
-    },
-    {
-      "date": "2026-10-03T13:12:58Z",
-      "section": "Movers",
-      "what": "Replaced Maza, Upamecano and Henry in the fallers list with Kiwior; updated fodder prices.",
-      "why": "FUT.GG's momentum page no longer lists Maza, Upamecano or Henry; it now lists Kiwior 86 (−21%)."
     }
   ],
   "drops": [
@@ -186,39 +186,39 @@
   ],
   "fallers": [
     {
-      "name": "Robin Gosens",
-      "ovr": 85,
-      "pct": -20.94,
-      "price": "−6,177",
+      "name": "Erling Haaland",
+      "ovr": 91,
+      "pct": -3.94,
+      "price": "−57,524",
       "version": "Destined for Glory"
     },
     {
-      "name": "Gabriel Martinelli",
-      "ovr": 82,
-      "pct": -13.23,
-      "price": "−1,951",
+      "name": "Michael Olise",
+      "ovr": 91,
+      "pct": -4.19,
+      "price": "−37,291",
       "version": "Team of the Week"
     },
     {
-      "name": "Jari Litmanen",
-      "ovr": 88,
-      "pct": -10.38,
-      "price": "−7,525",
-      "version": "Base Hero"
+      "name": "Wayne Rooney",
+      "ovr": 90,
+      "pct": -2.64,
+      "price": "−34,056",
+      "version": "Base Icon"
     },
     {
-      "name": "Dirk Kuyt",
-      "ovr": 86,
-      "pct": -10.16,
-      "price": "−10,770",
-      "version": "Base Hero"
+      "name": "Roberto Carlos",
+      "ovr": 90,
+      "pct": -2.19,
+      "price": "−25,404",
+      "version": "Base Icon"
     },
     {
-      "name": "Moleiro",
-      "ovr": 84,
-      "pct": -8.59,
-      "price": "−5,025",
-      "version": "Team of the Week"
+      "name": "Caroline Seger",
+      "ovr": 90,
+      "pct": -2.82,
+      "price": "−19,430",
+      "version": "Base Icon"
     }
   ],
   "fodder": [
@@ -239,42 +239,42 @@
     },
     {
       "ovr": 84,
-      "price": 750,
+      "price": 650,
       "score": 830
     },
     {
       "ovr": 85,
-      "price": 2100,
+      "price": 2200,
       "score": 2100
     },
     {
       "ovr": 86,
-      "price": 4200,
+      "price": 4100,
       "score": 4100
     },
     {
       "ovr": 87,
-      "price": 5000,
+      "price": 3100,
       "score": 5500
     },
     {
       "ovr": 88,
-      "price": 8800,
+      "price": 9000,
       "score": 8300
     },
     {
       "ovr": 89,
-      "price": 16500,
+      "price": 17500,
       "score": 11000
     },
     {
       "ovr": 90,
-      "price": 26500,
+      "price": 27000,
       "score": 14000
     },
     {
       "ovr": 91,
-      "price": 122000,
+      "price": 118000,
       "score": 19000
     }
   ],
@@ -350,28 +350,28 @@
   "moves": [
     {
       "confidence": "low",
-      "detail": "Team 2 went live at {{t:2026-10-02T18:00:00+01:00}}. FUT.GG fallers are still led by Gosens 85 (Destined for Glory, −20.9%). The falls are not slowing, so let prices settle first.",
-      "title": "Wait before buying Destined for Glory Team 2 cards",
+      "detail": "Team 2 went live at {{t:2026-10-02T18:00:00+01:00}}. FUT.GG's biggest fallers are now under 5% (Haaland 91 DFG −3.9%), so the sharp drop is over. Team 3 is expected at {{t:2026-10-09T18:00:00+01:00}} and adds supply, so buy only cards you will play or use.",
+      "title": "Destined for Glory Team 2 cards: falls have slowed, still wait for Team 3",
       "tone": "hold",
-      "when": "Until the fallers slow below 5%"
+      "when": "Until {{t:2026-10-09T18:00:00+01:00}}"
     },
     {
       "confidence": "low",
-      "detail": "Division Rivals rewards pay out at {{t:2026-10-08T06:59:00+00:00}} (EA Help) and add fodder and sub-85 cards. FUT.GG lists 86s at 4,200 and 87s at 5,000 now, so hold off on 87+ fodder until then.",
-      "title": "Wait for Rivals rewards before buying 87+ fodder",
+      "detail": "Division Rivals rewards pay out at {{t:2026-10-08T06:59:00+00:00}} (EA Help) and add fodder and sub-85 cards. FUT.GG lists 86s at 4,100 and 88s at 9,000 now, so hold off on 88+ fodder until then.",
+      "title": "Wait for Rivals rewards before buying 88+ fodder",
       "tone": "watch",
       "when": "Until {{t:2026-10-08T06:59:00+00:00}}"
     },
     {
       "confidence": "low",
-      "detail": "FUT.GG this update: 84s sit at 750 (0.90 coins per point), 85s at 2,100 (1.00), 86s at 4,200 (1.02), 87s at 5,000 (0.91), 88s at 8,800 (1.06). 84s and 87s are a tie at about 0.9. Use fodder in SBCs, don't trade it: selling costs the 5% tax.",
-      "title": "Fodder: 84s and 87s are the cheapest Item Score",
+      "detail": "FUT.GG this update: 84s sit at 650 (0.78 coins per point), 85s at 2,200 (1.05), 86s at 4,100 (1.00), 87s at 3,100 (0.56), 88s at 9,000 (1.08). 87s are clearly cheapest, a gap far above the 0.1 tie margin. Use fodder in SBCs, don't trade it: selling costs the 5% tax.",
+      "title": "Fodder: 87s are the cheapest Item Score",
       "tone": "watch",
       "when": "Every update"
     },
     {
       "confidence": "low",
-      "detail": "Last week's specials are still falling on FUT.GG (Martinelli TOTW −13.2%, Moleiro TOTW −8.6%). TOTW 4 is due {{t:2026-10-07T18:00:00+01:00}} (FUTBIN dates so far: 16, 23 and 30 Sep) and pushes last week's TOTW cards down further. Spares only, per the tip rule: selling and rebuying costs the 5% tax.",
+      "detail": "Last week's specials are still falling on FUT.GG (Olise 91 TOTW −4.2%). TOTW 4 is due {{t:2026-10-07T18:00:00+01:00}} (FUTBIN dates so far: 16, 23 and 30 Sep) and pushes last week's TOTW cards down further. Spares only, per the tip rule: selling and rebuying costs the 5% tax.",
       "title": "Sell spare TOTW cards before TOTW 4",
       "tone": "sell",
       "when": "Before {{t:2026-10-07T18:00:00+01:00}}"
@@ -379,10 +379,10 @@
   ],
   "news": [
     {
-      "detail": "Released at {{t:2026-10-02T18:00:00+01:00}} with Haaland 91 on top. FUT.GG shows Gosens −20.9% and Moleiro TOTW −8.6%.",
+      "detail": "Released at {{t:2026-10-02T18:00:00+01:00}} with Haaland 91 on top. FUT.GG shows Haaland −3.9% now, after Gosens fell about 21% earlier.",
       "kind": "data",
       "source": "FUTBIN · FUT.GG",
-      "title": "Destined for Glory Team 2 cards keep falling"
+      "title": "Destined for Glory Team 2 falls are slowing"
     },
     {
       "detail": "Rivals and Champions now pay several times FC 26's 500–600 coins per match, and far more rewards are tradeable. Expect bigger supply dumps on reward days and sharper weekly swings.",
@@ -403,10 +403,10 @@
       "title": "Streamlined SBCs mostly skip minimum ratings"
     },
     {
-      "detail": "FUT.GG: 81–83 at 650, 84s at 750, 85s at 2,100, 86s at 4,200, 87s at 5,000. FUTBIN's market and SBC pages returned 403 this run (twice) and its saved index is over 24 hours old, so the SBC list comes from FUT.GG.",
+      "detail": "FUT.GG: 81–84 at 650, 85s at 2,200, 86s at 4,100, 87s at 3,100. FUTBIN's market and SBC pages returned 403 this run (twice) and its saved index is over 24 hours old, so the SBC list comes from FUT.GG.",
       "kind": "data",
       "source": "FUT.GG · FUTBIN",
-      "title": "Fodder: 81–83 sit at the 650 floor"
+      "title": "Fodder: 87s dip to 3,100"
     }
   ],
   "platform": "console",
@@ -524,11 +524,11 @@
       "url": "https://www.fut.gg/sbc/category/players/"
     }
   ],
-  "updatedAt": "2026-10-05T06:13:31Z",
+  "updatedAt": "2026-10-05T07:13:57Z",
   "verdict": {
-    "detail": "FUT.GG: 81–83 at 650, 84s at 750, 85s at 2,100, 86s at 4,200 and 87s at 5,000. Fallers are Destined for Glory Gosens (−20.9%) and last week's TOTW cards (Martinelli 82 −13.2%, Moleiro 84 −8.6%). FUTBIN's Index 100 was 106.68 (−1.81%) and momentum 65.51 when last read {{t:2026-10-03T22:33:58+00:00}}; FUTBIN returned 403 this run (twice) and its saved copy is over 24 hours old. Next supply point is Rivals rewards at {{t:2026-10-08T06:59:00+00:00}}.",
-    "headline": "Destined for Glory Team 2 cards are still falling; wait for them to settle.",
-    "label": "Hold, specials are still falling",
+    "detail": "FUT.GG's biggest fallers are now Haaland 91 DFG (−3.9%), Olise 91 TOTW (−4.2%) and Icons at −2% to −3%, down from −21% for Gosens earlier. 87s have dropped to 3,100 (0.56 coins per point) and 81–84 sit at the 650 floor. FUTBIN's market and SBC pages returned 403 this run (twice) and its saved index is over 24 hours old. Next supply points are Rivals rewards at {{t:2026-10-08T06:59:00+00:00}} and Team 3 at {{t:2026-10-09T18:00:00+01:00}}.",
+    "headline": "Destined for Glory falls have slowed below 5%, but Team 3 is due Friday, so buy slowly.",
+    "label": "Hold, falls are slowing",
     "tone": "watch"
   }
 }
