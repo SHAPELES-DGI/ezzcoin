@@ -9,7 +9,7 @@ on:
 permissions:
   contents: write
 concurrency:
-  group: market-prices
+  group: market-prices-v2
   queue: max
 jobs:
   refresh:
