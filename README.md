@@ -4,7 +4,7 @@ An EA SPORTS FC 27 Ultimate Team trading desk: the weekly market cycle, fodder p
 
 ## How it works
 
-- `index.html` is the whole site. It needs no build step and runs on GitHub Pages.
+- `index.html` is the site entry point. `ezzcoins-upgrade.js` and `ezzcoins-upgrade.css` add the Now dashboard. It needs no build step and runs on GitHub Pages.
 - `data/snapshot.json`, `data/history.json` and `data/ledger.json` hold the market data. An hourly job rewrites them and pushes them here. The page reloads them every 5 minutes.
 - If the data files are missing or out of date, the weekly clock, the Flip calculator and the Playbook still work. The status pill turns "Stale" once the data is more than 3 hours old.
 
@@ -23,3 +23,8 @@ Buy a domain from any registrar, then go to Settings → Pages → Custom domain
 All rights reserved. See [LICENSE](LICENSE). This code is public only so GitHub Pages can host it; it may not be copied or reused.
 
 Not affiliated with EA SPORTS, FUTBIN or FUT.GG.
+
+
+## Dashboard
+
+The Now tab includes market calls, confidence indices (not probabilities), a ledger-based record, local budget presets, player details, browser price alerts and a compact playbook. It refreshes every five minutes and with Refresh. Stale data pauses alert triggers and holds the budget in cash. Coach shortcuts show stored market calls when no Coach input is configured. Alerts work while the site is open and do not send background notifications.
