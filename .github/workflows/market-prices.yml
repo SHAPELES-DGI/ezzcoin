@@ -10,7 +10,7 @@ permissions:
   contents: write
 concurrency:
   group: market-prices
-  cancel-in-progress: false
+  queue: max
 jobs:
   refresh:
     runs-on: ubuntu-latest
