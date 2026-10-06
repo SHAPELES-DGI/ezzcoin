@@ -268,6 +268,8 @@
   function coachPrompt(prompt) {
     const input = findCoachInput();
     if (input) {
+      const panel = input.closest("section[id], [role=tabpanel]");
+      if (panel?.hidden) document.getElementById("tab-" + panel.id)?.click();
       input.focus(); input.value = prompt; input.dispatchEvent(new Event('input',{bubbles:true}));
       $('#ez-coach-status').textContent = 'Prompt loaded into Coach — press Send.';
       input.scrollIntoView({behavior:'smooth',block:'center'});

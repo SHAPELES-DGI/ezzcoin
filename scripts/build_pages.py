@@ -25,9 +25,10 @@ SLUG_MAP = {"ø": "o", "Ø": "o", "ß": "ss", "ł": "l", "Ł": "l", "æ": "ae", 
             "œ": "oe", "đ": "d", "Đ": "d", "ı": "i", "ð": "d", "þ": "th"}
 ST_OUT = ["PAC", "SHO", "PAS", "DRI", "DEF", "PHY"]
 ST_GK = ["DIV", "HAN", "KIC", "REF", "SPD", "POS"]
-CSS_V = "19"
+CSS_V = "20"
 SPECIAL = 1000000000  # special-card ids on the site: SPECIAL + FUT.GG card id (gid) or FUTBIN card id (fid)
 CARD_ART = {}
+CARD_IDS = json.load(open(os.path.join(ROOT, "data", "card-ids.json")))
 REGULAR_PLAYSTYLES = {}
 
 
@@ -49,7 +50,7 @@ def q(v):
 CSS = (":root{--bg:#0A0D0C;--surface:#141917;--sunk:#1C2320;--ink:#EEF2EF;--muted:#93A29A;--line:#25302B;--gold:#E9B949;"
        "--buy:#4DD08F;--sell:#F27E68;--fd:'Barlow Condensed','Arial Narrow',sans-serif;--fb:'Barlow',system-ui,-apple-system,'Segoe UI',sans-serif;"
        "--fm:'IBM Plex Mono',ui-monospace,Menlo,monospace;color-scheme:dark}"
-       "*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 var(--fb)}"
+       "[hidden]{display:none!important}*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 var(--fb)}"
        "a{color:var(--gold)}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;max-width:980px;margin:0 auto;padding:12px 16px;border-bottom:1px solid var(--line)}"
        ".home{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink);font:italic 800 1.55rem/1 var(--fd);text-transform:uppercase}"
        ".home img{width:34px;height:34px}.home b{font:inherit}.home span{background:linear-gradient(180deg,#FFE59A,#E3A93A);-webkit-background-clip:text;background-clip:text;color:transparent}"
@@ -192,6 +193,7 @@ def card_art_image(item, name, fallback):
     """Full FC item render from Fodder; show the designed fallback if an item render is missing."""
     if item in (None, ""):
         return fallback
+    item = CARD_IDS.get(str(item), item)
     src = f"https://assets.fodder.gg/renders/{int(item)}.webp"
     return (f'<img class="card-art" src="{src}" alt="{e(name)} FC 27 Ultimate Team card" width="240" height="336" '
             f'loading="eager" decoding="async" onerror="this.hidden=true;this.nextElementSibling.hidden=false">'
@@ -249,7 +251,7 @@ def chem_box(x, up):
     return (f'<section class="chem" id="chem" data-s="{e(data)}" data-pos="{e(x["p"])}" data-alt="{e(x["a"] or "")}" data-ovr="{x["o"]}" '
             f'data-sm="{e(x["sm"] or "")}" data-wf="{e(x["wf"] or "")}" data-ps="{e(x["ps"] or "")}"><h2>Chemistry style</h2>'
             f'<p class="chem-note">Turn on JavaScript to see this card with each chemistry style.</p></section>'
-            f'<script src="{up}p/chem.js?v={CSS_V}" defer></script>')
+            f'<script src="{up}market-data.js"></script><script src="{up}p/chem.js?v={CSS_V}" defer></script>')
 
 
 def head(title, desc, canon, up, image=None):
@@ -319,7 +321,7 @@ def player_page(x, codes, by_club, by_nat, specials_of, credits):
         more += f'<h2>More from {e(x["nat"])}</h2>' + card_list(natmates, codes, up, lambda y: y["c"])
     hint = ("Cards rated 84 or higher are priced in turns through the day." if x["o"] >= 84
             else "Add this player to your watchlist on Ezzcoins: the most-watched players get a price every hour.")
-    script = ("<script>(()=>{const id=%s,el=document.getElementById('px'),g=f=>fetch('../../data/'+f+'?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).catch(()=>null);"
+    script = ("<script>(()=>{const id=%s,el=document.getElementById('px'),g=f=>window.EzzcoinsMarket.fetchData(f).catch(()=>null);"
               "const load=()=>Promise.all([g('prices.json'),g('topprices.json'),g('live-prices.json')]).then(([a,b,live])=>{"
               "const row=live&&Array.isArray(live.rows)?live.rows.find(r=>Number(r[0])===Number(id)):null;"
               "const lp=row&&row[3]===0&&row[1]>0?{price:row[1],at:live.publishedAt&&live.publishedAt.console,src:live.source}:null;"
@@ -418,7 +420,7 @@ def special_page(x, codes, specials, credits):
     script = ("<script>(()=>{const n=document.querySelector('.fc-name.sig'),fit=()=>{if(!n||!n.clientWidth)return;n.style.fontSize='';"
               "let f=parseFloat(getComputedStyle(n).fontSize);while(n.scrollWidth>n.clientWidth+1&&f>16){f--;n.style.fontSize=f+'px'}};"
               "fit();document.fonts&&document.fonts.ready.then(fit)})()</script>"
-              "<script>(()=>{const id=%s,key=%s,el=document.getElementById('px'),g=f=>fetch('../../data/'+f+'?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).catch(()=>null);"
+              "<script>(()=>{const id=%s,key=%s,el=document.getElementById('px'),g=f=>window.EzzcoinsMarket.fetchData(f).catch(()=>null);"
               "const load=()=>Promise.all([g('prices.json'),g(%s),g('live-prices.json')]).then(([a,b,live])=>{"
               "const n=b&&Array.isArray(b.cards)?b.cards.find(c=>String(c.gid!=null&&c.gid!==''?c.gid:c.fid)===key):null;"
               "const row=n&&n.gid!=null&&live&&Array.isArray(live.rows)?live.rows.find(r=>Number(r[0])===Number(n.gid)):null;"
@@ -638,7 +640,7 @@ def main():
     with open(os.path.join(out, "index.html"), "w", encoding="utf-8") as fh:
         fh.write(list_page(groups, codes, len(players), specials, legends))
     with open(os.path.join(out, "cardnames.json"), "w", encoding="utf-8") as fh:
-        json.dump({str(x["id"]): dict({"n": x["cn"], "nat": x["nat"]}, **({"ph": x["pid"]} if x["pid"] else {})) for x in specials + legends},
+        json.dump({str(x["id"]): dict({"n": x["cn"], "nat": x["nat"], "art": CARD_IDS.get(str(x["key"]), x["key"])}, **({"ph": x["pid"]} if x["pid"] else {})) for x in specials + legends},
                   fh, ensure_ascii=False, separators=(",", ":"))
     # Short photo credits for the cards on the home page, and a page listing every photo's author, licence and source.
     with open(os.path.join(out, "photos.json"), "w", encoding="utf-8") as fh:
