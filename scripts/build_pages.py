@@ -25,7 +25,7 @@ SLUG_MAP = {"ø": "o", "Ø": "o", "ß": "ss", "ł": "l", "Ł": "l", "æ": "ae", 
             "œ": "oe", "đ": "d", "Đ": "d", "ı": "i", "ð": "d", "þ": "th"}
 ST_OUT = ["PAC", "SHO", "PAS", "DRI", "DEF", "PHY"]
 ST_GK = ["DIV", "HAN", "KIC", "REF", "SPD", "POS"]
-CSS_V = "17"
+CSS_V = "18"
 SPECIAL = 1000000000  # special-card ids on the site: SPECIAL + FUT.GG card id (gid) or FUTBIN card id (fid)
 CARD_ART = {}
 
@@ -75,6 +75,7 @@ CSS = (":root{--bg:#0A0D0C;--surface:#141917;--sunk:#1C2320;--ink:#EEF2EF;--mute
        "mask-image:linear-gradient(to bottom,#000 58%,transparent 97%),linear-gradient(to right,transparent 0,#000 34%);mask-composite:intersect}"
        ".fc-name.long{font-size:1.15rem}.fc-name.xl{font-size:.98rem}"
        ".side{width:214px}.credit{width:214px}.hero{grid-template-columns:214px minmax(0,1fr)}"
+       ".playstyles{width:214px;display:flex;flex-wrap:wrap;justify-content:center;gap:5px;margin-top:2px}.playstyles-title{width:100%;text-align:center;color:var(--muted);font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin:2px 0}.playstyle{display:inline-flex;align-items:center;gap:4px;padding:4px 6px;border:1px solid #343c3b;border-radius:999px;background:#171d1c;color:#e8eeea;font-size:.68rem;line-height:1.2;white-space:nowrap}.playstyle i{display:grid;place-items:center;width:15px;height:15px;border-radius:50%;background:#c7e37c;color:#101511;font-size:9px;font-style:normal;font-weight:900}"
        ".card-xl{width:214px;height:330px;padding:16px 14px 12px;border-radius:20px 20px 40px 40px;text-align:center}"
        ".card-xl .fc-tl{position:absolute;left:16px;top:16px;z-index:1;text-align:center;line-height:1}"
        ".card-xl .fc-ovr{font-size:2.9rem}.card-xl .fc-pos{font-size:1.05rem;margin-top:2px}"
@@ -371,6 +372,15 @@ def ps_text(x):
     return f"{own} (base card; this card's are being checked)" if own else "Being checked"
 
 
+def playstyle_row(lst):
+    """Compact regular PlayStyles shown beneath special-card artwork when verified data exists."""
+    names = [t.strip() for t in ps_norm(lst, False).split(",") if t.strip()]
+    if not names:
+        return ""
+    badges = "".join(f'<span class="playstyle"><i aria-hidden="true">✦</i>{e(name)}</span>' for name in names)
+    return f'<div class="playstyles" aria-label="Regular PlayStyles"><div class="playstyles-title">PlayStyles</div>{badges}</div>'
+
+
 def special_page(x, codes, specials, credits):
     up = "../../"
     leg = x.get("leg")
@@ -424,9 +434,10 @@ def special_page(x, codes, specials, credits):
         pimg = art_photo
     fallback_card = big_card(card_variant(x["ver"], x["o"], True), x["o"], x["p"], x["cn"], x["s"], lab, flag(codes, x["nat"], up, True), ver, pimg, sig=True)
     full_art = card_art_image(x["key"], x["n"], fallback_card)
+    style_row = playstyle_row(x.get("pls"))
     return (head(title, desc, BASE + "p/" + x["path"], up, BASE + "photos/" + pc["img"] if pc else None) +
             f'<main><div class="crumb"><a href="{up}">Ezzcoins</a> › <a href="{up}p/">Player pages</a> › {e(x["n"])} ({e(ver)})</div>'
-            f'<div class="hero"><div class="side">{full_art}{"" if full_art or art_photo else pcredit}</div>'
+            f'<div class="hero"><div class="side">{full_art}{style_row}{"" if full_art or art_photo else pcredit}</div>'
             f'<div><div class="tag">{e(ver)}</div><h1>{e(x["n"])}</h1><div class="sub">{x["o"]} {e(x["p"])}' + (f" · {e(where)}" if where else "")
             + (f' · {flag(codes, x["nat"], up)}{e(x["nat"])}' if x["nat"] else "") + '</div>'
             f'<div class="kv"><div class="px" id="px"><span class="none">No console price yet. {"Icons and Heroes are" if leg else "New cards are"} priced every half hour while FUTBIN can be reached.</span></div>{meta_box(mt, x["o"])}</div>'
