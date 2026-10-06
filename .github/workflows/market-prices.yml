@@ -38,8 +38,17 @@ jobs:
           git add data/players.json data/live-prices.json data/market-cards.json data/card-metadata.json data/futbin-prices.json data/newcards.json data/card-ids.json data/card-renders.json p sitemap.xml
           if ! git diff --cached --quiet; then
             git commit -m "Refresh FC 27 cards, artwork, player pages and market prices"
-            git pull --rebase origin main
-            git push origin HEAD:main
+            # Another data/page workflow can push between fetch and push.
+            # These conflicts concern generated snapshots; keep this refresh.
+            pushed=false
+            for attempt in 1 2 3; do
+              git pull --rebase -X theirs origin main
+              if git push origin HEAD:main; then
+                pushed=true
+                break
+              fi
+            done
+            test "$pushed" = true
           fi
       # Pushes made with GITHUB_TOKEN do not start another Actions workflow.
       # Publish in this job so new card pages/artwork never wait for a manual push.
