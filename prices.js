@@ -131,6 +131,7 @@
   $('platform').value = (params.get('platform') || savedPlatform) === 'pc' ? 'pc' : 'console';
   $('search').value = params.get('q') || '';
   load();
-  setInterval(() => { if (!document.hidden) load(true); }, 300000);
+  setInterval(() => { if (!document.hidden) load(true); }, 60000);
 })();
+
 

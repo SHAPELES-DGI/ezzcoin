@@ -10,12 +10,12 @@
     alerts: 'ezzcoins_alerts_v1'
   };
 
-  const state = { snapshot: null, ledger: null, history: null };
+  const state = { snapshot: null, ledger: null, history: null, market: null };
   const $ = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
   const esc = s => String(s ?? '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
   const validPrice = n => n != null && n !== '' && Number.isFinite(+n) && +n > 0;
-  const coins = n => n != null && n !== '' && Number.isFinite(+n) ? new Intl.NumberFormat().format(Math.round(+n)) : '—';
+  const coins = n => n != null && n !== '' && Number.isFinite(+n) ? new Intl.NumberFormat("en-US").format(Math.round(+n)) : '—';
   const clamp = (n,a,b) => Math.max(a,Math.min(b,n));
   const toneClass = tone => ['buy','sell','watch','hold'].includes(tone) ? tone : 'watch';
   const confidenceIndex = c => CONFIDENCE_INDEX[String(c || '').toLowerCase()] || 35;
@@ -63,14 +63,19 @@
   }
 
   async function loadData() {
-    const bust = `?v=${Date.now()}`;
-    const urls = ['data/snapshot.json','data/ledger.json','data/history.json'];
-    const results = await Promise.allSettled(urls.map(u => fetch(u + bust, {cache:'no-store'}).then(r => {
-      if (!r.ok) throw new Error(`${u}: ${r.status}`); return r.json();
-    })));
+    const names = ['snapshot.json','ledger.json','history.json'];
+    const results = await Promise.allSettled(names.map(name => window.EzzcoinsMarket.fetchData(name)));
     if (results[0].status === 'fulfilled') state.snapshot = results[0].value;
     if (results[1].status === 'fulfilled') state.ledger = results[1].value;
     if (results[2].status === 'fulfilled') state.history = results[2].value;
+    try { state.market = await window.EzzcoinsMarket.load(true); } catch (_) {}
+    for (const player of state.snapshot?.meta || []) {
+      const quote = player.eaId && state.market ? window.EzzcoinsMarket.lookup(state.market, player.eaId) : null;
+      player.price = quote?.price ?? null;
+      player.priceAt = quote?.at;
+      player.priceSrc = quote?.src;
+    }
+    try { await window.EzzcoinsCardArt.load(); } catch (_) {}
     return results.some(r => r.status === 'fulfilled');
   }
 
@@ -96,25 +101,24 @@
   }
 
   function heroHTML() {
-    const s = state.snapshot;
-    const v = s?.verdict || {};
-    const stale = !isFresh();
-    return `
-      <section class="ez-hero">
-        <div class="ez-hero-top">
-          <div>
-            <div class="ez-kicker">Ezzcoins Command Center</div>
-            <h2>${esc(v.label || 'Waiting for the latest market read')}</h2>
-            <p>${esc(replaceTimeTokens(v.detail || 'Market data is unavailable. Try Refresh again shortly.'))}</p>
-          </div>
-          <div class="ez-status"><span class="ez-dot ${!stale?'is-live':''}"></span>${esc(humanTime(s?.updatedAt))}${stale ? ' · stale' : ''}</div>
-        </div>
-        <div class="ez-actions">
-          <button class="ez-btn primary" data-ez-scroll="trades">Best trades now</button>
-          <button class="ez-btn" data-ez-scroll="budget">Plan my coins</button>
-          <button class="ez-btn ghost" data-ez-scroll="alerts">Price alerts</button>
-          <button class="ez-btn ghost" data-ez-scroll="coach">Ask Coach</button>
-        </div>
+    const s = state.snapshot, v = s?.verdict || {}, fresh = isFresh();
+    const quotes = state.market?.coverage?.consolePriced;
+    return `<section class="ez-hero">
+      <div class="ez-hero-top"><div><div class="ez-kicker">THE EZZCOINS TRADING DESK</div>
+        <h2>Your next move starts here.</h2>
+        <p>Follow the market. Watch your players. Make a plan.</p></div>
+        <a class="ez-market-link" href="prices.html">Explore the market <span aria-hidden="true">↗</span></a></div>
+      <div class="ez-hero-stats">
+        <div><span>Console quotes</span><strong>${quotes == null ? '—' : coins(quotes)}</strong><small>${esc(humanTime(state.market?.publishedAt?.console))}</small></div>
+        <div><span>Price checks</span><strong>Every 15 min</strong><small>Page checks every minute</small></div>
+        <div><span>Market commentary</span><strong>${esc(humanTime(s?.updatedAt))}</strong><small>${fresh ? 'Latest stored read' : 'Older read · review before acting'}</small></div>
+      </div>
+      <details class="ez-market-brief"><summary><span class="ez-pill hold">MARKET READ</span><span>${esc(v.label || 'Waiting for a market read')}</span><span class="ez-brief-toggle">+</span></summary>
+        <p>${esc(replaceTimeTokens(v.detail || 'Market commentary is unavailable.'))}</p></details>
+      <div class="ez-actions"><button class="ez-btn primary" data-ez-scroll="trades">Trade ideas <span aria-hidden="true">↓</span></button>
+        <button class="ez-btn" data-ez-scroll="budget">Plan my coins</button>
+        <button class="ez-btn ghost" data-ez-scroll="alerts">Price alerts</button>
+        <button class="ez-btn ghost" data-ez-scroll="coach">Ask Coach</button></div>
       </section>`;
   }
 
@@ -123,7 +127,7 @@
     if (!moves.length) return '<p class="ez-card-sub">No market calls available yet.</p>';
     return `<div class="ez-trades">${moves.slice(0,4).map((m,i) => {
       const idx = confidenceIndex(m.confidence);
-      return `<article class="ez-trade">
+      return `<article class="ez-trade" data-tone="${toneClass(m.tone)}">
         <div class="ez-trade-head"><div class="ez-trade-title">${esc(m.title)}</div><span class="ez-pill ${toneClass(m.tone)}">${esc(m.tone || 'watch')}</span></div>
         <p>${esc(replaceTimeTokens(m.detail))}</p>
         <div class="ez-trade-foot">
@@ -230,8 +234,15 @@
 
   function playerHTML() {
     const meta = state.snapshot?.meta || [];
-    if (!meta.length) return '<p class="ez-card-sub">No player prices available yet.</p>';
-    return `<div class="ez-player-grid">${meta.slice(0,8).map((p,i)=>`<article class="ez-player" role="button" tabindex="0" aria-label="View ${esc(p.name)}" data-ez-player="${i}"><div class="ez-player-top"><span class="ez-player-rating">${esc(p.ovr)}</span><span class="ez-pill watch">${esc(p.pos || '')}</span></div><div class="ez-player-name">${esc(p.name)}</div><div class="ez-player-meta">${esc(p.note || '')}</div><div class="ez-player-price">${coins(p.price)} coins</div></article>`).join('')}</div>`;
+    if (!meta.length) return '<p class="ez-card-sub">No player quotes available yet.</p>';
+    return `<div class="ez-player-grid">${meta.slice(0,8).map((p,i)=>{
+      const asset = p.eaId ? window.EzzcoinsCardArt?.get(p.eaId,p.eaId,false) : null;
+      const art = asset ? window.EzzcoinsCardArt.html(asset,'ez-player-render',p.name) : `<div class="ez-player-rating">${esc(p.ovr)}</div>`;
+      return `<article class="ez-player" role="button" tabindex="0" aria-label="View ${esc(p.name)}" data-ez-player="${i}">
+        <div class="ez-player-art">${art}</div><div class="ez-player-top"><span class="ez-pill watch">${esc(p.pos || '')}</span><span class="ez-player-source">${esc(p.priceSrc || 'No quote')}</span></div>
+        <div class="ez-player-name">${esc(p.name)}</div><div class="ez-player-price">${coins(p.price)} <small>${validPrice(p.price)?'coins':'unavailable'}</small></div>
+        <div class="ez-player-meta">${esc(humanTime(p.priceAt))}</div></article>`;
+    }).join('')}</div>`;
   }
 
   function playbookHTML() {
@@ -249,12 +260,12 @@
   function shellHTML() {
     return `${heroHTML()}
       <div class="ez-grid">
-        <section class="ez-card wide" id="ez-trades"><h3>Best trades right now</h3><div class="ez-card-sub">Current stored calls · confidence index is not a win probability</div>${tradesHTML()}</section>
+        <section class="ez-card wide" id="ez-trades"><h3>Trade ideas</h3><div class="ez-card-sub">Ideas from the market read · confidence is not a win probability</div>${tradesHTML()}</section>
         <section class="ez-card" id="ez-record"><h3>Track record</h3><div class="ez-card-sub">Only graded calls count</div>${trackHTML()}</section>
         <section class="ez-card" id="ez-fodder"><h3>Best fodder value</h3><div class="ez-card-sub">Coins per Item Score point</div>${fodderHTML()}</section>
         <section class="ez-card wide" id="ez-budget"><h3>My Coins</h3><div class="ez-card-sub">Turn the current market read into a budget plan</div>${budgetHTML()}</section>
         <section class="ez-card" id="ez-coach"><h3>Coach shortcuts</h3><div class="ez-card-sub">One tap instead of thinking of a prompt</div>${coachHTML()}</section>
-        <section class="ez-card full" id="ez-players"><h3>Player trade board</h3><div class="ez-card-sub">Tap a card for a quick detail view; your existing player database still handles the full search</div>${playerHTML()}</section>
+        <section class="ez-card full" id="ez-players"><h3>Player trade board</h3><div class="ez-card-sub">Console prices from the same feed as Home · select a player for details</div>${playerHTML()}</section>
         <section class="ez-card half" id="ez-alerts"><h3>Price alerts</h3><div class="ez-card-sub">Saved in this browser</div>${alertsHTML()}</section>
         <section class="ez-card half" id="ez-playbook"><h3>Quick Playbook</h3><div class="ez-card-sub">The long strategy guide, compressed</div>${playbookHTML()}</section>
       </div>`;
@@ -326,10 +337,14 @@
     return null;
   }
 
+  function quoteFresh(key) {
+    const at = key.startsWith('player:') ? (state.snapshot?.meta || []).find(p => 'player:'+p.name === key)?.priceAt : state.snapshot?.updatedAt;
+    const age = Date.now() - Date.parse(at);
+    return Number.isFinite(age) && age >= 0 && age < 45 * 60000;
+  }
   function alertReached(a) {
     const p = currentPrice(a.key);
-    const older = /earlier update/i.test((state.snapshot?.meta || []).find(x => 'player:'+x.name === a.key)?.note || '');
-    return isFresh() && !older && validPrice(p) && +p <= +a.target;
+    return quoteFresh(a.key) && validPrice(p) && +p <= +a.target;
   }
 
   function renderAlerts() {
@@ -338,12 +353,11 @@
     if (!alerts.length) { box.innerHTML = '<div style="font-size:12px;color:var(--ez-muted)">No alerts yet.</div>'; return; }
     box.innerHTML = alerts.map((a,i) => {
       const now = currentPrice(a.key); const hit = alertReached(a);
-      return `<div class="ez-alert-item"><div><strong class="${hit?'ez-positive':''}">${esc(alertLabel(a.key))}</strong><small>${hit?'Target reached':'Target'}: ${coins(a.target)}${validPrice(now)?` · stored ${coins(now)}`: ' · price unavailable'}${!isFresh() ? ' · waiting for fresh data' : ''}</small></div><button class="ez-icon-btn" data-ez-remove-alert="${i}" aria-label="Remove alert">×</button></div>`;
+      return `<div class="ez-alert-item"><div><strong class="${hit?'ez-positive':''}">${esc(alertLabel(a.key))}</strong><small>${hit?'Target reached':'Target'}: ${coins(a.target)}${validPrice(now)?` · stored ${coins(now)}`: ' · price unavailable'}${!quoteFresh(a.key) ? ' · waiting for fresh quote' : ''}</small></div><button class="ez-icon-btn" data-ez-remove-alert="${i}" aria-label="Remove alert">×</button></div>`;
     }).join('');
   }
 
   function checkAlerts() {
-    if (!isFresh()) return;
     const alerts = savedAlerts();
     const hits = alerts.filter(alertReached);
     if (hits.length) toast(`${hits.length} Ezzcoins price alert${hits.length>1?'s':''} reached`);
@@ -365,7 +379,7 @@
     modal.querySelector('.ez-modal-content').innerHTML = `
       <div class="ez-kicker">${esc(p.pos || 'Player')} · ${esc(p.ovr || '')} OVR</div>
       <h3>${esc(p.name)}</h3>
-      <div class="ez-metric">${coins(p.price)}</div><div class="ez-metric-label">current stored console price</div>
+      <div class="ez-metric">${coins(p.price)}</div><div class="ez-metric-label">Console quote · ${esc(p.priceSrc || 'Unavailable')} · ${esc(humanTime(p.priceAt))}</div>
       ${mover ? `<div class="ez-mini-row"><span>Today</span><span class="${mover.pct>=0?'ez-positive':'ez-danger'}">${mover.pct>=0?'+':''}${mover.pct}%</span></div>`:''}
       <p>${esc(p.note || 'No extra note in the current snapshot.')}</p>
       <button class="ez-btn primary" data-ez-modal-alert="${esc(p.name)}">Create price alert</button>
@@ -450,9 +464,10 @@
     const {parent,before}=findInsertionPoint(); parent.insertBefore(root,before);
     injectModal(); arrangeSections(); bind(); renderAllocation(); renderAlerts(); checkAlerts();
     $('#refreshBtn')?.addEventListener('click', refresh);
-    setInterval(refresh, 5 * 60000);
+    setInterval(refresh, 60000);
     document.addEventListener('visibilitychange', () => { if(!document.hidden) refresh(); });
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, {once:true}); else init();
 })();
+
