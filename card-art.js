@@ -12,16 +12,17 @@ const style=document.createElement("style");style.textContent=`
 .fcard.has-card-render{background:transparent!important;box-shadow:none!important;border-radius:0!important}
 .fcard.has-card-render:after,.fcard.has-card-render>.fc-sil,.fcard.has-card-render>.fc-mono,.fcard.has-card-render>.fc-fallback{display:none!important}
 .fc-render{object-fit:contain!important;border-radius:0!important}
-.ea-item{position:relative;isolation:isolate;color:#fff5c8;font-family:Arial,sans-serif;aspect-ratio:300/420}
+.ea-item{position:relative;container-type:inline-size;isolation:isolate;color:#fff5c8;font-family:Arial,sans-serif;aspect-ratio:300/420}
+.fc-render.ea-item{position:absolute;inset:0;width:100%;height:100%}
 .ea-item .ea-frame{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;z-index:0}
 .ea-item .ea-face{position:absolute;top:21%;left:24%;width:64%;height:46%;object-fit:contain;object-position:bottom;z-index:1}
-.ea-rating{position:absolute;left:12%;top:16%;z-index:2;font-size:clamp(23px,2.1vw,32px);font-weight:800;line-height:1}
+.ea-rating{position:absolute;left:12%;top:16%;z-index:2;font-size:12cqw;font-weight:800;line-height:1}
 .ea-rating small{display:block;font-size:.53em;margin-top:3px}
-.ea-name{position:absolute;left:8%;right:8%;top:65%;text-align:center;z-index:2;font-size:19px;font-weight:700;line-height:1}
+.ea-name{position:absolute;left:8%;right:8%;top:65%;text-align:center;z-index:2;font-size:8cqw;font-weight:700;line-height:1}
 .ea-stats{position:absolute;left:12%;right:12%;top:74%;display:grid;grid-template-columns:repeat(6,1fr);gap:2px;z-index:2;text-align:center}
-.ea-stats small{display:block;font-size:8px;font-weight:700}.ea-stats b{display:block;font-size:13px;line-height:1.1}
-.ea-type{position:absolute;left:12%;right:12%;top:86%;text-align:center;font-size:8px;font-weight:bold;z-index:2}
-.card-art.ea-item{width:240px;max-width:100%;height:auto;min-height:0}
+.ea-stats small{display:block;font-size:3.8cqw;font-weight:700}.ea-stats b{display:block;font-size:5.8cqw;line-height:1.1}
+.ea-type{position:absolute;left:12%;right:12%;top:86%;text-align:center;font-size:3.4cqw;font-weight:bold;z-index:2}
+.card-art.ea-item{width:184px;max-width:100%;height:auto;min-height:0}
 `;document.head.append(style);
 async function repairDetail(){const match=location.pathname.match(/-(\d+)\/?$/);if(!match)return;await load();const id=Number(match[1]),special=id>=1e9,key=special?id-1e9:id,c=get(ids[key]||key,key,special);if(!c)return;const current=document.querySelector(".card-art");if(!current)return;const box=document.createElement("div");box.innerHTML=html(c,"card-art");const next=current.nextElementSibling;current.replaceWith(box.firstElementChild);if(next?.classList.contains("card-fallback"))next.hidden=true}
 window.EzzcoinsCardArt={load,get,html};
