@@ -57,7 +57,7 @@ def fetch(entry):
         assets_req = urllib.request.Request(assets_url, headers={"User-Agent": "Mozilla/5.0 (compatible; Ezzcoins/1.0)"})
         with urllib.request.urlopen(assets_req, timeout=15) as response:
             assets_source = response.read().decode("utf-8", "ignore")
-        start = assets_source.lower().find("ea fc item")
+        start = assets_source.lower().rfind("ea fc item")
         stop = assets_source.lower().find("futgg item", start + 1) if start >= 0 else -1
         section = assets_source[start:stop if stop > start else start + 12000] if start >= 0 else ""
         urls = re.findall(pattern, section)
