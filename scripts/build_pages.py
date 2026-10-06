@@ -25,10 +25,11 @@ SLUG_MAP = {"ø": "o", "Ø": "o", "ß": "ss", "ł": "l", "Ł": "l", "æ": "ae", 
             "œ": "oe", "đ": "d", "Đ": "d", "ı": "i", "ð": "d", "þ": "th"}
 ST_OUT = ["PAC", "SHO", "PAS", "DRI", "DEF", "PHY"]
 ST_GK = ["DIV", "HAN", "KIC", "REF", "SPD", "POS"]
-CSS_V = "21"
+CSS_V = "22"
 SPECIAL = 1000000000  # special-card ids on the site: SPECIAL + FUT.GG card id (gid) or FUTBIN card id (fid)
 CARD_ART = {}
 CARD_IDS = json.load(open(os.path.join(ROOT, "data", "card-ids.json")))
+CARD_RENDERS = json.load(open(os.path.join(ROOT, "data", "card-renders.json"), encoding="utf-8"))
 REGULAR_PLAYSTYLES = {}
 
 
@@ -194,7 +195,12 @@ def card_art_image(item, name, fallback):
     if item in (None, ""):
         return fallback
     item = CARD_IDS.get(str(item), item)
-    src = f"https://assets.fodder.gg/renders/{int(item)}.webp"
+    record = CARD_RENDERS.get(str(item)) or CARD_RENDERS.get("f:" + str(item))
+    if record and record.get("url"):
+        src = record["url"]
+    else:
+        # Official layered cards are filled by card-art.js.
+        return f'<div class="card-art" aria-label="{e(name)} FC 27 card"></div><div class="card-fallback" hidden>{fallback}</div>'
     return (f'<img class="card-art" src="{src}" alt="{e(name)} FC 27 Ultimate Team card" width="240" height="336" '
             f'loading="eager" decoding="async" onerror="this.hidden=true;this.nextElementSibling.hidden=false">'
             f'<div class="card-fallback" hidden>{fallback}</div>')
@@ -263,7 +269,7 @@ def head(title, desc, canon, up, image=None):
             f'<meta property="og:type" content="website"><meta property="og:title" content="{e(title)}"><meta property="og:description" content="{e(desc)}">'
             f'<meta property="og:url" content="{e(canon)}"><meta property="og:image" content="{e(image or BASE + "icon-512.png")}"><meta name="theme-color" content="#0A0D0C">'
             f'<link rel="icon" href="{up}favicon-32.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="{up}apple-touch-icon.png">'
-            f'<link rel="manifest" href="{up}manifest.webmanifest">{FONTS}<link rel="stylesheet" href="{up}p/style.css?v={CSS_V}">{ADSENSE}</head><body>'
+            f'<script src="{up}card-art.js?v=20261006" defer></script><link rel="manifest" href="{up}manifest.webmanifest">{FONTS}<link rel="stylesheet" href="{up}p/style.css?v={CSS_V}">{ADSENSE}</head><body>'
             f'<header class="top"><a class="home" href="{up}"><img src="{up}mark.svg" alt="" width="34" height="34"><b>Ezz<span>coins</span></b></a>'
             f'<nav class="nav"><a href="{up}#players">Database</a><a href="{up}p/">All players</a></nav></header>')
 

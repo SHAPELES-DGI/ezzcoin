@@ -13,7 +13,8 @@
   const base=new URL('../../',location.href);
   const fetchJSON=async name=>{const urls=[new URL('data/'+name,base).href];if(location.hostname.endsWith('github.io'))urls.unshift('https://raw.githubusercontent.com/SHAPELES-DGI/ezzcoin/main/data/'+name);for(const url of urls){try{const r=await fetch(url+'?t='+Math.floor(Date.now()/60000),{cache:'no-store'});if(r.ok)return await r.json()}catch{}}return null};
   const ids=await fetchJSON('card-ids.json'),item=ids?.[key]||key,img=document.querySelector('.card-art');
-  if(img&&ids?.[key]){img.onload=()=>{img.hidden=false;if(img.nextElementSibling)img.nextElementSibling.hidden=true};img.src='https://assets.fodder.gg/renders/'+item+'.webp';}
   const refresh=async()=>{const live=await fetchJSON('live-prices.json'),row=live?.rows?.find(r=>r[0]===item),el=document.getElementById('px');if(!row||!el)return;if(row[3]!==0){el.textContent=live.statusLabels?.[row[3]]||'No market price';return}if(!(row[1]>0))return;el.replaceChildren();const b=document.createElement('b'),span=document.createElement('span');b.textContent=Number(row[1]).toLocaleString('en-US')+' coins';span.textContent='Console · FUT.GG feed '+new Date(live.publishedAt.console).toLocaleString();el.append(b,span)};
   await refresh();setInterval(refresh,300000);
 })();
+
+if(!window.EzzcoinsCardArt){const artScript=document.createElement("script");artScript.src=new URL("../../card-art.js?v=20261006",location.href);document.head.appendChild(artScript);}

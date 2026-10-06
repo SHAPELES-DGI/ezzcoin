@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Cache rendered FC 27 card artwork URLs from the matching FUT.GG card pages."""
-import concurrent.futures, html, json, os, re, sys, unicodedata, urllib.request
+import concurrent.futures, html, json, os, re, sys, unicodedata, urllib.request, subprocess
 from html.parser import HTMLParser
 ROOT = sys.argv[1] if len(sys.argv) > 1 else "."
 PATH = os.path.join(ROOT, "data", "card-art.json")
@@ -120,3 +120,40 @@ with open(PATH, "w", encoding="utf-8") as fh:
 with open(os.path.join(ROOT, "data", "playstyles.json"), "w", encoding="utf-8") as fh:
     json.dump({"_version": 2, "cards": playstyles}, fh, ensure_ascii=False, separators=(",", ":"))
 print("Cached FUT.GG artwork for %d cards; regular PlayStyles for %d cards (%d new lookups)." % (len(cached), len(playstyles), len(todo)))
+
+# Keep full renders separate from portrait images and require an FC 27 item URL.
+render_path = os.path.join(ROOT, "data", "card-renders.json")
+try:
+    renders = json.load(open(render_path, encoding="utf-8"))
+except (OSError, ValueError):
+    renders = {}
+try:
+    exact_ids = json.load(open(os.path.join(ROOT, "data", "card-ids.json"), encoding="utf-8"))
+except (OSError, ValueError):
+    exact_ids = {}
+requested = sorted({int(exact_ids.get(item, item)) for item in candidates()
+                    if str(exact_ids.get(item, item)) not in renders and "f:" + item not in renders})
+def full_render_batch(batch):
+    url = "https://www.fut.gg/api/fut/players/v2/27/?ids=" + ",".join(map(str, batch))
+    result = subprocess.run(["curl", "-fsSL", "--max-time", "25", url], capture_output=True, text=True)
+    if result.returncode:
+        return {}
+    try:
+        players = json.loads(result.stdout).get("data", [])
+    except ValueError:
+        return {}
+    out = {}
+    for player in players:
+        item = player.get("eaId")
+        image = player.get("cardImageUrl", "")
+        if item in batch and str(player.get("game")) == "27" and ("/2027/futgg-player-item-card/27-%s." % item) in image:
+            out[str(item)] = {"url": image, "name": player.get("commonName") or player.get("cardName"),
+                              "ovr": player.get("overall"), "pos": player.get("position"),
+                              "version": player.get("rarityName")}
+    return out
+with concurrent.futures.ThreadPoolExecutor(max_workers=3) as pool:
+    for result in pool.map(full_render_batch, [requested[i:i+25] for i in range(0, len(requested), 25)]):
+        renders.update(result)
+with open(render_path, "w", encoding="utf-8") as fh:
+    json.dump(renders, fh, ensure_ascii=False, separators=(",", ":"))
+print("Validated full FC 27 artwork for %d cards." % len(renders))
