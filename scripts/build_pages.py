@@ -25,7 +25,7 @@ SLUG_MAP = {"ø": "o", "Ø": "o", "ß": "ss", "ł": "l", "Ł": "l", "æ": "ae", 
             "œ": "oe", "đ": "d", "Đ": "d", "ı": "i", "ð": "d", "þ": "th"}
 ST_OUT = ["PAC", "SHO", "PAS", "DRI", "DEF", "PHY"]
 ST_GK = ["DIV", "HAN", "KIC", "REF", "SPD", "POS"]
-CSS_V = "23"
+CSS_V = "24"
 SPECIAL = 1000000000  # special-card ids on the site: SPECIAL + FUT.GG card id (gid) or FUTBIN card id (fid)
 CARD_ART = {}
 CARD_IDS = json.load(open(os.path.join(ROOT, "data", "card-ids.json")))
@@ -269,7 +269,7 @@ def head(title, desc, canon, up, image=None):
             f'<meta property="og:type" content="website"><meta property="og:title" content="{e(title)}"><meta property="og:description" content="{e(desc)}">'
             f'<meta property="og:url" content="{e(canon)}"><meta property="og:image" content="{e(image or BASE + "icon-512.png")}"><meta name="theme-color" content="#0A0D0C">'
             f'<link rel="icon" href="{up}favicon-32.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="{up}apple-touch-icon.png">'
-            f'<script src="{up}card-art.js?v=20261006-fb1" defer></script><link rel="manifest" href="{up}manifest.webmanifest">{FONTS}<link rel="stylesheet" href="{up}p/style.css?v={CSS_V}">{ADSENSE}</head><body>'
+            f'<script src="{up}card-art.js?v=20261006-ps1" defer></script><link rel="manifest" href="{up}manifest.webmanifest">{FONTS}<link rel="stylesheet" href="{up}p/style.css?v={CSS_V}">{ADSENSE}</head><body>'
             f'<header class="top"><a class="home" href="{up}"><img src="{up}mark.svg" alt="" width="34" height="34"><b>Ezz<span>coins</span></b></a>'
             f'<nav class="nav"><a href="{up}#players">Database</a><a href="{up}p/">All players</a></nav></header>')
 
@@ -385,13 +385,21 @@ def ps_text(x):
     return f"{own} (base card; this card's are being checked)" if own else "Being checked"
 
 
+PLAYSTYLE_ICON_SLUGS = {"acrobatic":"acrobatic","chip shot":"chip-shot","dead ball":"dead-ball","finesse shot":"finesse-shot","gamechanger":"game-changer","low driven shot":"low-driven-shot","power shot":"power-shot","precision header":"precision-header","incisive pass":"incisive-pass","inventive":"inventive","long ball pass":"long-ball-pass","pinged pass":"pinged-pass","tiki taka":"tiki-taka","whipped pass":"whipped-pass","first touch":"first-touch","press proven":"press-proven","rapid":"rapid","technical":"technical","trickster":"trickster","aerial fortress":"aerial-fortress","anticipate":"anticipate","block":"block","intercept":"intercept","jockey":"jockey","slide tackle":"slide-tackle","bruiser":"bruiser","enforcer":"enforcer","long throw":"long-throw","quick step":"quick-step","relentless":"relentless","1v1 close down":"rush-out","cross claimer":"cross-claimer","deflector":"deflector","far reach":"far-reach","far throw":"far-throw","footwork":"footwork"}
+PLAYSTYLE_ICON_ALIASES = {"game changer": "gamechanger", "rush out": "1v1 close down", "tiki-taka": "tiki taka", "aerial": "aerial fortress", "power header": "precision header"}
+
 def playstyle_row(lst):
-    """Compact regular PlayStyles shown beneath special-card artwork when verified data exists."""
+    """Real named PlayStyle glyphs beneath verified player artwork."""
     names = [t.strip() for t in ps_norm(lst, False).split(",") if t.strip()]
     if not names:
         return ""
-    badges = "".join(f'<span class="playstyle"><i aria-hidden="true">✦</i>{e(name)}</span>' for name in names)
-    return f'<div class="playstyles" aria-label="Regular PlayStyles"><div class="playstyles-title">PlayStyles</div>{badges}</div>'
+    badges = []
+    for name in names:
+        key = name.lower()
+        slug = PLAYSTYLE_ICON_SLUGS.get(PLAYSTYLE_ICON_ALIASES.get(key, key))
+        icon = (f'<svg class="playstyle-icon" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><use href="../../playstyle-icons.svg?v=20261006-1#{slug}"></use></svg>' if slug else "")
+        badges.append(f'<span class="playstyle">{icon}{e(name)}</span>')
+    return '<div class="playstyles" aria-label="Regular PlayStyles"><div class="playstyles-title">PlayStyles</div>' + "".join(badges) + "</div>"
 
 
 def special_page(x, codes, specials, credits):

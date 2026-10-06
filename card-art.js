@@ -28,3 +28,21 @@ async function repairDetail(){const match=location.pathname.match(/-(\d+)\/?$/);
 window.EzzcoinsCardArt={load,get,html};
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",()=>repairDetail().catch(()=>{}),{once:true});else repairDetail().catch(()=>{});
 })();
+
+/* Real EA PlayStyle glyphs, sourced from FUT.GG's FC 27 PlayStyle reference. */
+(()=>{
+ const script=document.currentScript;
+ const sprite=new URL('playstyle-icons.svg?v=20261006-1',script?.src||location.href).href;
+ const aliases={'game changer':'gamechanger','rush out':'1v1 close down','tiki-taka':'tiki taka','aerial':'aerial fortress','power header':'precision header'};
+ const styles={"acrobatic": "acrobatic", "chip shot": "chip-shot", "dead ball": "dead-ball", "finesse shot": "finesse-shot", "gamechanger": "game-changer", "low driven shot": "low-driven-shot", "power shot": "power-shot", "precision header": "precision-header", "incisive pass": "incisive-pass", "inventive": "inventive", "long ball pass": "long-ball-pass", "pinged pass": "pinged-pass", "tiki taka": "tiki-taka", "whipped pass": "whipped-pass", "first touch": "first-touch", "press proven": "press-proven", "rapid": "rapid", "technical": "technical", "trickster": "trickster", "aerial fortress": "aerial-fortress", "anticipate": "anticipate", "block": "block", "intercept": "intercept", "jockey": "jockey", "slide tackle": "slide-tackle", "bruiser": "bruiser", "enforcer": "enforcer", "long throw": "long-throw", "quick step": "quick-step", "relentless": "relentless", "1v1 close down": "rush-out", "cross claimer": "cross-claimer", "deflector": "deflector", "far reach": "far-reach", "far throw": "far-throw", "footwork": "footwork"};
+ function key(name){const n=name.replace(/[+✦]/g,'').trim().toLowerCase();return styles[aliases[n]||n];}
+ function icon(name,plus){const slug=key(name);if(!slug)return null;const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.classList.add('playstyle-icon');svg.setAttribute('viewBox','0 0 256 256');svg.setAttribute('aria-hidden','true');svg.setAttribute('focusable','false');const use=document.createElementNS('http://www.w3.org/2000/svg','use');use.setAttribute('href',sprite+'#'+slug+(plus?'-plus':''));svg.append(use);return svg;}
+ function apply(){
+  document.querySelectorAll('.playstyle').forEach(badge=>{if(badge.querySelector('.playstyle-icon'))return;const name=badge.textContent.replace(/✦/g,'').trim();const glyph=icon(name,name.includes('+'));const dot=badge.querySelector('i');if(glyph){if(dot)dot.replaceWith(glyph);else badge.prepend(glyph);}else dot?.remove();});
+  const side=document.querySelector('.hero .side');if(!side||side.querySelector('[data-playstyle-plus]'))return;
+  const term=Array.from(document.querySelectorAll('dt')).find(e=>e.textContent.trim()==='PlayStyles+');const names=(term?.nextElementSibling?.textContent||'').split(',').map(s=>s.trim()).filter(s=>key(s));if(!names.length)return;
+  const row=document.createElement('div');row.className='playstyles';row.dataset.playstylePlus='true';row.setAttribute('aria-label','PlayStyles plus');const title=document.createElement('div');title.className='playstyles-title';title.textContent='PlayStyles+';row.append(title);names.forEach(name=>{const badge=document.createElement('span');badge.className='playstyle playstyle-plus';badge.append(icon(name,true),document.createTextNode(name));row.append(badge);});side.append(row);
+ }
+ const css=document.createElement('style');css.textContent='.playstyle{gap:6px;padding:5px 8px;font-size:11px;line-height:1.3}.playstyle-icon{width:26px;height:26px;flex:none;display:block;overflow:visible}.playstyle-plus{border-color:#e3c07566;background:#30281b;color:#f8e2b1}.playstyles{gap:7px;margin-top:12px}.playstyles-title{margin:4px 0;font-size:10px}.playstyle i{display:none}';document.head.append(css);
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',apply,{once:true});else apply();
+})();
