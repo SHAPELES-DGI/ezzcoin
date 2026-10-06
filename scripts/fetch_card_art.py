@@ -61,6 +61,8 @@ def fetch(entry):
         stop = assets_source.lower().find("futgg item", start + 1) if start >= 0 else -1
         section = assets_source[start:stop if stop > start else start + 12000] if start >= 0 else ""
         urls = re.findall(pattern, section)
+        if item == "50570733":
+            print("CARD_ASSET_DEBUG marker=%d stop=%d section=%s urls=%s" % (start, stop, section[:2500], urls[:5]))
         if urls:
             urls.sort(key=lambda u: ("width=" in u or "quality=" in u, len(u)), reverse=True)
             full_card = html.unescape(urls[0]).replace("&amp;", "&")
