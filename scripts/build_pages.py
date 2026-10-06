@@ -26,6 +26,7 @@ ST_OUT = ["PAC", "SHO", "PAS", "DRI", "DEF", "PHY"]
 ST_GK = ["DIV", "HAN", "KIC", "REF", "SPD", "POS"]
 CSS_V = "15"
 SPECIAL = 1000000000  # special-card ids on the site: SPECIAL + FUT.GG card id (gid) or FUTBIN card id (fid)
+CARD_ART = {}
 
 
 def slug(s):
@@ -67,6 +68,7 @@ CSS = (":root{--bg:#0A0D0C;--surface:#141917;--sunk:#1C2320;--ink:#EEF2EF;--mute
        ".tag{display:inline-block;background:linear-gradient(90deg,#FFDA7A,#E3A93A);color:#15201A;font:700 .8rem var(--fd);letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border-radius:5px;margin-bottom:8px}"
        ".nostats{margin-top:18px;color:var(--muted);font-size:.92rem;max-width:520px}"
        ".side{display:grid;gap:10px;justify-items:center;width:184px}"
+       ".card-art{display:block;width:214px;max-width:100%;height:auto;filter:drop-shadow(0 12px 22px rgb(0 0 0/.42));border-radius:18px}"
        ".fcard{text-align:left}.fc-photo{position:absolute;z-index:-1;top:0;right:0;width:76%;height:80%;object-fit:cover;object-position:50% 14%;"
        "-webkit-mask-image:linear-gradient(to bottom,#000 58%,transparent 97%),linear-gradient(to right,transparent 0,#000 34%);-webkit-mask-composite:source-in;"
        "mask-image:linear-gradient(to bottom,#000 58%,transparent 97%),linear-gradient(to right,transparent 0,#000 34%);mask-composite:intersect}"
@@ -180,6 +182,13 @@ def photo(credits, pid, name, up):
     credit = (f'<div class="credit">Photo (cropped): {e(c["author"])} \u00b7 {e(c["licence"])} \u00b7 Wikimedia Commons'
               f'<details><summary>Photo source</summary><p>{e(c["page"])}</p><p>Licence: {e(c["licenceUrl"])}</p></details></div>')
     return img, credit
+
+
+
+def card_art_image(url, name):
+    if not url:
+        return ""
+    return '<img class="card-art" src="' + e(url) + '" alt="' + e(name) + ' FC 27 player card" width="300" height="416" loading="eager" decoding="async">'
 
 
 def card_name(name):
@@ -309,7 +318,7 @@ def player_page(x, codes, by_club, by_nat, specials_of, credits):
     pimg, pcredit = photo(credits, x["id"], x["n"], up)
     return (head(title, desc, canon, up, BASE + "photos/" + pc["img"] if pc else None) +
             f'<main><div class="crumb"><a href="{up}">Ezzcoins</a> › <a href="{up}p/">Player pages</a> › {e(x["n"])}</div>'
-            f'<div class="hero"><div class="side">{big_card(tier, x["o"], x["p"], x["q"] or x["n"], x["s"], lab, flag(codes, x["nat"], up, True), x["c"], pimg)}{pcredit}</div>'
+            f'<div class="hero"><div class="side">{card_art_image(CARD_ART.get(str(x["id"])), x["n"]) or big_card(tier, x["o"], x["p"], x["q"] or x["n"], x["s"], lab, flag(codes, x["nat"], up, True), x["c"], pimg)}{"" if CARD_ART.get(str(x["id"])) else pcredit}</div>'
             f'<div><h1>{e(x["n"])}</h1><div class="sub">{x["o"]} {e(x["p"])}' + (f" · {e(where)}" if where else "")
             + (f' · {flag(codes, x["nat"], up)}{e(x["nat"])}' if x["nat"] else "") + '</div>'
             f'<div class="kv"><div class="px" id="px"><span class="none">No console price yet. {e(hint)}</span></div>{meta_box(mt, x["o"])}</div>'
@@ -395,7 +404,7 @@ def special_page(x, codes, specials, credits):
     pimg, pcredit = photo(credits, bid, x["n"], up)
     return (head(title, desc, BASE + "p/" + x["path"], up, BASE + "photos/" + pc["img"] if pc else None) +
             f'<main><div class="crumb"><a href="{up}">Ezzcoins</a> › <a href="{up}p/">Player pages</a> › {e(x["n"])} ({e(ver)})</div>'
-            f'<div class="hero"><div class="side">{big_card(card_variant(x["ver"], x["o"], True), x["o"], x["p"], x["cn"], x["s"], lab, flag(codes, x["nat"], up, True), ver, pimg, sig=True)}{pcredit}</div>'
+            f'<div class="hero"><div class="side">{card_art_image(CARD_ART.get(str(x["key"])), x["n"]) or big_card(card_variant(x["ver"], x["o"], True), x["o"], x["p"], x["cn"], x["s"], lab, flag(codes, x["nat"], up, True), ver, pimg, sig=True)}{"" if CARD_ART.get(str(x["key"])) else pcredit}</div>'
             f'<div><div class="tag">{e(ver)}</div><h1>{e(x["n"])}</h1><div class="sub">{x["o"]} {e(x["p"])}' + (f" · {e(where)}" if where else "")
             + (f' · {flag(codes, x["nat"], up)}{e(x["nat"])}' if x["nat"] else "") + '</div>'
             f'<div class="kv"><div class="px" id="px"><span class="none">No console price yet. {"Icons and Heroes are" if leg else "New cards are"} priced every half hour while FUTBIN can be reached.</span></div>{meta_box(mt, x["o"])}</div>'
@@ -446,6 +455,11 @@ def list_page(groups, codes, total, specials, legends=()):
 
 
 def main():
+    global CARD_ART
+    try:
+        CARD_ART = json.load(open(os.path.join(ROOT, "data", "card-art.json"), encoding="utf-8"))
+    except (OSError, ValueError):
+        CARD_ART = {}
     data = json.load(open(os.path.join(ROOT, "data", "players.json"), encoding="utf-8"))
     codes = json.load(open(os.path.join(ROOT, "flags", "codes.json"), encoding="utf-8"))
     cpath = os.path.join(ROOT, "photos", "credits.json")
