@@ -28,6 +28,7 @@ ST_GK = ["DIV", "HAN", "KIC", "REF", "SPD", "POS"]
 CSS_V = "16"
 SPECIAL = 1000000000  # special-card ids on the site: SPECIAL + FUT.GG card id (gid) or FUTBIN card id (fid)
 CARD_ART = {}
+FULL_CARD_ART = {}
 
 
 def slug(s):
@@ -186,6 +187,13 @@ def photo(credits, pid, name, up):
 
 
 
+def card_art_image(url, name):
+    """Full in-game EA FC item image downloaded from FUT.GG's assets page."""
+    if not url:
+        return ""
+    return f'<img class="card-art" src="{e(url)}" alt="{e(name)} FC 27 Ultimate Team card" width="300" height="416" loading="eager" decoding="async">'
+
+
 def card_art_photo(url, name):
     """Use the FUT.GG player render inside the site's designed card frame."""
     if not url:
@@ -318,12 +326,13 @@ def player_page(x, codes, by_club, by_nat, specials_of, credits):
               ) % json.dumps(str(x["id"]))
     pc = credits.get(str(x["id"]))
     pimg, pcredit = photo(credits, x["id"], x["n"], up)
+    full_art = card_art_image(FULL_CARD_ART.get(str(x["id"])), x["n"])
     art_photo = card_art_photo(CARD_ART.get(str(x["id"])), x["n"])
     if art_photo:
         pimg = art_photo
     return (head(title, desc, canon, up, BASE + "photos/" + pc["img"] if pc else None) +
             f'<main><div class="crumb"><a href="{up}">Ezzcoins</a> › <a href="{up}p/">Player pages</a> › {e(x["n"])}</div>'
-            f'<div class="hero"><div class="side">{big_card(tier, x["o"], x["p"], x["q"] or x["n"], x["s"], lab, flag(codes, x["nat"], up, True), x["c"], pimg)}{"" if art_photo else pcredit}</div>'
+            f'<div class="hero"><div class="side">{full_art or big_card(tier, x["o"], x["p"], x["q"] or x["n"], x["s"], lab, flag(codes, x["nat"], up, True), x["c"], pimg)}{"" if (full_art or art_photo) else pcredit}</div>'
             f'<div><h1>{e(x["n"])}</h1><div class="sub">{x["o"]} {e(x["p"])}' + (f" · {e(where)}" if where else "")
             + (f' · {flag(codes, x["nat"], up)}{e(x["nat"])}' if x["nat"] else "") + '</div>'
             f'<div class="kv"><div class="px" id="px"><span class="none">No console price yet. {e(hint)}</span></div>{meta_box(mt, x["o"])}</div>'
@@ -407,12 +416,13 @@ def special_page(x, codes, specials, credits):
     bid = x.get("pid")
     pc = credits.get(str(bid)) if bid else None
     pimg, pcredit = photo(credits, bid, x["n"], up)
+    full_art = card_art_image(FULL_CARD_ART.get(str(x["key"])), x["n"])
     art_photo = card_art_photo(CARD_ART.get(str(x["key"])), x["n"])
     if art_photo:
         pimg = art_photo
     return (head(title, desc, BASE + "p/" + x["path"], up, BASE + "photos/" + pc["img"] if pc else None) +
             f'<main><div class="crumb"><a href="{up}">Ezzcoins</a> › <a href="{up}p/">Player pages</a> › {e(x["n"])} ({e(ver)})</div>'
-            f'<div class="hero"><div class="side">{big_card(card_variant(x["ver"], x["o"], True), x["o"], x["p"], x["cn"], x["s"], lab, flag(codes, x["nat"], up, True), ver, pimg, sig=True)}{"" if art_photo else pcredit}</div>'
+            f'<div class="hero"><div class="side">{full_art or big_card(card_variant(x["ver"], x["o"], True), x["o"], x["p"], x["cn"], x["s"], lab, flag(codes, x["nat"], up, True), ver, pimg, sig=True)}{"" if (full_art or art_photo) else pcredit}</div>'
             f'<div><div class="tag">{e(ver)}</div><h1>{e(x["n"])}</h1><div class="sub">{x["o"]} {e(x["p"])}' + (f" · {e(where)}" if where else "")
             + (f' · {flag(codes, x["nat"], up)}{e(x["nat"])}' if x["nat"] else "") + '</div>'
             f'<div class="kv"><div class="px" id="px"><span class="none">No console price yet. {"Icons and Heroes are" if leg else "New cards are"} priced every half hour while FUTBIN can be reached.</span></div>{meta_box(mt, x["o"])}</div>'
@@ -463,11 +473,15 @@ def list_page(groups, codes, total, specials, legends=()):
 
 
 def main():
-    global CARD_ART
+    global CARD_ART, FULL_CARD_ART
     try:
         CARD_ART = json.load(open(os.path.join(ROOT, "data", "card-art.json"), encoding="utf-8"))
     except (OSError, ValueError):
         CARD_ART = {}
+    try:
+        FULL_CARD_ART = json.load(open(os.path.join(ROOT, "data", "full-card-art.json"), encoding="utf-8"))
+    except (OSError, ValueError):
+        FULL_CARD_ART = {}
     data = json.load(open(os.path.join(ROOT, "data", "players.json"), encoding="utf-8"))
     codes = json.load(open(os.path.join(ROOT, "flags", "codes.json"), encoding="utf-8"))
     cpath = os.path.join(ROOT, "photos", "credits.json")
