@@ -2,7 +2,7 @@ name: Player pages
 on:
   push:
     branches: [main]
-    paths: [data/players.json, data/newcards.json, data/legends.json, scripts/build_pages.py, scripts/chem.min.js, scripts/meta.py, flags/codes.json]
+    paths: [data/players.json, data/newcards.json, data/legends.json, scripts/build_pages.py, scripts/fetch_card_art.py, scripts/chem.min.js, scripts/meta.py, flags/codes.json]
   workflow_dispatch:
 permissions:
   contents: write
@@ -12,7 +12,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - name: Build and commit player pages
@@ -23,8 +23,9 @@ jobs:
           for i in 1 2 3 4 5; do
             git fetch -q origin main
             git reset -q --hard origin/main
+            python3 scripts/fetch_card_art.py .
             python3 scripts/build_pages.py .
-            git add -A p sitemap.xml
+            git add -A p sitemap.xml data/card-art.json
             if git diff --cached --quiet; then echo "No changes"; exit 0; fi
             git commit -q -m "Rebuild player pages"
             git push origin HEAD:main && exit 0
