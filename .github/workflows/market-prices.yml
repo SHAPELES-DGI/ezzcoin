@@ -27,6 +27,7 @@ jobs:
           python3 scripts/test_card_catalog.py
           python3 scripts/test_futbin_prices.py
           node scripts/test_home_prices.cjs
+          node scripts/test_market_sync.cjs
           python3 scripts/test_home_sync.py
       - name: Discover FC 27 cards, prices and matching artwork
         run: python3 scripts/update_market_prices.py --metadata-batches 16

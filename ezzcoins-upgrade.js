@@ -79,6 +79,21 @@
     return results.some(r => r.status === 'fulfilled');
   }
 
+  window.addEventListener('ezzcoins:quotes', event => {
+    state.market = event.detail;
+    for (const [index, player] of (state.snapshot?.meta || []).entries()) {
+      const quote = player.eaId ? window.EzzcoinsMarket.lookup(state.market, player.eaId) : null;
+      player.price = quote?.price ?? null; player.priceAt = quote?.at; player.priceSrc = quote?.src;
+      const card = document.querySelector('[data-ez-player="'+index+'"]');
+      if (card) {
+        card.querySelector('.ez-player-price').innerHTML = coins(player.price)+' <small>'+(validPrice(player.price)?'coins':'unavailable')+'</small>';
+        card.querySelector('.ez-player-source').textContent = player.priceSrc || 'No quote';
+        card.querySelector('.ez-player-meta').textContent = humanTime(player.priceAt);
+      }
+    }
+    renderAlerts();
+  });
+
   function gradedStats() {
     const calls = state.ledger?.calls || [];
     const graded = calls.filter(c => c.status === 'hit' || c.status === 'miss');

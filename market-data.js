@@ -7,16 +7,21 @@
   let loadedAt = 0;
   async function fetchData(name) {
     if (!/^[a-z-]+\.json$/.test(name)) throw new Error('Invalid data filename');
-    // Workflow commits do not trigger Pages builds. Read those public snapshots
-    // from main, retaining the deployed copy if GitHub's raw host is unavailable.
-    const urls = ['https://raw.githubusercontent.com/SHAPELES-DGI/ezzcoin/main/data/' + name,
-                  new URL('data/' + name, root).href];
-    for (const url of urls) {
+    // Compare deployment and repository copies: either CDN can lag a refresh.
+    // Use the newest timestamp and retain either host as an availability fallback.
+    const urls = [new URL('data/' + name, root).href,
+                  'https://raw.githubusercontent.com/SHAPELES-DGI/ezzcoin/main/data/' + name];
+    const candidates = await Promise.allSettled(urls.map(async url => {
       try {
         const response = await fetch(url + '?t=' + Math.floor(Date.now() / 60000), { cache: 'no-store', signal: AbortSignal.timeout(15000) });
         if (response.ok) return await response.json();
       } catch (_) { /* Try the deployed snapshot. */ }
-    }
+      throw new Error('Snapshot unavailable');
+    }));
+    const available = candidates.filter(r => r.status === 'fulfilled').map(r => r.value);
+    const time = data => Date.parse(data.retrievedAt || data.updatedAt || data.at || '') || 0;
+    available.sort((a, b) => time(b) - time(a));
+    if (available.length) return available[0];
     throw new Error('Market data unavailable');
   }
   function validate(data) {
@@ -39,6 +44,7 @@
     pending = (async () => {
       cached = validate(await fetchData('live-prices.json'));
       loadedAt = Date.now();
+      window.dispatchEvent(new CustomEvent('ezzcoins:quotes', { detail: cached }));
       return cached;
     })();
     try { return await pending; } finally { pending = null; }
