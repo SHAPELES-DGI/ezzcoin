@@ -40,7 +40,7 @@
     const delayed = minutes > 90;
     $('freshness').textContent = delayed ? 'Delayed prices' : 'Recent price feed';
     $('freshness').classList.toggle('stale', delayed);
-    $('sourceTime').textContent = 'FUT.GG · ' + date(time);
+    $('sourceTime').textContent = 'FUTBIN first · FUT.GG fallback feed: ' + date(time);
     $('priceCount').textContent = number(platform === 'pc' ? feed.coverage.pcPriced : feed.coverage.consolePriced);
     $('platformLabel').textContent = (platform === 'pc' ? 'PC' : 'Console') + ' prices available';
     $('cardCount').textContent = number(feed.coverage.feedCards);
@@ -53,8 +53,9 @@
     const platform = $('platform').value;
     const batch = filtered.slice(shown, shown + 50);
     $('results').insertAdjacentHTML('beforeend', batch.map(({ card, price }) => {
+      const quote=window.EzzcoinsMarket.lookup(feed,card.id,platform),origin=feed.quoteMetadata?.[String(card.id)]?.[platform],src=quote?.src||feed.source;
       const color = card.rating < 65 ? ' bronze' : card.rating < 75 ? ' silver' : '';
-      return `<tr><td class="player"><strong>${escape(card.name)}</strong><small>${escape(card.version)} · ID ${card.id}</small></td><td>${card.rating ? `<span class="rating${color}">${card.rating}</span>` : '—'}</td><td>${escape(card.position || '—')}</td><td class="club">${escape(card.club || card.nation || '—')}</td><td class="price${price === null ? ' unavailable' : ''}">${price === null ? escape(stateLabel(card, platform)) : number(price)}</td><td><a class="source" href="${escape(card.url)}" target="_blank" rel="noopener noreferrer">FUT.GG ↗</a></td></tr>`;
+      return `<tr><td class="player"><strong>${escape(card.name)}</strong><small>${escape(card.version)} · ID ${card.id}</small></td><td>${card.rating ? `<span class="rating${color}">${card.rating}</span>` : '—'}</td><td>${escape(card.position || '—')}</td><td class="club">${escape(card.club || card.nation || '—')}</td><td class="price${price === null ? ' unavailable' : ''}">${price === null ? escape(stateLabel(card, platform)) : number(price)}</td><td><a class="source" href="${escape(origin?.url||card.url)}" title="${escape(date(quote?.at||feed.publishedAt[platform]))}" target="_blank" rel="noopener noreferrer">${escape(src)} ↗</a></td></tr>`;
     }).join(''));
     shown += batch.length;
     if (!filtered.length) $('results').innerHTML = '<tr><td colspan="6" class="empty">No cards match these filters. Try a different name, budget or availability.</td></tr>';
@@ -108,7 +109,7 @@
     // Neutralize spreadsheet formulas in text supplied by upstream metadata.
     const csv = value => '"' + String(value ?? '').replace(/^[=+@-]/, "'$&").replace(/"/g, '""') + '"';
     const rows = [['EA item ID', 'Player', 'Rating', 'Version', 'Position', 'Club', 'Platform', 'Lowest Buy Now coins', 'Availability', 'Source', 'Feed published at'],
-      ...filtered.map(({ card, price }) => [card.id, card.name, card.rating, card.version, card.position, card.club, platform, price, price === null ? stateLabel(card, platform) : 'Price available', feed.source, feed.publishedAt[platform]])];
+      ...filtered.map(({ card, price }) => [card.id, card.name, card.rating, card.version, card.position, card.club, platform, price, price === null ? stateLabel(card, platform) : 'Price available', window.EzzcoinsMarket.lookup(feed,card.id,platform)?.src||feed.source, window.EzzcoinsMarket.lookup(feed,card.id,platform)?.at||feed.publishedAt[platform]])];
     const blob = new Blob(['\uFEFF' + rows.map(row => row.map(csv).join(',')).join('\r\n')], { type: 'text/csv;charset=utf-8' });
     const url = URL.createObjectURL(blob), link = document.createElement('a');
     link.href = url; link.download = 'ezzcoins-fc27-' + platform + '-prices.csv'; link.click();
@@ -132,3 +133,4 @@
   load();
   setInterval(() => { if (!document.hidden) load(true); }, 300000);
 })();
+

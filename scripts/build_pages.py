@@ -25,7 +25,7 @@ SLUG_MAP = {"ø": "o", "Ø": "o", "ß": "ss", "ł": "l", "Ł": "l", "æ": "ae", 
             "œ": "oe", "đ": "d", "Đ": "d", "ı": "i", "ð": "d", "þ": "th"}
 ST_OUT = ["PAC", "SHO", "PAS", "DRI", "DEF", "PHY"]
 ST_GK = ["DIV", "HAN", "KIC", "REF", "SPD", "POS"]
-CSS_V = "22"
+CSS_V = "23"
 SPECIAL = 1000000000  # special-card ids on the site: SPECIAL + FUT.GG card id (gid) or FUTBIN card id (fid)
 CARD_ART = {}
 CARD_IDS = json.load(open(os.path.join(ROOT, "data", "card-ids.json")))
@@ -257,7 +257,7 @@ def chem_box(x, up):
     return (f'<section class="chem" id="chem" data-s="{e(data)}" data-pos="{e(x["p"])}" data-alt="{e(x["a"] or "")}" data-ovr="{x["o"]}" '
             f'data-sm="{e(x["sm"] or "")}" data-wf="{e(x["wf"] or "")}" data-ps="{e(x["ps"] or "")}"><h2>Chemistry style</h2>'
             f'<p class="chem-note">Turn on JavaScript to see this card with each chemistry style.</p></section>'
-            f'<script src="{up}market-data.js"></script><script src="{up}p/chem.js?v={CSS_V}" defer></script>')
+            f'<script src="{up}market-data.js?v=20261006-fb1"></script><script src="{up}p/chem.js?v={CSS_V}" defer></script>')
 
 
 ADSENSE = "<script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5351346431839799\" crossorigin=\"anonymous\"></script>"
@@ -269,7 +269,7 @@ def head(title, desc, canon, up, image=None):
             f'<meta property="og:type" content="website"><meta property="og:title" content="{e(title)}"><meta property="og:description" content="{e(desc)}">'
             f'<meta property="og:url" content="{e(canon)}"><meta property="og:image" content="{e(image or BASE + "icon-512.png")}"><meta name="theme-color" content="#0A0D0C">'
             f'<link rel="icon" href="{up}favicon-32.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="{up}apple-touch-icon.png">'
-            f'<script src="{up}card-art.js?v=20261006-3" defer></script><link rel="manifest" href="{up}manifest.webmanifest">{FONTS}<link rel="stylesheet" href="{up}p/style.css?v={CSS_V}">{ADSENSE}</head><body>'
+            f'<script src="{up}card-art.js?v=20261006-fb1" defer></script><link rel="manifest" href="{up}manifest.webmanifest">{FONTS}<link rel="stylesheet" href="{up}p/style.css?v={CSS_V}">{ADSENSE}</head><body>'
             f'<header class="top"><a class="home" href="{up}"><img src="{up}mark.svg" alt="" width="34" height="34"><b>Ezz<span>coins</span></b></a>'
             f'<nav class="nav"><a href="{up}#players">Database</a><a href="{up}p/">All players</a></nav></header>')
 
@@ -333,8 +333,8 @@ def player_page(x, codes, by_club, by_nat, specials_of, credits):
     script = ("<script>(()=>{const id=%s,el=document.getElementById('px'),g=f=>window.EzzcoinsMarket.fetchData(f).catch(()=>null);"
               "const load=()=>Promise.all([g('prices.json'),g('topprices.json'),g('live-prices.json')]).then(([a,b,live])=>{"
               "const row=live&&Array.isArray(live.rows)?live.rows.find(r=>Number(r[0])===Number(id)):null;"
-              "const lp=row&&row[3]===0&&row[1]>0?{price:row[1],at:live.publishedAt&&live.publishedAt.console,src:live.source}:null;"
-              "const c=[lp,a&&a.players&&a.players[id],b&&b.players&&b.players[id]].filter(p=>p&&p.price>0&&Number.isFinite(Date.parse(p.at))).sort((x,y)=>Date.parse(y.at)-Date.parse(x.at))[0];"
+              "const meta=live&&live.quoteMetadata&&live.quoteMetadata[String(id)]&&live.quoteMetadata[String(id)].console;const lp=row&&row[3]===0&&row[1]>0?{price:row[1],at:meta&&meta.at||live.publishedAt.console,src:meta&&meta.src||live.source}:null;"
+              "const c=lp||[a&&a.players&&a.players[id],b&&b.players&&b.players[id]].filter(p=>p&&p.price>0&&Number.isFinite(Date.parse(p.at))).sort((x,y)=>Date.parse(y.at)-Date.parse(x.at))[0];"
               "if(!c)return;const m=Math.round((Date.now()-Date.parse(c.at))/6e4),h=Math.floor(m/60),ago=m<1?'just now':m<60?m+' min ago':h<48?h+' h ago':Math.floor(h/24)+' days ago';"
               "const label=c.src==='FUT.GG'?'FUT.GG feed updated':'Console price from '+(c.src||'FUTBIN');"
               "el.innerHTML='<b><i class=\"coin\"></i>'+Number(c.price).toLocaleString('en-US')+'</b><span>'+label+' \\u00b7 '+ago+'</span>'});load();setInterval(load,300000)})()</script>"
@@ -430,14 +430,14 @@ def special_page(x, codes, specials, credits):
               "let f=parseFloat(getComputedStyle(n).fontSize);while(n.scrollWidth>n.clientWidth+1&&f>16){f--;n.style.fontSize=f+'px'}};"
               "fit();document.fonts&&document.fonts.ready.then(fit)})()</script>"
               "<script>(()=>{const id=%s,key=%s,el=document.getElementById('px'),g=f=>window.EzzcoinsMarket.fetchData(f).catch(()=>null);"
-              "const load=()=>Promise.all([g('prices.json'),g(%s),g('live-prices.json')]).then(([a,b,live])=>{"
+              "const load=()=>Promise.all([g('card-ids.json'),g(%s),g('live-prices.json')]).then(([ids,b,live])=>{"
               "const n=b&&Array.isArray(b.cards)?b.cards.find(c=>String(c.gid!=null&&c.gid!==''?c.gid:c.fid)===key):null;"
-              "const row=n&&n.gid!=null&&live&&Array.isArray(live.rows)?live.rows.find(r=>Number(r[0])===Number(n.gid)):null;"
-              "const lp=row&&row[3]===0&&row[1]>0?{price:row[1],at:live.publishedAt&&live.publishedAt.console,src:live.source}:null;"
-              "const c=[lp,a&&a.players&&a.players[id],n&&{price:n.price,at:n.priceAt,src:n.src}].filter(p=>p&&p.price>0&&Number.isFinite(Date.parse(p.at))).sort((x,y)=>Date.parse(y.at)-Date.parse(x.at))[0];"
-              "if(!c)return;const m=Math.round((Date.now()-Date.parse(c.at))/6e4),h=Math.floor(m/60),ago=m<1?'just now':m<60?m+' min ago':h<48?h+' h ago':Math.floor(h/24)+' days ago';"
-              "const label=c.src==='FUT.GG'?'FUT.GG feed updated':'Console price from '+(c.src||'FUTBIN');"
-              "el.innerHTML='<b><i class=\"coin\"></i>'+Number(c.price).toLocaleString('en-US')+'</b><span>'+label+' \\u00b7 '+ago+'</span>'});load();setInterval(load,300000)})()</script>"
+              "const item=ids&&ids[key]||n&&n.eaId||n&&n.gid||Number(key);"
+              "const row=live&&Array.isArray(live.rows)?live.rows.find(r=>Number(r[0])===Number(item)):null;"
+              "if(!row||row[3]!==0||!(row[1]>0)){const state=row&&row[3];el.textContent=/FUT Champions/i.test(n&&n.version||'')?'Reward card · not tradeable':state===1?'SBC card · not tradeable':state===2?'Objective card · not tradeable':state===4?'Reward card · not tradeable':state===3?'Not tradeable':state===0?'No listings':'Price unavailable';return}"
+              "const q=live.quoteMetadata&&live.quoteMetadata[String(item)]&&live.quoteMetadata[String(item)].console;const c={price:row[1],at:q&&q.at||live.publishedAt.console,src:q&&q.src||live.source};"
+              "const m=Math.max(0,Math.round((Date.now()-Date.parse(c.at))/6e4)),h=Math.floor(m/60),ago=m<1?'just now':m<60?m+' min ago':h<48?h+' h ago':Math.floor(h/24)+' days ago';"
+              "el.innerHTML='<b><i class=\\\"coin\\\"></i>'+Number(c.price).toLocaleString('en-US')+'</b><span>Console · '+c.src+' · '+ago+'</span>'});load();setInterval(load,300000)})()</script>"
               ) % (json.dumps(str(x["id"])), json.dumps(str(x["key"])), json.dumps("legends.json" if leg else "newcards.json"))
     bid = x.get("pid")
     pc = credits.get(str(bid)) if bid else None

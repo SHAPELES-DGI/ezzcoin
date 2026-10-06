@@ -5,18 +5,18 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#0a0d0c">
   <title>FC 27 Lowest Player Prices · Ezzcoins</title>
-  <meta name="description" content="Search FC 27 player prices by exact card version. Compare the lowest recorded Buy Now prices on console and PC, sourced from FUT.GG.">
+  <meta name="description" content="Search FC 27 player prices by exact card version. Compare the lowest recorded Buy Now prices on console and PC, using FUTBIN first with FUT.GG as fallback.">
   <link rel="icon" href="favicon.ico">
   <link rel="stylesheet" href="prices.css?v=20261005">
-  <script src="market-data.js?v=20261005" defer></script>
-  <script src="prices.js?v=20261005" defer></script>
+  <script src="market-data.js?v=20261006-fb1" defer></script>
+  <script src="prices.js?v=20261006-fb1" defer></script>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5351346431839799" crossorigin="anonymous"></script></head>
 <body>
   <header><a class="brand" href="./">EZZCOINS<span>FC 27</span></a><a class="back" href="./#players">← Player database</a></header>
   <main>
     <section class="hero">
       <div><p class="eyebrow">TRANSFER MARKET / PLAYER PRICES</p><h1>Find the lowest price.</h1><p class="intro">Lowest recorded Buy Now prices, by exact card version.</p></div>
-      <div class="feed-status"><span class="status" id="freshness">Loading prices</span><p id="sourceTime">Source: FUT.GG</p><button id="refresh" type="button">Refresh prices ↻</button></div>
+      <div class="feed-status"><span class="status" id="freshness">Loading prices</span><p id="sourceTime">FUTBIN first · FUT.GG fallback</p><button id="refresh" type="button">Refresh prices ↻</button></div>
     </section>
     <div class="stats" aria-label="Price coverage"><div><strong id="priceCount">—</strong><span id="platformLabel">Console prices available</span></div><div><strong id="cardCount">—</strong><span>Cards in the market feed</span></div><div><strong>Buy Now</strong><span>Coins · lowest recorded listing</span></div></div>
     <p class="notice" id="notice" role="status">Loading the player database and market feed…</p>
@@ -35,7 +35,8 @@
       <div class="table-wrap"><table><thead><tr><th scope="col">Player / card</th><th scope="col">OVR</th><th scope="col">Position</th><th scope="col">Club</th><th scope="col" class="price-col">Lowest Buy Now</th><th scope="col">Source</th></tr></thead><tbody id="results"><tr><td colspan="6" class="empty">Loading prices…</td></tr></tbody></table></div>
       <div class="more"><button id="more" type="button" hidden>Show 50 more</button><span id="shown"></span></div>
     </section>
-    <footer><p>Prices are third-party observations from <a href="https://www.fut.gg/" target="_blank" rel="noopener noreferrer">FUT.GG</a>, and listings can sell before you search in-game. Console and PC markets are separate. The timestamp is when the source published its feed; individual observations may be older.</p><p>SBC costs, objective rewards and unavailable prices are excluded from market-price results. Refreshes are scheduled every 30 minutes; delayed data is marked above. EA supplies base-player ratings; FUT.GG supplies additional card details.</p><p>© 2026 Ezzcoins · Not affiliated with EA SPORTS or FUT.GG.</p></footer>
+    <footer><p>Prices use FUTBIN first, with missing quotes supplied by <a href="https://www.fut.gg/" target="_blank" rel="noopener noreferrer">FUT.GG</a>, and listings can sell before you search in-game. Console and PC markets are separate. The timestamp is when the source published its feed; individual observations may be older.</p><p>SBC costs, objective rewards and unavailable prices are excluded from market-price results. Refreshes are scheduled every 15 minutes; delayed data is marked above. EA supplies base-player ratings; FUT.GG supplies additional card details.</p><p>© 2026 Ezzcoins · Not affiliated with EA SPORTS or FUT.GG.</p></footer>
   </main>
 </body>
 </html>
+

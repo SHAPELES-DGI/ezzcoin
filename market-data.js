@@ -1,6 +1,7 @@
 /* Shared exact-item prices. Source time is the feed publication time. */
 (() => {
   'use strict';
+  const root = new URL('./', document.currentScript.src);
   let cached = null;
   let pending = null;
   let loadedAt = 0;
@@ -8,9 +9,8 @@
     if (!/^[a-z-]+\.json$/.test(name)) throw new Error('Invalid data filename');
     // Workflow commits do not trigger Pages builds. Read those public snapshots
     // from main, retaining the deployed copy if GitHub's raw host is unavailable.
-    const urls = location.hostname.endsWith('.github.io')
-      ? ['https://raw.githubusercontent.com/SHAPELES-DGI/ezzcoin/main/data/' + name, 'data/' + name]
-      : ['data/' + name];
+    const urls = ['https://raw.githubusercontent.com/SHAPELES-DGI/ezzcoin/main/data/' + name,
+                  new URL('data/' + name, root).href];
     for (const url of urls) {
       try {
         const response = await fetch(url + '?t=' + Math.floor(Date.now() / 60000), { cache: 'no-store', signal: AbortSignal.timeout(15000) });
@@ -29,8 +29,9 @@
     if (!row) return null;
     const col = platform === 'pc' ? 2 : 1;
     const status = row[col + 2];
+    const quote = data.quoteMetadata?.[String(id)]?.[platform];
     return { id: row[0], price: status === 0 && row[col] > 0 ? row[col] : null, status,
-      at: data.publishedAt[platform], src: data.source, hist: [] };
+      at: quote?.at || data.publishedAt[platform], src: quote?.src || data.source, hist: [] };
   }
   async function load(force = false) {
     if (pending) return pending;

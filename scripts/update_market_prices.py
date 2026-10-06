@@ -9,10 +9,13 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 import itertools
 import json
+import subprocess
 from pathlib import Path
 import time
 from urllib.error import HTTPError
 from urllib.request import Request, urlopen
+from card_catalog import extract, publish
+from futbin_prices import refresh as refresh_futbin
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
@@ -56,8 +59,12 @@ def decode(index, console, pc):
 
 def metadata_batch(ids):
     url = "https://www.fut.gg/api/fut/players/v2/27/?ids=" + ",".join(map(str, ids))
-    payload = get_json(url)
+    result = subprocess.run(["curl", "-fsSL", "--max-time", "30", url], capture_output=True, text=True)
+    if result.returncode:
+        raise RuntimeError("FC 27 metadata request failed: " + result.stderr.strip()[:160])
+    payload = json.loads(result.stdout)
     records = []
+    details = {}
     for p in payload.get("data", []):
         item = p.get("eaId")
         if item not in ids or str(p.get("game")) != "27":
@@ -69,14 +76,17 @@ def metadata_batch(ids):
         records.append([item, p.get("basePlayerEaId"), name, p["overall"], p.get("position", ""), p.get("rarityName", ""),
                         (p.get("club") or {}).get("name", ""), (p.get("league") or {}).get("name", ""),
                         (p.get("nation") or {}).get("name", ""), "https://www.fut.gg" + url])
+        details[str(item)] = extract(p)
     time.sleep(0.3)
-    return records
+    return records, details
 
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--metadata-batches", type=int, default=6)
+    parser.add_argument("--metadata-batches", type=int, default=16)
     parser.add_argument("--workers", type=int, default=2, choices=(1, 2, 3))
+    parser.add_argument("--futbin-pages", type=int, default=12)
+    parser.add_argument("--futbin-player-pages", type=int, default=20)
     args = parser.parse_args()
     manifest = get_json("https://r2.fut.gg/27/manifest.json")
     names = ["player-prices-index", "player-prices-ps5-dyn", "player-prices-pc-dyn"]
@@ -97,6 +107,8 @@ def main():
     if cached["cols"] != COLS:
         raise ValueError("Unknown metadata cache format")
     cards = {row[0]: row for row in cached["rows"]}
+    metadata_path = DATA / "card-metadata.json"
+    metadata = json.loads(metadata_path.read_text()) if metadata_path.exists() else {}
     unresolved = set(cached.get("unresolved", []))
     needed = sorted({row[0] for row in rows} - base_ids - cards.keys())
     # Retry unresolved source IDs after new IDs, so source gaps cannot starve new cards.
@@ -104,6 +116,13 @@ def main():
     if checked_date == utc()[:10]:
         needed = [item for item in needed if item not in unresolved]
     needed.sort(key=lambda item: (item in unresolved, item))
+    exact_ids = json.loads((DATA / "card-ids.json").read_text())
+    home_cards = json.loads((DATA / "newcards.json").read_text()).get("cards", [])
+    home_ids = [int(exact_ids.get(str(c.get("gid") or c.get("fid"))) or c.get("eaId") or c.get("gid") or 0) for c in home_cards]
+    # First discover new feed IDs; then enrich cards already shown on Home, then the rest.
+    enrich = home_ids + sorted((item for item in cards if item > 16777216), reverse=True)
+    needed = list(dict.fromkeys(needed + [item for item in enrich if item and
+                        (str(item) not in metadata or metadata[str(item)].get("checkedAt", "")[:10] != utc()[:10])]))
     batches = [needed[i:i + 30] for i in range(0, min(len(needed), max(0, args.metadata_batches) * 30), 30)]
     errors = []
     with ThreadPoolExecutor(max_workers=args.workers) as pool:
@@ -111,7 +130,8 @@ def main():
         for n, future in enumerate(as_completed(jobs), 1):
             batch = jobs[future]
             try:
-                records = future.result()
+                records, details = future.result()
+                metadata.update(details)
                 cards.update({row[0]: row for row in records})
                 unresolved.update(set(batch) - {row[0] for row in records})
                 unresolved.difference_update(row[0] for row in records)
@@ -124,10 +144,14 @@ def main():
                         job.cancel()
                     break
     known = base_ids | cards.keys()
+    quote_metadata, futbin_coverage = refresh_futbin(DATA, rows, home_cards,
+                            pages=args.futbin_pages, player_pages=args.futbin_player_pages)
     coverage = {"feedCards": len(rows), "namedCards": sum(r[0] in known for r in rows),
                 "consolePriced": sum(r[1] is not None for r in rows), "pcPriced": sum(r[2] is not None for r in rows),
                 "unresolvedCards": sum(r[0] not in known for r in rows)}
     output = {"game": "FC 27", "source": "FUT.GG", "sourceUrl": "https://www.fut.gg/", "retrievedAt": utc(),
+              "primarySource": "FUTBIN", "fallbackSource": "FUT.GG", "quoteMetadata": quote_metadata,
+              "primaryCoverage": futbin_coverage,
               "publishedAt": published, "priceType": "lowestBuyNow", "coverage": coverage,
               "cols": ["id", "console", "pc", "consoleState", "pcState"], "rows": rows,
               "statusLabels": {"0": "Market card", "1": "SBC", "2": "Objective", "3": "No market price", "4": "Token reward"},
@@ -136,6 +160,10 @@ def main():
     write_json(card_path, {"source": "FUT.GG", "updatedAt": utc(), "cols": COLS, "unresolvedCheckedAt": checked_at,
                            "rows": sorted(cards.values(), key=lambda row: row[0]), "unresolved": sorted(unresolved)})
     write_json(DATA / "live-prices.json", output)
+    write_json(metadata_path, metadata)
+    added = publish(DATA, metadata, {r[0]: r for r in rows}, published["console"], quote_metadata)
+    print(json.dumps({"FUTBIN": futbin_coverage}), flush=True)
+    print(f"Automatic card catalog: {added} new cards; {len(metadata)} exact artwork records", flush=True)
     print(json.dumps({**coverage, "publishedAt": published, "metadataErrors": errors}), flush=True)
 
 

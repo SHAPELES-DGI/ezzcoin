@@ -5,26 +5,47 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: [scripts/update_market_prices.py, .github/workflows/market-prices.yml]
+    paths: [scripts/update_market_prices.py, scripts/card_catalog.py, scripts/futbin_prices.py, .github/workflows/market-prices.yml]
 permissions:
   contents: write
+  pages: write
+  id-token: write
 concurrency:
   group: market-prices-v2
   queue: max
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
-      - name: Fetch public FC 27 prices
-        run: python3 scripts/update_market_prices.py --metadata-batches 6
+      - name: Validate exact card discovery
+        run: |
+          python3 scripts/test_card_catalog.py
+          python3 scripts/test_futbin_prices.py
+          node scripts/test_home_prices.cjs
+      - name: Discover FC 27 cards, prices and matching artwork
+        run: python3 scripts/update_market_prices.py --metadata-batches 16
+      - name: Rebuild player pages for newly discovered cards
+        run: python3 scripts/build_pages.py .
       - name: Commit refreshed prices
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/live-prices.json data/market-cards.json
-          if git diff --cached --quiet; then exit 0; fi
-          git commit -m "Refresh FC 27 console and PC market prices"
-          git pull --rebase origin main
-          git push origin HEAD:main
+          git add data/players.json data/live-prices.json data/market-cards.json data/card-metadata.json data/futbin-prices.json data/newcards.json data/card-ids.json data/card-renders.json p sitemap.xml
+          if ! git diff --cached --quiet; then
+            git commit -m "Refresh FC 27 cards, artwork, player pages and market prices"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+      # Pushes made with GITHUB_TOKEN do not start another Actions workflow.
+      # Publish in this job so new card pages/artwork never wait for a manual push.
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - name: Publish refreshed site
+        id: deployment
+        uses: actions/deploy-pages@v4
