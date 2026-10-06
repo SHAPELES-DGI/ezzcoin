@@ -68,7 +68,7 @@ def fetch(entry):
             full_card = html.unescape(urls[0]).replace("&amp;", "&")
         return item, player_image, full_card
     except Exception as error:
-        if item == 50570733:
+        if item == "50570733":
             print("CARD_ASSET_ERROR", repr(error))
         return item, None, None
 os.makedirs(os.path.dirname(PATH), exist_ok=True)
