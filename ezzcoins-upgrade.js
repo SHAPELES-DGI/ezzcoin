@@ -282,7 +282,7 @@
         <section class="ez-card" id="ez-coach"><h3>Coach shortcuts</h3><div class="ez-card-sub">One tap instead of thinking of a prompt</div>${coachHTML()}</section>
         <section class="ez-card full" id="ez-players"><h3>Player trade board</h3><div class="ez-card-sub">Console prices from the same feed as Home · select a player for details</div>${playerHTML()}</section>
         <section class="ez-card half" id="ez-alerts"><h3>Price alerts</h3><div class="ez-card-sub">Saved in this browser</div>${alertsHTML()}</section>
-        <section class="ez-card half" id="ez-playbook"><h3>Quick Playbook</h3><div class="ez-card-sub">The long strategy guide, compressed</div>${playbookHTML()}</section>
+
       </div>`;
   }
 
@@ -296,7 +296,7 @@
   function arrangeSections() {
     // Rebuild the managed groups on refresh, then move fresh nodes into their tabs.
     document.querySelectorAll('[data-ez-group]').forEach(el=>el.remove());
-    const groups={trading:['ez-trades','ez-record','ez-fodder','ez-players','ez-alerts'],tools:['ez-budget','ez-coach'],playbook:['ez-playbook']};
+    const groups={trading:['ez-trades','ez-record','ez-fodder','ez-players','ez-alerts'],tools:['ez-budget','ez-coach']};
     for(const [tab,ids] of Object.entries(groups)){
       const panel=document.getElementById(tab);if(!panel)continue;
       const group=document.createElement('div');group.className='ez-grid';group.dataset.ezGroup=tab;
@@ -485,4 +485,5 @@
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, {once:true}); else init();
 })();
+
 
