@@ -25,9 +25,10 @@ SLUG_MAP = {"ø": "o", "Ø": "o", "ß": "ss", "ł": "l", "Ł": "l", "æ": "ae", 
             "œ": "oe", "đ": "d", "Đ": "d", "ı": "i", "ð": "d", "þ": "th"}
 ST_OUT = ["PAC", "SHO", "PAS", "DRI", "DEF", "PHY"]
 ST_GK = ["DIV", "HAN", "KIC", "REF", "SPD", "POS"]
-CSS_V = "18"
+CSS_V = "19"
 SPECIAL = 1000000000  # special-card ids on the site: SPECIAL + FUT.GG card id (gid) or FUTBIN card id (fid)
 CARD_ART = {}
+REGULAR_PLAYSTYLES = {}
 
 
 def slug(s):
@@ -334,9 +335,10 @@ def player_page(x, codes, by_club, by_nat, specials_of, credits):
         pimg = art_photo
     fallback_card = big_card(tier, x["o"], x["p"], x["q"] or x["n"], x["s"], lab, flag(codes, x["nat"], up, True), x["c"], pimg)
     full_art = card_art_image(x["id"], x["n"], fallback_card)
+    style_row = playstyle_row(x.get("pls"))
     return (head(title, desc, canon, up, BASE + "photos/" + pc["img"] if pc else None) +
             f'<main><div class="crumb"><a href="{up}">Ezzcoins</a> › <a href="{up}p/">Player pages</a> › {e(x["n"])}</div>'
-            f'<div class="hero"><div class="side">{full_art}{"" if full_art or art_photo else pcredit}</div>'
+            f'<div class="hero"><div class="side">{full_art}{style_row}{"" if full_art or art_photo else pcredit}</div>'
             f'<div><h1>{e(x["n"])}</h1><div class="sub">{x["o"]} {e(x["p"])}' + (f" · {e(where)}" if where else "")
             + (f' · {flag(codes, x["nat"], up)}{e(x["nat"])}' if x["nat"] else "") + '</div>'
             f'<div class="kv"><div class="px" id="px"><span class="none">No console price yet. {e(hint)}</span></div>{meta_box(mt, x["o"])}</div>'
@@ -349,9 +351,9 @@ def player_page(x, codes, by_club, by_nat, specials_of, credits):
 PS_NAMES = ["Finesse Shot", "Chip Shot", "Power Shot", "Dead Ball", "Precision Header", "Low Driven Shot", "Gamechanger", "Acrobatic",
             "Incisive Pass", "Pinged Pass", "Long Ball Pass", "Tiki Taka", "Whipped Pass", "Inventive", "Technical", "Rapid", "Flair", "First Touch",
             "Trickster", "Press Proven", "Quick Step", "Relentless", "Long Throw", "Bruiser", "Enforcer", "Jockey", "Block", "Intercept", "Anticipate",
-            "Slide Tackle", "Aerial Fortress", "Far Throw", "Footwork", "Cross Claimer", "Rush Out", "Far Reach", "Deflector"]
+            "Slide Tackle", "Aerial Fortress", "Far Throw", "Footwork", "Cross Claimer", "Rush Out", "Far Reach", "Deflector", "1v1 Close Down"]
 PS_KEY = {re.sub(r"[^a-z]", "", n.lower()): n for n in PS_NAMES}
-PS_KEY.update({"precision": "Precision Header", "powerheader": "Precision Header"})
+PS_KEY.update({"precision": "Precision Header", "powerheader": "Precision Header", "lowdriven": "Low Driven Shot", "longball": "Long Ball Pass"})
 
 
 def ps_norm(lst, plus):
@@ -488,11 +490,15 @@ def list_page(groups, codes, total, specials, legends=()):
 
 
 def main():
-    global CARD_ART
+    global CARD_ART, REGULAR_PLAYSTYLES
     try:
         CARD_ART = json.load(open(os.path.join(ROOT, "data", "card-art.json"), encoding="utf-8"))
     except (OSError, ValueError):
         CARD_ART = {}
+    try:
+        REGULAR_PLAYSTYLES = json.load(open(os.path.join(ROOT, "data", "playstyles.json"), encoding="utf-8"))
+    except (OSError, ValueError):
+        REGULAR_PLAYSTYLES = {}
 
     data = json.load(open(os.path.join(ROOT, "data", "players.json"), encoding="utf-8"))
     codes = json.load(open(os.path.join(ROOT, "flags", "codes.json"), encoding="utf-8"))
@@ -511,6 +517,7 @@ def main():
              "nat": get(r, "nation") or "", "g": get(r, "gender"), "sm": get(r, "sm"), "wf": get(r, "wf"), "ft": get(r, "foot") or "",
              "h": get(r, "height"), "age": get(r, "age"), "ps": get(r, "psp") or "",
              "s": [get(r, f"s{k}") for k in range(1, 7)]}
+        x["pls"] = ps_norm(REGULAR_PLAYSTYLES.get(str(x["id"]), ""), False)
         x["path"] = f'{slug(x["n"])}-{x["id"]}/' if x["o"] >= MIN_OVR else ""
         allp[x["id"]] = x
         byname.setdefault(slug(x["n"]), []).append(x)
@@ -549,6 +556,8 @@ def main():
         # base card's, shown as such, when the base card is surely the same player (linked id or same club). Same rule as index.html.
         sx["psChk"] = bool(c.get("psAt"))
         sx["pls"] = ps_norm(c.get("pls"), False) if sx["psChk"] else ""
+        if not sx["pls"]:
+            sx["pls"] = ps_norm(REGULAR_PLAYSTYLES.get(str(key), ""), False)
         sx["ps"] = (ps_norm(c.get("ps"), True) if sx["psChk"] else
                     b["ps"] if b and (str(c.get("baseId") or "").isdigit() or (c.get("club") and b["c"] == c.get("club"))) else "")
         # Name on the card: EA's card name for the same player ("João Félix", "Álex Baena") when the base card is
@@ -587,6 +596,7 @@ def main():
               "p": c.get("pos") or "", "a": c.get("alt") or "", "c": c.get("club") or "", "l": c["league"], "nat": c.get("nation") or "",
               "sm": c.get("sm"), "wf": c.get("wf"), "s": [None if v in (None, "") else v for v in st], "ver": ver, "added": "",
               "base": None, "ps": ps_norm(c["ps"], True) if c.get("ps") else "", "cn": card_name(c["name"]) if len(c["name"]) > 14 else c["name"]}
+        lx["pls"] = ps_norm(REGULAR_PLAYSTYLES.get(str(key), ""), False)
         lx["pid"] = lx["id"] if str(lx["id"]) in credits else None  # photo saved under the card's own id
         lx["path"] = f'{slug(lx["n"])}-{slug(ver)}-{lx["id"]}/'
         legends.append(lx)
