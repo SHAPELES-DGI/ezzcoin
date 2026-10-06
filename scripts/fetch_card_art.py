@@ -46,7 +46,7 @@ def fetch(entry):
         request = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (compatible; Ezzcoins/1.0)"})
         with urllib.request.urlopen(request, timeout=15) as response:
             source = response.read().decode("utf-8", "ignore")
-        pattern = r'https?://game-assets[.]fut[.]gg/[^\\s<>]*?/2027/player-item/27-' + re.escape(item) + r'[.][a-f0-9]{32,}[.]webp'
+        pattern = r'https?://game-assets[.]fut[.]gg/[^\s<>]*?/2027/player-item/27-' + re.escape(item) + r'[.][a-f0-9]{32,}[.]webp'
         match = re.search(pattern, source)
         return item, html.unescape(match.group(0)).replace("&amp;", "&") if match else None
     except Exception:
