@@ -496,7 +496,8 @@ def main():
     except (OSError, ValueError):
         CARD_ART = {}
     try:
-        REGULAR_PLAYSTYLES = json.load(open(os.path.join(ROOT, "data", "playstyles.json"), encoding="utf-8"))
+        stored_playstyles = json.load(open(os.path.join(ROOT, "data", "playstyles.json"), encoding="utf-8"))
+        REGULAR_PLAYSTYLES = stored_playstyles.get("cards", stored_playstyles) if isinstance(stored_playstyles, dict) else {}
     except (OSError, ValueError):
         REGULAR_PLAYSTYLES = {}
 
