@@ -250,14 +250,39 @@
     return `${heroHTML()}
       <div class="ez-grid">
         <section class="ez-card wide" id="ez-trades"><h3>Best trades right now</h3><div class="ez-card-sub">Current stored calls · confidence index is not a win probability</div>${tradesHTML()}</section>
-        <section class="ez-card"><h3>Track record</h3><div class="ez-card-sub">Only graded calls count</div>${trackHTML()}</section>
+        <section class="ez-card" id="ez-record"><h3>Track record</h3><div class="ez-card-sub">Only graded calls count</div>${trackHTML()}</section>
         <section class="ez-card" id="ez-fodder"><h3>Best fodder value</h3><div class="ez-card-sub">Coins per Item Score point</div>${fodderHTML()}</section>
         <section class="ez-card wide" id="ez-budget"><h3>My Coins</h3><div class="ez-card-sub">Turn the current market read into a budget plan</div>${budgetHTML()}</section>
         <section class="ez-card" id="ez-coach"><h3>Coach shortcuts</h3><div class="ez-card-sub">One tap instead of thinking of a prompt</div>${coachHTML()}</section>
         <section class="ez-card full" id="ez-players"><h3>Player trade board</h3><div class="ez-card-sub">Tap a card for a quick detail view; your existing player database still handles the full search</div>${playerHTML()}</section>
         <section class="ez-card half" id="ez-alerts"><h3>Price alerts</h3><div class="ez-card-sub">Saved in this browser</div>${alertsHTML()}</section>
-        <section class="ez-card half"><h3>Quick Playbook</h3><div class="ez-card-sub">The long strategy guide, compressed</div>${playbookHTML()}</section>
+        <section class="ez-card half" id="ez-playbook"><h3>Quick Playbook</h3><div class="ez-card-sub">The long strategy guide, compressed</div>${playbookHTML()}</section>
       </div>`;
+  }
+
+
+  function showSection(id) {
+    const target=document.getElementById(id);
+    const panel=target?.closest('[role="tabpanel"]');
+    if(panel) document.getElementById('tab-'+panel.id)?.click();
+    target?.scrollIntoView({behavior:'smooth',block:'start'});
+  }
+  function arrangeSections() {
+    // Rebuild the managed groups on refresh, then move fresh nodes into their tabs.
+    document.querySelectorAll('[data-ez-group]').forEach(el=>el.remove());
+    const groups={trading:['ez-trades','ez-record','ez-fodder','ez-players','ez-alerts'],tools:['ez-budget','ez-coach'],playbook:['ez-playbook']};
+    for(const [tab,ids] of Object.entries(groups)){
+      const panel=document.getElementById(tab);if(!panel)continue;
+      const group=document.createElement('div');group.className='ez-grid';group.dataset.ezGroup=tab;
+      for(const id of ids){const el=document.getElementById(id);if(el)group.append(el);}
+      panel.prepend(group);
+    }
+    const root=document.getElementById('ezz-upgrade-root');
+    const trading=document.getElementById('trading');
+    if(root&&trading)trading.prepend(root);
+    // The detailed market read belongs alongside the trading analysis.
+    const read=document.getElementById('readHead')?.closest('.board');
+    if(read&&trading)trading.append(read);
   }
 
   function findCoachInput() {
@@ -359,7 +384,7 @@
   function bind() {
     $$('[data-ez-budget]').forEach(b => b.addEventListener('click', () => { $('#ez-budget-input').value = b.dataset.ezBudget; renderAllocation(); }));
     $('[data-ez-record]')?.addEventListener('click', () => { $('#tab-trading')?.click(); const record = $('#record'); if (record) { record.open = true; record.scrollIntoView({behavior:'smooth',block:'start'}); } });
-    $$('[data-ez-scroll]').forEach(btn => btn.addEventListener('click', () => $(`#ez-${btn.dataset.ezScroll}`)?.scrollIntoView({behavior:'smooth',block:'start'})));
+    $$('[data-ez-scroll]').forEach(btn => btn.addEventListener('click', () => showSection(`ez-${btn.dataset.ezScroll}`)));
     $('#ez-plan-btn')?.addEventListener('click', renderAllocation);
     $('#ez-budget-input')?.addEventListener('keydown', e => { if(e.key==='Enter') renderAllocation(); });
     $$('[data-ez-prompt]').forEach(b => b.addEventListener('click', ()=>coachPrompt(b.dataset.ezPrompt)));
@@ -381,7 +406,7 @@
     $('#ez-player-modal')?.addEventListener('click',e=>{
       const b=e.target.closest('[data-ez-modal-alert]'); if(!b) return;
       closePlayer();
-      $('#ez-alerts')?.scrollIntoView({behavior:'smooth',block:'center'});
+      showSection('ez-alerts');
       const sel=$('#ez-alert-item'); if(sel){ sel.value=`player:${b.dataset.ezModalAlert}`; sel.dispatchEvent(new Event('change',{bubbles:true})); }
     });
     document.addEventListener('keydown',e=>{
@@ -414,7 +439,7 @@
       if(input && Number.isFinite(Number(input.value))) saveJSON(STORAGE.budget, Number(input.value));
       if($('#ez-player-modal')?.classList.contains('open')) closePlayer();
       root.innerHTML=shellHTML();
-      bind(); renderAllocation(); renderAlerts(); checkAlerts();
+      arrangeSections(); bind(); renderAllocation(); renderAlerts(); checkAlerts();
     } finally { refreshing=false; }
   }
 
@@ -423,7 +448,7 @@
     await loadData();
     const root = document.createElement('div'); root.id='ezz-upgrade-root'; root.innerHTML=shellHTML();
     const {parent,before}=findInsertionPoint(); parent.insertBefore(root,before);
-    injectModal(); bind(); renderAllocation(); renderAlerts(); checkAlerts();
+    injectModal(); arrangeSections(); bind(); renderAllocation(); renderAlerts(); checkAlerts();
     $('#refreshBtn')?.addEventListener('click', refresh);
     setInterval(refresh, 5 * 60000);
     document.addEventListener('visibilitychange', () => { if(!document.hidden) refresh(); });
