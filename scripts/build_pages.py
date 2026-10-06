@@ -5,6 +5,7 @@ Writes p/<slug>-<id>/index.html for every player rated MIN_OVR or higher in
 data/players.json, p/<slug>-<version>-<id>/index.html for every new special card in
 data/newcards.json, a list page at p/index.html, p/cardnames.json (the name and nation shown on each special card,
 taken from EA's card of the same player) and sitemap.xml at the site root.
+FUT.GG card artwork is refreshed by scripts/fetch_card_art.py and cached in data/card-art.json.
 Prices are not baked in: each page loads the newest price from data/prices.json
 and data/topprices.json in the browser.
 
