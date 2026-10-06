@@ -1,7 +1,7 @@
 (()=>{"use strict";
 const root=new URL("./",document.currentScript.src);let cards={},ids={},pending;
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-async function read(name){if(window.EzzcoinsMarket)return window.EzzcoinsMarket.fetchData(name);const r=await fetch(new URL("data/"+name,root),{cache:"no-store"});if(!r.ok)throw Error(name);return r.json()}
+async function read(name){const r=await fetch(new URL("data/"+name,root),{cache:"no-store"});if(!r.ok)throw Error(name);return r.json()}
 async function load(){if(!pending)pending=Promise.all([read("card-renders.json"),read("card-ids.json")]).then(([a,b])=>{cards=a;ids=b;return a}).catch(e=>{pending=null;throw e});return pending}
 function get(item,key,special=false){return cards[String(item)]||(special?cards["f:"+key]:null)||null}
 function html(c,cls="fc-render",name=c.name){if(c.url)return '<img class="'+cls+'" src="'+esc(c.url)+'" alt="'+esc(name)+' '+esc(c.ovr)+' '+esc(c.version)+' FC 27 card" loading="lazy" decoding="async">';
