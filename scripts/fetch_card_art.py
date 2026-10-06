@@ -54,7 +54,8 @@ class PlayStyleParser(HTMLParser):
                 self.depth = 0
             return
         title = attrs.get("title")
-        if title and title not in self.names:
+        classes = set((attrs.get("class") or "").split())
+        if title and "opacity-30" not in classes and title not in self.names:
             self.names.append(title)
         if tag not in self.VOID:
             self.depth += 1
@@ -101,8 +102,9 @@ try:
 except (OSError, ValueError):
     cached = {}
 try:
-    playstyles = json.load(open(os.path.join(ROOT, "data", "playstyles.json"), encoding="utf-8"))
-except (OSError, ValueError):
+    stored_playstyles = json.load(open(os.path.join(ROOT, "data", "playstyles.json"), encoding="utf-8"))
+    playstyles = stored_playstyles.get("cards", {}) if stored_playstyles.get("_version") == 2 else {}
+except (OSError, ValueError, AttributeError):
     playstyles = {}
 todo = [(item, info) for item, info in candidates().items() if item not in cached or item not in playstyles]
 if todo:
@@ -116,5 +118,5 @@ os.makedirs(os.path.dirname(PATH), exist_ok=True)
 with open(PATH, "w", encoding="utf-8") as fh:
     json.dump(cached, fh, ensure_ascii=False, separators=(",", ":"))
 with open(os.path.join(ROOT, "data", "playstyles.json"), "w", encoding="utf-8") as fh:
-    json.dump(playstyles, fh, ensure_ascii=False, separators=(",", ":"))
+    json.dump({"_version": 2, "cards": playstyles}, fh, ensure_ascii=False, separators=(",", ":"))
 print("Cached FUT.GG artwork for %d cards; regular PlayStyles for %d cards (%d new lookups)." % (len(cached), len(playstyles), len(todo)))
