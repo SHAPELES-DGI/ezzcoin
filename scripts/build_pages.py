@@ -296,11 +296,14 @@ def player_page(x, codes, by_club, by_nat, specials_of, credits):
         more += f'<h2>More from {e(x["nat"])}</h2>' + card_list(natmates, codes, up, lambda y: y["c"])
     hint = ("Cards rated 84 or higher are priced in turns through the day." if x["o"] >= 84
             else "Add this player to your watchlist on Ezzcoins: the most-watched players get a price every hour.")
-    script = ("<script>(()=>{const id=%s,el=document.getElementById('px'),g=f=>fetch('../../data/'+f+'?t='+Date.now(),{cache:'no-store'})"
-              ".then(r=>r.ok?r.json():null).catch(()=>null);Promise.all([g('prices.json'),g('topprices.json')]).then(([a,b])=>{"
-              "const c=[a&&a.players&&a.players[id],b&&b.players&&b.players[id]].filter(p=>p&&p.price>0).sort((x,y)=>Date.parse(y.at)-Date.parse(x.at))[0];"
+    script = ("<script>(()=>{const id=%s,el=document.getElementById('px'),g=f=>fetch('../../data/'+f+'?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).catch(()=>null);"
+              "const load=()=>Promise.all([g('prices.json'),g('topprices.json'),g('live-prices.json')]).then(([a,b,live])=>{"
+              "const row=live&&Array.isArray(live.rows)?live.rows.find(r=>Number(r[0])===Number(id)):null;"
+              "const lp=row&&row[3]===0&&row[1]>0?{price:row[1],at:live.publishedAt&&live.publishedAt.console,src:live.source}:null;"
+              "const c=[lp,a&&a.players&&a.players[id],b&&b.players&&b.players[id]].filter(p=>p&&p.price>0&&Number.isFinite(Date.parse(p.at))).sort((x,y)=>Date.parse(y.at)-Date.parse(x.at))[0];"
               "if(!c)return;const m=Math.round((Date.now()-Date.parse(c.at))/6e4),h=Math.floor(m/60),ago=m<1?'just now':m<60?m+' min ago':h<48?h+' h ago':Math.floor(h/24)+' days ago';"
-              "el.innerHTML='<b><i class=\"coin\"></i>'+Number(c.price).toLocaleString('en-US')+'</b><span>Console price from '+(c.src||'FUTBIN')+' \\u00b7 '+ago+'</span>'})})()</script>"
+              "const label=c.src==='FUT.GG'?'FUT.GG feed updated':'Console price from '+(c.src||'FUTBIN');"
+              "el.innerHTML='<b><i class=\"coin\"></i>'+Number(c.price).toLocaleString('en-US')+'</b><span>'+label+' \\u00b7 '+ago+'</span>'});load();setInterval(load,300000)})()</script>"
               ) % json.dumps(str(x["id"]))
     pc = credits.get(str(x["id"]))
     pimg, pcredit = photo(credits, x["id"], x["n"], up)
@@ -377,12 +380,15 @@ def special_page(x, codes, specials, credits):
     script = ("<script>(()=>{const n=document.querySelector('.fc-name.sig'),fit=()=>{if(!n||!n.clientWidth)return;n.style.fontSize='';"
               "let f=parseFloat(getComputedStyle(n).fontSize);while(n.scrollWidth>n.clientWidth+1&&f>16){f--;n.style.fontSize=f+'px'}};"
               "fit();document.fonts&&document.fonts.ready.then(fit)})()</script>"
-              "<script>(()=>{const id=%s,key=%s,el=document.getElementById('px'),g=f=>fetch('../../data/'+f+'?t='+Date.now(),{cache:'no-store'})"
-              ".then(r=>r.ok?r.json():null).catch(()=>null);Promise.all([g('prices.json'),g(%s)]).then(([a,b])=>{"
+              "<script>(()=>{const id=%s,key=%s,el=document.getElementById('px'),g=f=>fetch('../../data/'+f+'?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).catch(()=>null);"
+              "const load=()=>Promise.all([g('prices.json'),g(%s),g('live-prices.json')]).then(([a,b,live])=>{"
               "const n=b&&Array.isArray(b.cards)?b.cards.find(c=>String(c.gid!=null&&c.gid!==''?c.gid:c.fid)===key):null;"
-              "const c=[a&&a.players&&a.players[id],n&&{price:n.price,at:n.priceAt,src:n.src}].filter(p=>p&&p.price>0).sort((x,y)=>Date.parse(y.at)-Date.parse(x.at))[0];"
+              "const row=n&&n.gid!=null&&live&&Array.isArray(live.rows)?live.rows.find(r=>Number(r[0])===Number(n.gid)):null;"
+              "const lp=row&&row[3]===0&&row[1]>0?{price:row[1],at:live.publishedAt&&live.publishedAt.console,src:live.source}:null;"
+              "const c=[lp,a&&a.players&&a.players[id],n&&{price:n.price,at:n.priceAt,src:n.src}].filter(p=>p&&p.price>0&&Number.isFinite(Date.parse(p.at))).sort((x,y)=>Date.parse(y.at)-Date.parse(x.at))[0];"
               "if(!c)return;const m=Math.round((Date.now()-Date.parse(c.at))/6e4),h=Math.floor(m/60),ago=m<1?'just now':m<60?m+' min ago':h<48?h+' h ago':Math.floor(h/24)+' days ago';"
-              "el.innerHTML='<b><i class=\"coin\"></i>'+Number(c.price).toLocaleString('en-US')+'</b><span>Console price from '+(c.src||'FUTBIN')+' \\u00b7 '+ago+'</span>'})})()</script>"
+              "const label=c.src==='FUT.GG'?'FUT.GG feed updated':'Console price from '+(c.src||'FUTBIN');"
+              "el.innerHTML='<b><i class=\"coin\"></i>'+Number(c.price).toLocaleString('en-US')+'</b><span>'+label+' \\u00b7 '+ago+'</span>'});load();setInterval(load,300000)})()</script>"
               ) % (json.dumps(str(x["id"])), json.dumps(str(x["key"])), json.dumps("legends.json" if leg else "newcards.json"))
     bid = x.get("pid")
     pc = credits.get(str(bid)) if bid else None
