@@ -25,7 +25,7 @@ SLUG_MAP = {"ø": "o", "Ø": "o", "ß": "ss", "ł": "l", "Ł": "l", "æ": "ae", 
             "œ": "oe", "đ": "d", "Đ": "d", "ı": "i", "ð": "d", "þ": "th"}
 ST_OUT = ["PAC", "SHO", "PAS", "DRI", "DEF", "PHY"]
 ST_GK = ["DIV", "HAN", "KIC", "REF", "SPD", "POS"]
-CSS_V = "24"
+CSS_V = "25"
 SPECIAL = 1000000000  # special-card ids on the site: SPECIAL + FUT.GG card id (gid) or FUTBIN card id (fid)
 CARD_ART = {}
 CARD_IDS = json.load(open(os.path.join(ROOT, "data", "card-ids.json")))
@@ -263,11 +263,13 @@ def chem_box(x, up):
 ADSENSE = "<script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5351346431839799\" crossorigin=\"anonymous\"></script>"
 
 
+CSS += "\n/* Approved FIFA 18–20-inspired colour theme for every player page. */\n:root{--bg:#080d29;--surface:#1c1b42;--sunk:#24254f;--ink:#f7f8ff;--muted:#bcc0df;--line:#48436e;--gold:#38e6ed;--buy:#55e4b0;--sell:#ff7cac}\nbody{background:radial-gradient(ellipse at 0 12%,#6223bd35,transparent 48%),radial-gradient(ellipse at 100% 55%,#16b5d820,transparent 48%),#080d29}\n.top{position:relative;border-bottom:2px solid #6245bd;background:linear-gradient(110deg,#20184c,#111a3d);border-radius:0 0 12px 12px;overflow:hidden}.top:after{content:\"\";position:absolute;right:0;bottom:0;width:95px;height:3px;background:#ff42ab;transform:skewX(-35deg)}.nav a{padding:8px 11px;border:1px solid #6555a4;border-radius:6px;color:#43edf0}.nav a:hover{background:#35e4e9;color:#08132c}.home span{background:linear-gradient(180deg,#ffe59a,#e3a93a);background-clip:text;-webkit-background-clip:text;color:transparent}\nh1{font-style:italic;color:#f8f8ff;text-shadow:2px 2px 0 #5a30904d}.sub{color:#c2c1e0}.crumb,.crumb a{color:#b6b5d9}.crumb a:hover{color:#43edf0}\n.px{background:linear-gradient(125deg,#352363,#1d2048);border-color:#7a5bb5;box-shadow:0 6px 25px #07071f35;border-left:3px solid #32e4e8}.px b{color:#4aeced}.px span{color:#d1c9e5}.mt,.st,.chem{background:linear-gradient(140deg,#2a2253,#17203e);border-color:#59497f}.mt{border-top:3px solid #f947ad}.st b{color:#64e5c5}.chem{border-top:3px solid #38e6ed}.chem h2{color:#f5f0ff}.chem-lv button[aria-pressed=true]{background:linear-gradient(100deg,#31e5e9,#30b7fb);color:#07132d}.chem select{border-color:#68618e}.chem-best button:hover{border-color:#39e8ee}.tag{background:linear-gradient(100deg,#e043ac,#8639d9);color:#fff}.facts dt{color:#a5a8db}.facts dd{color:#f1efff}.more a{background:linear-gradient(120deg,#242047,#151d3d);border-color:#534373}.playstyle{background:#1c2146;border-color:#605183;color:#f1efff}.playstyle-plus{background:#30281b;color:#f8e2b1;border-color:#e3c07566}.playstyle-icon{width:26px;height:26px;flex:none;display:block;overflow:visible}.playstyle{gap:6px;padding:5px 8px;font-size:11px;line-height:1.3}footer{border-top-color:#4f427a}a:focus-visible,button:focus-visible,select:focus-visible{outline:3px solid #49eff2;outline-offset:3px}::selection{background:#c53493;color:white}\n@media(max-width:600px){.top{border-radius:0;padding:12px}.nav{gap:6px}.nav a{padding:7px 8px}.px{width:100%;text-align:left}.hero{gap:20px}.sub{font-size:14px}}\n"
+
 def head(title, desc, canon, up, image=None):
     return (f'<!doctype html>{BANNER}<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
             f'<title>{e(title)}</title><meta name="description" content="{e(desc)}"><link rel="canonical" href="{e(canon)}">'
             f'<meta property="og:type" content="website"><meta property="og:title" content="{e(title)}"><meta property="og:description" content="{e(desc)}">'
-            f'<meta property="og:url" content="{e(canon)}"><meta property="og:image" content="{e(image or BASE + "icon-512.png")}"><meta name="theme-color" content="#0A0D0C">'
+            f'<meta property="og:url" content="{e(canon)}"><meta property="og:image" content="{e(image or BASE + "icon-512.png")}"><meta name="theme-color" content="#080d29">'
             f'<link rel="icon" href="{up}favicon-32.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="{up}apple-touch-icon.png">'
             f'<script src="{up}card-art.js?v=20261006-ps1" defer></script><link rel="manifest" href="{up}manifest.webmanifest">{FONTS}<link rel="stylesheet" href="{up}p/style.css?v={CSS_V}">{ADSENSE}</head><body>'
             f'<header class="top"><a class="home" href="{up}"><img src="{up}mark.svg" alt="" width="34" height="34"><b>Ezz<span>coins</span></b></a>'
