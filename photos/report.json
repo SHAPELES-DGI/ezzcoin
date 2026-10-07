@@ -5,10 +5,20 @@
 "ovr": 85,
 "why": "no Wikidata footballer with this name and a photo"
 },
+"226385": {
+"name": "Cristian Espinoza",
+"ovr": 76,
+"why": "no Wikidata footballer with this name and a photo"
+},
 "231866": {
 "name": "Rodrigo Hernández Cascante",
 "ovr": 90,
 "why": "2 footballers with this name"
+},
+"236532": {
+"name": "Robin Koch",
+"ovr": 79,
+"why": "no Wikidata footballer with this name and a photo"
 },
 "237288": {
 "name": "María Francesca Caldentey Oliver",
@@ -25,6 +35,16 @@
 "ovr": 73,
 "why": "no Wikidata footballer with this name and a photo"
 },
+"243032": {
+"name": "Hugo Duro Perales",
+"ovr": 77,
+"why": "no Wikidata footballer with this name and a photo"
+},
+"245354": {
+"name": "José Paradela",
+"ovr": 77,
+"why": "no Wikidata footballer with this name and a photo"
+},
 "246641": {
 "name": "Chiamaka Nnadozie",
 "ovr": 85,
@@ -35,6 +55,11 @@
 "ovr": 68,
 "why": "no Wikidata footballer with this name and a photo"
 },
+"261249": {
+"name": "Édouard Michut",
+"ovr": 68,
+"why": "no Wikidata footballer with this name and a photo"
+},
 "261861": {
 "name": "Jack Moylan",
 "ovr": 69,
@@ -42,6 +67,11 @@
 },
 "262642": {
 "name": "Zeki Amdouni",
+"ovr": 74,
+"why": "no Wikidata footballer with this name and a photo"
+},
+"262906": {
+"name": "Yannik Engelhardt",
 "ovr": 74,
 "why": "no Wikidata footballer with this name and a photo"
 },
@@ -65,17 +95,47 @@
 "ovr": 73,
 "why": "no Wikidata footballer with this name and a photo"
 },
+"273564": {
+"name": "Gift Orban",
+"ovr": 73,
+"why": "no Wikidata footballer with this name and a photo"
+},
+"274246": {
+"name": "Lewis Miley",
+"ovr": 77,
+"why": "no Wikidata footballer with this name and a photo"
+},
+"276216": {
+"name": "Ezechiel Banzuzi",
+"ovr": 73,
+"why": "no Wikidata footballer with this name and a photo"
+},
 "276695": {
 "name": "Shea Charles",
 "ovr": 73,
+"why": "no Wikidata footballer with this name and a photo"
+},
+"276725": {
+"name": "Lorenzo Palmisani",
+"ovr": 69,
+"why": "no Wikidata footballer with this name and a photo"
+},
+"279541": {
+"name": "Trent Koné-Doherty",
+"ovr": 59,
 "why": "no Wikidata footballer with this name and a photo"
 },
 "279604": {
 "name": "Mikel Jauregizar Alboniga",
 "ovr": 79,
 "why": "no Wikidata footballer with this name and a photo"
+},
+"75320": {
+"name": "Ismaëlo Ganiou",
+"ovr": 77,
+"why": "no Wikidata footballer with this name and a photo"
 }
 },
-"photos": 731,
-"players": 823
+"photos": 760,
+"players": 864
 }
