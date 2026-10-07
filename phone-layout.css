@@ -11,3 +11,36 @@
  .ezz-main input,.ezz-main select,.ezz-main textarea{font-size:16px;min-height:44px}.ezz-main .btn,.ezz-main .segs button,.ezz-main .ez-btn,.ezz-main .ez-budget-presets button{min-height:44px;touch-action:manipulation}.ezz-main .form{grid-template-columns:1fr 1fr;gap:12px}.ezz-main .ez-hero{padding:22px 18px!important}.ezz-main .ez-hero-stats>div{padding:13px 10px!important}.ezz-main .ez-hero-stats strong{font-size:20px!important}.ezz-main .ez-actions{display:grid;grid-template-columns:1fr 1fr}.ezz-main .ez-actions .ez-btn{font-size:12px!important}.ezz-main .ez-player-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}.ezz-main .reading-hero{padding:23px 18px!important}.ezz-main .play-guide summary{min-height:72px}.ezz-main .event-details summary,.ezz-main .drop summary{min-height:44px}.ezz-main .pl-row,.ezz-main .wl-row{padding-block:14px}.ezz-main .pl-row button,.ezz-main .wl-row button{min-width:44px;min-height:44px}
  body.ezz-prices{font-size:14px;overflow-x:clip}.ezz-prices header,.ezz-prices main{padding-inline:12px}.ezz-prices header{min-height:68px;gap:10px}.ezz-prices .hero{padding:24px 0 18px}.ezz-prices h1{font-size:30px}.ezz-prices .filters{grid-template-columns:1fr 1fr;gap:12px;padding:14px}.ezz-prices input,.ezz-prices select{min-height:46px;font-size:16px;width:100%;min-width:0}.ezz-prices button{min-height:44px}.ezz-prices .table-wrap{overflow-x:hidden}.ezz-prices table{min-width:0;width:100%;table-layout:fixed}.ezz-prices th,.ezz-prices td{padding:11px 6px}.ezz-prices th:nth-child(4),.ezz-prices td:nth-child(4),.ezz-prices th:nth-child(6),.ezz-prices td:nth-child(6){display:none}.ezz-prices th:nth-child(1){width:44%}.ezz-prices th:nth-child(2){width:11%}.ezz-prices th:nth-child(3){width:12%}.ezz-prices th:nth-child(5){width:33%}.ezz-prices td.player{min-width:0;overflow-wrap:anywhere}.ezz-prices td.player strong{font-size:13px}.ezz-prices td.player small{font-size:10px}.ezz-prices td.price{font-size:13px;white-space:normal;overflow-wrap:anywhere}.ezz-prices th.price-col{font-size:10px}.ezz-prices .results-bar{flex-wrap:wrap;gap:10px}.ezz-prices .results-bar button{max-width:none}.ezz-prices .stats strong{font-size:20px}.ezz-prices .feed-status button{margin-left:0}
 }
+
+/* The full filter grid stays open on wide screens. */
+@media(min-width:601px){
+ .pl-filter-drawer,.pl-filter-options{display:contents!important}
+ .pl-filter-drawer>summary{display:none}
+}
+.auth-error{color:#ffb5c9;line-height:1.5}
+@media(max-width:600px){
+ .ezz-main #plCard{order:-1;padding:14px}
+ .ezz-main #plCard>.card-head{gap:6px;margin-bottom:10px}
+ .ezz-main #plCard>.card-head h2{font-size:24px}
+ .ezz-main #plCard>.card-head>a{display:none}
+ .ezz-main #plMeta{font-size:10px;letter-spacing:.3px;width:100%}
+ .ezz-main .pl-filters{display:block}
+ .ezz-main .pl-search{display:none}
+ .ezz-main .pl-filter-drawer{border:1px solid var(--line);border-radius:10px;background:var(--sunk)}
+ .ezz-main .pl-filter-drawer>summary{padding:10px 12px;min-height:44px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-weight:600;list-style:none}
+ .ezz-main .pl-filter-drawer>summary::-webkit-details-marker{display:none}
+ .ezz-main .pl-filter-drawer[open]>summary span{transform:rotate(180deg)}
+ .ezz-main .pl-filter-options{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:4px 12px 14px}
+ .ezz-main .pl-filter-options label{min-width:0}
+ .ezz-main .pl-bar{margin:10px 0 4px;gap:8px;font-size:13px}
+ .ezz-main #plReset{font-size:11px;padding:8px}
+ .ezz-main .pl-name b{white-space:normal;font-size:15px}
+ .ezz-main .pl-name span{white-space:normal;font-size:12px}
+ .ezz-main .pl-row{column-gap:8px}
+ .ezz-main #watchCard .note{font-size:12px}
+ .ezz-main .wl-acct{display:grid;gap:12px}
+ .ezz-main .wl-acct .acts{display:flex;flex-wrap:wrap;gap:8px}
+ .ezz-main #wlIn{width:100%;min-height:48px}
+ .ezz-main #plCard,.ezz-main #watchCard{scroll-margin-top:125px}
+ .ezz-main #plCard>.note{font-size:12px;line-height:1.5}
+}
