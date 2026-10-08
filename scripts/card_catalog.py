@@ -32,6 +32,7 @@ def extract(player):
             "stats": [s.get("rating") for s in player.get("faceStats", [])],
             "added": (player.get("createdAt") or "")[:10], "createdAt": player.get("createdAt", ""),
             "url": "https://www.fut.gg" + player.get("url", ""), "src": "FUT.GG",
+            "isIcon": bool(player.get("isIcon")), "isHero": bool(player.get("isHero")),
             "cardImageUrl": image, "isSpecial": bool(player.get("isSpecial") or player.get("isIcon") or player.get("isHero")),
             "excluded": bool(player.get("isEvolutionPlayerItem") or player.get("isProvisional")),
             "checkedAt": datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z"),
@@ -45,6 +46,25 @@ def publish(data, metadata, prices, published_at, quote_metadata=None):
     renders = read(data / "card-renders.json", {})
     legends = read(data / "legends.json", {"cards": []})
     cards = catalog.get("cards", [])
+    # Base Icons/Heroes are not in the normal-player roster or the new-card feed.
+    # Publish every verified catalogue item, even while richer metadata is pending.
+    market = read(data / "market-cards.json", {"cols": [], "rows": []})
+    legend_by_id = {int(c.get("eaId") or c.get("gid")): c for c in legends.get("cards", [])}
+    import re
+    for row in market.get("rows", []):
+        item = dict(zip(market["cols"], row))
+        version = item.get("version", "")
+        is_icon = bool(re.search(r"\bicon\b", version, re.I) or item.get("league") == "Icons")
+        is_hero = bool(re.search(r"\bhero\b", version, re.I) or item.get("league") == "Heroes")
+        is_icon = is_icon and not is_hero
+        if not (is_icon or is_hero):
+            continue
+        key = item.pop("id")
+        card = legend_by_id.setdefault(key, {"gid": key})
+        card.update(metadata.get(str(key), {}))
+        card.update(item, eaId=key, isIcon=is_icon, isHero=is_hero, src="FUT.GG")
+        ids[str(card.get("gid") or card.get("fid"))] = key
+    legends["cards"] = list(legend_by_id.values())
     roster = read(data / "players.json", None)
     base_ids = {row[roster["cols"].index("id")] for row in roster["rows"]} if roster else set()
     base_added = 0
@@ -82,13 +102,13 @@ def publish(data, metadata, prices, published_at, quote_metadata=None):
             cards.append(card)
             existing[item] = card
             added += 1
-        for field in ("eaId", "baseId", "name", "version", "ovr", "pos", "alt", "club", "league", "nation", "sm", "wf", "stats", "added", "createdAt", "url", "src"):
+        for field in ("eaId", "baseId", "name", "version", "ovr", "pos", "alt", "club", "league", "nation", "sm", "wf", "stats", "added", "createdAt", "url", "src", "isIcon", "isHero", "gender", "foot"):
             if record.get(field) is not None:
                 card[field] = record[field]
         # Preserve old FUTBIN keys so saved watchlist entries and existing URLs survive.
         card_key = str(card.get("gid") or card.get("fid"))
         ids[card_key] = item
-    for card in cards:
+    for card in cards + legends.get("cards", []):
         key = str(card.get("gid") or card.get("fid"))
         item = ids.get(key) or card.get("eaId") or card.get("gid")
         quote = prices.get(int(item)) if item else None
@@ -104,6 +124,8 @@ def publish(data, metadata, prices, published_at, quote_metadata=None):
     if cards != old.get("cards", []):
         catalog["updatedAt"] = datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
     catalog.update({"cards": cards, "automatic": True, "discoverySource": "FUT.GG FC 27 item index"})
+    legends.update(automatic=True, source="FUT.GG FC 27 item catalogue")
+    write(data / "legends.json", legends)
     write(data / "newcards.json", catalog)
     write(data / "card-ids.json", ids)
     write(data / "card-renders.json", renders)

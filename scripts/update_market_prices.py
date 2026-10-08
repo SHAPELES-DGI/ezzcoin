@@ -120,7 +120,10 @@ def main():
     home_cards = json.loads((DATA / "newcards.json").read_text()).get("cards", [])
     home_ids = [int(exact_ids.get(str(c.get("gid") or c.get("fid"))) or c.get("eaId") or c.get("gid") or 0) for c in home_cards]
     # First discover new feed IDs; then enrich cards already shown on Home, then the rest.
-    enrich = home_ids + sorted((item for item in cards if item > 16777216), reverse=True)
+    legend_ids = [item for item, row in cards.items()
+                  if "icon" in row[5].lower() or "hero" in row[5].lower()
+                  or row[7] in ("Icons", "Heroes")]
+    enrich = legend_ids + home_ids + sorted((item for item in cards if item > 16777216), reverse=True)
     needed = list(dict.fromkeys(needed + [item for item in enrich if item and
                         (str(item) not in metadata or metadata[str(item)].get("checkedAt", "")[:10] != utc()[:10])]))
     batches = [needed[i:i + 30] for i in range(0, min(len(needed), max(0, args.metadata_batches) * 30), 30)]
