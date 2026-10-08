@@ -48,6 +48,28 @@
       "status": "void",
       "title": "Sell DFG Isak (88) before the Friday 19:00 promo",
       "tone": "sell"
+    },
+    {
+      "checkAt": "2026-10-09T09:30:00+02:00",
+      "confidence": "low",
+      "entry": null,
+      "entryAt": "2026-10-08T09:30:00+02:00",
+      "exit": null,
+      "id": "c-2026-10-08-86floor",
+      "madeAt": "2026-10-08T07:14:10Z",
+      "note": "86 floor was 750 at the time of the call, down from 6,000 an hour earlier. Hits if it recovers above about 790 after tax. Lesson relied on: floor cards at a hard floor lose to the 5% tax, so this only works because 86 is far below its usual level.",
+      "ref": {
+        "kind": "floor",
+        "label": "FUT.GG cheapest 86",
+        "ovr": 86,
+        "source": "FUT.GG",
+        "url": "https://www.fut.gg/cheapest-by-rating/"
+      },
+      "result": null,
+      "rule": "buy_after_tax",
+      "status": "pending",
+      "title": "Buy 86-rated fodder after the Rivals dump, check in 24 hours",
+      "tone": "buy"
     }
   ],
   "lessons": [
