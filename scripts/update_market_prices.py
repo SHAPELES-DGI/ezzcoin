@@ -121,7 +121,7 @@ def main():
     home_ids = [int(exact_ids.get(str(c.get("gid") or c.get("fid"))) or c.get("eaId") or c.get("gid") or 0) for c in home_cards]
     # First discover new feed IDs; then enrich cards already shown on Home, then the rest.
     legend_ids = [item for item, row in cards.items()
-                  if "icon" in row[5].lower() or "hero" in row[5].lower()
+                  if "icon" in row[5].lower() or "hero" in row[5].lower() or "hall of fut" in row[5].lower() or "fut gallery" in row[5].lower()
                   or row[7] in ("Icons", "Heroes")]
     enrich = legend_ids + home_ids + sorted((item for item in cards if item > 16777216), reverse=True)
     needed = list(dict.fromkeys(needed + [item for item in enrich if item and

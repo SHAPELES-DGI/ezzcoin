@@ -33,7 +33,8 @@ def extract(player):
             "added": (player.get("createdAt") or "")[:10], "createdAt": player.get("createdAt", ""),
             "url": "https://www.fut.gg" + player.get("url", ""), "src": "FUT.GG",
             "isIcon": bool(player.get("isIcon")), "isHero": bool(player.get("isHero")),
-            "cardImageUrl": image, "isSpecial": bool(player.get("isSpecial") or player.get("isIcon") or player.get("isHero")),
+            "isGallery": "hall of fut" in player.get("rarityName", "").lower(),
+            "cardImageUrl": image, "isSpecial": bool(player.get("isSpecial") or player.get("isIcon") or player.get("isHero") or "hall of fut" in player.get("rarityName", "").lower()),
             "excluded": bool(player.get("isEvolutionPlayerItem") or player.get("isProvisional")),
             "checkedAt": datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z"),
             "gender": 1 if player.get("gender") == 2 else 0, "foot": player.get("foot", ""),
@@ -57,12 +58,13 @@ def publish(data, metadata, prices, published_at, quote_metadata=None):
         is_icon = bool(re.search(r"\bicon\b", version, re.I) or item.get("league") == "Icons")
         is_hero = bool(re.search(r"\bhero\b", version, re.I) or item.get("league") == "Heroes")
         is_icon = is_icon and not is_hero
-        if not (is_icon or is_hero):
+        is_gallery = bool(re.search(r"hall of fut|fut gallery", version, re.I))
+        if not (is_icon or is_hero or is_gallery):
             continue
         key = item.pop("id")
         card = legend_by_id.setdefault(key, {"gid": key})
         card.update(metadata.get(str(key), {}))
-        card.update(item, eaId=key, isIcon=is_icon, isHero=is_hero, src="FUT.GG")
+        card.update(item, eaId=key, isIcon=is_icon, isHero=is_hero, isGallery=is_gallery, src="FUT.GG")
         ids[str(card.get("gid") or card.get("fid"))] = key
     legends["cards"] = list(legend_by_id.values())
     roster = read(data / "players.json", None)
@@ -102,7 +104,7 @@ def publish(data, metadata, prices, published_at, quote_metadata=None):
             cards.append(card)
             existing[item] = card
             added += 1
-        for field in ("eaId", "baseId", "name", "version", "ovr", "pos", "alt", "club", "league", "nation", "sm", "wf", "stats", "added", "createdAt", "url", "src", "isIcon", "isHero", "gender", "foot"):
+        for field in ("eaId", "baseId", "name", "version", "ovr", "pos", "alt", "club", "league", "nation", "sm", "wf", "stats", "added", "createdAt", "url", "src", "isIcon", "isHero", "isGallery", "gender", "foot"):
             if record.get(field) is not None:
                 card[field] = record[field]
         # Preserve old FUTBIN keys so saved watchlist entries and existing URLs survive.
