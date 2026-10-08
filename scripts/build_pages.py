@@ -25,7 +25,7 @@ SLUG_MAP = {"ø": "o", "Ø": "o", "ß": "ss", "ł": "l", "Ł": "l", "æ": "ae", 
             "œ": "oe", "đ": "d", "Đ": "d", "ı": "i", "ð": "d", "þ": "th"}
 ST_OUT = ["PAC", "SHO", "PAS", "DRI", "DEF", "PHY"]
 ST_GK = ["DIV", "HAN", "KIC", "REF", "SPD", "POS"]
-CSS_V = "26"
+CSS_V = "27"
 SPECIAL = 1000000000  # special-card ids on the site: SPECIAL + FUT.GG card id (gid) or FUTBIN card id (fid)
 CARD_ART = {}
 CARD_IDS = json.load(open(os.path.join(ROOT, "data", "card-ids.json")))
@@ -237,6 +237,9 @@ MT_NOTE = ("Meta rating: Ezzcoins' own estimate of how well this card plays in g
            "its skill moves, weak foot and PlayStyle+. An average card scores about its overall rating; higher means it plays above its rating.")
 
 
+CSS += ".mt-positions{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.mt-positions>span{display:flex;align-items:center;gap:7px;padding:5px 9px;background:var(--sunk);border:1px solid var(--line);border-radius:7px}.mt-positions small{font-size:11px;color:var(--muted)}.mt-positions strong{font-size:17px;color:var(--gold)}"
+
+
 def meta_box(mt, ovr):
     """Meta rating panel next to the price, or "" when the card has no stats yet."""
     if not mt:
@@ -244,9 +247,9 @@ def meta_box(mt, ovr):
     (bp, bv), rest = next(iter(mt.items())), list(mt.items())[1:]
     d = bv - (ovr or 0)
     delta = f' <em class="{"up" if d > 0 else "dn"}">{"+" if d > 0 else "−"}{abs(d)} vs overall</em>' if d else " <em>same as overall</em>"
-    other = " · ".join(f"{p} {v}" for p, v in rest[:4])
+    positions = "".join(f'<span><small>{e(p)}</small><strong>{v}</strong></span>' for p, v in mt.items())
     return (f'<div class="mt" id="mt" title="{e(MT_NOTE)}"><b>{bv}</b><span>Meta rating · {e(bp)}</span>'
-            f'<i>{delta}{" · " + e(other) if other else ""}</i></div>')
+            f'<i>{delta}</i><div class="mt-positions">{positions}</div></div>')
 
 
 def chem_box(x, up):
