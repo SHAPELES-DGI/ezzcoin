@@ -35,6 +35,11 @@
 "ovr": 73,
 "why": "no Wikidata footballer with this name and a photo"
 },
+"242541": {
+"name": "Ciaron Brown",
+"ovr": 69,
+"why": "no Wikidata footballer with this name and a photo"
+},
 "243032": {
 "name": "Hugo Duro Perales",
 "ovr": 77,
@@ -90,6 +95,11 @@
 "ovr": 74,
 "why": "no Wikidata footballer with this name and a photo"
 },
+"269186": {
+"name": "Orri Óskarsson",
+"ovr": 74,
+"why": "no Wikidata footballer with this name and a photo"
+},
 "272137": {
 "name": "Sara Ortega Ruiz",
 "ovr": 73,
@@ -130,12 +140,17 @@
 "ovr": 79,
 "why": "no Wikidata footballer with this name and a photo"
 },
+"73014": {
+"name": "Cornelia Kramer",
+"ovr": 78,
+"why": "no Wikidata footballer with this name and a photo"
+},
 "75320": {
 "name": "Ismaëlo Ganiou",
 "ovr": 77,
 "why": "no Wikidata footballer with this name and a photo"
 }
 },
-"photos": 760,
-"players": 864
+"photos": 769,
+"players": 876
 }
