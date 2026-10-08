@@ -1,1 +1,532 @@
-{"corrections":[{"date":"2026-10-08T18:13:51Z","section":"Moves right now","what":"Replaced \"84s are cheapest per point\" with 85s at 750 (0.36), flagged as unconfirmed.","why":"FUT.GG now lists 85s at 750 and 84s at 700, so 84s are no longer the cheapest per point; 85s were 2,300 an hour ago."},{"date":"2026-10-08T17:13:13Z","section":"Moves right now","what":"Replaced \"85s are cheapest per point\" with 84s at 650 (0.78); removed the Ends soon tag from Marquee Matchups.","why":"FUT.GG now lists 85s at 2,300 (1.10 per point), and its expiring-soon page lists only TOTW Upgrade, Akliouche and Destined for Glory Challenge 4."},{"date":"2026-10-08T09:14:26Z","section":"Moves right now","what":"Replaced \"85s are the cheapest per point\" with 84s at 650 (0.78) and removed the Gosens 85 DFG −13.4% figure.","why":"FUT.GG now lists 85s at 2,300 (1.10 per point) and 84s at 650; Gosens is no longer among the biggest fallers."},{"date":"2026-10-08T08:14:26Z","section":"Moves right now","what":"Replaced \"Buy 85–86 fodder while the Rivals dump lasts\" with a fodder-per-point read and a note that the 86 call's premise broke.","why":"FUT.GG now lists 85s at 1,500 and 86s at 4,200 (were 800 and 750 an hour earlier), so the floor of 1,500 the move was conditioned on is gone."},{"date":"2026-10-08T07:14:10Z","section":"Moves right now","what":"Replaced \"Wait for Rivals rewards before buying 87+ fodder\" and \"84s are the cheapest per point\" with a buy-85–86-fodder move.","why":"The {{t:2026-10-08T06:59:00+00:00}} payout has passed and FUT.GG now lists 85s at 800 and 86s at 750 (were 3,100 and 6,000)."},{"date":"2026-10-08T00:14:30Z","section":"Moves right now","what":"Replaced \"85s are the cheapest per point\" with 84s at 900 (1.08) and Paz 87 DFG −10.1% with Gosens 85 DFG −10.0%.","why":"FUT.GG now lists 85s at 2,800 (1.33 per point) and no longer lists Paz among the fallers."},{"date":"2026-10-07T20:13:41Z","section":"Moves right now","what":"Replaced \"87s show 1,200, likely a single listing\" and 86s as cheapest with 84s at 900 (1.08 per point) against 86s at 5,500 (1.34).","why":"FUT.GG's cheapest 87 is now 7,500, so the 1,200 reading was a single listing that is gone; 86s rose to 5,500."},{"date":"2026-10-07T19:13:12Z","section":"Moves right now","what":"Brought Destined for Glory cards back into the faller read (Paz 87 −12.2%, McKennie 85 −11.6%) and removed \"TOTW 4 could not be checked\".","why":"FUT.GG's momentum page lists two DFG cards again, and FUTBIN's new-cards list shows 23 TOTW cards added at the {{t:2026-10-07T18:00:00+01:00}} release."},{"date":"2026-10-07T18:14:28Z","section":"Moves right now","what":"Replaced \"McKennie 85 DFG −15.8%\" and the Destined for Glory fall claim with a note that no DFG card is among the biggest fallers; the faller list is now TOTW only.","why":"FUT.GG's momentum page no longer lists McKennie or any Destined for Glory card; cheapest-by-rating also changed (84 850, 86 5,000, 87 7,600)."},{"date":"2026-10-07T17:14:10Z","section":"Moves right now","what":"Removed the \"before TOTW 4\" deadline and refreshed the faller list","why":"The TOTW 4 time had passed; FUT.GG momentum now shows different fallers (Elvedi, Lewandowski, Brown)."},{"date":"2026-10-07T15:13:44Z","section":"Hot SBCs","what":"Removed the \"Ends soon\" tag from Liga F POTM September.","why":"FUT.GG's expiring-soon page now lists only Destined for Glory Challenge 3 and Marquee Matchups."},{"date":"2026-10-07T11:13:44Z","section":"Moves right now","what":"Replaced \"86s are the cheapest per Item Score point (1,300)\" with 84s at 1,000 and 85s at 2,600 as a near tie.","why":"FUT.GG's cheapest 86 is now 5,200 (1.27 per point); the 1,300 reading was a single card that is gone."},{"date":"2026-10-07T04:13:42Z","section":"Calendar","what":"Changed \"Next promo team in packs\" (Team 3 at 18:00 UK Friday) to \"Destined for Glory Team 3 (not confirmed)\" and removed Team 3 from the verdict and moves.","why":"FUTBIN and FUT.GG show no third squad, and the promo is reported as two squads ending 9 Oct; the old date was an assumption from EA's weekly cadence."},{"date":"2026-10-05T08:14:04Z","section":"Moves right now","what":"Replaced \"87s are clearly cheapest (3,100)\" and \"falls have slowed below 5%\" with a tie on 84–88 and a still-falling read.","why":"FUT.GG now shows 87s at 6,000 (1.09 per point) and Gosens −17.8%, Kuyt −13.7%, Haaland −8.4%."},{"date":"2026-10-05T07:13:57Z","section":"Moves right now","what":"Replaced \"Until the fallers slow below 5%\" with a wait until Team 3, and made 87s the cheapest fodder (3,100).","why":"FUT.GG's biggest faller is now −4.2% (Olise), so the condition was met; cheapest-by-rating shows 87s at 3,100 (0.56 per point)."}],"drops":[{"detail":"Confirmed by EA as part of Season 1. No date or players announced yet.","expected":"Before Season 1 ends on 22 Oct","firstSeen":"2026-09-30T19:20:05Z","ftr":false,"official":true,"sheriff":false,"sources":[{"title":"EA · FC 27 Launch Update Pitch Notes","url":"https://www.ea.com/games/ea-sports-fc/fc-27/news/pitch-notes-fc27-launch-update"},{"title":"FUTBIN · FC 27 promo teams confirmed","url":"https://www.futbin.com/news/articles/1778/fc-27-promo-teams-confirmed"}],"status":"confirmed","title":"Future Stars"},{"detail":"Ultimate Scream, UEFA Road to the Knockouts, Hall of FUT Unleashed and Black Friday Thunderstruck, from EA's roadmap. Exact dates not announced.","expected":"Season 2, from 22 Oct","firstSeen":"2026-09-30T19:20:05Z","ftr":false,"official":true,"sheriff":false,"sources":[{"title":"FUTBIN · FC 27 promo teams confirmed","url":"https://www.futbin.com/news/articles/1778/fc-27-promo-teams-confirmed"}],"status":"confirmed","title":"Season 2 campaigns"},{"detail":"FUT Sheriff says Ramos is coming as a Destined for Glory SBC. It is not on FUT.GG's active SBC list and FifaTradingRomania doesn't back it, so don't invest on it. FUTBIN lists a Destined for Glory Ramos card (84), reportedly unlockable via objectives.","expected":"Soon (unconfirmed)","firstSeen":"2026-10-03T05:13:35Z","ftr":false,"official":false,"reportedAt":"2026-09-28T16:07:06Z","sheriff":true,"sources":[{"title":"FUT Sheriff on X · Ramos Destined for Glory SBC","url":"https://x.com/FutSheriff/status/2104603819569000488"}],"status":"one_source","title":"Gonçalo Ramos Destined for Glory SBC"}],"events":[{"confirmed":false,"date":"2026-10-09T19:00:00+02:00","detail":"EA's weekly squad cadence suggested Team 3 at {{t:2026-10-09T18:00:00+01:00}}, but FUTBIN and FUT.GG show no third squad and reports put the promo's end at 9 Oct. Treat it as unconfirmed.","impact":"info","title":"Destined for Glory Team 3 (not confirmed)"},{"confirmed":true,"date":"2026-10-22T08:59:00+02:00","detail":"Future Stars lands before this. Season 2 brings Ultimate Scream, UEFA Road to the Knockouts, Hall of FUT Unleashed and Black Friday Thunderstruck, per EA's roadmap as reported by FUTBIN.","impact":"both","title":"Season 1 ends · Season 2 starts"},{"allDay":true,"confirmed":true,"date":"2026-10-25T03:00:00+02:00","detail":"Rivals rewards stay at the same UTC time, so from 29 October they arrive an hour earlier on local clocks in Europe.","impact":"info","title":"Clocks go back in Europe"}],"fallers":[{"name":"Robert Lewandowski","ovr":85,"pct":-23.28,"price":"Price change −3,259","version":"Team of the Week"},{"name":"Lauren Hemp","ovr":88,"pct":-17.25,"price":"Price change −13,972","version":"Team of the Week"},{"name":"Kevin De Bruyne","ovr":86,"pct":-15.6,"price":"Price change −11,154","version":"Team of the Week"},{"name":"Omar Marmoush","ovr":84,"pct":-10.71,"price":"Price change −5,409","version":"Team of the Week"},{"name":"Jude Bellingham","ovr":91,"pct":-9.82,"price":"Price change −153,978","version":"Team of the Week"},{"name":"Gianluigi Donnarumma","ovr":90,"pct":-9.24,"price":"Price change −19,866","version":"Team of the Week"},{"name":"João Cancelo","ovr":84,"pct":-9.15,"price":"Price change −6,039","version":"Team of the Week"},{"name":"Milos Kerkez","ovr":83,"pct":-8.49,"price":"Price change −2,929","version":"Team of the Week"}],"fodder":[{"ovr":81,"price":650,"score":280},{"ovr":82,"price":700,"score":340},{"ovr":83,"price":700,"score":410},{"ovr":84,"price":700,"score":830},{"ovr":85,"price":750,"score":2100},{"ovr":86,"price":4800,"score":4100},{"ovr":87,"price":6000,"score":5500},{"ovr":88,"price":11500,"score":8300},{"ovr":89,"price":18500,"score":11000},{"ovr":90,"price":29250,"score":14000},{"ovr":91,"price":121000,"score":19000}],"index":{"icons":42.86,"idx100":106.68,"idx100Chg":-1.81,"idx84":70.05,"idx85":89.86,"idx86":59.13,"momentum":65.51,"momentumLabel":"The market is starting to move fast","note":"FUTBIN's market page returned 403 again this run, and its saved reading ({{t:2026-10-03T22:33:58Z}}) is days old, so the index values are from an earlier update."},"meta":[{"name":"Chawinga","note":"Console · FUT.GG","ovr":89,"pos":"LM","price":18750,"eaId":279799,"priceState":0,"at":"2026-10-08T18:52:24Z","src":"FUT.GG","priceAt":"2026-10-08T18:52:24Z"},{"name":"João Neves","note":"Console · FUT.GG","ovr":88,"pos":"CM","price":13750,"eaId":272834,"priceState":0,"at":"2026-10-08T18:52:24Z","src":"FUT.GG","priceAt":"2026-10-08T18:52:24Z"},{"name":"Messi","note":"Console · FUT.GG","ovr":89,"pos":"CAM","price":20000,"eaId":158023,"priceState":0,"at":"2026-10-08T18:52:24Z","src":"FUT.GG","priceAt":"2026-10-08T18:52:24Z"},{"name":"Banda","note":"Console · FUT.GG","ovr":88,"pos":"ST","price":11250,"eaId":276359,"priceState":0,"at":"2026-10-08T18:52:24Z","src":"FUT.GG","priceAt":"2026-10-08T18:52:24Z"},{"name":"Kimmich","note":"Console · FUT.GG","ovr":88,"pos":"CDM","price":11500,"eaId":212622,"priceState":0,"at":"2026-10-08T18:52:24Z","src":"FUT.GG","priceAt":"2026-10-08T18:52:24Z"},{"name":"Bühl","note":"Console · FUT.GG","ovr":88,"pos":"LM","price":11750,"eaId":248822,"priceState":0,"at":"2026-10-08T18:52:24Z","src":"FUT.GG","priceAt":"2026-10-08T18:52:24Z"},{"name":"Hasegawa","note":"Console · FUT.GG","ovr":88,"pos":"CDM","price":11750,"eaId":245830,"priceState":0,"at":"2026-10-08T18:52:24Z","src":"FUT.GG","priceAt":"2026-10-08T18:52:24Z"},{"name":"Hemp","note":"Console · FUT.GG","ovr":87,"pos":"LM","price":7000,"eaId":257008,"priceState":0,"at":"2026-10-08T18:52:24Z","src":"FUT.GG","priceAt":"2026-10-08T18:52:24Z"}],"moves":[{"confidence":"low","detail":"FUT.GG: 85s at 750 (0.36 coins per Item Score point), 84s at 700 (0.84), 86s at 4,800 (1.17), 87s at 6,000 (1.09). 85s were 2,300 an hour ago, so treat 750 as unconfirmed until a second update shows it. Use fodder in SBCs, don't trade it: selling costs the 5% tax.","title":"Fodder: 85s dipped to 750, wait for a second reading","tone":"watch","when":"Every update"},{"confidence":"low","detail":"The tracked call entered at 4,200. FUT.GG's cheapest 86 is 4,800; after the 5% tax that is 4,560, above the entry. It is graded at the check time, so don't treat it as a hit yet.","ledgerId":"c-2026-10-08-86floor","title":"86 fodder call: above the entry","tone":"watch","when":"Until {{t:2026-10-09T07:30:00+00:00}}"},{"confidence":"low","detail":"FUT.GG: Lewandowski 85 TOTW −23.3%, Hemp 88 TOTW −17.3%, De Bruyne 86 TOTW −15.6%, Bellingham 91 TOTW −9.8%. Spares only: selling and rebuying costs the 5% tax. Keep cards you play with (tip rule).","title":"Sell spare TOTW cards while they still hold value","tone":"sell","when":"Now"},{"confidence":"low","detail":"Only Kökçü 86 (−5.3%) and Gosens 85 (−3.6%) are among FUT.GG's biggest fallers, and no Team 3 is confirmed on FUTBIN or FUT.GG. Buy only what you play.","title":"Destined for Glory cards: buy only what you play","tone":"hold","when":"Until the next squad news"}],"news":[{"detail":"FUT.GG: 84s are 700, 85s 750, 86s 4,800, 87s 6,000 and 88s 11,500. 85s were 2,300 an hour earlier.","kind":"data","source":"FUT.GG","title":"Fodder prices"},{"detail":"FUT.GG: Lewandowski 85 TOTW −23.3%, Hemp 88 TOTW −17.3%, De Bruyne 86 TOTW −15.6%, Bellingham 91 TOTW −9.8%.","kind":"data","source":"FUT.GG","title":"TOTW cards lead the falls"},{"detail":"FUT.GG lists Liga F (Pina 89, 1.125M), LALIGA (Raphinha 89, 1.3M) and Bundesliga (Olise 91, 700K) POTM SBCs. Costs are FUT.GG's.","kind":"data","source":"FUT.GG","title":"New Player of the Month SBCs"},{"detail":"EA published Title Update v1.0.4 for FC 27 on 7 October (EA news page, read this run). Patch notes were not read.","kind":"official","source":"EA","title":"Title Update v1.0.4 is out"},{"detail":"Rivals and Champions now pay several times FC 26's 500–600 coins per match, and far more rewards are tradeable. Expect bigger supply dumps on reward days and sharper weekly swings.","kind":"official","source":"EA Pitch Notes","title":"Matches pay several times more coins"},{"detail":"EA's plan, shared by FUT Sheriff: most Streamlined SBCs ask only for a total Item Score. Any high-scoring card works, which keeps demand on 84–86 fodder.","kind":"creator","source":"FUT Sheriff","title":"Streamlined SBCs mostly skip minimum ratings"}],"platform":"console","risers":[],"sbcs":[{"cost":"68K","expires":"Ends soon","name":"Akliouche (Destined for Glory)","note":"Special card 85. This run's list comes from FUT.GG because FUTBIN returned 403; no end times shown."},{"cost":"12K","expires":"Ends soon","name":"TOTW Upgrade","note":"Rewards a TOTW player item from TOTW 1 to 3."},{"cost":"–","expires":"Ends soon","name":"Destined for Glory Challenge 4","note":"Rewards a Small Electrum Players Pack."},{"cost":"–","expires":"","name":"Marquee Matchups","note":"4 challenges, rewards a Jumbo Gold Pack."},{"cost":"11.8K","expires":"","name":"Weslley Pinto Batista (Patati 84)","note":"Squad Foundations card 84."},{"cost":"18.8K","expires":"","name":"Tarciane (Destined for Glory)","note":"Special card 84."},{"cost":"18.8K","expires":"","name":"Premier League POTM September (Groß 84)","note":"Player of the Month card."},{"cost":"90K","expires":"","name":"Serie A POTM September (Malen 85)","note":"Player of the Month card."}],"source":"scheduled","sources":[{"title":"FUT.GG · Cheapest by rating","url":"https://www.fut.gg/cheapest-by-rating/"},{"title":"FUT.GG · Momentum","url":"https://www.fut.gg/players/momentum/"},{"title":"FUT.GG · Player SBCs","url":"https://www.fut.gg/sbc/category/players/"},{"title":"FUT.GG · Upgrade SBCs","url":"https://www.fut.gg/sbc/category/upgrades/"},{"title":"FUT.GG · Challenges","url":"https://www.fut.gg/sbc/category/challenges/"},{"title":"FUT.GG · Expiring soon","url":"https://www.fut.gg/sbc/category/expiring-soon/"},{"title":"EA · FC 27 Launch Update Pitch Notes","url":"https://www.ea.com/games/ea-sports-fc/fc-27/news/pitch-notes-fc27-launch-update"},{"title":"EA Help · How Rivals works","url":"https://help.ea.com/en/articles/ea-sports-fc/ultimate-team-rivals/"},{"title":"EA Help · Gallery Sets and rewards","url":"https://help.ea.com/en/articles/ea-sports-fc/gallery-hub/"},{"title":"FUTBIN · Market index","url":"https://www.futbin.com/market"},{"title":"EA · FC 27 news","url":"https://www.ea.com/games/ea-sports-fc/fc-27/news"}],"updatedAt":"2026-10-08T18:13:51Z","verdict":{"detail":"FUT.GG: 85s are 750 (0.36 coins per Item Score point), 84s 700, 86s 4,800 and 87s 6,000. Lewandowski 85 TOTW is −23.3% and Hemp 88 TOTW −17.3%. FUTBIN returned 403 again this run and its saved market reading is days old, so the index is from an earlier update.","headline":"TOTW cards keep falling and 85s dipped to 750, so there is no clear trade yet.","label":"TOTW cards still falling, 85 fodder dipped","tone":"watch"},"pricesUpdatedAt":"2026-10-08T18:54:26Z"}
+{
+  "corrections": [
+    {
+      "date": "2026-10-08T18:13:51Z",
+      "section": "Moves right now",
+      "what": "Replaced \"84s are cheapest per point\" with 85s at 750 (0.36), flagged as unconfirmed.",
+      "why": "FUT.GG now lists 85s at 750 and 84s at 700, so 84s are no longer the cheapest per point; 85s were 2,300 an hour ago."
+    },
+    {
+      "date": "2026-10-08T17:13:13Z",
+      "section": "Moves right now",
+      "what": "Replaced \"85s are cheapest per point\" with 84s at 650 (0.78); removed the Ends soon tag from Marquee Matchups.",
+      "why": "FUT.GG now lists 85s at 2,300 (1.10 per point), and its expiring-soon page lists only TOTW Upgrade, Akliouche and Destined for Glory Challenge 4."
+    },
+    {
+      "date": "2026-10-08T09:14:26Z",
+      "section": "Moves right now",
+      "what": "Replaced \"85s are the cheapest per point\" with 84s at 650 (0.78) and removed the Gosens 85 DFG −13.4% figure.",
+      "why": "FUT.GG now lists 85s at 2,300 (1.10 per point) and 84s at 650; Gosens is no longer among the biggest fallers."
+    },
+    {
+      "date": "2026-10-08T08:14:26Z",
+      "section": "Moves right now",
+      "what": "Replaced \"Buy 85–86 fodder while the Rivals dump lasts\" with a fodder-per-point read and a note that the 86 call's premise broke.",
+      "why": "FUT.GG now lists 85s at 1,500 and 86s at 4,200 (were 800 and 750 an hour earlier), so the floor of 1,500 the move was conditioned on is gone."
+    },
+    {
+      "date": "2026-10-08T07:14:10Z",
+      "section": "Moves right now",
+      "what": "Replaced \"Wait for Rivals rewards before buying 87+ fodder\" and \"84s are the cheapest per point\" with a buy-85–86-fodder move.",
+      "why": "The {{t:2026-10-08T06:59:00+00:00}} payout has passed and FUT.GG now lists 85s at 800 and 86s at 750 (were 3,100 and 6,000)."
+    },
+    {
+      "date": "2026-10-08T00:14:30Z",
+      "section": "Moves right now",
+      "what": "Replaced \"85s are the cheapest per point\" with 84s at 900 (1.08) and Paz 87 DFG −10.1% with Gosens 85 DFG −10.0%.",
+      "why": "FUT.GG now lists 85s at 2,800 (1.33 per point) and no longer lists Paz among the fallers."
+    },
+    {
+      "date": "2026-10-07T20:13:41Z",
+      "section": "Moves right now",
+      "what": "Replaced \"87s show 1,200, likely a single listing\" and 86s as cheapest with 84s at 900 (1.08 per point) against 86s at 5,500 (1.34).",
+      "why": "FUT.GG's cheapest 87 is now 7,500, so the 1,200 reading was a single listing that is gone; 86s rose to 5,500."
+    },
+    {
+      "date": "2026-10-07T19:13:12Z",
+      "section": "Moves right now",
+      "what": "Brought Destined for Glory cards back into the faller read (Paz 87 −12.2%, McKennie 85 −11.6%) and removed \"TOTW 4 could not be checked\".",
+      "why": "FUT.GG's momentum page lists two DFG cards again, and FUTBIN's new-cards list shows 23 TOTW cards added at the {{t:2026-10-07T18:00:00+01:00}} release."
+    },
+    {
+      "date": "2026-10-07T18:14:28Z",
+      "section": "Moves right now",
+      "what": "Replaced \"McKennie 85 DFG −15.8%\" and the Destined for Glory fall claim with a note that no DFG card is among the biggest fallers; the faller list is now TOTW only.",
+      "why": "FUT.GG's momentum page no longer lists McKennie or any Destined for Glory card; cheapest-by-rating also changed (84 850, 86 5,000, 87 7,600)."
+    },
+    {
+      "date": "2026-10-07T17:14:10Z",
+      "section": "Moves right now",
+      "what": "Removed the \"before TOTW 4\" deadline and refreshed the faller list",
+      "why": "The TOTW 4 time had passed; FUT.GG momentum now shows different fallers (Elvedi, Lewandowski, Brown)."
+    },
+    {
+      "date": "2026-10-07T15:13:44Z",
+      "section": "Hot SBCs",
+      "what": "Removed the \"Ends soon\" tag from Liga F POTM September.",
+      "why": "FUT.GG's expiring-soon page now lists only Destined for Glory Challenge 3 and Marquee Matchups."
+    },
+    {
+      "date": "2026-10-07T11:13:44Z",
+      "section": "Moves right now",
+      "what": "Replaced \"86s are the cheapest per Item Score point (1,300)\" with 84s at 1,000 and 85s at 2,600 as a near tie.",
+      "why": "FUT.GG's cheapest 86 is now 5,200 (1.27 per point); the 1,300 reading was a single card that is gone."
+    },
+    {
+      "date": "2026-10-07T04:13:42Z",
+      "section": "Calendar",
+      "what": "Changed \"Next promo team in packs\" (Team 3 at 18:00 UK Friday) to \"Destined for Glory Team 3 (not confirmed)\" and removed Team 3 from the verdict and moves.",
+      "why": "FUTBIN and FUT.GG show no third squad, and the promo is reported as two squads ending 9 Oct; the old date was an assumption from EA's weekly cadence."
+    },
+    {
+      "date": "2026-10-05T08:14:04Z",
+      "section": "Moves right now",
+      "what": "Replaced \"87s are clearly cheapest (3,100)\" and \"falls have slowed below 5%\" with a tie on 84–88 and a still-falling read.",
+      "why": "FUT.GG now shows 87s at 6,000 (1.09 per point) and Gosens −17.8%, Kuyt −13.7%, Haaland −8.4%."
+    },
+    {
+      "date": "2026-10-05T07:13:57Z",
+      "section": "Moves right now",
+      "what": "Replaced \"Until the fallers slow below 5%\" with a wait until Team 3, and made 87s the cheapest fodder (3,100).",
+      "why": "FUT.GG's biggest faller is now −4.2% (Olise), so the condition was met; cheapest-by-rating shows 87s at 3,100 (0.56 per point)."
+    }
+  ],
+  "drops": [
+    {
+      "detail": "Confirmed by EA as part of Season 1. No date or players announced yet.",
+      "expected": "Before Season 1 ends on 22 Oct",
+      "firstSeen": "2026-09-30T19:20:05Z",
+      "ftr": false,
+      "official": true,
+      "sheriff": false,
+      "sources": [
+        {
+          "title": "EA · FC 27 Launch Update Pitch Notes",
+          "url": "https://www.ea.com/games/ea-sports-fc/fc-27/news/pitch-notes-fc27-launch-update"
+        },
+        {
+          "title": "FUTBIN · FC 27 promo teams confirmed",
+          "url": "https://www.futbin.com/news/articles/1778/fc-27-promo-teams-confirmed"
+        }
+      ],
+      "status": "confirmed",
+      "title": "Future Stars"
+    },
+    {
+      "detail": "Ultimate Scream, UEFA Road to the Knockouts, Hall of FUT Unleashed and Black Friday Thunderstruck, from EA's roadmap. Exact dates not announced.",
+      "expected": "Season 2, from 22 Oct",
+      "firstSeen": "2026-09-30T19:20:05Z",
+      "ftr": false,
+      "official": true,
+      "sheriff": false,
+      "sources": [
+        {
+          "title": "FUTBIN · FC 27 promo teams confirmed",
+          "url": "https://www.futbin.com/news/articles/1778/fc-27-promo-teams-confirmed"
+        }
+      ],
+      "status": "confirmed",
+      "title": "Season 2 campaigns"
+    },
+    {
+      "detail": "FUT Sheriff says Ramos is coming as a Destined for Glory SBC. It is not on FUT.GG's active SBC list and FifaTradingRomania doesn't back it, so don't invest on it. FUTBIN lists a Destined for Glory Ramos card (84), reportedly unlockable via objectives.",
+      "expected": "Soon (unconfirmed)",
+      "firstSeen": "2026-10-03T05:13:35Z",
+      "ftr": false,
+      "official": false,
+      "reportedAt": "2026-09-28T16:07:06Z",
+      "sheriff": true,
+      "sources": [
+        {
+          "title": "FUT Sheriff on X · Ramos Destined for Glory SBC",
+          "url": "https://x.com/FutSheriff/status/2104603819569000488"
+        }
+      ],
+      "status": "one_source",
+      "title": "Gonçalo Ramos Destined for Glory SBC"
+    }
+  ],
+  "events": [
+    {
+      "confirmed": false,
+      "date": "2026-10-09T19:00:00+02:00",
+      "detail": "EA's weekly squad cadence suggested Team 3 at {{t:2026-10-09T18:00:00+01:00}}, but FUTBIN and FUT.GG show no third squad and reports put the promo's end at 9 Oct. Treat it as unconfirmed.",
+      "impact": "info",
+      "title": "Destined for Glory Team 3 (not confirmed)"
+    },
+    {
+      "confirmed": true,
+      "date": "2026-10-22T08:59:00+02:00",
+      "detail": "Future Stars lands before this. Season 2 brings Ultimate Scream, UEFA Road to the Knockouts, Hall of FUT Unleashed and Black Friday Thunderstruck, per EA's roadmap as reported by FUTBIN.",
+      "impact": "both",
+      "title": "Season 1 ends · Season 2 starts"
+    },
+    {
+      "allDay": true,
+      "confirmed": true,
+      "date": "2026-10-25T03:00:00+02:00",
+      "detail": "Rivals rewards stay at the same UTC time, so from 29 October they arrive an hour earlier on local clocks in Europe.",
+      "impact": "info",
+      "title": "Clocks go back in Europe"
+    }
+  ],
+  "fallers": [
+    {
+      "name": "Robert Lewandowski",
+      "ovr": 85,
+      "pct": -20,
+      "price": "Price change −2,800",
+      "version": "Team of the Week"
+    },
+    {
+      "name": "Lauren Hemp",
+      "ovr": 88,
+      "pct": -15.26,
+      "price": "Price change −12,132",
+      "version": "Team of the Week"
+    },
+    {
+      "name": "Kevin De Bruyne",
+      "ovr": 86,
+      "pct": -12.42,
+      "price": "Price change −8,756",
+      "version": "Team of the Week"
+    },
+    {
+      "name": "Ibrahim Maza",
+      "ovr": 85,
+      "pct": -9.87,
+      "price": "Price change −1,949",
+      "version": "Destined for Glory"
+    },
+    {
+      "name": "Gianluigi Donnarumma",
+      "ovr": 90,
+      "pct": -9.82,
+      "price": "Price change −20,622",
+      "version": "Team of the Week"
+    },
+    {
+      "name": "Carlos Alberto",
+      "ovr": 91,
+      "pct": -8.39,
+      "price": "Price change −138,015",
+      "version": "Base Icon"
+    },
+    {
+      "name": "Orkun Kökçü",
+      "ovr": 86,
+      "pct": -8.39,
+      "price": "Price change −2,643",
+      "version": "Destined for Glory"
+    },
+    {
+      "name": "Omar Marmoush",
+      "ovr": 84,
+      "pct": -7.4,
+      "price": "Price change −3,774",
+      "version": "Team of the Week"
+    }
+  ],
+  "fodder": [
+    {
+      "ovr": 81,
+      "price": 650,
+      "score": 280
+    },
+    {
+      "ovr": 82,
+      "price": 700,
+      "score": 340
+    },
+    {
+      "ovr": 83,
+      "price": 700,
+      "score": 410
+    },
+    {
+      "ovr": 84,
+      "price": 700,
+      "score": 830
+    },
+    {
+      "ovr": 85,
+      "price": 850,
+      "score": 2100
+    },
+    {
+      "ovr": 86,
+      "price": 4500,
+      "score": 4100
+    },
+    {
+      "ovr": 87,
+      "price": 6500,
+      "score": 5500
+    },
+    {
+      "ovr": 88,
+      "price": 11000,
+      "score": 8300
+    },
+    {
+      "ovr": 89,
+      "price": 18000,
+      "score": 11000
+    },
+    {
+      "ovr": 90,
+      "price": 28500,
+      "score": 14000
+    },
+    {
+      "ovr": 91,
+      "price": 120000,
+      "score": 19000
+    }
+  ],
+  "index": {
+    "icons": 42.86,
+    "idx100": 106.68,
+    "idx100Chg": -1.81,
+    "idx84": 70.05,
+    "idx85": 89.86,
+    "idx86": 59.13,
+    "momentum": 65.51,
+    "momentumLabel": "The market is starting to move fast",
+    "note": "FUTBIN's market page returned 403 again this run, and its saved reading ({{t:2026-10-03T22:33:58Z}}) is days old, so the index values are from an earlier update."
+  },
+  "meta": [
+    {
+      "name": "Chawinga",
+      "note": "#1 on FUT.GG's best cheap players (price from an earlier update)",
+      "ovr": 89,
+      "pos": "LM",
+      "price": 24500
+    },
+    {
+      "name": "João Neves",
+      "note": "#4 on FUT.GG's best cheap players (price from an earlier update)",
+      "ovr": 88,
+      "pos": "CM",
+      "price": 30000
+    },
+    {
+      "name": "Messi",
+      "note": "#8 on FUT.GG's best cheap players (price from an earlier update)",
+      "ovr": 89,
+      "pos": "CAM",
+      "price": 32000
+    },
+    {
+      "name": "Banda",
+      "note": "#18 on FUT.GG's best cheap players (price from an earlier update)",
+      "ovr": 88,
+      "pos": "ST",
+      "price": 9300
+    },
+    {
+      "name": "Kimmich",
+      "note": "#22 on FUT.GG (price from an earlier update)",
+      "ovr": 88,
+      "pos": "CDM",
+      "price": 9900
+    },
+    {
+      "name": "Bühl",
+      "note": "#24 on FUT.GG's best cheap players (price from an earlier update)",
+      "ovr": 88,
+      "pos": "LM",
+      "price": 9000
+    },
+    {
+      "name": "Hasegawa",
+      "note": "#25 on FUT.GG, cheapest 88 (price this run; rank from an earlier update)",
+      "ovr": 88,
+      "pos": "CDM",
+      "price": 10500
+    },
+    {
+      "name": "Hemp",
+      "note": "#30 on FUT.GG, cheapest 87 (price from an earlier update)",
+      "ovr": 87,
+      "pos": "LM",
+      "price": 5100
+    }
+  ],
+  "moves": [
+    {
+      "confidence": "low",
+      "detail": "FUT.GG: 84s at 700 (0.84 coins per Item Score point), 85s at 850 (0.40), 86s at 4,500 (1.10), 87s at 6,500 (1.18). 85s are back up from 750 an hour ago, so the dip was short. Use fodder in SBCs, don't trade it: selling costs the 5% tax.",
+      "title": "Fodder: 84s at 700, 85s at 850",
+      "tone": "watch",
+      "when": "Every update"
+    },
+    {
+      "confidence": "low",
+      "detail": "The tracked call entered at 4,200. FUT.GG's cheapest 86 is 4,500; after the 5% tax that is 4,275, just above the entry. It is graded at the check time, so don't treat it as a hit yet.",
+      "ledgerId": "c-2026-10-08-86floor",
+      "title": "86 fodder call: above the entry",
+      "tone": "watch",
+      "when": "Until {{t:2026-10-09T07:30:00+00:00}}"
+    },
+    {
+      "confidence": "low",
+      "detail": "FUT.GG: Lewandowski 85 TOTW −20%, Hemp 88 TOTW −15.3%, De Bruyne 86 TOTW −12.4%, Donnarumma 90 TOTW −9.8%. Spares only: selling and rebuying costs the 5% tax. Keep cards you play with (tip rule).",
+      "title": "Sell spare TOTW cards while they still hold value",
+      "tone": "sell",
+      "when": "Now"
+    },
+    {
+      "confidence": "low",
+      "detail": "FUT.GG's biggest fallers include Maza 85 DFG (−9.9%) and Kökçü 86 DFG (−8.4%). No Team 3 is confirmed on FUTBIN or FUT.GG. Buy only what you play.",
+      "title": "Destined for Glory cards: buy only what you play",
+      "tone": "hold",
+      "when": "Until the next squad news"
+    }
+  ],
+  "news": [
+    {
+      "detail": "FUT.GG: 84s are 700, 85s 850, 86s 4,500, 87s 6,500 and 88s 11,000.",
+      "kind": "data",
+      "source": "FUT.GG",
+      "title": "Fodder prices"
+    },
+    {
+      "detail": "FUT.GG: Lewandowski 85 TOTW −20%, Hemp 88 TOTW −15.3%, De Bruyne 86 TOTW −12.4%, Donnarumma 90 TOTW −9.8%.",
+      "kind": "data",
+      "source": "FUT.GG",
+      "title": "TOTW cards lead the falls"
+    },
+    {
+      "detail": "FUT.GG lists Liga F (Pina 89, 1.125M), LALIGA (Raphinha 89, 1.3M) and Bundesliga (Olise 91, 700K) POTM SBCs. Costs are FUT.GG's.",
+      "kind": "data",
+      "source": "FUT.GG",
+      "title": "New Player of the Month SBCs"
+    },
+    {
+      "detail": "EA published Title Update v1.0.4 for FC 27 on 7 October (EA news page, read this run). Patch notes were not read.",
+      "kind": "official",
+      "source": "EA",
+      "title": "Title Update v1.0.4 is out"
+    },
+    {
+      "detail": "Rivals and Champions now pay several times FC 26's 500–600 coins per match, and far more rewards are tradeable. Expect bigger supply dumps on reward days and sharper weekly swings.",
+      "kind": "official",
+      "source": "EA Pitch Notes",
+      "title": "Matches pay several times more coins"
+    },
+    {
+      "detail": "EA's plan, shared by FUT Sheriff: most Streamlined SBCs ask only for a total Item Score. Any high-scoring card works, which keeps demand on 84–86 fodder.",
+      "kind": "creator",
+      "source": "FUT Sheriff",
+      "title": "Streamlined SBCs mostly skip minimum ratings"
+    }
+  ],
+  "platform": "console",
+  "risers": [],
+  "sbcs": [
+    {
+      "cost": "68K",
+      "expires": "Ends soon",
+      "name": "Akliouche (Destined for Glory)",
+      "note": "Special card 85. This run's list comes from FUT.GG because FUTBIN returned 403; no end times shown."
+    },
+    {
+      "cost": "12K",
+      "expires": "Ends soon",
+      "name": "TOTW Upgrade",
+      "note": "Rewards a TOTW player item from TOTW 1 to 3."
+    },
+    {
+      "cost": "–",
+      "expires": "Ends soon",
+      "name": "Destined for Glory Challenge 4",
+      "note": "Rewards a Small Electrum Players Pack."
+    },
+    {
+      "cost": "–",
+      "expires": "",
+      "name": "Marquee Matchups",
+      "note": "4 challenges, rewards a Jumbo Gold Pack."
+    },
+    {
+      "cost": "11.8K",
+      "expires": "",
+      "name": "Weslley Pinto Batista (Patati 84)",
+      "note": "Squad Foundations card 84."
+    },
+    {
+      "cost": "18.8K",
+      "expires": "",
+      "name": "Tarciane (Destined for Glory)",
+      "note": "Special card 84."
+    },
+    {
+      "cost": "18.8K",
+      "expires": "",
+      "name": "Premier League POTM September (Groß 84)",
+      "note": "Player of the Month card."
+    },
+    {
+      "cost": "90K",
+      "expires": "",
+      "name": "Serie A POTM September (Malen 85)",
+      "note": "Player of the Month card."
+    }
+  ],
+  "source": "scheduled",
+  "sources": [
+    {
+      "title": "FUT.GG · Cheapest by rating",
+      "url": "https://www.fut.gg/cheapest-by-rating/"
+    },
+    {
+      "title": "FUT.GG · Momentum",
+      "url": "https://www.fut.gg/players/momentum/"
+    },
+    {
+      "title": "FUT.GG · Player SBCs",
+      "url": "https://www.fut.gg/sbc/category/players/"
+    },
+    {
+      "title": "FUT.GG · Upgrade SBCs",
+      "url": "https://www.fut.gg/sbc/category/upgrades/"
+    },
+    {
+      "title": "FUT.GG · Challenges",
+      "url": "https://www.fut.gg/sbc/category/challenges/"
+    },
+    {
+      "title": "FUT.GG · Expiring soon",
+      "url": "https://www.fut.gg/sbc/category/expiring-soon/"
+    },
+    {
+      "title": "EA · FC 27 Launch Update Pitch Notes",
+      "url": "https://www.ea.com/games/ea-sports-fc/fc-27/news/pitch-notes-fc27-launch-update"
+    },
+    {
+      "title": "EA Help · How Rivals works",
+      "url": "https://help.ea.com/en/articles/ea-sports-fc/ultimate-team-rivals/"
+    },
+    {
+      "title": "EA Help · Gallery Sets and rewards",
+      "url": "https://help.ea.com/en/articles/ea-sports-fc/gallery-hub/"
+    },
+    {
+      "title": "FUTBIN · Market index",
+      "url": "https://www.futbin.com/market"
+    },
+    {
+      "title": "EA · FC 27 news",
+      "url": "https://www.ea.com/games/ea-sports-fc/fc-27/news"
+    }
+  ],
+  "updatedAt": "2026-10-08T19:15:00Z",
+  "verdict": {
+    "detail": "FUT.GG: 85s are 850 (0.40 coins per Item Score point), 84s 700, 86s 4,500 and 87s 6,500. Lewandowski 85 TOTW is −20% and Hemp 88 TOTW −15.3%. FUTBIN returned 403 again this run and its saved market reading is days old, so the index is from an earlier update.",
+    "headline": "TOTW cards keep falling and 85s dipped to 750, so there is no clear trade yet.",
+    "label": "TOTW cards still falling, 85 fodder dipped",
+    "tone": "watch"
+  }
+}
