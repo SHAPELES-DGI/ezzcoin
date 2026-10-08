@@ -52,12 +52,13 @@
     {
       "checkAt": "2026-10-09T09:30:00+02:00",
       "confidence": "low",
-      "entry": null,
+      "entry": 4200,
       "entryAt": "2026-10-08T09:30:00+02:00",
+      "entryRecordedAt": "2026-10-08T08:14:26Z",
       "exit": null,
       "id": "c-2026-10-08-86floor",
       "madeAt": "2026-10-08T07:14:10Z",
-      "note": "86 floor was 750 at the time of the call, down from 6,000 an hour earlier. Hits if it recovers above about 790 after tax. Lesson relied on: floor cards at a hard floor lose to the 5% tax, so this only works because 86 is far below its usual level.",
+      "note": "86 floor was 750 at the time of the call, down from 6,000 an hour earlier. Hits if it recovers above about 790 after tax. Lesson relied on: floor cards at a hard floor lose to the 5% tax, so this only works because 86 is far below its usual level. Entry read at the first update after the entry time: 86 floor was already 4,200, so the 750 dump had ended.",
       "ref": {
         "kind": "floor",
         "label": "FUT.GG cheapest 86",
@@ -67,7 +68,7 @@
       },
       "result": null,
       "rule": "buy_after_tax",
-      "status": "pending",
+      "status": "open",
       "title": "Buy 86-rated fodder after the Rivals dump, check in 24 hours",
       "tone": "buy"
     }
@@ -133,6 +134,11 @@
       "date": "2026-10-07T04:13:42Z",
       "kind": "miss",
       "text": "Listed a Destined for Glory Team 3 date from EA's weekly cadence, but FUTBIN and FUT.GG show no third squad. Only list a promo squad once FUTBIN, FUT.GG or EA names it."
+    },
+    {
+      "date": "2026-10-08T08:14:26Z",
+      "kind": "miss",
+      "text": "Called a lasting fodder dump from one reading (86s at 750) an hour after the Rivals payout; it was back at 4,200 within an hour. Wait for two consecutive updates before treating a post-payout floor as real."
     }
   ]
 }
