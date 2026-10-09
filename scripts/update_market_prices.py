@@ -123,9 +123,12 @@ def main():
     legend_ids = [item for item, row in cards.items()
                   if "icon" in row[5].lower() or "hero" in row[5].lower() or "hall of fut" in row[5].lower() or "fut gallery" in row[5].lower()
                   or row[7] in ("Icons", "Heroes")]
-    enrich = legend_ids + home_ids + sorted((item for item in cards if item > 16777216), reverse=True)
+    # Rotate through base cards too: EA's ratings list may omit UT positions.
+    ci = {name: i for i, name in enumerate(roster["cols"])}
+    base_enrich = [int(row[ci["id"]]) for row in sorted(roster["rows"], key=lambda row: -(row[ci["ovr"]] or 0))]
+    enrich = [251852] + legend_ids + home_ids + sorted((item for item in cards if item > 16777216), reverse=True) + base_enrich
     needed = list(dict.fromkeys(needed + [item for item in enrich if item and
-                        (str(item) not in metadata or metadata[str(item)].get("checkedAt", "")[:10] != utc()[:10])]))
+                        (str(item) not in metadata or metadata[str(item)].get("checkedAt", "")[:7 if item in base_ids else 10] != utc()[:7 if item in base_ids else 10])]))
     batches = [needed[i:i + 30] for i in range(0, min(len(needed), max(0, args.metadata_batches) * 30), 30)]
     errors = []
     with ThreadPoolExecutor(max_workers=args.workers) as pool:

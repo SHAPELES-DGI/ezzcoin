@@ -163,6 +163,15 @@ def main():
             if r[0] is None or r[0] in seen:
                 continue
             seen.add(r[0]); rows.append(r)
+    # Preserve verified UT positions when EA's public ratings list has fewer.
+    cache_path = os.path.join(os.path.dirname(out), "card-metadata.json")
+    if os.path.exists(cache_path):
+        with open(cache_path, encoding="utf-8") as fh:
+            metadata = json.load(fh)
+        for r in rows:
+            record = metadata.get(str(r[0]), {})
+            if not record.get("excluded") and not record.get("isSpecial") and record.get("baseId") == r[0] and record.get("ovr") == r[4] and record.get("pos") == r[5] and isinstance(record.get("alt"), str):
+                r[6] = record["alt"]
     rows.sort(key=lambda r: (-(r[4] or 0), r[1]))
     n = len(rows)
     complete = sum(1 for r in rows if r[4] and r[5] and r[7] and all(v is not None for v in r[16:22]))

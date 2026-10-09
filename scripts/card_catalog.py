@@ -70,6 +70,8 @@ def publish(data, metadata, prices, published_at, quote_metadata=None):
     roster = read(data / "players.json", None)
     base_ids = {row[roster["cols"].index("id")] for row in roster["rows"]} if roster else set()
     base_added = 0
+    positions_updated = 0
+    base_rows = {int(row[roster["cols"].index("id")]): row for row in roster["rows"]} if roster else {}
     existing = {}
     for card in cards + legends.get("cards", []):
         key = card.get("gid") or card.get("fid")
@@ -86,6 +88,13 @@ def publish(data, metadata, prices, published_at, quote_metadata=None):
             renders[key] = {"url": image, "name": record["name"], "ovr": record["ovr"],
                             "pos": record["pos"], "version": record["version"]}
         if not record.get("isSpecial"):
+            # Exact UT item positions can exceed EA ratings-page positions.
+            row = base_rows.get(item)
+            if row is not None and item == record.get("baseId") and record.get("pos") == row[roster["cols"].index("pos")] and record.get("ovr") == row[roster["cols"].index("ovr")]:
+                alt_index = roster["cols"].index("alt")
+                if isinstance(record.get("alt"), str) and row[alt_index] != record["alt"]:
+                    row[alt_index] = record["alt"]
+                    positions_updated += 1
             if roster and item == record.get("baseId") and item not in base_ids and len(record.get("stats", [])) == 6:
                 values = {"id": item, "name": record["name"], "q": record["name"].split()[-1],
                           "full": record["name"], "foot": "L" if record.get("foot") == "Left" else "R"}
@@ -131,7 +140,7 @@ def publish(data, metadata, prices, published_at, quote_metadata=None):
     write(data / "newcards.json", catalog)
     write(data / "card-ids.json", ids)
     write(data / "card-renders.json", renders)
-    if base_added:
+    if base_added or positions_updated:
         roster["count"] = len(roster["rows"])
         roster["updatedAt"] = datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
         roster["discoverySource"] = "FUT.GG FC 27 item index"
