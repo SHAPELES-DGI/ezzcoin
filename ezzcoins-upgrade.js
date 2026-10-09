@@ -16,6 +16,7 @@
   const esc = s => String(s ?? '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
   const validPrice = n => n != null && n !== '' && Number.isFinite(+n) && +n > 0;
   const coins = n => n != null && n !== '' && Number.isFinite(+n) ? new Intl.NumberFormat("en-US").format(Math.round(+n)) : '—';
+  const coinPrice = n => (validPrice(n) ? '<i class="coin" aria-hidden="true"></i>' : '') + coins(n);
   const clamp = (n,a,b) => Math.max(a,Math.min(b,n));
   const toneClass = tone => ['buy','sell','watch','hold'].includes(tone) ? tone : 'watch';
   const confidenceIndex = c => CONFIDENCE_INDEX[String(c || '').toLowerCase()] || 35;
@@ -86,7 +87,7 @@
       player.price = quote?.price ?? null; player.priceAt = quote?.at; player.priceSrc = quote?.src;
       const card = document.querySelector('[data-ez-player="'+index+'"]');
       if (card) {
-        card.querySelector('.ez-player-price').innerHTML = coins(player.price)+' <small>'+(validPrice(player.price)?'coins':'unavailable')+'</small>';
+        card.querySelector('.ez-player-price').innerHTML = coinPrice(player.price)+' <small>'+(validPrice(player.price)?'coins':'unavailable')+'</small>';
         card.querySelector('.ez-player-source').textContent = player.priceSrc || 'No quote';
         card.querySelector('.ez-player-meta').textContent = humanTime(player.priceAt);
       }
@@ -175,7 +176,7 @@
       <div class="ez-metric">${tie ? b.near.map(x=>x.ovr).join('–') : b.best.ovr}</div>
       <div class="ez-metric-label">best Item Score value ${tie ? '(near-tie)' : ''}</div>
       <div class="ez-mini-row"><span>Lowest c / pt</span><span>${b.best.cpp.toFixed(2)}</span></div>
-      <div class="ez-mini-row"><span>${b.best.ovr} floor</span><span>${coins(b.best.price)}</span></div>
+      <div class="ez-mini-row"><span>${b.best.ovr} floor</span><span>${coinPrice(b.best.price)}</span></div>
       <div class="ez-mini-row"><span>Score</span><span>${coins(b.best.score)}</span></div>`;
   }
 
@@ -224,7 +225,7 @@
     saveJSON(STORAGE.budget, budget);
     const plan = allocationFor(budget);
     $('#ez-allocation').innerHTML = plan.map(([label,pct,note]) => `
-      <div class="ez-alloc"><span>${esc(label)}</span><span class="ez-alloc-bar"><i style="width:${pct}%"></i></span><strong>${coins(budget*pct/100)} (${pct}%)</strong></div>
+      <div class="ez-alloc"><span>${esc(label)}</span><span class="ez-alloc-bar"><i style="width:${pct}%"></i></span><strong>${coinPrice(budget*pct/100)} (${pct}%)</strong></div>
       <div style="margin:-5px 0 6px 103px;font-size:10.5px;color:var(--ez-muted)">${esc(note)}</div>`).join('');
   }
 
@@ -255,7 +256,7 @@
       const art = asset ? window.EzzcoinsCardArt.html(asset,'ez-player-render',p.name) : `<div class="ez-player-rating">${esc(p.ovr)}</div>`;
       return `<article class="ez-player" role="button" tabindex="0" aria-label="View ${esc(p.name)}" data-ez-player="${i}">
         <div class="ez-player-art">${art}</div><div class="ez-player-top"><span class="ez-pill watch">${esc(p.pos || '')}</span><span class="ez-player-source">${esc(p.priceSrc || 'No quote')}</span></div>
-        <div class="ez-player-name">${esc(p.name)}</div><div class="ez-player-price">${coins(p.price)} <small>${validPrice(p.price)?'coins':'unavailable'}</small></div>
+        <div class="ez-player-name">${esc(p.name)}</div><div class="ez-player-price">${coinPrice(p.price)} <small>${validPrice(p.price)?'coins':'unavailable'}</small></div>
         <div class="ez-player-meta">${esc(humanTime(p.priceAt))}</div></article>`;
     }).join('')}</div>`;
   }
@@ -368,7 +369,7 @@
     if (!alerts.length) { box.innerHTML = '<div style="font-size:12px;color:var(--ez-muted)">No alerts yet.</div>'; return; }
     box.innerHTML = alerts.map((a,i) => {
       const now = currentPrice(a.key); const hit = alertReached(a);
-      return `<div class="ez-alert-item"><div><strong class="${hit?'ez-positive':''}">${esc(alertLabel(a.key))}</strong><small>${hit?'Target reached':'Target'}: ${coins(a.target)}${validPrice(now)?` · stored ${coins(now)}`: ' · price unavailable'}${!quoteFresh(a.key) ? ' · waiting for fresh quote' : ''}</small></div><button class="ez-icon-btn" data-ez-remove-alert="${i}" aria-label="Remove alert">×</button></div>`;
+      return `<div class="ez-alert-item"><div><strong class="${hit?'ez-positive':''}">${esc(alertLabel(a.key))}</strong><small>${hit?'Target reached':'Target'}: ${coinPrice(a.target)}${validPrice(now)?` · stored ${coinPrice(now)}`: ' · price unavailable'}${!quoteFresh(a.key) ? ' · waiting for fresh quote' : ''}</small></div><button class="ez-icon-btn" data-ez-remove-alert="${i}" aria-label="Remove alert">×</button></div>`;
     }).join('');
   }
 
@@ -394,7 +395,7 @@
     modal.querySelector('.ez-modal-content').innerHTML = `
       <div class="ez-kicker">${esc(p.pos || 'Player')} · ${esc(p.ovr || '')} OVR</div>
       <h3>${esc(p.name)}</h3>
-      <div class="ez-metric">${coins(p.price)}</div><div class="ez-metric-label">Console quote · ${esc(p.priceSrc || 'Unavailable')} · ${esc(humanTime(p.priceAt))}</div>
+      <div class="ez-metric">${coinPrice(p.price)}</div><div class="ez-metric-label">Console quote · ${esc(p.priceSrc || 'Unavailable')} · ${esc(humanTime(p.priceAt))}</div>
       ${mover ? `<div class="ez-mini-row"><span>Today</span><span class="${mover.pct>=0?'ez-positive':'ez-danger'}">${mover.pct>=0?'+':''}${mover.pct}%</span></div>`:''}
       <p>${esc(p.note || 'No extra note in the current snapshot.')}</p>
       <button class="ez-btn primary" data-ez-modal-alert="${esc(p.name)}">Create price alert</button>
