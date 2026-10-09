@@ -55,10 +55,11 @@
       "entry": 4200,
       "entryAt": "2026-10-08T09:30:00+02:00",
       "entryRecordedAt": "2026-10-08T08:14:26Z",
-      "exit": null,
+      "exit": 4900,
+      "gradedAt": "2026-10-09T08:13:48Z",
       "id": "c-2026-10-08-86floor",
       "madeAt": "2026-10-08T07:14:10Z",
-      "note": "86 floor was 750 at the time of the call, down from 6,000 an hour earlier. Hits if it recovers above about 790 after tax. Lesson relied on: floor cards at a hard floor lose to the 5% tax, so this only works because 86 is far below its usual level. Entry read at the first update after the entry time: 86 floor was already 4,200, so the 750 dump had ended.",
+      "note": "86 floor was 750 at the time of the call, down from 6,000 an hour earlier. Hits if it recovers above about 790 after tax. Lesson relied on: floor cards at a hard floor lose to the 5% tax, so this only works because 86 is far below its usual level. Entry read at the first update after the entry time: 86 floor was already 4,200, so the 750 dump had ended. Exit read at the first update after the check time.",
       "ref": {
         "kind": "floor",
         "label": "FUT.GG cheapest 86",
@@ -66,9 +67,9 @@
         "source": "FUT.GG",
         "url": "https://www.fut.gg/cheapest-by-rating/"
       },
-      "result": null,
+      "result": 10.8,
       "rule": "buy_after_tax",
-      "status": "open",
+      "status": "hit",
       "title": "Buy 86-rated fodder after the Rivals dump, check in 24 hours",
       "tone": "buy"
     }
@@ -139,6 +140,12 @@
       "date": "2026-10-08T08:14:26Z",
       "kind": "miss",
       "text": "Called a lasting fodder dump from one reading (86s at 750) an hour after the Rivals payout; it was back at 4,200 within an hour. Wait for two consecutive updates before treating a post-payout floor as real."
+    },
+    {
+      "callId": "c-2026-10-08-86floor",
+      "date": "2026-10-09T08:13:48Z",
+      "kind": "hit",
+      "text": "Buying the 86 floor at the first update after the Rivals dump had ended (4,200 against a usual 4,900) worked; the entry came from a normal-level reading, not the 750 dump price."
     }
   ]
 }
