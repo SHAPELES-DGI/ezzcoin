@@ -281,8 +281,8 @@ def head(title, desc, canon, up, image=None):
             f'<nav class="nav"><a href="{up}#players">Database</a><a href="{up}p/">All players</a></nav></header>')
 
 
-def foot(up):
-    return (f'<footer>Ratings: EA SPORTS FC 27. Prices: FUTBIN (backups: FUT.GG, FUTWIZ, EasySBC). Ezzcoins is a fan-made site and is not affiliated with EA SPORTS, FUTBIN, FUT.GG, FUTWIZ or EasySBC. '
+def foot(up, price_note=False):
+    return (f'<footer>' + ('<p id="price-source" aria-live="polite"></p>' if price_note else '') + f'Ratings: EA SPORTS FC 27. Prices: FUTBIN (backups: FUT.GG, FUTWIZ, EasySBC). Ezzcoins is a fan-made site and is not affiliated with EA SPORTS, FUTBIN, FUT.GG, FUTWIZ or EasySBC. '
             f'<a href="{up}p/credits/">Photo credits</a> · <a href="{up}privacy.html">Privacy and cookies</a></footer></body></html>')
 
 
@@ -344,7 +344,7 @@ def player_page(x, codes, by_club, by_nat, specials_of, credits):
               "const c=lp||[a&&a.players&&a.players[id],b&&b.players&&b.players[id]].filter(p=>p&&p.price>0&&Number.isFinite(Date.parse(p.at))).sort((x,y)=>Date.parse(y.at)-Date.parse(x.at))[0];"
               "if(!c)return;const m=Math.round((Date.now()-Date.parse(c.at))/6e4),h=Math.floor(m/60),ago=m<1?'just now':m<60?m+' min ago':h<48?h+' h ago':Math.floor(h/24)+' days ago';"
               "const label=c.src==='FUT.GG'?'FUT.GG feed updated':'Console price from '+(c.src||'FUTBIN');"
-              "el.innerHTML='<b><i class=\"coin\"></i>'+Number(c.price).toLocaleString('en-US')+'</b><span>'+label+' \\u00b7 '+ago+'</span>'});load();setInterval(load,300000)})()</script>"
+              "el.innerHTML='<b><i class=\"coin\"></i>'+Number(c.price).toLocaleString('en-US')+'</b>';document.getElementById('price-source').textContent=label+' · '+ago;});load();setInterval(load,300000)})()</script>"
               ) % json.dumps(str(x["id"]))
     pc = credits.get(str(x["id"]))
     pimg, pcredit = photo(credits, x["id"], x["n"], up)
@@ -362,7 +362,7 @@ def player_page(x, codes, by_club, by_nat, specials_of, credits):
             f'<div class="kv"><div class="px" id="px"><span class="none">No console price yet. {e(hint)}</span></div>{meta_box(mt, x["o"])}</div>'
             f'<div class="stats">{stats}</div>{chem_box(x, up)}<dl class="facts">{dl}</dl>' + (f'<p class="mtnote">{e(MT_NOTE)}</p>' if mt else "") +
             f'<a class="btn" href="{up}#q={e(x["n"])}">Watch on Ezzcoins</a></div></div>'
-            f'<section class="more">{more}</section></main>{script}' + foot(up))
+            f'<section class="more">{more}</section></main>{script}' + foot(up, True))
 
 
 # PlayStyle names in EA's spelling (FUTWIZ writes some as one word, e.g. "Quickstep", "GameChanger", "Deadball", "Precision").
@@ -452,7 +452,7 @@ def special_page(x, codes, specials, credits):
               "if(!row||row[3]!==0||!(row[1]>0)){const state=row&&row[3];el.textContent=/FUT Champions/i.test(n&&n.version||'')?'Reward card · not tradeable':state===1?'SBC card · not tradeable':state===2?'Objective card · not tradeable':state===4?'Reward card · not tradeable':state===3?'Not tradeable':state===0?'No listings':'Price unavailable';return}"
               "const q=live.quoteMetadata&&live.quoteMetadata[String(item)]&&live.quoteMetadata[String(item)].console;const c={price:row[1],at:q&&q.at||live.publishedAt.console,src:q&&q.src||live.source};"
               "const m=Math.max(0,Math.round((Date.now()-Date.parse(c.at))/6e4)),h=Math.floor(m/60),ago=m<1?'just now':m<60?m+' min ago':h<48?h+' h ago':Math.floor(h/24)+' days ago';"
-              "el.innerHTML='<b><i class=\\\"coin\\\"></i>'+Number(c.price).toLocaleString('en-US')+'</b><span>Console · '+c.src+' · '+ago+'</span>'});load();setInterval(load,300000)})()</script>"
+              "el.innerHTML='<b><i class=\\\"coin\\\"></i>'+Number(c.price).toLocaleString('en-US')+'</b>';document.getElementById('price-source').textContent='Console · '+c.src+' · '+ago;});load();setInterval(load,300000)})()</script>"
               ) % (json.dumps(str(x["id"])), json.dumps(str(x["key"])), json.dumps("legends.json" if leg else "newcards.json"))
     bid = x.get("pid")
     pc = credits.get(str(bid)) if bid else None
@@ -471,7 +471,7 @@ def special_page(x, codes, specials, credits):
             f'<div class="kv"><div class="px" id="px"><span class="none">No console price yet. {"Icons and Heroes are" if leg else "New cards are"} priced every half hour while FUTBIN can be reached.</span></div>{meta_box(mt, x["o"])}</div>'
             + (f'<div class="stats">{stats}</div>{chem_box(x, up)}' if has else '<p class="nostats">This card\'s own stats appear here after one of the next ' + ("price" if leg else "hourly") + ' updates.</p>')
             + f'<dl class="facts">{dl}</dl>' + (f'<p class="mtnote">{e(MT_NOTE)}</p>' if mt else "") + f'<a class="btn" href="{up}#q={e(x["n"])}">Watch on Ezzcoins</a></div></div>'
-            f'<section class="more">{more}</section></main>{script}' + foot(up))
+            f'<section class="more">{more}</section></main>{script}' + foot(up, True))
 
 
 def credits_page(credits, allp, legends_by_id=None):
