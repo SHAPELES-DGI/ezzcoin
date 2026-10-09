@@ -108,8 +108,8 @@ CSS = (":root{--bg:#0A0D0C;--surface:#141917;--sunk:#1C2320;--ink:#EEF2EF;--mute
        ".flag{width:16px;height:12px;border-radius:2px;vertical-align:-1px;margin-right:5px;box-shadow:0 0 0 1px rgb(255 255 255/.16)}"
        ".px{margin-top:16px;display:inline-grid;gap:8px;max-width:100%;background:#101813;border:1px solid #506344;border-radius:12px;padding:14px 18px}"
        ".px b{font:700 clamp(1.75rem,4vw,2.25rem)/1.15 var(--fb);font-variant-numeric:tabular-nums;letter-spacing:.01em;color:#ffe08a;overflow-wrap:anywhere}.px span{font:400 .8rem/1.5 var(--fb);color:#bac6bd;overflow-wrap:anywhere}.px .none{max-width:420px}"
-       ".coin{display:inline-block;width:.85em;height:.85em;border-radius:50%;background:radial-gradient(circle at 35% 30%,#FFE9A6,#E3A834 55%,#94590B);"
-       "box-shadow:inset 0 0 0 1.5px rgb(255 243 207/.7);vertical-align:-.08em;margin-right:7px}"
+       ".coin{display:inline-block;width:.85em;height:.85em;background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAuCAMAAABgZ9sFAAAATlBMVEVHcEznxV/fvlrkwl321GjQr1Hpx2D202gmJiUhISH612vLq08dHR3xz2XhwF3TslToxmA5NSjauVhuYTpIQi99bT1cUjSQfkakjUq8oE5U95CRAAAACHRSTlMAF55Y3t18u6ZyN+8AAALJSURBVEjHhZaJYqsgEEXjlgwim+z//6PvDsQ0bTTv2iqVM5cZUOzt9kfDND5mta7r/Bin4fZVw/2x/tJj+gar9UPz/YKe5vVU89kIw7heavyoYfix1iVHn2Ku+meA4YJWORBRgPhS9Cl/0Co7SmVftdZq3UsiyvqTP2gZyEuVk4MzuVS0jhTkB/+sMqNPJnpT1Hug/Kz3NYMHHeH2R1n5gz/mc37RgT4UYJHf07mvCockf0Yz70muvN59fWem9xDsKc08+hSL7SfQSmUymS4UJUrgFNj+odDYye90qepds39gztswhXZ/jacK+57N1K4hfTEn0ik0bLqNyiq7U0bmgshDWCjn+2ol3xTQu4NTI6fOubTVFH3IRAW/JJ1TXS5J3AL/wDQiKgvr4O20afbJFhLexuB9VTycsyJaa9V807hY77SAkvUIEsIg2BnjcMtl5CjIOI+cgTNtkzNCkHPZOTDwFSIjVDhZiX2EcamBbzhMocq+JJxlg8gxbP/Cn8kYNq0FcoWZYoPoMU07krHa6tuMN0dHoUlIiUQ2dOkYiy6Aik4NxsSjVK3tfBsRo7OoAQ97d4psoBGacJ9htCpCoRE4JEWOXGSXc61i1N7rFFvOQnZ8al4hHFmeSobQsOk26B1HFCVcwpvH6A3DAz/uaBjsF1/MvZCAdn67p50Fe7+97Pinn/gc6xYbxC/30Fp4nmTYtgZsTeI4B+5jZumvduPLlqrbTuRq2kpD+qs9LLvBETd/xrvqkQoDy7Etmaa4JRn/0h7esfe/tvkRf+zMu4reNwU8Qgc9/uypS7+DvlRrDMQohShL2lzpfcv7FrwYyUdFMiEWNGo1JYYNe8wnzbyUwKWsmcvlh4YvXj61/P18HDxH+BRS8rnKfs980Pwp651GvqvBcjz7HE+LPNVy9Sm+nwXcv3zpp/E3+/9/C6Zx5EHqMp6w/wCTK1Li1bS+hAAAAABJRU5ErkJggg==) center/contain no-repeat;vertical-align:-.08em;margin-right:7px}"
+       ".price-updated{display:block;color:var(--muted);font:13px/1.4 var(--fb);margin-top:7px}"
        ".stats{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin-top:18px;max-width:560px}"
        ".st{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:9px 4px;text-align:center}"
        ".st small{display:block;font:600 .74rem var(--fd);letter-spacing:.1em;color:var(--muted)}.st b{font:500 1.45rem var(--fm)}"
@@ -344,7 +344,7 @@ def player_page(x, codes, by_club, by_nat, specials_of, credits):
               "const c=lp||[a&&a.players&&a.players[id],b&&b.players&&b.players[id]].filter(p=>p&&p.price>0&&Number.isFinite(Date.parse(p.at))).sort((x,y)=>Date.parse(y.at)-Date.parse(x.at))[0];"
               "if(!c)return;const m=Math.round((Date.now()-Date.parse(c.at))/6e4),h=Math.floor(m/60),ago=m<1?'just now':m<60?m+' min ago':h<48?h+' h ago':Math.floor(h/24)+' days ago';"
               "const label=c.src==='FUT.GG'?'FUT.GG feed updated':'Console price from '+(c.src||'FUTBIN');"
-              "el.innerHTML='<b><i class=\"coin\"></i>'+Number(c.price).toLocaleString('en-US')+'</b>';document.getElementById('price-source').textContent=label+' · '+ago;});load();setInterval(load,300000)})()</script>"
+              "el.innerHTML='<b><i class=\"coin\"></i>'+Number(c.price).toLocaleString('en-US')+'</b><span class=price-updated>Updated '+ago+'</span>';el.querySelector('.price-updated').title=new Date(c.at).toLocaleString();document.getElementById('price-source').textContent=label+' · '+ago;});load();setInterval(load,300000)})()</script>"
               ) % json.dumps(str(x["id"]))
     pc = credits.get(str(x["id"]))
     pimg, pcredit = photo(credits, x["id"], x["n"], up)
@@ -452,7 +452,7 @@ def special_page(x, codes, specials, credits):
               "if(!row||row[3]!==0||!(row[1]>0)){const state=row&&row[3];el.textContent=/FUT Champions/i.test(n&&n.version||'')?'Reward card · not tradeable':state===1?'SBC card · not tradeable':state===2?'Objective card · not tradeable':state===4?'Reward card · not tradeable':state===3?'Not tradeable':state===0?'No listings':'Price unavailable';return}"
               "const q=live.quoteMetadata&&live.quoteMetadata[String(item)]&&live.quoteMetadata[String(item)].console;const c={price:row[1],at:q&&q.at||live.publishedAt.console,src:q&&q.src||live.source};"
               "const m=Math.max(0,Math.round((Date.now()-Date.parse(c.at))/6e4)),h=Math.floor(m/60),ago=m<1?'just now':m<60?m+' min ago':h<48?h+' h ago':Math.floor(h/24)+' days ago';"
-              "el.innerHTML='<b><i class=\\\"coin\\\"></i>'+Number(c.price).toLocaleString('en-US')+'</b>';document.getElementById('price-source').textContent='Console · '+c.src+' · '+ago;});load();setInterval(load,300000)})()</script>"
+              "el.innerHTML='<b><i class=\\\"coin\\\"></i>'+Number(c.price).toLocaleString('en-US')+'</b><span class=price-updated>Updated '+ago+'</span>';el.querySelector('.price-updated').title=new Date(c.at).toLocaleString();document.getElementById('price-source').textContent='Console · '+c.src+' · '+ago;});load();setInterval(load,300000)})()</script>"
               ) % (json.dumps(str(x["id"])), json.dumps(str(x["key"])), json.dumps("legends.json" if leg else "newcards.json"))
     bid = x.get("pid")
     pc = credits.get(str(bid)) if bid else None
