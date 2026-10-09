@@ -437,7 +437,7 @@ def special_page(x, codes, specials, credits):
              if has else "")
     if leg:
         others = sorted((y for y in specials if y.get("leg") == leg and y["id"] != x["id"]), key=lambda y: -y["o"])[:8]
-        more = (f'<h2>More {"Icons" if leg == "icon" else "Heroes"}</h2>' + card_list(others, codes, up, lambda y: f'{y["p"]} · {y["c"] or y["l"]}')) if others else ""
+        more = (f'<h2>More {"Icons" if leg == "icon" else "Heroes" if leg == "hero" else "FUT Gallery"}</h2>' + card_list(others, codes, up, lambda y: f'{y["p"]} · {y["c"] or y["l"]}')) if others else ""
     else:
         others = [y for y in specials if y["id"] != x["id"] and not y.get("leg")][:8]
         more = f'<h2>Other new cards</h2>' + card_list(others, codes, up, lambda y: y["ver"]) if others else ""
@@ -501,7 +501,7 @@ def list_page(groups, codes, total, specials, legends=()):
     title = "FC 27 player pages: stats and prices | Ezzcoins"
     desc = f"Stats, PlayStyles and console prices for all {total} EA SPORTS FC 27 Ultimate Team players rated {MIN_OVR} or higher."
     body = (f'<h2>New special cards</h2>' + card_list(specials, codes, up, lambda y: y["ver"]) if specials else "")
-    for leg, label in (("icon", "Icons"), ("hero", "Heroes")):
+    for leg, label in (("icon", "Icons"), ("hero", "Heroes"), ("gallery", "FUT Gallery")):
         items = sorted((y for y in legends if y.get("leg") == leg), key=lambda y: (-y["o"], y["n"]))
         if items:
             body += f'<h2>{label}</h2>' + card_list(items, codes, up, lambda y: f'{y["p"]} · {y["c"] or y["l"]}')
@@ -598,7 +598,7 @@ def main():
         if b:
             specials_of.setdefault(b["id"], []).append(sx)
     specials.sort(key=lambda y: (str(y["added"]), y["o"]), reverse=True)
-    # Icons and Heroes (data/legends.json, filled by the price runs): special-card pages of their own, kept for good.
+    # Icons, Heroes and FUT Gallery (data/legends.json): permanent special-card pages.
     legends = []
     lpath = os.path.join(ROOT, "data", "legends.json")
     lcards = []
@@ -613,14 +613,16 @@ def main():
             key = int(c.get("gid") if c.get("gid") not in (None, "") else c.get("fid"))
         except (TypeError, ValueError):
             continue
-        leg = "icon" if c.get("league") == "Icons" else "hero" if c.get("league") == "Heroes" else ""
+        leg = ("icon" if c.get("isIcon") or c.get("league") == "Icons" else
+               "hero" if c.get("isHero") or c.get("league") == "Heroes" else
+               "gallery" if c.get("isGallery") or "hall of fut" in str(c.get("version") or "").lower() else "")
         if not c.get("name") or not leg or SPECIAL + key in seen:
             continue
         seen.add(SPECIAL + key)
         st = c.get("stats") if isinstance(c.get("stats"), list) and len(c["stats"]) == 6 else [None] * 6
-        ver = c.get("version") or ("Icon" if leg == "icon" else "Hero")
+        ver = c.get("version") or ("Icon" if leg == "icon" else "Hero" if leg == "hero" else "FUT Gallery")
         lx = {"id": SPECIAL + key, "key": key, "leg": leg, "n": c["name"], "full": c.get("full") or "", "o": int(c.get("ovr") or 0),
-              "p": c.get("pos") or "", "a": c.get("alt") or "", "c": c.get("club") or "", "l": c["league"], "nat": c.get("nation") or "",
+              "p": c.get("pos") or "", "a": c.get("alt") or "", "c": c.get("club") or "", "l": c.get("league") or "", "nat": c.get("nation") or "",
               "sm": c.get("sm"), "wf": c.get("wf"), "s": [None if v in (None, "") else v for v in st], "ver": ver, "added": "",
               "base": None, "ps": ps_norm(c["ps"], True) if c.get("ps") else "", "cn": card_name(c["name"]) if len(c["name"]) > 14 else c["name"]}
         lx["pls"] = ps_norm(REGULAR_PLAYSTYLES.get(str(key), ""), False)
@@ -676,7 +678,7 @@ def main():
     with open(os.path.join(ROOT, "sitemap.xml"), "w", encoding="utf-8") as fh:
         fh.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
                  + "".join(f"<url><loc>{e(u)}</loc></url>\n" for u in urls) + "</urlset>\n")
-    print(f"OK: {len(players)} player pages ({sum(1 for x in players if str(x['id']) in credits)} with photos), {len(specials)} special card pages, {len(legends)} Icon and Hero pages, list page and sitemap ({len(urls)} URLs)")
+    print(f"OK: {len(players)} player pages ({sum(1 for x in players if str(x['id']) in credits)} with photos), {len(specials)} special card pages, {len(legends)} Icon, Hero and FUT Gallery pages, list page and sitemap ({len(urls)} URLs)")
 
 
 if __name__ == "__main__":
