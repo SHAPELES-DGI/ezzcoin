@@ -1,144 +1,144 @@
 {
-  "calls": [
-    {
-      "checkAt": "2026-10-02T17:00:00+02:00",
-      "confidence": "medium",
-      "entry": 650,
-      "entryAt": "2026-10-01T10:00:00+02:00",
-      "entryRecordedAt": "2026-10-01T08:29:00Z",
-      "exit": 650,
-      "gradedAt": "2026-10-02T15:14:03Z",
-      "id": "c-2026-10-01-84floor",
-      "lesson": "Assumed the 84 floor could rise before exit, but 81–84 all sit at a hard 650 floor, so the 5% tax guarantees a loss; use floor cards as SBC fodder, and only track calls on cards with room to move.",
-      "madeAt": "2026-09-30T18:26:38Z",
-      "note": "Entry is the cheapest 84 on FUT.GG at the first update after 10:00 Thursday",
-      "ref": {
-        "kind": "floor",
-        "label": "FUT.GG cheapest 84",
-        "ovr": 84,
-        "source": "FUT.GG",
-        "url": "https://www.fut.gg/cheapest-by-rating/"
-      },
-      "result": -5.1,
-      "rule": "buy_after_tax",
-      "status": "miss",
-      "title": "Buy 84-rated fodder Thursday morning, sell or use by Friday 17:00",
-      "tone": "buy"
-    },
-    {
-      "checkAt": "2026-10-03T12:00:00+02:00",
-      "confidence": "medium",
-      "entry": null,
-      "entryAt": "2026-10-02T17:00:00+02:00",
-      "exit": null,
-      "id": "c-2026-10-02-isak",
-      "madeAt": "2026-09-30T18:26:38Z",
-      "note": "609,000 on FUTBIN when the call was made. Entry not recorded: the nearest FUTBIN reading (481,000 at 20:00 UTC) is over 3 hours after the entry time, so it stays pending and is voided if still unreadable 12 hours past due. Voided 2026-10-03T03:13:12Z: entry still unreadable 12 hours past due (FUTBIN blocked).",
-      "ref": {
-        "kind": "player",
-        "label": "FUTBIN Destined for Glory page, PS price",
-        "name": "Alexander Isak",
-        "ovr": 88,
-        "source": "FUTBIN",
-        "url": "https://www.futbin.com/27/totw/DestinedForGlory",
-        "version": "Destined for Glory"
-      },
-      "result": null,
-      "rule": "sell_lower",
-      "status": "void",
-      "title": "Sell DFG Isak (88) before the Friday 19:00 promo",
-      "tone": "sell"
-    },
-    {
-      "checkAt": "2026-10-09T09:30:00+02:00",
-      "confidence": "low",
-      "entry": 4200,
-      "entryAt": "2026-10-08T09:30:00+02:00",
-      "entryRecordedAt": "2026-10-08T08:14:26Z",
-      "exit": null,
-      "id": "c-2026-10-08-86floor",
-      "madeAt": "2026-10-08T07:14:10Z",
-      "note": "86 floor was 750 at the time of the call, down from 6,000 an hour earlier. Hits if it recovers above about 790 after tax. Lesson relied on: floor cards at a hard floor lose to the 5% tax, so this only works because 86 is far below its usual level. Entry read at the first update after the entry time: 86 floor was already 4,200, so the 750 dump had ended.",
-      "ref": {
-        "kind": "floor",
-        "label": "FUT.GG cheapest 86",
-        "ovr": 86,
-        "source": "FUT.GG",
-        "url": "https://www.fut.gg/cheapest-by-rating/"
-      },
-      "result": null,
-      "rule": "buy_after_tax",
-      "status": "open",
-      "title": "Buy 86-rated fodder after the Rivals dump, check in 24 hours",
-      "tone": "buy"
-    }
-  ],
-  "lessons": [
-    {
-      "date": "2026-09-30T18:26:38Z",
-      "text": "Coin-seller blogs contradicted each other on basic dates. Only EA, FUT.GG, FUTBIN, FUT Sheriff, FifaTradingRomania and The FUT Accountant are used now."
-    },
-    {
-      "date": "2026-09-30T18:26:38Z",
-      "text": "FUT.GG and FUTBIN can show different prices for the same card. Every call is graded on the same site and page it was made from."
-    },
-    {
-      "date": "2026-09-30T19:20:05Z",
-      "kind": "miss",
-      "text": "Listed the Mora and Pedro Gonçalves OTW SBCs as upcoming on 30 Sep, but both posts were from 11–16 Sep and FUTBIN shows the SBC already released and expired (Ones to Watch Duo Pick 1). Check each post's date and FUTBIN's past SBCs before listing a drop."
-    },
-    {
-      "date": "2026-09-30T19:20:05Z",
-      "kind": "hit",
-      "text": "The two-source rule held: FUT Sheriff and FifaTradingRomania both reported the Mora vs Pedro Gonçalves OTW Pick SBC on 16 Sep, and it landed as described."
-    },
-    {
-      "date": "2026-09-30T19:48:34Z",
-      "kind": "tip",
-      "status": "new",
-      "text": "Sell-before-promo calls are for spare cards only. Keep the cards you play Champions with that weekend: selling and rebuying them costs the 5% tax and usually a higher Friday price.",
-      "tipId": "4d2f57d7l9pknakf169p"
-    },
-    {
-      "date": "2026-10-01T05:33:00Z",
-      "kind": "miss",
-      "text": "Repeated FUTBIN's +25% Index 100 day change for ~10 hours as a reason to sell, then it reset to +1.3%. Don't base a verdict on one day-change figure; use the index level, momentum gauge and EA's reward times together."
-    },
-    {
-      "date": "2026-10-01T11:28:00Z",
-      "kind": "miss",
-      "text": "The fodder move said 09:00–13:00 but floors stayed at 650 well past 13:00. Tie fodder buy windows to a price level (e.g. while the 84 floor is at 650), not a fixed clock time."
-    },
-    {
-      "date": "2026-10-01T15:45:00Z",
-      "kind": "miss",
-      "text": "Earlier updates wrote plain clock times in text. Write every time as a {{t:...}} token so each viewer sees their own zone."
-    },
-    {
-      "date": "2026-10-01T20:21:42Z",
-      "kind": "miss",
-      "text": "FUT.GG's SBC list showed Item Score requirements (700,000, 90,000) where a coin cost was expected. Take SBC coin costs from FUTBIN's console column and label Item Score separately."
-    },
-    {
-      "callId": "c-2026-10-01-84floor",
-      "date": "2026-10-02T15:14:03Z",
-      "kind": "miss",
-      "text": "Assumed the 84 floor could rise before exit, but 81–84 all sit at a hard 650 floor, so the 5% tax guarantees a loss; use floor cards as SBC fodder, and only track calls on cards with room to move."
-    },
-    {
-      "date": "2026-10-02T20:14:00Z",
-      "kind": "miss",
-      "text": "The \"cheapest Item Score\" move flipped between 84s, 85s and 86s about ten times in one day because their per-point costs sit within 0.1 of each other. Treat gaps under 0.1 coins per point as a tie and don't log a correction for them."
-    },
-    {
-      "date": "2026-10-07T04:13:42Z",
-      "kind": "miss",
-      "text": "Listed a Destined for Glory Team 3 date from EA's weekly cadence, but FUTBIN and FUT.GG show no third squad. Only list a promo squad once FUTBIN, FUT.GG or EA names it."
-    },
-    {
-      "date": "2026-10-08T08:14:26Z",
-      "kind": "miss",
-      "text": "Called a lasting fodder dump from one reading (86s at 750) an hour after the Rivals payout; it was back at 4,200 within an hour. Wait for two consecutive updates before treating a post-payout floor as real."
-    }
-  ]
+ "calls": [
+  {
+   "checkAt": "2026-10-02T17:00:00+02:00",
+   "confidence": "medium",
+   "entry": 650,
+   "entryAt": "2026-10-01T10:00:00+02:00",
+   "entryRecordedAt": "2026-10-01T08:29:00Z",
+   "exit": 650,
+   "gradedAt": "2026-10-02T15:14:03Z",
+   "id": "c-2026-10-01-84floor",
+   "lesson": "Assumed the 84 floor could rise before exit, but 81–84 all sit at a hard 650 floor, so the 5% tax guarantees a loss; use floor cards as SBC fodder, and only track calls on cards with room to move.",
+   "madeAt": "2026-09-30T18:26:38Z",
+   "note": "Entry is the cheapest 84 on FUT.GG at the first update after 10:00 Thursday",
+   "ref": {
+    "kind": "floor",
+    "label": "FUT.GG cheapest 84",
+    "ovr": 84,
+    "source": "FUT.GG",
+    "url": "https://www.fut.gg/cheapest-by-rating/"
+   },
+   "result": -5.1,
+   "rule": "buy_after_tax",
+   "status": "miss",
+   "title": "Buy 84-rated fodder Thursday morning, sell or use by Friday 17:00",
+   "tone": "buy"
+  },
+  {
+   "checkAt": "2026-10-03T12:00:00+02:00",
+   "confidence": "medium",
+   "entry": null,
+   "entryAt": "2026-10-02T17:00:00+02:00",
+   "exit": null,
+   "id": "c-2026-10-02-isak",
+   "madeAt": "2026-09-30T18:26:38Z",
+   "note": "609,000 on FUTBIN when the call was made. Entry not recorded: the nearest FUTBIN reading (481,000 at 20:00 UTC) is over 3 hours after the entry time, so it stays pending and is voided if still unreadable 12 hours past due. Voided 2026-10-03T03:13:12Z: entry still unreadable 12 hours past due (FUTBIN blocked).",
+   "ref": {
+    "kind": "player",
+    "label": "FUTBIN Destined for Glory page, PS price",
+    "name": "Alexander Isak",
+    "ovr": 88,
+    "source": "FUTBIN",
+    "url": "https://www.futbin.com/27/totw/DestinedForGlory",
+    "version": "Destined for Glory"
+   },
+   "result": null,
+   "rule": "sell_lower",
+   "status": "void",
+   "title": "Sell DFG Isak (88) before the Friday 19:00 promo",
+   "tone": "sell"
+  },
+  {
+   "checkAt": "2026-10-09T09:30:00+02:00",
+   "confidence": "low",
+   "entry": 4200,
+   "entryAt": "2026-10-08T09:30:00+02:00",
+   "entryRecordedAt": "2026-10-08T08:14:26Z",
+   "exit": null,
+   "id": "c-2026-10-08-86floor",
+   "madeAt": "2026-10-08T07:14:10Z",
+   "note": "86 floor was 750 at the time of the call, down from 6,000 an hour earlier. Hits if it recovers above about 790 after tax. Lesson relied on: floor cards at a hard floor lose to the 5% tax, so this only works because 86 is far below its usual level. Entry read at the first update after the entry time: 86 floor was already 4,200, so the 750 dump had ended.",
+   "ref": {
+    "kind": "floor",
+    "label": "FUT.GG cheapest 86",
+    "ovr": 86,
+    "source": "FUT.GG",
+    "url": "https://www.fut.gg/cheapest-by-rating/"
+   },
+   "result": null,
+   "rule": "buy_after_tax",
+   "status": "open",
+   "title": "Buy 86-rated fodder after the Rivals dump, check in 24 hours",
+   "tone": "buy"
+  }
+ ],
+ "lessons": [
+  {
+   "date": "2026-09-30T18:26:38Z",
+   "text": "Coin-seller blogs contradicted each other on basic dates. Only EA, FUT.GG, FUTBIN, FUT Sheriff, FifaTradingRomania and The FUT Accountant are used now."
+  },
+  {
+   "date": "2026-09-30T18:26:38Z",
+   "text": "FUT.GG and FUTBIN can show different prices for the same card. Every call is graded on the same site and page it was made from."
+  },
+  {
+   "date": "2026-09-30T19:20:05Z",
+   "kind": "miss",
+   "text": "Listed the Mora and Pedro Gonçalves OTW SBCs as upcoming on 30 Sep, but both posts were from 11–16 Sep and FUTBIN shows the SBC already released and expired (Ones to Watch Duo Pick 1). Check each post's date and FUTBIN's past SBCs before listing a drop."
+  },
+  {
+   "date": "2026-09-30T19:20:05Z",
+   "kind": "hit",
+   "text": "The two-source rule held: FUT Sheriff and FifaTradingRomania both reported the Mora vs Pedro Gonçalves OTW Pick SBC on 16 Sep, and it landed as described."
+  },
+  {
+   "date": "2026-09-30T19:48:34Z",
+   "kind": "tip",
+   "status": "new",
+   "text": "Sell-before-promo calls are for spare cards only. Keep the cards you play Champions with that weekend: selling and rebuying them costs the 5% tax and usually a higher Friday price.",
+   "tipId": "4d2f57d7l9pknakf169p"
+  },
+  {
+   "date": "2026-10-01T05:33:00Z",
+   "kind": "miss",
+   "text": "Repeated FUTBIN's +25% Index 100 day change for ~10 hours as a reason to sell, then it reset to +1.3%. Don't base a verdict on one day-change figure; use the index level, momentum gauge and EA's reward times together."
+  },
+  {
+   "date": "2026-10-01T11:28:00Z",
+   "kind": "miss",
+   "text": "The fodder move said 09:00–13:00 but floors stayed at 650 well past 13:00. Tie fodder buy windows to a price level (e.g. while the 84 floor is at 650), not a fixed clock time."
+  },
+  {
+   "date": "2026-10-01T15:45:00Z",
+   "kind": "miss",
+   "text": "Earlier updates wrote plain clock times in text. Write every time as a {{t:...}} token so each viewer sees their own zone."
+  },
+  {
+   "date": "2026-10-01T20:21:42Z",
+   "kind": "miss",
+   "text": "FUT.GG's SBC list showed Item Score requirements (700,000, 90,000) where a coin cost was expected. Take SBC coin costs from FUTBIN's console column and label Item Score separately."
+  },
+  {
+   "callId": "c-2026-10-01-84floor",
+   "date": "2026-10-02T15:14:03Z",
+   "kind": "miss",
+   "text": "Assumed the 84 floor could rise before exit, but 81–84 all sit at a hard 650 floor, so the 5% tax guarantees a loss; use floor cards as SBC fodder, and only track calls on cards with room to move."
+  },
+  {
+   "date": "2026-10-02T20:14:00Z",
+   "kind": "miss",
+   "text": "The \"cheapest Item Score\" move flipped between 84s, 85s and 86s about ten times in one day because their per-point costs sit within 0.1 of each other. Treat gaps under 0.1 coins per point as a tie and don't log a correction for them."
+  },
+  {
+   "date": "2026-10-07T04:13:42Z",
+   "kind": "miss",
+   "text": "Listed a Destined for Glory Team 3 date from EA's weekly cadence, but FUTBIN and FUT.GG show no third squad. Only list a promo squad once FUTBIN, FUT.GG or EA names it."
+  },
+  {
+   "date": "2026-10-08T08:14:26Z",
+   "kind": "miss",
+   "text": "Called a lasting fodder dump from one reading (86s at 750) an hour after the Rivals payout; it was back at 4,200 within an hour. Wait for two consecutive updates before treating a post-payout floor as real."
+  }
+ ]
 }
