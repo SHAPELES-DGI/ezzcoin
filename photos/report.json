@@ -55,6 +55,11 @@
 "ovr": 85,
 "why": "no Wikidata footballer with this name and a photo"
 },
+"259565": {
+"name": "Yoan Bonny",
+"ovr": 78,
+"why": "no Wikidata footballer with this name and a photo"
+},
 "259579": {
 "name": "Salomón Rodríguez",
 "ovr": 68,
@@ -78,6 +83,11 @@
 "262906": {
 "name": "Yannik Engelhardt",
 "ovr": 74,
+"why": "no Wikidata footballer with this name and a photo"
+},
+"263765": {
+"name": "Tom Bischof",
+"ovr": 79,
 "why": "no Wikidata footballer with this name and a photo"
 },
 "264452": {
@@ -140,6 +150,21 @@
 "ovr": 79,
 "why": "no Wikidata footballer with this name and a photo"
 },
+"70786": {
+"name": "Josh King",
+"ovr": 74,
+"why": "2 footballers with this name"
+},
+"70966": {
+"name": "Jacobo Ramón Naveros",
+"ovr": 76,
+"why": "no Wikidata footballer with this name and a photo"
+},
+"70967": {
+"name": "Carlos Espí Escrihuela",
+"ovr": 77,
+"why": "no Wikidata footballer with this name and a photo"
+},
 "73014": {
 "name": "Cornelia Kramer",
 "ovr": 78,
@@ -156,6 +181,6 @@
 "why": "no Wikidata footballer with this name and a photo"
 }
 },
-"photos": 769,
-"players": 877
+"photos": 777,
+"players": 889
 }
