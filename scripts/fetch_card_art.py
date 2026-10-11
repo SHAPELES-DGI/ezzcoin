@@ -3,6 +3,8 @@
 import concurrent.futures, html, json, os, re, sys, unicodedata, urllib.request, subprocess
 from html.parser import HTMLParser
 ROOT = sys.argv[1] if len(sys.argv) > 1 else "."
+MIN_OVR = 75  # same cutoff as scripts/build_pages.py
+NEW_PER_RUN = 300  # new FUT.GG page lookups per run; the rest follow on later runs
 PATH = os.path.join(ROOT, "data", "card-art.json")
 MAP = {"ø":"o","Ø":"o","ß":"ss","ł":"l","Ł":"l","æ":"ae","Æ":"ae","œ":"oe","đ":"d","Đ":"d","ı":"i","ð":"d","þ":"th"}
 def slug(value):
@@ -19,7 +21,7 @@ def candidates():
             pid, ovr, name = int(row[cols["id"]]), int(row[cols["ovr"]] or 0), row[cols["name"]]
         except (KeyError, TypeError, ValueError):
             continue
-        if ovr >= 80 and name:
+        if ovr >= MIN_OVR and name:
             out[str(pid)] = (pid, name)
     for filename in ("newcards.json", "legends.json"):
         path = os.path.join(ROOT, "data", filename)
@@ -37,7 +39,7 @@ def candidates():
                 item, player = int(item), int(player)
             except (TypeError, ValueError):
                 continue
-            if name and int(card.get("ovr") or 0) >= 80:
+            if name and int(card.get("ovr") or 0) >= MIN_OVR:
                 out[str(item)] = (player, name)
     return out
 class PlayStyleParser(HTMLParser):
@@ -107,8 +109,10 @@ try:
 except (OSError, ValueError, AttributeError):
     playstyles = {}
 todo = [(item, info) for item, info in candidates().items() if item not in cached or item not in playstyles]
+waiting = max(0, len(todo) - NEW_PER_RUN)
+todo = todo[:NEW_PER_RUN]
 if todo:
-    with concurrent.futures.ThreadPoolExecutor(max_workers=10) as pool:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
         for item, url, styles in pool.map(fetch, todo):
             if url:
                 cached[item] = url
@@ -119,7 +123,7 @@ with open(PATH, "w", encoding="utf-8") as fh:
     json.dump(cached, fh, ensure_ascii=False, separators=(",", ":"))
 with open(os.path.join(ROOT, "data", "playstyles.json"), "w", encoding="utf-8") as fh:
     json.dump({"_version": 2, "cards": playstyles}, fh, ensure_ascii=False, separators=(",", ":"))
-print("Cached FUT.GG artwork for %d cards; regular PlayStyles for %d cards (%d new lookups)." % (len(cached), len(playstyles), len(todo)))
+print("Cached FUT.GG artwork for %d cards; regular PlayStyles for %d cards (%d new lookups, %d waiting for later runs)." % (len(cached), len(playstyles), len(todo), waiting))
 
 # Keep full renders separate from portrait images and require an FC 27 item URL.
 render_path = os.path.join(ROOT, "data", "card-renders.json")

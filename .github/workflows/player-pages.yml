@@ -4,6 +4,9 @@ on:
     branches: [main]
     paths: [data/players.json, data/newcards.json, data/legends.json, scripts/build_pages.py, scripts/fetch_card_art.py, scripts/chem.min.js, scripts/meta.py, flags/codes.json]
   workflow_dispatch:
+  # Every 4 hours too, so artwork for newly added pages fills in a few hundred cards at a time.
+  schedule:
+    - cron: '17 */4 * * *'
 permissions:
   contents: write
 concurrency:

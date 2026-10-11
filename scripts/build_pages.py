@@ -19,7 +19,7 @@ from meta import meta  # noqa: E402  (same folder)
 
 ROOT = sys.argv[1] if len(sys.argv) > 1 else "."
 BASE = os.environ.get("EZZ_BASE", "https://ezzcoins.com/")
-MIN_OVR = 80
+MIN_OVR = 75
 BANNER = "<!-- © 2026 Ezzcoins. All rights reserved. Copying or reuse of this code is not permitted. -->"
 SLUG_MAP = {"ø": "o", "Ø": "o", "ß": "ss", "ł": "l", "Ł": "l", "æ": "ae", "Æ": "ae",
             "œ": "oe", "đ": "d", "Đ": "d", "ı": "i", "ð": "d", "þ": "th"}
