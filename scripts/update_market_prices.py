@@ -162,9 +162,12 @@ def main():
               "cols": ["id", "console", "pc", "consoleState", "pcState"], "rows": rows,
               "statusLabels": {"0": "Market card", "1": "SBC", "2": "Objective", "3": "No market price", "4": "Token reward"},
               "sourceFiles": urls}
-    checked_at = utc() if batches else cached.get("unresolvedCheckedAt")
-    write_json(card_path, {"source": "FUT.GG", "updatedAt": utc(), "cols": COLS, "unresolvedCheckedAt": checked_at,
-                           "rows": sorted(cards.values(), key=lambda row: row[0]), "unresolved": sorted(unresolved)})
+    # The day is all the retry logic needs; a full timestamp would rewrite this 1 MB file on every run.
+    checked_at = utc()[:10] if batches else cached.get("unresolvedCheckedAt")
+    card_doc = {"source": "FUT.GG", "updatedAt": utc(), "cols": COLS, "unresolvedCheckedAt": checked_at,
+                "rows": sorted(cards.values(), key=lambda row: row[0]), "unresolved": sorted(unresolved)}
+    if {k: v for k, v in card_doc.items() if k != "updatedAt"} != {k: v for k, v in cached.items() if k != "updatedAt"}:
+        write_json(card_path, card_doc)
     write_json(DATA / "live-prices.json", output)
     write_json(metadata_path, metadata)
     added = publish(DATA, metadata, {r[0]: r for r in rows}, published["console"], quote_metadata)

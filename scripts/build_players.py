@@ -163,9 +163,18 @@ def main():
             if r[0] is None or r[0] in seen:
                 continue
             seen.add(r[0]); rows.append(r)
-    # Preserve verified UT positions when EA's public ratings list has fewer.
+    # Preserve verified UT positions when EA's public ratings list has fewer. data/ut-positions.json is written by
+    # scripts/market_extras.py from the card metadata cache, which no longer lives in the repository.
+    ut_path = os.path.join(os.path.dirname(out), "ut-positions.json")
     cache_path = os.path.join(os.path.dirname(out), "card-metadata.json")
-    if os.path.exists(cache_path):
+    if os.path.exists(ut_path):
+        with open(ut_path, encoding="utf-8") as fh:
+            positions = json.load(fh).get("positions", {})
+        for r in rows:
+            v = positions.get(str(r[0]))
+            if v and v[0] == r[4] and v[1] == r[5] and isinstance(v[2], str):
+                r[6] = v[2]
+    elif os.path.exists(cache_path):
         with open(cache_path, encoding="utf-8") as fh:
             metadata = json.load(fh)
         for r in rows:

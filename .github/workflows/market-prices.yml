@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: [scripts/update_market_prices.py, scripts/card_catalog.py, scripts/futbin_prices.py, scripts/update_sbcs.py, scripts/sync_home_prices.py, .github/workflows/market-prices.yml]
+    paths: [scripts/update_market_prices.py, scripts/card_catalog.py, scripts/futbin_prices.py, scripts/update_sbcs.py, scripts/sync_home_prices.py, scripts/market_extras.py, .github/workflows/market-prices.yml]
 permissions:
   contents: write
   pages: write
@@ -22,6 +22,21 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+      # The 6 MB card metadata cache and the hourly price snapshots live in the Actions cache, not in git,
+      # so they don't grow the repository on every run.
+      - name: Restore market caches
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            data/card-metadata.json
+            data/.cache
+          key: market-cache-${{ github.run_id }}
+          restore-keys: market-cache-
+      - name: Seed card metadata if the cache is empty
+        run: |
+          if [ ! -s data/card-metadata.json ]; then
+            curl -fsSL "https://raw.githubusercontent.com/SHAPELES-DGI/ezzcoin/b49d74fca57a9e6c9af18435f4032f8df12c702d/data/card-metadata.json" -o data/card-metadata.json || rm -f data/card-metadata.json
+          fi
       - name: Validate exact card discovery
         run: |
           python3 scripts/test_card_catalog.py
@@ -36,13 +51,25 @@ jobs:
         continue-on-error: true
       - name: Sync Home and trading prices
         run: python3 scripts/sync_home_prices.py
+      - name: Market index, trending cards and cheapest cards by rating
+        run: python3 scripts/market_extras.py
+        continue-on-error: true
+      - name: Save market caches
+        if: always()
+        continue-on-error: true
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            data/card-metadata.json
+            data/.cache
+          key: market-cache-${{ github.run_id }}-${{ github.run_attempt }}
       - name: Rebuild player pages for newly discovered cards
         run: python3 scripts/build_pages.py .
       - name: Commit refreshed prices
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/legends.json data/sbcsolutions.json data/snapshot.json data/prices.json data/topprices.json data/trending.json data/players.json data/live-prices.json data/market-cards.json data/card-metadata.json data/futbin-prices.json data/newcards.json data/card-ids.json data/card-renders.json p sitemap.xml
+          git add data/legends.json data/sbcsolutions.json data/snapshot.json data/prices.json data/topprices.json data/trending.json data/players.json data/live-prices.json data/market-cards.json data/futbin-prices.json data/market.json data/cheapest.json data/market-index.json data/ut-positions.json data/newcards.json data/card-ids.json data/card-renders.json p sitemap.xml
           if ! git diff --cached --quiet; then
             git commit -m "Refresh FC 27 cards, artwork, player pages and market prices"
             # Another data/page workflow can push between fetch and push.

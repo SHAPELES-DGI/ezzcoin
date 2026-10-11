@@ -139,6 +139,8 @@ def publish(data, metadata, prices, published_at, quote_metadata=None):
     write(data / "legends.json", legends)
     write(data / "newcards.json", catalog)
     write(data / "card-ids.json", ids)
+    # Stable key order, so an unchanged artwork map is never rewritten (it is 2 MB).
+    renders = dict(sorted(renders.items(), key=lambda kv: (0, int(kv[0]), "") if kv[0].isdigit() else (1, 0, kv[0])))
     write(data / "card-renders.json", renders)
     if base_added or positions_updated:
         roster["count"] = len(roster["rows"])

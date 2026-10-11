@@ -19,7 +19,7 @@ ROOT = sys.argv[1] if len(sys.argv) > 1 else "."
 MIN_OVR = 80
 SPECIAL = 1000000000  # Icons and Heroes are keyed SPECIAL + FUTBIN id, like special cards on the site
 WIDTH = 360
-UA = "EzzcoinsPhotoBot/1.0 (https://shapeles-dgi.github.io/ezzcoin/; https://github.com/SHAPELES-DGI/ezzcoin)"
+UA = "EzzcoinsPhotoBot/1.0 (https://ezzcoins.com/; https://github.com/SHAPELES-DGI/ezzcoin)"
 SPARQL = "https://query.wikidata.org/sparql"
 COMMONS = "https://commons.wikimedia.org/w/api.php"
 # Free licences only: public domain, CC0, CC BY, CC BY-SA, and Commons' plain "Attribution" licence (credit the author).
