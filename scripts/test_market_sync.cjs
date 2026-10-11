@@ -14,5 +14,18 @@ vm.createContext(context);vm.runInContext(fs.readFileSync('market-data.js','utf8
   assert.equal(events[0].detail,data);
   context.fetch=async url=>{if(url.includes('raw.githubusercontent'))return {ok:true,json:async()=>fresh};throw Error('deployed unavailable');};
   assert.equal((await context.window.EzzcoinsMarket.fetchData('live-prices.json')).retrievedAt,fresh.retrievedAt);
+  const relay='https://api.ezzcoins.com/', live={...feed(new Date().toISOString()), relay:'api.ezzcoins.com'};
+  let asked=[];
+  context.fetch=async url=>{asked.push(url);return {ok:true,json:async()=>url.startsWith(relay)?live:fresh};};
+  assert.equal((await context.window.EzzcoinsMarket.fetchData('live-prices.json')).relay,'api.ezzcoins.com');
+  assert.deepEqual(asked,[relay+'live-prices.json']);
+  context.fetch=async url=>({ok:true,json:async()=>url.startsWith(relay)?{...live,publishedAt:{console:'2026-10-06T00:00:00Z',pc:'2026-10-06T00:00:00Z'}}:fresh});
+  assert.equal((await context.window.EzzcoinsMarket.fetchData('live-prices.json')).retrievedAt,fresh.retrievedAt);
+  context.fetch=async url=>{if(url.startsWith(relay))throw Error('relay down');return {ok:true,json:async()=>fresh};};
+  assert.equal((await context.window.EzzcoinsMarket.fetchData('live-prices.json')).retrievedAt,fresh.retrievedAt);
+  asked=[];context.fetch=async url=>{asked.push(url);return {ok:true,json:async()=>fresh};};
+  await context.window.EzzcoinsMarket.fetchData('players.json');
+  assert(!asked.some(url=>url.startsWith(relay)));
   console.log('Newest snapshot selection, shared quote event and source fallback pass');
+  console.log('Live relay: fresh copy used alone; stale or unreachable relay falls back to GitHub copies');
 })().catch(error=>{console.error(error);process.exitCode=1;});

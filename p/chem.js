@@ -11,10 +11,10 @@
   if(!match)return;
   const id=Number(match[1]),key=id>=1000000000?id-1000000000:id;
   const base=new URL('../../',location.href);
-  const fetchJSON=async name=>{const urls=[new URL('data/'+name,base).href];urls.unshift('https://raw.githubusercontent.com/SHAPELES-DGI/ezzcoin/main/data/'+name);for(const url of urls){try{const r=await fetch(url+'?t='+Math.floor(Date.now()/60000),{cache:'no-store'});if(r.ok)return await r.json()}catch{}}return null};
+  const fetchJSON=async name=>{const urls=[new URL('data/'+name,base).href];urls.unshift('https://raw.githubusercontent.com/SHAPELES-DGI/ezzcoin/main/data/'+name);if(name==='live-prices.json')urls.unshift('https://api.ezzcoins.com/live-prices.json');for(const url of urls){try{const live=url.startsWith('https://api.ezzcoins.com/'),r=await fetch(live?url:url+'?t='+Math.floor(Date.now()/60000),{cache:live?'no-cache':'no-store'});if(r.ok){const d=await r.json();if(!live||Date.now()-(Date.parse(d?.publishedAt?.console||'')||0)<18e5)return d}}catch{}}return null};
   const ids=await fetchJSON('card-ids.json'),item=ids?.[key]||key,img=document.querySelector('.card-art');
   const refresh=async()=>{const live=await fetchJSON('live-prices.json'),row=live?.rows?.find(r=>r[0]===item),el=document.getElementById('px');if(!row||!el)return;if(row[3]!==0){el.textContent=live.statusLabels?.[row[3]]||'No market price';return}if(!(row[1]>0)){el.textContent='No listings';return;}el.replaceChildren();const b=document.createElement('b'),span=document.createElement('span');const coin=document.createElement('i');coin.className='coin';coin.setAttribute('aria-hidden','true');b.append(coin,document.createTextNode(Number(row[1]).toLocaleString('en-US')));const quote=live.quoteMetadata?.[String(item)]?.console;const at=quote?.at||live.publishedAt.console,m=Math.max(0,Math.round((Date.now()-Date.parse(at))/60000)),h=Math.floor(m/60),ago=m<1?'just now':m<60?m+' min ago':h<48?h+' h ago':Math.floor(h/24)+' days ago';span.className='price-updated';span.textContent='Updated '+ago;span.title=new Date(at).toLocaleString();const source=document.getElementById('price-source');if(source)source.textContent='Console · '+(quote?.src||live.source)+' · '+new Date(at).toLocaleString();el.append(b,span)};
-  await refresh();setInterval(refresh,300000);
+  await refresh();setInterval(refresh,60000);
 })();
 
 if(!window.EzzcoinsCardArt){const artScript=document.createElement("script");artScript.src=new URL("../../card-art.js?v=20261006-fb1",location.href);document.head.appendChild(artScript);}

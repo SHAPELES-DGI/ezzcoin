@@ -5,8 +5,24 @@
   let cached = null;
   let pending = null;
   let loadedAt = 0;
+  // Live relay on the Ezzcoins server: republishes FUT.GG prices within about a minute of release.
+  // Used only while its copy is fresh; otherwise the GitHub copies below are compared as before.
+  const LIVE_API = 'https://api.ezzcoins.com/';
+  const LIVE_FILES = new Set(['live-prices.json']);
+  async function fetchLive(name) {
+    // no-cache revalidates with the server, so unchanged prices cost a tiny 304 reply.
+    const response = await fetch(LIVE_API + name, { cache: 'no-cache', signal: AbortSignal.timeout(8000) });
+    if (!response.ok) throw new Error('Live relay unavailable');
+    const data = await response.json();
+    const published = Date.parse(data?.publishedAt?.console || '') || 0;
+    if (Date.now() - published > 30 * 60000) throw new Error('Live relay copy is stale');
+    return data;
+  }
   async function fetchData(name) {
     if (!/^[a-z-]+\.json$/.test(name)) throw new Error('Invalid data filename');
+    if (LIVE_FILES.has(name)) {
+      try { return await fetchLive(name); } catch (_) { /* Fall back to the GitHub copies. */ }
+    }
     // Compare deployment and repository copies: either CDN can lag a refresh.
     // Use the newest timestamp and retain either host as an availability fallback.
     const urls = [new URL('data/' + name, root).href,
