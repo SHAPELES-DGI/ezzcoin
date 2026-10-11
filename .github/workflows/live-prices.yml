@@ -1,0 +1,37 @@
+name: Live prices (fast lane)
+# The Ezzcoins server starts this every 3 minutes (workflow_dispatch), because GitHub's own
+# schedule runs 10-25 minutes late. The 10-minute schedule is only a backup if the server is down.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/10 * * * *'
+permissions:
+  contents: write
+concurrency:
+  group: live-prices
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: scripts
+          fetch-depth: 1
+      - name: Fetch FUT.GG's newest public prices
+        run: python3 scripts/live_prices.py --out "$RUNNER_TEMP/live"
+      # The live branch always holds one commit that is replaced each time, so price history
+      # never builds up in the repository. Pushing it does not rebuild or redeploy the site.
+      - name: Publish to the live branch
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd "$RUNNER_TEMP/live" 2>/dev/null || exit 0
+          [ -f live-prices.json ] || exit 0
+          git init -q -b live
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add live-prices.json stamp.json
+          git commit -q -m "Live FC 27 prices"
+          git push -q -f "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" live
