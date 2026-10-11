@@ -170,6 +170,11 @@
 "ovr": 78,
 "why": "no Wikidata footballer with this name and a photo"
 },
+"75272": {
+"name": "Will Lankshear",
+"ovr": 70,
+"why": "no Wikidata footballer with this name and a photo"
+},
 "75320": {
 "name": "Ismaëlo Ganiou",
 "ovr": 77,
@@ -179,8 +184,13 @@
 "name": "Weslley Pinto Batista",
 "ovr": 72,
 "why": "no Wikidata footballer with this name and a photo"
+},
+"81539": {
+"name": "Divine Mukasa",
+"ovr": 69,
+"why": "no Wikidata footballer with this name and a photo"
 }
 },
-"photos": 777,
-"players": 889
+"photos": 779,
+"players": 893
 }
