@@ -175,7 +175,7 @@
   #tx-layout #tx-board .clock .v{font-size:26px}
   #tx-layout .tx-meter{grid-template-columns:minmax(0,1fr);gap:14px;padding-top:16px}
   #tx-layout .tx-meter-read strong{font-size:50px}
-  #tx-layout .tx-jump{margin:0 -16px;padding:2px 16px}
+  #tx-layout .tx-jump{margin:0 -12px;padding:2px 12px}
   #tx-layout .tx-jump .tx-jump-plan{margin-left:0}
   #tx-layout .tx-slot>.card,#tx-layout .tx-slot>.ez-card,#tx-layout .tx-slot>details.card{padding:18px 16px!important;border-radius:16px!important}
   #tx-layout .card-head h2,#tx-layout .ez-card>h3,#tx-layout .rec-title h2{font-size:23px!important}

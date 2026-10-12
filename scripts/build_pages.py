@@ -35,6 +35,7 @@ REGULAR_PLAYSTYLES = {}
 BAKE_MOVE = 0.20  # rewrite a page's baked price only when the live price moved more than 20%
 BAKE_MIN = 1000   # ... and by at least this many coins (cheap cards jump 30% between 700 and 1,000)
 LIVE = {}          # EA item id -> (console price or None, state) from data/live-prices.json
+TRANSFER_OFFSET = 50331648  # EA's new base item for a player who changed club: old id + 3 x 2^24
 LIVE_OK = False    # False when the live feed is missing or too small to trust: pages then keep their old price
 OLD_PRICES = {}    # page path -> price baked into the page before this build
 STATE_TXT = {1: "SBC card · not tradeable", 2: "Objective card · not tradeable", 3: "Not on the transfer market",
@@ -268,7 +269,7 @@ def chem_box(x, up):
     return (f'<section class="chem" id="chem" data-s="{e(data)}" data-pos="{e(x["p"])}" data-alt="{e(x["a"] or "")}" data-ovr="{x["o"]}" '
             f'data-sm="{e(x["sm"] or "")}" data-wf="{e(x["wf"] or "")}" data-ps="{e(x["ps"] or "")}"><h2>Chemistry style</h2>'
             f'<p class="chem-note">Turn on JavaScript to see this card with each chemistry style.</p></section>'
-            f'<script src="{up}market-data.js?v=20261006-fb1"></script><script src="{up}p/chem.js?v={CSS_V}" defer></script>')
+            f'<script src="{up}market-data.js?v=20261013-fix"></script><script src="{up}p/chem.js?v={CSS_V}" defer></script>')
 
 
 ADSENSE = "<script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5351346431839799\" crossorigin=\"anonymous\"></script>"
@@ -324,7 +325,11 @@ def baked_price(path, item):
     if not LIVE_OK:
         return (old, None) if old else (None, "No console price right now.")
     try:
-        new, state = LIVE.get(int(item), (None, None))
+        item = int(item)
+        # A player who changes club gets a new base item (old id + 3 x 2^24); the feed lists only that one.
+        if item not in LIVE and 0 < item < TRANSFER_OFFSET // 3:
+            item += TRANSFER_OFFSET
+        new, state = LIVE.get(item, (None, None))
     except (TypeError, ValueError):
         new, state = None, None
     if new is None:
@@ -412,8 +417,8 @@ def player_page(x, codes, by_club, by_nat, specials_of, credits):
         more += f'<h2>More from {e(x["nat"])}</h2>' + card_list(natmates, codes, up, lambda y: y["c"])
     script = ("<script>(()=>{const id=%s,el=document.getElementById('px'),g=f=>window.EzzcoinsMarket.fetchData(f).catch(()=>null);"
               "const load=()=>Promise.all([g('prices.json'),g('topprices.json'),g('live-prices.json')]).then(([a,b,live])=>{"
-              "const row=live&&Array.isArray(live.rows)?live.rows.find(r=>Number(r[0])===Number(id)):null;"
-              "const meta=live&&live.quoteMetadata&&live.quoteMetadata[String(id)]&&live.quoteMetadata[String(id)].console;const lp=row&&row[3]===0&&row[1]>0?{price:row[1],at:meta&&meta.at||live.publishedAt.console,src:meta&&meta.src||live.source}:null;"
+              "const rows=live&&Array.isArray(live.rows)?live.rows:[],row=rows.find(r=>Number(r[0])===Number(id))||(Number(id)<16777216?rows.find(r=>Number(r[0])===Number(id)+50331648):null)||null;"
+              "const meta=row&&live.quoteMetadata&&live.quoteMetadata[String(row[0])]&&live.quoteMetadata[String(row[0])].console;const lp=row&&row[3]===0&&row[1]>0?{price:row[1],at:meta&&meta.at||live.publishedAt.console,src:meta&&meta.src||live.source}:null;"
               "const c=lp||[a&&a.players&&a.players[id],b&&b.players&&b.players[id]].filter(p=>p&&p.price>0&&Number.isFinite(Date.parse(p.at))).sort((x,y)=>Date.parse(y.at)-Date.parse(x.at))[0];"
               "if(!c)return;const m=Math.round((Date.now()-Date.parse(c.at))/6e4),h=Math.floor(m/60),ago=m<1?'just now':m<60?m+' min ago':h<48?h+' h ago':Math.floor(h/24)+' days ago';"
               "const label=c.src==='FUT.GG'?'FUT.GG feed updated':'Console price from '+(c.src||'FUTBIN');"
@@ -754,7 +759,7 @@ def main():
     os.makedirs(os.path.join(out, "credits"), exist_ok=True)
     with open(os.path.join(out, "credits", "index.html"), "w", encoding="utf-8") as fh:
         fh.write(credits_page(credits, allp, {x["id"]: x for x in legends}))
-    urls = [BASE, BASE + "prices.html", BASE + "privacy.html", BASE + "p/", BASE + "p/credits/"] + [BASE + "p/" + x["path"] for x in specials + legends + players]
+    urls = [BASE, BASE + "prices.html", BASE + "tools.html", BASE + "privacy.html", BASE + "p/", BASE + "p/credits/"] + [BASE + "p/" + x["path"] for x in specials + legends + players]
     with open(os.path.join(ROOT, "sitemap.xml"), "w", encoding="utf-8") as fh:
         fh.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
                  + "".join(f"<url><loc>{e(u)}</loc></url>\n" for u in urls) + "</urlset>\n")

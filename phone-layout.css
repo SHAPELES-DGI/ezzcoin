@@ -55,3 +55,6 @@
  .ezz-main.mobile-search-active #plCard{padding-top:12px}
  .ezz-main #plList{scroll-margin-top:145px}
 }
+
+@media(max-width:600px){.ezz-main .hscroll{margin-inline:-12px;padding-left:12px;padding-right:12px;scroll-padding-left:12px}
+.ezz-prices th{letter-spacing:.03em}.ezz-prices th:nth-child(1){width:40%}.ezz-prices th:nth-child(3){width:17%}.ezz-prices th:nth-child(5){width:32%}.ezz-prices th.price-col{white-space:normal}}

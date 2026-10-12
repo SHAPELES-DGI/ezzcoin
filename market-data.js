@@ -50,12 +50,15 @@
     if (data.rows.some(r => !Array.isArray(r) || r.length !== 5 || !Number.isSafeInteger(r[0]) || r[0] <= 0 || [1,2].some(c => r[c] !== null && (!Number.isInteger(r[c]) || r[c] <= 0 || r[c] > 15000000)) || [3,4].some(c => !Number.isInteger(r[c]) || r[c] < 0 || r[c] > 4)) || new Set(data.rows.map(r=>r[0])).size !== data.rows.length) throw new Error('Invalid price rows');
     return { ...data, byId: new Map(data.rows.map(row => [row[0], row])) };
   }
+  // A player who changes club gets a new base item from EA (old id + 3 × 2^24) and the feed lists only that one.
+  const TRANSFER_OFFSET = 50331648;
   function lookup(data, id, platform = 'console') {
-    const row = data?.byId.get(Number(id));
+    const n = Number(id);
+    const row = data?.byId.get(n) || (n > 0 && n < 16777216 ? data?.byId.get(n + TRANSFER_OFFSET) : undefined);
     if (!row) return null;
     const col = platform === 'pc' ? 2 : 1;
     const status = row[col + 2];
-    const quote = data.quoteMetadata?.[String(id)]?.[platform];
+    const quote = data.quoteMetadata?.[String(row[0])]?.[platform];
     return { id: row[0], price: status === 0 && row[col] > 0 ? row[col] : null, status,
       at: quote?.at || data.publishedAt[platform], src: quote?.src || data.source, hist: [], ...freshness(quote?.at || data.publishedAt[platform]) };
   }

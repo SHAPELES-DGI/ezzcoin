@@ -16,6 +16,9 @@ assert b.baked_price("c/", 3) == (10000, None), "moves within 20% keep the old p
 assert b.baked_price("d/", 4) == (None, "SBC card · not tradeable")
 assert b.baked_price("e/", 5) == (None, "No listings right now.")
 assert b.baked_price("f/", 99) == (None, "No console price right now.")
+b.LIVE[247090 + 50331648] = (4900, 0)
+assert b.baked_price("g/", 247090) == (4900, None), "a transferred player's new base item gives his price"
+assert b.baked_price("h/", 247090 + 50331648) == (4900, None)
 b.LIVE_OK = False
 assert b.baked_price("b/", 2) == (10000, None), "an unusable feed keeps every old price"
 print("Baked page prices: thresholds, states and feed fallback pass")

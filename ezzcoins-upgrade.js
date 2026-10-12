@@ -24,6 +24,7 @@
   const saveJSON = (key, value) => { try { localStorage.setItem(key, JSON.stringify(value)); } catch { toast('Browser storage is unavailable; this change will not persist.'); } };
   const savedAlerts = () => { const a = getJSON(STORAGE.alerts, []); return Array.isArray(a) ? a.filter(x => x && typeof x.key === 'string' && validPrice(x.target)) : []; };
   const isFresh = () => window.EzzcoinsMarket.freshness(state.market?.publishedAt?.console||state.snapshot?.updatedAt).usable;
+  const ageNote = () => window.EzzcoinsMarket.freshness(state.market?.publishedAt?.console||state.snapshot?.updatedAt).freshness === 'delayed' ? 'Prices are more than 15 minutes old. Refresh before acting.' : 'Prices are unavailable or more than 90 minutes old. Refresh before acting.';
 
   function toast(message) {
     let el = $('.ez-toast');
@@ -182,7 +183,7 @@
   }
 
   function allocationFor(budget) {
-    if (!isFresh()) return [['Keep liquid', 100, 'Market data is stale or unavailable. Refresh before acting.']];
+    if (!isFresh()) return [['Keep liquid', 100, ageNote()]];
     const moves = state.snapshot?.moves || [];
     const buys = moves.filter(m => m.tone === 'buy');
     const highRiskMarket = moves.some(m => /still falling|wait/i.test(m.title || '') || m.tone === 'hold');
@@ -389,7 +390,7 @@
       : moves;
     const answer = relevant.length ? relevant.map(m => replaceTimeTokens(m.title + ': ' + m.detail)).join('\n\n')
       : 'There are no confirmed BUY calls in this market read. Keep coins available and wait for the next update.';
-    $('#ez-coach-status').textContent = (!isFresh() ? 'Stored data is stale. Refresh before acting.\n\n' : '') + answer;
+    $('#ez-coach-status').textContent = (!isFresh() ? ageNote() + '\n\n' : '') + answer;
   }
 
   function alertLabel(key) {

@@ -10,6 +10,10 @@ vm.createContext(context);vm.runInContext(fs.readFileSync('market-data.js','utf8
   const data=await context.window.EzzcoinsMarket.load(true);
   assert.equal(data.retrievedAt,fresh.retrievedAt);
   assert.equal(context.window.EzzcoinsMarket.lookup(data,123).price,1500);
+  const moved=context.window.EzzcoinsMarket.validate({...fresh, rows:[[123,1500,1700,0,0],[247090+50331648,4900,5200,0,0],[555,800,900,0,0],[555+50331648,9000,9900,0,0]]});
+  assert.equal(context.window.EzzcoinsMarket.lookup(moved,247090).price,4900,'a transferred player falls back to his new base item');
+  assert.equal(context.window.EzzcoinsMarket.lookup(moved,555).price,800,'an existing base row always wins');
+  assert.equal(context.window.EzzcoinsMarket.lookup(moved,999),null);
   assert.equal(events[0].type,'ezzcoins:quotes');
   assert.equal(events[0].detail,data);
   context.fetch=async url=>{if(url.includes('raw.githubusercontent'))return {ok:true,json:async()=>fresh};throw Error('deployed unavailable');};
