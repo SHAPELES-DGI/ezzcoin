@@ -701,6 +701,34 @@ def update_top(mk, t):
         write("topprices.json", {"updatedAt": iso(t), "source": "FUT.GG", "minOvr": 84, "players": players})
 
 
+# ---------------------------------------------------------------- keeping the desk's own calls
+
+BACKUP = ".cache/desk-ledger.json"  # Actions cache, not git
+
+
+def restore_own_calls(ledger):
+    """Put back the desk's calls and lessons if another writer replaced data/ledger.json."""
+    saved = read(BACKUP, {})
+    have = {c.get("id") for c in ledger.get("calls", [])}
+    lost = [c for c in saved.get("calls", []) if c.get("strategy") and c.get("id") not in have]
+    if not lost:
+        return
+    ids = {c["id"] for c in lost}
+    ledger.setdefault("calls", []).extend(lost)
+    ledger["calls"].sort(key=lambda c: c.get("madeAt") or "")
+    texts = {l.get("text") for l in ledger.setdefault("lessons", [])}
+    ledger["lessons"] += [l for l in saved.get("lessons", []) if l.get("callId") in ids and l.get("text") not in texts]
+    print(f"desk: restored {len(lost)} of its own calls")
+
+
+def backup_own_calls(ledger):
+    try:
+        (DATA / ".cache").mkdir(parents=True, exist_ok=True)
+        (DATA / BACKUP).write_text(json.dumps(ledger, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    except OSError:
+        pass
+
+
 # ---------------------------------------------------------------- main
 
 def main():
@@ -711,6 +739,7 @@ def main():
         return
     prev = read("snapshot.json", {})
     ledger = read("ledger.json", {"calls": [], "lessons": []})
+    restore_own_calls(ledger)
     graded = grade(mk, ledger, t)
     new_call = make_calls(mk, ledger, t)
     ph = phase(t)
@@ -754,6 +783,7 @@ def main():
     }
     write("snapshot.json", strip_name(snap))
     write("ledger.json", strip_name(ledger))
+    backup_own_calls(ledger)
 
     hist = read("history.json", {"points": []})
     pts = hist.get("points", [])
