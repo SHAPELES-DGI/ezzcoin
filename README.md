@@ -42,3 +42,12 @@ Run locally with Python 3: `python scripts/update_market_prices.py`. Initial met
 ## Live prices (fast lane)
 
 GitHub runs the scheduled market workflow 10-25 minutes late, while FUT.GG publishes new prices about every 5 minutes. The `Live prices (fast lane)` workflow closes that gap: the Ezzcoins server starts it every 3 minutes, `scripts/live_prices.py` checks FUT.GG's public manifest, and only when new prices exist does it publish `live-prices.json` (same format as `data/live-prices.json`) to the `live` branch. That branch always holds a single replaced commit, so price history does not build up and the site is not rebuilt. `market-data.js` and the player pages read the live copy first and use it only while FUT.GG's publication time is under 30 minutes old; otherwise they fall back to the main-branch copies. Pages poll every minute. A 10-minute schedule is a backup if the server is down.
+
+## Prices in the page HTML
+
+`scripts/build_pages.py` writes each card's console price from `data/live-prices.json` into its player page, so search engines and link previews see a real price; the browser then swaps in the newest one. A page keeps its baked price until the market moves more than 15%, so a price refresh doesn't rewrite thousands of pages. `scripts/prerender_home.py` does the same for the home page's market read, SBC list and news (between the `<!--pre:...-->` markers in `index.html`); the market workflow runs it every time.
+
+## Ads
+
+`ezz-ads.js` holds the AdSense publisher ID and the ad unit's slot number (`SLOT`). While `SLOT` is empty no ad boxes appear; once it is set, ads show in the boxes marked `ezz-ad` on the home page, the price page and every player page (phones included), plus the side rails on very wide screens. The EU/UK consent message is managed in AdSense under Privacy & messaging.
+

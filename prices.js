@@ -28,7 +28,7 @@
         club: row[ec.club], nation: row[ec.nation], version, type, url: row[ec.url] });
     }
     for (const row of feed.rows) if (!byId.has(row[0])) {
-      byId.set(row[0], { id: row[0], name: 'Card details unavailable', rating: null, position: '', club: '', version: 'Exact item ID ' + row[0], type: 'unknown', url: 'https://www.fut.gg/players/' });
+      byId.set(row[0], { id: row[0], name: 'Card details unavailable', rating: null, position: '', club: '', version: 'Exact item ID ' + row[0], type: 'unknown', url: '' });
     }
     return [...byId.values()].map(card => ({ ...card, key: normalize([card.name, card.full, card.club, card.nation, card.version, card.id].join(' ')) }));
   }
@@ -40,7 +40,8 @@
     const delayed = minutes > 90;
     $('freshness').textContent = delayed ? 'Delayed prices' : 'Recent price feed';
     $('freshness').classList.toggle('stale', delayed);
-    $('sourceTime').textContent = 'FUTBIN first · FUT.GG fallback feed: ' + date(time);
+    const futbin = (feed.primaryCoverage && feed.primaryCoverage[platform]) || 0;
+    $('sourceTime').textContent = (futbin > 0 ? 'FUTBIN for ' + number(futbin) + ' cards, FUT.GG for the rest' : 'Source: FUT.GG') + ' · feed: ' + date(time);
     $('priceCount').textContent = number(platform === 'pc' ? feed.coverage.pcPriced : feed.coverage.consolePriced);
     $('platformLabel').textContent = (platform === 'pc' ? 'PC' : 'Console') + ' prices available';
     $('cardCount').textContent = number(feed.coverage.feedCards);
@@ -55,7 +56,7 @@
     $('results').insertAdjacentHTML('beforeend', batch.map(({ card, price }) => {
       const quote=window.EzzcoinsMarket.lookup(feed,card.id,platform),origin=feed.quoteMetadata?.[String(card.id)]?.[platform],src=quote?.src||feed.source;
       const color = card.rating < 65 ? ' bronze' : card.rating < 75 ? ' silver' : '';
-      return `<tr><td class="player"><strong>${escape(card.name)}</strong><small>${escape(card.version)} · ID ${card.id}</small></td><td>${card.rating ? `<span class="rating${color}">${card.rating}</span>` : '—'}</td><td>${escape(card.position || '—')}</td><td class="club">${escape(card.club || card.nation || '—')}</td><td class="price${price === null ? ' unavailable' : ''}">${price === null ? escape(stateLabel(card, platform)) : number(price)}</td><td><a class="source" href="${escape(origin?.url||card.url)}" title="${escape(date(quote?.at||feed.publishedAt[platform]))}" target="_blank" rel="noopener noreferrer">${escape(src)} ↗</a></td></tr>`;
+      return `<tr><td class="player"><strong>${escape(card.name)}</strong><small>${escape(card.version)} · ID ${card.id}</small></td><td>${card.rating ? `<span class="rating${color}">${card.rating}</span>` : '—'}</td><td>${escape(card.position || '—')}</td><td class="club">${escape(card.club || card.nation || '—')}</td><td class="price${price === null ? ' unavailable' : ''}">${price === null ? escape(stateLabel(card, platform)) : number(price)}</td><td><span class="source" title="${escape(date(quote?.at||feed.publishedAt[platform]))}">${escape(src)}</span></td></tr>`;
     }).join(''));
     shown += batch.length;
     if (!filtered.length) $('results').innerHTML = '<tr><td colspan="6" class="empty">No cards match these filters. Try a different name, budget or availability.</td></tr>';

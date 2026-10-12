@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: [scripts/update_market_prices.py, scripts/card_catalog.py, scripts/futbin_prices.py, scripts/update_sbcs.py, scripts/sync_home_prices.py, scripts/market_extras.py, .github/workflows/market-prices.yml]
+    paths: [scripts/prerender_home.py, scripts/update_market_prices.py, scripts/card_catalog.py, scripts/futbin_prices.py, scripts/update_sbcs.py, scripts/sync_home_prices.py, scripts/market_extras.py, .github/workflows/market-prices.yml]
 permissions:
   contents: write
   pages: write
@@ -54,6 +54,9 @@ jobs:
       - name: Market index, trending cards and cheapest cards by rating
         run: python3 scripts/market_extras.py
         continue-on-error: true
+      - name: Write the latest market read into the home page for search engines
+        run: python3 scripts/prerender_home.py .
+        continue-on-error: true
       - name: Save market caches
         if: always()
         continue-on-error: true
@@ -69,7 +72,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/legends.json data/sbcsolutions.json data/snapshot.json data/prices.json data/topprices.json data/trending.json data/players.json data/live-prices.json data/market-cards.json data/futbin-prices.json data/market.json data/cheapest.json data/market-index.json data/ut-positions.json data/newcards.json data/card-ids.json data/card-renders.json p sitemap.xml
+          git add index.html data/legends.json data/sbcsolutions.json data/snapshot.json data/prices.json data/topprices.json data/trending.json data/players.json data/live-prices.json data/market-cards.json data/futbin-prices.json data/market.json data/cheapest.json data/market-index.json data/ut-positions.json data/newcards.json data/card-ids.json data/card-renders.json p sitemap.xml
           if ! git diff --cached --quiet; then
             git commit -m "Refresh FC 27 cards, artwork, player pages and market prices"
             # Another data/page workflow can push between fetch and push.
