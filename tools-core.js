@@ -23,10 +23,11 @@ function chemistry(squad,slots,manager={}){
  const active=squad.map((p,i)=>p&&positions(p).includes(slots[i])?p:null);
  const clubs={},nations={},leagues={};const inc=(o,k,v=1)=>{if(k)o[k]=(o[k]||0)+v;};
  for(const p of active){if(!p)continue;inc(clubs,p.club,1+(p.extraClubChemistry||0));inc(nations,p.nation,1+(p.extraNationChemistry||0));if(!p.isIcon)inc(leagues,p.league,1+(p.extraLeagueChemistry||0));}
- inc(nations,manager.nation);inc(leagues,manager.league);
  const icons=active.filter(p=>p?.isIcon).length;
  const threshold=(n,a)=>a.filter(v=>n>=v).length;
- const points=active.map(p=>!p?0:p.isIcon||p.isHero||p.isFullChemistry?3:Math.min(3,threshold(clubs[p.club]||0,[2,4,7])+threshold((nations[p.nation]||0)+active.filter(v=>v?.extraSquadNationChemistry&&v.nation!==p.nation).length,[2,5,8])+threshold((leagues[p.league]||0)+icons+active.filter(v=>v?.extraSquadLeagueChemistry&&v.league!==p.league).length,[3,5,8])));
+ // FC 27: a manager does not count towards link thresholds; an in-position starter sharing the manager's nation or league gets one flat point (max one, total still capped at 3).
+ const boss=p=>(manager.nation&&p.nation===manager.nation)||(manager.league&&p.league===manager.league)?1:0;
+ const points=active.map(p=>!p?0:p.isIcon||p.isHero||p.isFullChemistry?3:Math.min(3,threshold(clubs[p.club]||0,[2,4,7])+threshold((nations[p.nation]||0)+active.filter(v=>v?.extraSquadNationChemistry&&v.nation!==p.nation).length,[2,5,8])+threshold((leagues[p.league]||0)+icons+active.filter(v=>v?.extraSquadLeagueChemistry&&v.league!==p.league).length,[3,5,8])+boss(p)));
  return {points,total:points.reduce((a,b)=>a+b,0),clubs,nations,leagues};
 }
 function squadRating(players){if(!players.length)return 0;const avg=players.reduce((a,p)=>a+p.ovr,0)/players.length;return Math.floor((players.reduce((a,p)=>a+p.ovr+Math.max(0,p.ovr-avg),0)/players.length)+1e-9);}
