@@ -355,7 +355,7 @@ AD_BOX = '<div class="ezz-ad" hidden aria-label="Advertisement"></div>'
 
 
 def foot(up, price_note=False):
-    return (f'<footer>' + ('<p id="price-source" aria-live="polite"></p>' if price_note else '') + f'Ratings: EA SPORTS FC 27. Prices come from FUTBIN when it can be reached and from FUT.GG otherwise. Ezzcoins is a fan-made site and is not affiliated with EA SPORTS, FUTBIN, FUT.GG, FUTWIZ or EasySBC. '
+    return (f'<footer>' + ('<p id="price-source" aria-live="polite"></p>' if price_note else '') + f'Ratings: EA SPORTS FC 27. Prices come from FUTBIN when it can be reached and from FUT.GG otherwise. Ezzcoins is a free, fan-made site, not endorsed by or affiliated with EA or its licensors, and not affiliated with FUTBIN, FUT.GG, FUTWIZ or EasySBC. It never sells coins, accounts or boosting. '
             f'<a href="{up}p/credits/">Photo credits</a> · <a href="{up}privacy.html">Privacy and cookies</a></footer></body></html>')
 
 

@@ -22,7 +22,7 @@ Buy a domain from any registrar, then go to Settings → Pages → Custom domain
 
 All rights reserved. See [LICENSE](LICENSE). This code is public only so GitHub Pages can host it; it may not be copied or reused.
 
-Not affiliated with EA SPORTS, FUTBIN or FUT.GG.
+Ezzcoins is a free, fan-made site, not endorsed by or affiliated with EA or its licensors. It is not affiliated with FUTBIN or FUT.GG and never sells coins, accounts or boosting.
 
 
 ## Dashboard
