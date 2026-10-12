@@ -8,7 +8,7 @@ taken from EA's card of the same player) and sitemap.xml at the site root.
 FUT.GG card artwork is refreshed by scripts/fetch_card_art.py and cached in data/card-art.json.
 Each page carries the console price from data/live-prices.json in its HTML, so search engines and link
 previews see it; the browser then loads the newest price. A page keeps its previous baked price until the
-market moves more than BAKE_MOVE, so the pages are not rewritten on every price refresh.
+market moves more than BAKE_MOVE and BAKE_MIN coins, so the pages are not rewritten on every price refresh.
 
 Usage: python3 scripts/build_pages.py [site root]   (standard library only)
 GitHub runs it automatically (.github/workflows/player-pages.yml) whenever data/players.json or data/newcards.json changes.
@@ -32,7 +32,8 @@ CARD_ART = {}
 CARD_IDS = json.load(open(os.path.join(ROOT, "data", "card-ids.json")))
 CARD_RENDERS = json.load(open(os.path.join(ROOT, "data", "card-renders.json"), encoding="utf-8"))
 REGULAR_PLAYSTYLES = {}
-BAKE_MOVE = 0.15  # rewrite a page's baked price only when the live price moved more than 15%
+BAKE_MOVE = 0.20  # rewrite a page's baked price only when the live price moved more than 20%
+BAKE_MIN = 1000   # ... and by at least this many coins (cheap cards jump 30% between 700 and 1,000)
 LIVE = {}          # EA item id -> (console price or None, state) from data/live-prices.json
 LIVE_OK = False    # False when the live feed is missing or too small to trust: pages then keep their old price
 OLD_PRICES = {}    # page path -> price baked into the page before this build
@@ -330,7 +331,7 @@ def baked_price(path, item):
         if state == 0:
             return None, "No listings right now."
         return None, STATE_TXT.get(state, "No console price right now.")
-    if old and abs(new - old) / old <= BAKE_MOVE:
+    if old and (abs(new - old) / old <= BAKE_MOVE or abs(new - old) < BAKE_MIN):
         return old, None
     return new, None
 

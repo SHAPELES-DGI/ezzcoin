@@ -45,7 +45,7 @@ GitHub runs the scheduled market workflow 10-25 minutes late, while FUT.GG publi
 
 ## Prices in the page HTML
 
-`scripts/build_pages.py` writes each card's console price from `data/live-prices.json` into its player page, so search engines and link previews see a real price; the browser then swaps in the newest one. A page keeps its baked price until the market moves more than 15%, so a price refresh doesn't rewrite thousands of pages. `scripts/prerender_home.py` does the same for the home page's market read, SBC list and news (between the `<!--pre:...-->` markers in `index.html`); the market workflow runs it every time.
+`scripts/build_pages.py` writes each card's console price from `data/live-prices.json` into its player page, so search engines and link previews see a real price; the browser then swaps in the newest one. A page keeps its baked price until the market moves more than 20% and at least 1,000 coins, so a price refresh doesn't rewrite thousands of pages. `scripts/prerender_home.py` does the same for the home page's market read, SBC list and news (between the `<!--pre:...-->` markers in `index.html`); the market workflow runs it every time.
 
 ## Ads
 
