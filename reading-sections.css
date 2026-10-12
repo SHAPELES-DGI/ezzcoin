@@ -76,3 +76,9 @@ details[open]>summary>.reading-plus{transform:rotate(45deg);}
 @media(max-width:850px){.calendar-layout{grid-template-columns:1fr;}.play-guides{gap:12px;}.play-guide{padding:17px;}.guide-heading b{font-size:18px;}}
 @media(max-width:600px){:is(#calendar,#playbook) .reading-hero{padding:22px 20px;border-radius:18px;}.reading-hero p{font-size:13px;}:is(#calendar,#playbook) .card{padding:19px;}.play-guides,.reading-bottom{grid-template-columns:1fr;}.playbook-principles{gap:12px;}.playbook-principles strong{font-size:17px;}.playbook-principles span{font-size:10px;}#calendar .ev{grid-template-columns:88px minmax(0,1fr);gap:12px;}#calendar .ev .when{font-size:12px;}.guide-number{width:34px;height:39px;}.guide-heading b{font-size:18px;}.guide-heading small{font-size:11px;}.play-guide dl{grid-template-columns:58px minmax(0,1fr);font-size:12px;}.section-disclosure>summary b{font-size:20px;}}
 @media(prefers-reduced-motion:reduce){.reading-plus,.play-guide{transition:none;}}
+.reading-pills .reading-jump{border:1px solid #62dbea66;background:#29dae51f;border-radius:999px;padding:7px 12px;font-size:11px;font-weight:650;color:#aceff7;text-decoration:none;margin-left:auto;}
+.reading-pills .reading-jump:hover,.reading-pills .reading-jump:focus-visible{background:#29dae533;}
+#calendar .calendar-playbook{margin-top:34px;padding-top:30px;border-top:1px solid var(--reading-line);scroll-margin-top:140px;}
+@media(max-width:640px){.reading-pills .reading-jump{margin-left:0;}#calendar .calendar-playbook{margin-top:26px;padding-top:22px;}}
+.tab .tab-short{display:none;}
+@media(max-width:600px){.tab .tab-long{display:none;}.tab .tab-short{display:inline;}}
