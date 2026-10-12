@@ -5,7 +5,7 @@ An EA SPORTS FC 27 Ultimate Team trading desk: the weekly market cycle, fodder p
 ## How it works
 
 - `index.html` is the site entry point. `ezzcoins-upgrade.js` and `ezzcoins-upgrade.css` add the Now dashboard. It needs no build step and runs on GitHub Pages.
-- `data/snapshot.json`, `data/history.json` and `data/ledger.json` hold the market data. An hourly job rewrites them and pushes them here. The page reloads them every 5 minutes.
+- `data/snapshot.json`, `data/history.json` and `data/ledger.json` hold the market data. `scripts/desk.py` (the automatic desk) rewrites them on every run of the market workflow, with no AI involved. The page reloads them every 5 minutes.
 - If the data files are missing or out of date, the weekly clock, the Flip calculator and the Playbook still work. The status pill turns "Stale" once the data is more than 3 hours old.
 
 ## Hosting on GitHub Pages
@@ -50,4 +50,15 @@ GitHub runs the scheduled market workflow 10-25 minutes late, while FUT.GG publi
 ## Ads
 
 `ezz-ads.js` holds the AdSense publisher ID and the ad unit's slot number (`SLOT`). While `SLOT` is empty no ad boxes appear; once it is set, ads show in the boxes marked `ezz-ad` on the home page, the price page and every player page (phones included), plus the side rails on very wide screens. The EU/UK consent message is managed in AdSense under Privacy & messaging.
+
+## Automatic desk
+
+`scripts/desk.py` runs in the `FC 27 market prices` workflow after the price scripts and keeps the whole site going on its own:
+
+- **Market read:** verdict, moves, fodder board, SBC list, biggest risers and fallers, cheap meta cards (from Ezzcoins' own meta rating), the weekly calendar (Team of the Week, Rivals rewards) and data news, all from Ezzcoins' own price feed and files.
+- **Trade calls:** at most 2 a day (Zurich calendar day), 3 hours apart, from four written strategies: buy before the weekend, buy the dip, sell the spike and the Rivals rewards dip. Each call is graded on the same feed at its check time (5% tax counted on buy calls), and each grade adds a lesson.
+- **Learning:** a strategy with 3+ graded calls and under 50% hits is paused for 7 days, then retested at low confidence; one with 70%+ hits is used first, at high confidence.
+- **Watched and top cards:** `data/prices.json` follows the 25 most-watched cards in the public watchlists (read about once an hour) and `data/topprices.json` every base card rated 84+.
+
+`.github/workflows/players.yml` rebuilds `data/players.json` from EA's ratings once a day. Leaks from FUT Sheriff and FifaTradingRomania are not followed any more: the calendar lists only official, recurring events and promos that have actually gone live.
 
