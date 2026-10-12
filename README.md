@@ -62,3 +62,19 @@ GitHub runs the scheduled market workflow 10-25 minutes late, while FUT.GG publi
 
 `.github/workflows/players.yml` rebuilds `data/players.json` from EA's ratings once a day. Leaks from FUT Sheriff and FifaTradingRomania are not followed any more: the calendar lists only official, recurring events and promos that have actually gone live.
 
+
+
+## Builders and personal trading workspace
+
+`tools.html` adds four responsive tools without replacing the PC dashboard:
+
+- Squad Builder: four formations, unique base-player selections, a coin-budget search, player locks, manager selectors, chemistry estimates and position-specific meta with estimated chemistry-style boosts.
+- Evolution Builder: published eligibility rules, attribute caps, branching choices, original/evolved comparison and sequential eligible paths. Missing attribute data blocks a computed result. Source examples use the published final stats; calculated face stats can differ in rounding.
+- SBC Solver: exact dynamic programming for Item Score challenges among known, fresh eligible items; bounded valid-squad search for puzzles. Every supported requirement is checked, unsupported rules fail visibly, and puzzle solutions never claim a global optimum. Favourite/untradeable exclusions are user-entered.
+- My Trades: purchases, sales, quantity and platform; realised and current profit after five percent tax; exact-card targets and optional notifications while the page is open. Firebase account sync uses the existing owner document with masked, conditional writes so watchlist IDs survive. Local drafts, export and import remain available if Firebase rules reject the extra dashboard field.
+
+`record_price_history.py` retains actual source timestamps hourly for seven days and daily for thirty days for rated 75+ base cards and discovered special items. Sixty-four on-demand shards keep graph downloads small. New ranges fill as observations accumulate. Source SBC release dates provide graph context; no invented historical quotes or assumed causal changes are added.
+
+`update_builders.py` reads the public data-only catalogue (no JavaScript evaluation) and caches exact Item Scores plus rich attributes. It refreshes hourly through the existing market job, rotating affordable items and filling missing metadata. Failed reads retain prior snapshots. Prices use shared exact-item lookup, validation, retry/preserved data, one-minute visible polling, and freshness labels: current up to 15 minutes, delayed up to 90, outdated thereafter. Solvers and alerts use current quotes only. The upstream publishes at its own cadence; the page does not promise five-minute upstream updates.
+
+Checks: `node scripts/test_builders.cjs`, existing quote/card/home tests, and `python scripts/test_price_history.py`. Browser notifications currently require the page to stay open. Server push delivery is a separate hosting integration and is not enabled by GitHub Pages. Firebase authenticated sync needs the deployed owner-only rules to allow the dashboard field; no public access rule is added.

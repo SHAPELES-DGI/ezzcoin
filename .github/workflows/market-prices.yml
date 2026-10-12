@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: [scripts/desk.py, scripts/prerender_home.py, scripts/update_market_prices.py, scripts/card_catalog.py, scripts/futbin_prices.py, scripts/update_sbcs.py, scripts/sync_home_prices.py, scripts/market_extras.py, .github/workflows/market-prices.yml]
+    paths: [scripts/desk.py, scripts/prerender_home.py, scripts/update_market_prices.py, scripts/card_catalog.py, scripts/futbin_prices.py, scripts/update_sbcs.py, scripts/sync_home_prices.py, scripts/market_extras.py, scripts/update_builders.py, scripts/record_price_history.py, scripts/public_page_data.py, tools-core.js, .github/workflows/market-prices.yml]
 permissions:
   contents: write
   pages: write
@@ -43,6 +43,7 @@ jobs:
           python3 scripts/test_futbin_prices.py
           node scripts/test_home_prices.cjs
           node scripts/test_market_sync.cjs
+          node scripts/test_builders.cjs
           python3 scripts/test_home_sync.py
           python3 scripts/test_baked_prices.py
           python3 scripts/test_desk.py
@@ -51,6 +52,11 @@ jobs:
       - name: Refresh active SBCs and solution costs
         run: python3 scripts/update_sbcs.py
         continue-on-error: true
+      - name: Refresh Evolution rules and SBC item metadata
+        run: python3 scripts/update_builders.py --batches 6 --details 12 --min-age 3600
+        continue-on-error: true
+      - name: Retain recorded player prices
+        run: python3 scripts/record_price_history.py
       - name: Sync Home and trading prices
         run: python3 scripts/sync_home_prices.py
       - name: Market index, trending cards and cheapest cards by rating
@@ -77,7 +83,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add index.html data/history.json data/ledger.json data/legends.json data/sbcsolutions.json data/snapshot.json data/prices.json data/topprices.json data/trending.json data/players.json data/live-prices.json data/market-cards.json data/futbin-prices.json data/market.json data/cheapest.json data/market-index.json data/ut-positions.json data/newcards.json data/card-ids.json data/card-renders.json p sitemap.xml
+          git add data/evolutions.json data/builder-items.json data/price-history index.html data/history.json data/ledger.json data/legends.json data/sbcsolutions.json data/snapshot.json data/prices.json data/topprices.json data/trending.json data/players.json data/live-prices.json data/market-cards.json data/futbin-prices.json data/market.json data/cheapest.json data/market-index.json data/ut-positions.json data/newcards.json data/card-ids.json data/card-renders.json p sitemap.xml
           if ! git diff --cached --quiet; then
             git commit -m "Refresh FC 27 cards, artwork, player pages and market prices"
             # Another data/page workflow can push between fetch and push.

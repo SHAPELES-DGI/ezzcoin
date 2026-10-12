@@ -23,7 +23,7 @@
   const getJSON = (key, fallback) => { try { return JSON.parse(localStorage.getItem(key) || '') || fallback; } catch { return fallback; } };
   const saveJSON = (key, value) => { try { localStorage.setItem(key, JSON.stringify(value)); } catch { toast('Browser storage is unavailable; this change will not persist.'); } };
   const savedAlerts = () => { const a = getJSON(STORAGE.alerts, []); return Array.isArray(a) ? a.filter(x => x && typeof x.key === 'string' && validPrice(x.target)) : []; };
-  const isFresh = () => { const t = Date.parse(state.snapshot?.updatedAt); return Number.isFinite(t) && Date.now() - t >= 0 && Date.now() - t <= 3 * 3600e3; };
+  const isFresh = () => window.EzzcoinsMarket.freshness(state.market?.publishedAt?.console||state.snapshot?.updatedAt).usable;
 
   function toast(message) {
     let el = $('.ez-toast');
@@ -355,8 +355,7 @@
 
   function quoteFresh(key) {
     const at = key.startsWith('player:') ? (state.snapshot?.meta || []).find(p => 'player:'+p.name === key)?.priceAt : state.snapshot?.updatedAt;
-    const age = Date.now() - Date.parse(at);
-    return Number.isFinite(age) && age >= 0 && age < 45 * 60000;
+    return window.EzzcoinsMarket.freshness(at).usable;
   }
   function alertReached(a) {
     const p = currentPrice(a.key);
