@@ -10,7 +10,7 @@
     alerts: 'ezzcoins_alerts_v1'
   };
 
-  const state = { snapshot: null, ledger: null, history: null, market: null };
+  const state = { snapshot: null, ledger: null, history: null, market: null, pulse: null };
   const $ = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
   const esc = s => String(s ?? '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
@@ -64,11 +64,12 @@
   }
 
   async function loadData() {
-    const names = ['snapshot.json','ledger.json','history.json'];
+    const names = ['snapshot.json','ledger.json','history.json','market.json'];
     const results = await Promise.allSettled(names.map(name => window.EzzcoinsMarket.fetchData(name)));
     if (results[0].status === 'fulfilled') state.snapshot = results[0].value;
     if (results[1].status === 'fulfilled') state.ledger = results[1].value;
     if (results[2].status === 'fulfilled') state.history = results[2].value;
+    if (results[3].status === 'fulfilled') state.pulse = results[3].value;
     try { state.market = await window.EzzcoinsMarket.load(true); } catch (_) {}
     for (const player of state.snapshot?.meta || []) {
       const quote = player.eaId && state.market ? window.EzzcoinsMarket.lookup(state.market, player.eaId) : null;
@@ -77,7 +78,7 @@
       player.priceSrc = quote?.src;
     }
     try { await window.EzzcoinsCardArt.load(); } catch (_) {}
-    return results.some(r => r.status === 'fulfilled');
+    return results.slice(0,3).some(r => r.status === 'fulfilled');
   }
 
   window.addEventListener('ezzcoins:quotes', event => {
@@ -140,20 +141,20 @@
 
   function tradesHTML() {
     const moves = state.snapshot?.moves || [];
-    if (!moves.length) return '<p class="ez-card-sub">No market calls available yet.</p>';
+    if (!moves.length) return '<p class="ez-card-sub">No trade calls right now. New ones arrive with the next market read.</p>';
     return `<div class="ez-trades">${moves.slice(0,4).map((m,i) => {
-      const idx = confidenceIndex(m.confidence);
-      return `<article class="ez-trade" data-tone="${toneClass(m.tone)}">
-        <div class="ez-trade-head"><div class="ez-trade-title">${esc(m.title)}</div><span class="ez-pill ${toneClass(m.tone)}">${esc(m.tone || 'watch')}</span></div>
-        <p>${esc(replaceTimeTokens(m.detail))}</p>
+      const idx = confidenceIndex(m.confidence), tone = toneClass(m.tone);
+      return `<article class="ez-trade" data-tone="${tone}">
+        <div class="ez-trade-head"><span class="ez-pill ${tone}">${esc(m.tone || 'watch')}</span><span class="ez-trade-when">${esc(replaceTimeTokens(m.when || 'Current update'))}</span></div>
+        <h4 class="ez-trade-title">${esc(m.title)}</h4>
+        <p class="ez-trade-detail" id="ez-trade-detail-${i}">${esc(replaceTimeTokens(m.detail))}</p>
         <div class="ez-trade-foot">
-          <span>${esc(replaceTimeTokens(m.when || 'Current update'))}</span>
-          <span class="ez-confidence" title="Internal confidence index, not a win probability">${esc(m.confidence || 'low')} <span class="ez-confbar"><i style="width:${idx}%"></i></span> ${idx}/100</span>
+          <button type="button" class="ez-trade-more" aria-expanded="false" aria-controls="ez-trade-detail-${i}">Show why</button>
+          <span class="ez-confidence" title="Internal confidence index, not a win probability"><span class="ez-confbar"><i style="width:${idx}%"></i></span>${esc(String(m.confidence || 'low').replace(/^./, c => c.toUpperCase()))} confidence</span>
         </div>
       </article>`;
     }).join('')}</div>`;
   }
-
   function trackHTML() {
     const st = gradedStats();
     const wr = st.winRate == null ? '—' : `${Math.round(st.winRate)}%`;
@@ -248,6 +249,10 @@
       <div class="ez-disclaimer">Alerts use stored console prices and are checked while this page is open. They stay in this browser.</div>`;
   }
 
+  function metaNote(note) {
+    const m = /^Meta (\d+) at (\w+): the best Ezzcoins meta rating for up to (\S+)$/.exec(note || '');
+    return m ? `<div class="ez-player-note">Meta ${esc(m[1])} · best up to ${esc(m[3])}</div>` : '';
+  }
   function playerHTML() {
     const meta = state.snapshot?.meta || [];
     if (!meta.length) return '<p class="ez-card-sub">No player quotes available yet.</p>';
@@ -256,7 +261,7 @@
       const art = asset ? window.EzzcoinsCardArt.html(asset,'ez-player-render',p.name) : `<div class="ez-player-rating">${esc(p.ovr)}</div>`;
       return `<article class="ez-player" role="button" tabindex="0" aria-label="View ${esc(p.name)}" data-ez-player="${i}">
         <div class="ez-player-art">${art}</div><div class="ez-player-top"><span class="ez-pill watch">${esc(p.pos || '')}</span><span class="ez-player-source">${esc(p.priceSrc || 'No quote')}</span></div>
-        <div class="ez-player-name">${esc(p.name)}</div><div class="ez-player-price">${coinPrice(p.price)} <small>${validPrice(p.price)?'coins':'unavailable'}</small></div>
+        <div class="ez-player-name">${esc(p.name)}</div>${metaNote(p.note)}<div class="ez-player-price">${coinPrice(p.price)} <small>${validPrice(p.price)?'coins':'unavailable'}</small></div>
         <div class="ez-player-meta">${esc(humanTime(p.priceAt))}</div></article>`;
     }).join('')}</div>`;
   }
@@ -276,12 +281,12 @@
   function shellHTML() {
     return `${heroHTML()}
       <div class="ez-grid">
-        <section class="ez-card wide" id="ez-trades"><h3>Trade ideas</h3><div class="ez-card-sub">Ideas from the market read · confidence is not a win probability</div>${tradesHTML()}</section>
+        <section class="ez-card wide" id="ez-trades"><h3>Trade calls</h3><div class="ez-card-sub">Live calls from the latest market read. Confidence is not a win chance.</div>${tradesHTML()}</section>
         <section class="ez-card" id="ez-record"><h3>Track record</h3><div class="ez-card-sub">Only graded calls count</div>${trackHTML()}</section>
         <section class="ez-card" id="ez-fodder"><h3>Best fodder value</h3><div class="ez-card-sub">Coins per Item Score point</div>${fodderHTML()}</section>
         <section class="ez-card wide" id="ez-budget"><h3>My Coins</h3><div class="ez-card-sub">Turn the current market read into a budget plan</div>${budgetHTML()}</section>
         <section class="ez-card" id="ez-coach"><h3>Coach shortcuts</h3><div class="ez-card-sub">One tap instead of thinking of a prompt</div>${coachHTML()}</section>
-        <section class="ez-card full" id="ez-players"><h3>Player trade board</h3><div class="ez-card-sub">Console prices from the same feed as Home · select a player for details</div>${playerHTML()}</section>
+        <section class="ez-card full" id="ez-players"><h3>Meta cards to trade</h3><div class="ez-card-sub">The best meta card at each budget. Tap a card for details.</div>${playerHTML()}</section>
         <section class="ez-card half" id="ez-alerts"><h3>Price alerts</h3><div class="ez-card-sub">Saved in this browser</div>${alertsHTML()}</section>
 
       </div>`;
@@ -294,22 +299,72 @@
     if(panel) document.getElementById('tab-'+panel.id)?.click();
     target?.scrollIntoView({behavior:'smooth',block:'start'});
   }
+  function meterHTML() {
+    const p = state.pulse?.momentum != null ? state.pulse : state.snapshot?.index;
+    const mom = Number(p?.momentum);
+    if (!Number.isFinite(mom)) return '';
+    const label = p.momentumLabel || (mom < 45 ? 'Prices are falling' : mom > 55 ? 'Prices are rising' : 'Prices are steady');
+    const tone = mom < 45 ? 'down' : mom > 55 ? 'up' : 'flat';
+    return `<div class="tx-meter" data-tone="${tone}">
+      <div class="tx-meter-read"><strong>${Math.round(mom)}</strong><span><b>${esc(label)}</b>Share of moving cards that rose in the last hour</span></div>
+      <div class="tx-meter-scale" role="img" aria-label="Market momentum ${Math.round(mom)} out of 100: ${esc(label)}">
+        <div class="tx-meter-track"><span class="tx-meter-mark" style="left:${clamp(mom,0,100)}%"></span></div>
+        <div class="tx-meter-ends" aria-hidden="true"><span>Falling</span><span>Steady</span><span>Rising</span></div>
+      </div></div>`;
+  }
+
+  const TX_LAYOUT = `
+    <div class="tx-hero" id="tx-hero"><div id="tx-board"></div><div id="tx-meter"></div></div>
+    <nav class="tx-jump" aria-label="Trading sections">
+      <button type="button" data-tx-go="tx-calls">Trade calls</button>
+      <button type="button" data-tx-go="tx-fodder">Fodder</button>
+      <button type="button" data-tx-go="tx-movers">Movers</button>
+      <button type="button" data-tx-go="tx-players">Meta cards</button>
+      <button type="button" data-tx-go="tx-alerts">Price alerts</button>
+      <button type="button" class="tx-jump-plan" data-tx-plan>Plan my coins</button>
+    </nav>
+    <div class="tx-row tx-split"><div class="tx-slot" id="tx-calls"></div><div class="tx-slot" id="tx-record"></div></div>
+    <div class="tx-row tx-split tx-narrow-first"><div class="tx-slot" id="tx-fodder"></div><div class="tx-slot" id="tx-movers"></div></div>
+    <div class="tx-row"><div class="tx-slot" id="tx-players"></div></div>
+    <div class="tx-row tx-split tx-even"><div class="tx-slot" id="tx-chart"></div><div class="tx-slot" id="tx-pulse"></div></div>
+    <div class="tx-row"><div class="tx-slot" id="tx-alerts"></div></div>
+    <div class="tx-row"><div class="tx-slot" id="tx-history"></div></div>
+    <div id="tx-spare" hidden></div>`;
+
+  function arrangeTrading() {
+    const trading = document.getElementById('trading'); if (!trading) return;
+    const byId = id => document.getElementById(id);
+    const cardOf = id => byId(id)?.closest('.card');
+    let layout = byId('tx-layout');
+    if (!layout) {
+      layout = document.createElement('div'); layout.id = 'tx-layout'; layout.innerHTML = TX_LAYOUT;
+      trading.prepend(layout);
+      // Static cards keep their ids, so the page's own updater keeps filling them in their new places.
+      const once = [['tx-board', byId('readHead')?.closest('.board')], ['tx-fodder', cardOf('fodderTbl')], ['tx-chart', cardOf('chart')],
+                    ['tx-movers', cardOf('fallers')], ['tx-pulse', cardOf('pulse')], ['tx-history', byId('record')]];
+      for (const [slot, el] of once) if (el) byId(slot).append(el);
+      for (const el of [cardOf('moves'), cardOf('metaTbl')]) if (el) byId('tx-spare').append(el);
+      for (const g of [...trading.children]) if (g.classList.contains('grid2') && !g.children.length) g.remove();
+      const ad = trading.querySelector(':scope > .ezz-ad'); if (ad) trading.append(ad);
+    }
+    // Fresh dashboard sections replace the previous ones on every refresh.
+    const dyn = [['tx-calls','ez-trades'],['tx-record','ez-record'],['tx-players','ez-players'],['tx-alerts','ez-alerts']];
+    for (const [slot] of dyn) byId(slot).replaceChildren();
+    for (const [slot, id] of dyn) { const el = byId(id); if (el) byId(slot).append(el); }
+    const when = byId('metaWhen')?.textContent.trim(), sub = byId('ez-players')?.querySelector('.ez-card-sub');
+    if (when && sub) sub.insertAdjacentHTML('afterend', `<p class="tx-window">${esc(when)}</p>`);
+    byId('tx-meter').innerHTML = meterHTML();
+    const root = byId('ezz-upgrade-root'); if (root) trading.append(root);
+  }
+
   function arrangeSections() {
     // Rebuild the managed groups on refresh, then move fresh nodes into their tabs.
     document.querySelectorAll('[data-ez-group]').forEach(el=>el.remove());
-    const groups={trading:['ez-trades','ez-record','ez-fodder','ez-players','ez-alerts'],tools:['ez-budget','ez-coach']};
-    for(const [tab,ids] of Object.entries(groups)){
-      const panel=document.getElementById(tab);if(!panel)continue;
-      const group=document.createElement('div');group.className='ez-grid';group.dataset.ezGroup=tab;
-      for(const id of ids){const el=document.getElementById(id);if(el)group.append(el);}
-      panel.prepend(group);
-    }
-    const root=document.getElementById('ezz-upgrade-root');
-    const trading=document.getElementById('trading');
-    if(root&&trading)trading.prepend(root);
-    // The detailed market read belongs alongside the trading analysis.
-    const read=document.getElementById('readHead')?.closest('.board');
-    if(read&&trading)trading.append(read);
+    const tools=document.getElementById('tools');
+    if(tools){const group=document.createElement('div');group.className='ez-grid';group.dataset.ezGroup='tools';
+      for(const id of ['ez-budget','ez-coach']){const el=document.getElementById(id);if(el)group.append(el);}
+      tools.prepend(group);}
+    arrangeTrading();
   }
 
   function findCoachInput() {
@@ -478,6 +533,13 @@
     const root = document.createElement('div'); root.id='ezz-upgrade-root'; root.innerHTML=shellHTML();
     const {parent,before}=findInsertionPoint(); parent.insertBefore(root,before);
     injectModal(); arrangeSections(); bind(); renderAllocation(); renderAlerts(); checkAlerts();
+    document.addEventListener('click', e => {
+      const more = e.target.closest('.ez-trade-more');
+      if (more) { const open = more.closest('.ez-trade').classList.toggle('open'); more.setAttribute('aria-expanded', open); more.textContent = open ? 'Show less' : 'Show why'; return; }
+      const go = e.target.closest('[data-tx-go]');
+      if (go) { document.getElementById(go.dataset.txGo)?.scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start'}); return; }
+      if (e.target.closest('[data-tx-plan]')) showSection('ez-budget');
+    });
     $('#refreshBtn')?.addEventListener('click', refresh);
     setInterval(refresh, 60000);
     document.addEventListener('visibilitychange', () => { if(!document.hidden) refresh(); });
