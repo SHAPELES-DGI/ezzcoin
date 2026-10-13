@@ -3,3 +3,10 @@
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
 
 .pitch{display:flex;flex-direction:column;justify-content:space-between;min-height:620px;gap:18px}.pitch-row{display:flex;justify-content:center;gap:10px;position:relative;z-index:1}.pitch-row>.slot{flex:1;max-width:150px;min-width:0;width:100%;padding:8px 5px}.pitch-row>.slot b{overflow-wrap:anywhere}.pitch-row>.slot small{font-size:10px}.pitch-row:last-child>.slot{max-width:130px}.slot-settings select{min-height:44px}@media(max-width:760px){.pitch{min-height:550px;gap:12px}.pitch-row{gap:5px}.pitch-row>.slot{min-height:106px;font-size:10px}.pitch-row>.slot b{font-size:10px}.pitch-row>.slot small{font-size:9px}.pitch-row>.slot img{width:36px;height:50px}.pitch-row>.slot strong{font-size:10px}.pitch-row:last-child>.slot{max-width:100px}}
+/* Squad Builder pitch: every position box is the same size. Rows are a 10-column grid and each box spans 2 columns
+   (same width); the pitch is a grid of equal rows, so every box also gets the height of the tallest one. */
+.pitch{display:grid;grid-template-columns:minmax(0,1fr);grid-auto-rows:1fr;align-content:stretch}
+.pitch-row{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));column-gap:8px;align-items:stretch}
+.pitch-row>.slot,.pitch-row:last-child>.slot{width:100%;max-width:none;min-height:118px;height:100%;flex:none}
+.pitch-row>.slot b{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;line-height:1.15}
+@media(max-width:760px){.pitch{padding:10px 8px}.pitch-row{column-gap:4px}.pitch-row>.slot,.pitch-row:last-child>.slot{min-height:104px;padding:6px 3px}.pitch-row>.slot b{font-size:10px}.pitch-row>.slot small{line-height:1.2}}

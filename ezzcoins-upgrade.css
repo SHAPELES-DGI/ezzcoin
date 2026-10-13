@@ -91,3 +91,13 @@
 .ez-trade-foot{flex-wrap:wrap}.ez-coach-status{white-space:pre-line}.ez-modal-close{flex-shrink:0}
 #ezz-upgrade-root [id]{scroll-margin-top:145px}
 @media(max-width:620px){#ezz-upgrade-root{padding:0}.ez-alloc{grid-template-columns:80px minmax(20px,1fr) auto}.ez-confbar{width:45px}}
+/* My Coins plan: one block per part, so labels, bars, amounts and notes never overlap on a phone. */
+.ez-allocation{display:grid;gap:14px}
+.ez-alloc{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:7px!important;margin:0!important;font-size:13px}
+.ez-alloc-top{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.ez-alloc-label{font-weight:700;color:var(--ez-text)}
+.ez-alloc-top strong{white-space:nowrap;font-variant-numeric:tabular-nums}
+.ez-alloc-top strong small{font-weight:600;color:var(--ez-muted);margin-left:2px}
+.ez-alloc-bar{display:block;width:100%}
+.ez-alloc-note{font-size:12px;line-height:1.45;color:var(--ez-muted)}
+@media(max-width:600px){#ez-budget .ez-chips{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px}#ez-budget .ez-chip{min-width:0;padding-inline:0;text-align:center}}

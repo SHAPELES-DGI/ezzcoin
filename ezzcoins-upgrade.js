@@ -305,9 +305,10 @@
     if (!Number.isFinite(budget)) return toast('Enter a valid coin budget');
     saveJSON(STORAGE.budget, budget);
     const plan = allocationFor(budget);
+    // Each part of the plan: name and amount on one line, the bar under them, then the note. Nothing overlaps on phones.
     $('#ez-allocation').innerHTML = plan.map(([label,pct,note]) => `
-      <div class="ez-alloc"><span>${esc(label)}</span><span class="ez-alloc-bar"><i style="width:${pct}%"></i></span><strong>${coinPrice(budget*pct/100)} (${pct}%)</strong></div>
-      <div style="margin:-5px 0 6px 103px;font-size:10.5px;color:var(--ez-muted)">${esc(note)}</div>`).join('');
+      <div class="ez-alloc"><div class="ez-alloc-top"><span class="ez-alloc-label">${esc(label)}</span><strong>${coinPrice(budget*pct/100)} <small>${pct}%</small></strong></div>
+        <span class="ez-alloc-bar" role="img" aria-label="${pct}% of your coins"><i style="width:${pct}%"></i></span><div class="ez-alloc-note">${esc(note)}</div></div>`).join('');
   }
 
   function coachHTML() {

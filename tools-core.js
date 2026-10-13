@@ -8,7 +8,24 @@ const STRONG=new Set(['Quick Step+','Rapid+','Finesse Shot+','Technical+','Low D
 const MINOR=new Set(['Dead Ball+','Long Throw+','Far Throw+']);
 const STYLES={None:[0,0,0,0,0,0],Basic:[1.65,.9,2.25,2.7,2.1,1.5],Hunter:[6,2.85,0,0,0,0],Shadow:[6,0,0,0,3.9,0],Engine:[3,0,3.6,3.3,0,0],Anchor:[3,0,0,0,4.2,3.9],Finisher:[0,5.25,0,4.95,0,0],Catalyst:[6,0,5.1,0,0,0],Hawk:[3,4.05,0,0,0,3],Glove:[6,9,0,0,0,3],Cat:[0,0,0,6,1.8,9]};
 const POS={0:'GK',3:'RB',5:'CB',7:'LB',10:'CDM',12:'RM',14:'CM',16:'LM',18:'CAM',23:'RW',25:'ST',27:'LW'};
-const FORMATIONS={'4-3-3':['LW','ST','RW','CM','CM','CM','LB','CB','CB','RB','GK'],'4-4-2':['ST','ST','LM','CM','CM','RM','LB','CB','CB','RB','GK'],'4-2-3-1':['ST','CAM','CAM','CAM','CDM','CDM','LB','CB','CB','RB','GK'],'3-5-2':['ST','ST','CAM','LM','CDM','CDM','RM','CB','CB','CB','GK']};
+// FC 27 Ultimate Team formations, drawn on the pitch from attack to goal. Each slot is "POSITION" + the column it
+// starts in on a 10-column pitch; every slot spans 2 columns, so all boxes are the same size (1 3 5 7 9 = five across).
+// Since FC 25 there are no CF, LWB or RWB slots: five-at-the-back uses LB/RB and the old CF slots are CAMs.
+// Slot order (top row first, left to right) is what saved squads store, so existing formations keep their order.
+const B4='LB2 CB4 CB6 RB8',B3='CB3 CB5 CB7',B5='LB1 CB3 CB5 CB7 RB9',M4='LM1 CM4 CM6 RM9',F3='LW1 ST5 RW9',S2='ST3 ST7';
+const LAYOUTS={
+ '4-3-3':[F3,'CM3 CM5 CM7',B4],'4-3-3 (2)':[F3,'CM3 CM7','CDM5',B4],'4-3-3 (3)':[F3,'CM5','CDM4 CDM6',B4],'4-3-3 (4)':[F3,'CAM5','CM3 CM7',B4],
+ '4-4-2':[S2,M4,B4],'4-4-2 (2)':[S2,'LM1 CDM4 CDM6 RM9',B4],'4-4-1-1 (2)':['ST5','CAM5',M4,B4],
+ '4-2-3-1':['ST5','CAM2 CAM5 CAM8','CDM4 CDM6',B4],'4-2-3-1 (2)':['ST5','LM1 CAM5 RM9','CDM4 CDM6',B4],
+ '4-1-2-1-2':[S2,'CAM5','LM1 RM9','CDM5',B4],'4-1-2-1-2 (2)':[S2,'CAM5','CM3 CM7','CDM5',B4],
+ '4-1-3-2':[S2,'LM1 CM5 RM9','CDM5',B4],'4-1-4-1':['ST5',M4,'CDM5',B4],'4-2-1-3':[F3,'CAM5','CDM4 CDM6',B4],
+ '4-2-2-2':[S2,'CAM2 CAM8','CDM4 CDM6',B4],'4-2-4':['LW1 ST4 ST6 RW9','CM4 CM6',B4],'4-3-1-2':[S2,'CAM5','CM3 CM5 CM7',B4],
+ '4-3-2-1':['ST5','CAM3 CAM7','CM3 CM5 CM7',B4],'4-5-1':['ST5','CAM3 CAM7','LM1 CM5 RM9',B4],'4-5-1 (2)':['ST5','LM1 CM3 CM5 CM7 RM9',B4],
+ '3-5-2':[S2,'CAM5','LM1 CDM4 CDM6 RM9',B3],'3-1-4-2':[S2,M4,'CDM5',B3],'3-4-1-2':[S2,'CAM5',M4,B3],'3-4-2-1':['ST5','CAM3 CAM7',M4,B3],'3-4-3':[F3,M4,B3],
+ '5-2-1-2':[S2,'CAM5','CM4 CM6',B5],'5-2-3':[F3,'CM4 CM6',B5],'5-3-2':[S2,'CM3 CM7','CDM5',B5],'5-4-1':['ST5',M4,B5]
+};
+const ROWS=Object.fromEntries(Object.entries(LAYOUTS).map(([f,rows])=>[f,[...rows,'GK5'].map(r=>r.split(' ').map(t=>({pos:t.replace(/\d+$/,''),col:Number(t.match(/\d+$/)[0])})))]));
+const FORMATIONS=Object.fromEntries(Object.entries(ROWS).map(([f,rows])=>[f,rows.flat().map(s=>s.pos)]));
 const positions=p=>[...new Set([p.pos,...String(p.alt||'').split(',')].map(v=>v.trim()).filter(v=>W[v]))];
 function meta(p,pos=p.pos,style='None',chem=3){
  if(!W[pos]||!Array.isArray(p.stats)||p.stats.length!==6||p.stats.some(x=>!Number.isFinite(x)))return null;
@@ -183,6 +200,6 @@ function evolve(card,evo,choices={}){
  return {card:out,verified:false,upgrades:upgradeLabels};
 }
 function profit(buy,sell,quantity=1){return (Math.floor(sell*.95)-buy)*quantity;}
-const API={W,STYLES,FORMATIONS,POS,positions,meta,chemistry,squadRating,autoSquad,requirementRules,individualOK,validateSbc,solveScore,solvePuzzle,eligibility,evolve,profit};
+const API={W,STYLES,FORMATIONS,ROWS,POS,positions,meta,chemistry,squadRating,autoSquad,requirementRules,individualOK,validateSbc,solveScore,solvePuzzle,eligibility,evolve,profit};
 root.EzzTools=API;if(typeof module!=='undefined')module.exports=API;
 })(typeof globalThis!=='undefined'?globalThis:this);

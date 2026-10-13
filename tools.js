@@ -2,6 +2,9 @@
 (async()=>{
 'use strict';
 const C=window.EzzTools,M=window.EzzcoinsMarket,$=id=>document.getElementById(id);
+// Every FC 27 formation, grouped by the back line, in both formation pickers.
+for(const id of ['formation','sbc-formation']){const sel=$(id);if(!sel)continue;const keep=sel.value;const groups={4:'Four at the back',3:'Three at the back',5:'Five at the back'};
+ sel.innerHTML=Object.entries(groups).map(([n,label])=>`<optgroup label="${label}">${Object.keys(C.FORMATIONS).filter(f=>f[0]===n).map(f=>`<option>${f}</option>`).join('')}</optgroup>`).join('');sel.value=C.FORMATIONS[keep]?keep:'4-3-3';}
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const coins=v=>Number.isFinite(v)?Math.round(v).toLocaleString('en-US'):'Unavailable';
 const safeImage=url=>{try{const u=new URL(url);return u.protocol==='https:'&&u.hostname==='game-assets.fut.gg'?u.href:'';}catch{return '';}};
@@ -44,8 +47,9 @@ function renderSquad(){
  let cost=0,unknown=0,metas=[];
  for(let i=0;i<squad.length;i++){const p=squad[i];if(p){const q=M.lookup(quotes,p.id,platform);if(q?.price)cost+=q.price;else unknown++;const value=C.meta(p,slots[i],styles[i],chem.points[i]);if(value!=null)metas.push(value);}}
  $('squad-stats').innerHTML=metric('Squad cost',coins(cost)+(unknown?' + '+unknown+' unpriced':''))+metric('Chemistry',chem.total+' / 33',chem.total===33)+metric('Average position meta',metas.length?(metas.reduce((a,b)=>a+b,0)/metas.length).toFixed(1):'—')+metric('Budget remaining',unknown?'Unpriced cards':coins(Number($('budget').value)-cost));
- const rowSizes={'4-3-3':[3,3,4,1],'4-4-2':[2,4,4,1],'4-2-3-1':[1,3,2,4,1],'3-5-2':[2,1,4,3,1]}[$('formation').value];let offset=0;
- $('pitch').innerHTML=rowSizes.map(size=>{const row=slots.slice(offset,offset+size).map((pos,j)=>{const i=offset+j,p=squad[i],img=image(p);return `<button class="slot" data-slot="${i}" aria-pressed="${selectedSlot===i}" type="button"><strong>${pos}${p?.locked?' · LOCK':''}</strong>${p?`${img?`<img src="${esc(img)}" alt="">`:''}<b>${esc(p.name)}</b><small>${C.meta(p,pos,styles[i],chem.points[i])??'—'} meta · ${chem.points[i]} chem</small>`:'<b>+ Add player</b>'}</button>`;}).join('');offset+=size;return `<div class="pitch-row">${row}</div>`;}).join('');
+ // Each row sits on a 10-column pitch and every slot spans 2 columns, so all position boxes are the same size.
+ const rows=C.ROWS[$('formation').value];let offset=0;
+ $('pitch').innerHTML=rows.map(r=>{const size=r.length,row=slots.slice(offset,offset+size).map((pos,j)=>{const i=offset+j,p=squad[i],img=image(p);return `<button class="slot" style="grid-column:${r[j].col} / span 2" data-slot="${i}" aria-pressed="${selectedSlot===i}" type="button"><strong>${pos}${p?.locked?' · LOCK':''}</strong>${p?`${img?`<img src="${esc(img)}" alt="">`:''}<b>${esc(p.name)}</b><small>${C.meta(p,pos,styles[i],chem.points[i])??'—'} meta · ${chem.points[i]} chem</small>`:'<b>+ Add player</b>'}</button>`;}).join('');offset+=size;return `<div class="pitch-row">${row}</div>`;}).join('');
  const selected=squad[selectedSlot];$('slot-settings').innerHTML=selected?`<div class="toolbar"><label>Chemistry style<select data-style-slot="${selectedSlot}" aria-label="Chemistry style for ${esc(selected.name)}">${Object.keys(C.STYLES).filter(s=>selected.pos==='GK'?['None','Glove','Cat'].includes(s):!['Glove','Cat'].includes(s)).map(s=>`<option${styles[selectedSlot]===s?' selected':''}>${s}</option>`).join('')}</select></label><button type="button" data-lock-slot="${selectedSlot}" aria-pressed="${!!selected.locked}">${selected.locked?'Unlock':'Lock player'}</button><button type="button" data-remove-slot="${selectedSlot}">Remove</button></div>`:'';
  $('slot-label').textContent='Choose a '+slots[selectedSlot]+'. Adding a card replaces the selected slot.';
 }
