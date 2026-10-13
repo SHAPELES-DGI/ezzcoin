@@ -4,7 +4,14 @@
   const number = value => value.toLocaleString('en-US');
   const escape = value => String(value ?? '').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
   const normalize = value => String(value ?? '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
-  let feed = null, cards = [], filtered = [], shown = 0, busy = false;
+  let feed = null, cards = [], filtered = [], shown = 0, busy = false, dayAgo = null;
+  // 24h change: today's price against the recorded price from about a day ago (data/day-ago.json).
+  const MOVER_MIN = 1000; // mover sorts skip cards under this many coins, where one listing swings the percentage
+  const change = (id, price, platform) => {
+    const ref = dayAgo?.get(id)?.[platform === 'pc' ? 1 : 0];
+    return price !== null && ref ? { pct: (price / ref - 1) * 100, ref } : null;
+  };
+  const changeText = c => c ? (Math.abs(c.pct) < 0.05 ? '0.0%' : (c.pct > 0 ? '▲ +' : '▼ ') + c.pct.toFixed(1) + '%') : '';
   const filterIds = ['search', 'platform', 'type', 'minRating', 'maxPrice', 'availability', 'sort'];
   const date = value => new Date(value).toLocaleString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', timeZoneName: 'short' });
   const stateLabel = (card, platform) => {
@@ -56,7 +63,9 @@
     $('results').insertAdjacentHTML('beforeend', batch.map(({ card, price }) => {
       const quote=window.EzzcoinsMarket.lookup(feed,card.id,platform),origin=feed.quoteMetadata?.[String(card.id)]?.[platform],src=quote?.src||feed.source;
       const color = card.rating < 65 ? ' bronze' : card.rating < 75 ? ' silver' : '';
-      return `<tr><td class="player"><strong>${escape(card.name)}</strong><small>${escape(card.version)} · ID ${card.id}</small></td><td>${card.rating ? `<span class="rating${color}">${card.rating}</span>` : '—'}</td><td>${escape(card.position || '—')}</td><td class="club">${escape(card.club || card.nation || '—')}</td><td class="price${price === null ? ' unavailable' : ''}">${price === null ? escape(stateLabel(card, platform)) : number(price)}</td><td><span class="source" title="${escape(date(quote?.at||feed.publishedAt[platform]))}">${escape(src)}</span></td></tr>`;
+      const c = filtered.changes.get(card.id), dir = !c ? '' : c.pct >= 0.05 ? ' up' : c.pct <= -0.05 ? ' down' : ' flat';
+      const chg = c ? `<small class="chg${dir}" title="${escape('About 24 hours ago: ' + number(c.ref) + ' coins')}">${changeText(c)} <span>24h</span></small>` : '';
+      return `<tr><td class="player"><strong>${escape(card.name)}</strong><small>${escape(card.version)} · ID ${card.id}</small></td><td>${card.rating ? `<span class="rating${color}">${card.rating}</span>` : '—'}</td><td>${escape(card.position || '—')}</td><td class="club">${escape(card.club || card.nation || '—')}</td><td class="price${price === null ? ' unavailable' : ''}">${price === null ? escape(stateLabel(card, platform)) : number(price) + chg}</td><td><span class="source" title="${escape(date(quote?.at||feed.publishedAt[platform]))}">${escape(src)}</span></td></tr>`;
     }).join(''));
     shown += batch.length;
     if (!filtered.length) $('results').innerHTML = '<tr><td colspan="6" class="empty">No cards match these filters. Try a different name, budget or availability.</td></tr>';
@@ -69,17 +78,26 @@
     const terms = normalize($('search').value.trim()).split(/\s+/).filter(Boolean);
     const minRating = Math.max(0, Number($('minRating').value) || 0);
     const budget = $('maxPrice').value === '' ? null : Math.max(0, Number($('maxPrice').value));
-    filtered = cards.map(card => ({ card, price: window.EzzcoinsMarket.lookup(feed, card.id, platform)?.price ?? null })).filter(({ card, price }) =>
+    filtered = cards.map(card => { const quote = window.EzzcoinsMarket.lookup(feed, card.id, platform), price = quote?.price ?? null;
+      return { card, price, chg: quote ? change(quote.id, price, platform) : null }; }).filter(({ card, price }) =>
       terms.every(term => card.key.includes(term)) && (!type || card.type === type) && (card.rating ?? 0) >= minRating &&
       (budget === null || price !== null && price <= budget) && (availability === 'all' || (availability === 'priced' ? price !== null : price === null)));
     const sort = $('sort').value;
+    filtered.changes = new Map(filtered.filter(x => x.chg).map(x => [x.card.id, x.chg]));
+    const mover = x => x.chg && x.price >= MOVER_MIN && x.chg.ref >= MOVER_MIN ? x.chg.pct : null;
     filtered.sort((a, b) => {
+      if (sort === 'rise' || sort === 'fall') {
+        const ma = mover(a), mb = mover(b);
+        if (ma === null || mb === null) return (ma === null) - (mb === null) || (a.price ?? Infinity) - (b.price ?? Infinity);
+        return sort === 'rise' ? mb - ma : ma - mb;
+      }
       if (sort === 'name') return a.card.name.localeCompare(b.card.name) || (b.card.rating ?? 0) - (a.card.rating ?? 0);
       if (sort === 'rating') return (b.card.rating ?? 0) - (a.card.rating ?? 0) || (a.price ?? Infinity) - (b.price ?? Infinity);
       if (a.price === null || b.price === null) return (a.price === null ? 1 : 0) - (b.price === null ? 1 : 0) || a.card.name.localeCompare(b.card.name);
       return (sort === 'desc' ? b.price - a.price : a.price - b.price) || (b.card.rating ?? 0) - (a.card.rating ?? 0) || a.card.name.localeCompare(b.card.name);
     });
-    $('resultCount').textContent = number(filtered.length) + (filtered.length === 1 ? ' result' : ' results') + ' · ' + (platform === 'pc' ? 'PC' : 'Console') + ' · coins';
+    $('resultCount').textContent = number(filtered.length) + (filtered.length === 1 ? ' result' : ' results') + ' · ' + (platform === 'pc' ? 'PC' : 'Console') + ' · coins'
+      + (sort === 'rise' || sort === 'fall' ? (dayAgo ? ' · 24h change, cards worth ' + number(MOVER_MIN) + '+ first' : ' · 24h change not available yet') : '');
     $('download').disabled = !filtered.length;
     freshness(); renderMore(true);
     const params = new URLSearchParams();
@@ -92,7 +110,11 @@
     if (busy) return;
     busy = true; $('refresh').disabled = true;
     try {
-      const [data, roster, extra] = await Promise.all([window.EzzcoinsMarket.load(refresh), window.EzzcoinsMarket.fetchData('players.json'), window.EzzcoinsMarket.fetchData('market-cards.json')]);
+      const [data, roster, extra, ago] = await Promise.all([window.EzzcoinsMarket.load(refresh), window.EzzcoinsMarket.fetchData('players.json'), window.EzzcoinsMarket.fetchData('market-cards.json'),
+        window.EzzcoinsMarket.fetchData('day-ago.json').catch(() => null)]);
+      // Day-old prices are optional: without them the page simply shows no 24h change.
+      if (ago && Array.isArray(ago.rows) && ago.cols?.join(',') === 'id,console,pc' && Date.now() - Date.parse(ago.updatedAt) < 6 * 3600000)
+        dayAgo = new Map(ago.rows.filter(r => Array.isArray(r) && r.length === 3).map(r => [r[0], [r[1], r[2]]]));
       feed = data;
       cards = buildCards(roster, extra);
       cards.findCardIds = new Set(cards.filter(card => card.type !== 'unknown').map(card => card.id));
@@ -109,8 +131,8 @@
     const platform = $('platform').value;
     // Neutralize spreadsheet formulas in text supplied by upstream metadata.
     const csv = value => '"' + String(value ?? '').replace(/^[=+@-]/, "'$&").replace(/"/g, '""') + '"';
-    const rows = [['EA item ID', 'Player', 'Rating', 'Version', 'Position', 'Club', 'Platform', 'Lowest Buy Now coins', 'Availability', 'Source', 'Feed published at'],
-      ...filtered.map(({ card, price }) => [card.id, card.name, card.rating, card.version, card.position, card.club, platform, price, price === null ? stateLabel(card, platform) : 'Price available', window.EzzcoinsMarket.lookup(feed,card.id,platform)?.src||feed.source, window.EzzcoinsMarket.lookup(feed,card.id,platform)?.at||feed.publishedAt[platform]])];
+    const rows = [['EA item ID', 'Player', 'Rating', 'Version', 'Position', 'Club', 'Platform', 'Lowest Buy Now coins', '24h change %', 'Availability', 'Source', 'Feed published at'],
+      ...filtered.map(({ card, price, chg }) => [card.id, card.name, card.rating, card.version, card.position, card.club, platform, price, chg ? chg.pct.toFixed(1) : '', price === null ? stateLabel(card, platform) : 'Price available', window.EzzcoinsMarket.lookup(feed,card.id,platform)?.src||feed.source, window.EzzcoinsMarket.lookup(feed,card.id,platform)?.at||feed.publishedAt[platform]])];
     const blob = new Blob(['\uFEFF' + rows.map(row => row.map(csv).join(',')).join('\r\n')], { type: 'text/csv;charset=utf-8' });
     const url = URL.createObjectURL(blob), link = document.createElement('a');
     link.href = url; link.download = 'ezzcoins-fc27-' + platform + '-prices.csv'; link.click();

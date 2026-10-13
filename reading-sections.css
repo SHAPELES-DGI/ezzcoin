@@ -82,3 +82,7 @@ details[open]>summary>.reading-plus{transform:rotate(45deg);}
 @media(max-width:640px){.reading-pills .reading-jump{margin-left:0;}#calendar .calendar-playbook{margin-top:26px;padding-top:22px;}}
 .tab .tab-short{display:none;}
 @media(max-width:600px){.tab .tab-long{display:none;}.tab .tab-short{display:inline;}}
+/* Links from each playbook setup to its full guide page */
+.play-guide .guide-more{display:inline-block;margin-top:14px;font-size:13px;font-weight:700;color:#ebc66e;text-decoration:none}
+.play-guide .guide-more:hover{text-decoration:underline}
+.reading-inline{color:#ebc66e}

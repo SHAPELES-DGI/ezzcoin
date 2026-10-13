@@ -759,7 +759,17 @@ def main():
     os.makedirs(os.path.join(out, "credits"), exist_ok=True)
     with open(os.path.join(out, "credits", "index.html"), "w", encoding="utf-8") as fh:
         fh.write(credits_page(credits, allp, {x["id"]: x for x in legends}))
-    urls = [BASE, BASE + "prices.html", BASE + "tools.html", BASE + "privacy.html", BASE + "p/", BASE + "p/credits/"] + [BASE + "p/" + x["path"] for x in specials + legends + players]
+    # Trading guides (scripts/build_guides.py) and weekly recaps (scripts/weekly_recap.py), found on disk.
+    articles = []
+    for folder in ("guides", "recap"):
+        base = os.path.join(ROOT, folder)
+        if os.path.exists(os.path.join(base, "index.html")):
+            articles.append(f"{folder}/")
+        if os.path.isdir(base):
+            articles += sorted((f"{folder}/{n}/" for n in os.listdir(base) if os.path.exists(os.path.join(base, n, "index.html"))),
+                               reverse=folder == "recap")
+    urls = ([BASE, BASE + "prices.html", BASE + "tools.html", BASE + "privacy.html"] + [BASE + a for a in articles]
+            + [BASE + "p/", BASE + "p/credits/"] + [BASE + "p/" + x["path"] for x in specials + legends + players])
     with open(os.path.join(ROOT, "sitemap.xml"), "w", encoding="utf-8") as fh:
         fh.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
                  + "".join(f"<url><loc>{e(u)}</loc></url>\n" for u in urls) + "</urlset>\n")

@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: [scripts/desk.py, scripts/prerender_home.py, scripts/update_market_prices.py, scripts/card_catalog.py, scripts/futbin_prices.py, scripts/update_sbcs.py, scripts/sync_home_prices.py, scripts/market_extras.py, scripts/update_builders.py, scripts/record_price_history.py, scripts/public_page_data.py, tools-core.js, .github/workflows/market-prices.yml]
+    paths: [scripts/desk.py, scripts/weekly_recap.py, scripts/site_page.py, scripts/prerender_home.py, scripts/update_market_prices.py, scripts/card_catalog.py, scripts/futbin_prices.py, scripts/update_sbcs.py, scripts/sync_home_prices.py, scripts/market_extras.py, scripts/update_builders.py, scripts/record_price_history.py, scripts/public_page_data.py, tools-core.js, .github/workflows/market-prices.yml]
 permissions:
   contents: write
   pages: write
@@ -47,6 +47,8 @@ jobs:
           python3 scripts/test_home_sync.py
           python3 scripts/test_baked_prices.py
           python3 scripts/test_desk.py
+          (cd scripts && python3 test_price_history.py)
+          python3 scripts/test_weekly_recap.py
       - name: Discover FC 27 cards, prices and matching artwork
         run: python3 scripts/update_market_prices.py --metadata-batches 16
       - name: Refresh active SBCs and solution costs
@@ -64,6 +66,9 @@ jobs:
         continue-on-error: true
       - name: Market read, trade calls and their grading (automatic desk)
         run: python3 scripts/desk.py
+        continue-on-error: true
+      - name: Weekly market recap (this week so far, and each finished week once)
+        run: python3 scripts/weekly_recap.py .
         continue-on-error: true
       - name: Write the latest market read into the home page for search engines
         run: python3 scripts/prerender_home.py .
@@ -83,7 +88,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/evolutions.json data/builder-items.json data/price-history index.html data/history.json data/ledger.json data/legends.json data/sbcsolutions.json data/snapshot.json data/prices.json data/topprices.json data/trending.json data/players.json data/live-prices.json data/market-cards.json data/futbin-prices.json data/market.json data/cheapest.json data/market-index.json data/ut-positions.json data/newcards.json data/card-ids.json data/card-renders.json p sitemap.xml
+          git add data/evolutions.json data/builder-items.json data/price-history index.html data/history.json data/ledger.json data/legends.json data/sbcsolutions.json data/snapshot.json data/prices.json data/topprices.json data/trending.json data/players.json data/live-prices.json data/market-cards.json data/futbin-prices.json data/market.json data/cheapest.json data/market-index.json data/ut-positions.json data/newcards.json data/card-ids.json data/card-renders.json data/day-ago.json p recap sitemap.xml
           if ! git diff --cached --quiet; then
             git commit -m "Refresh FC 27 cards, artwork, player pages and market prices"
             # Another data/page workflow can push between fetch and push.

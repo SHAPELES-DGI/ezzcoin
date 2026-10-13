@@ -17,3 +17,7 @@ button,input,select{font:inherit}input,select{background:#181d40!important;borde
 footer{border-top-color:#454069!important}::selection{background:#c53493;color:white}
 @media(max-width:700px){.fifa-hero{padding:26px 22px;min-height:220px;margin-bottom:24px}.fifa-hero h2{font-size:36px}.fifa-hero p{font-size:14px}.fifa-hero-ball{display:none}.fifa-hero:before{width:90%;right:-50%;opacity:.25}.fifa-hero:after{right:-45%;opacity:.35}.tabs{background:#0c1237!important}.tab{border-radius:0!important}.rowhead{padding-left:10px}.top{backdrop-filter:none}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+/* Trust line under the home headline */
+.fifa-hero .trust-line{margin-top:14px;display:inline-flex;gap:8px;align-items:flex-start;padding:8px 12px;border-radius:10px;background:#0b103a99;border:1px solid #37f0ed55;color:#f2f6ff;font-size:13px;line-height:1.45;font-weight:600}
+.fifa-hero .trust-line span{color:#37f0ed}
+.card-head .card-link{text-decoration:none;color:#37f0ed}
