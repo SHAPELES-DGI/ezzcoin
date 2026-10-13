@@ -1,1 +1,456 @@
-{"updatedAt":"2026-10-13T11:04:38Z","source":"automatic","platform":"console","verdict":{"tone":"hold","label":"Prices falling","headline":"Card prices are falling: hold your coins and buy only cards you will play.","detail":"Ezzcoins' Top 100 index is 98.9 (-1.9% in a day) and momentum is 45: prices are falling. 84s cost 750, 85s 2,000 and 86s 5,000. Midweek is usually the quietest time to buy cards for the weekend."},"index":{"idx100":98.9,"idx100Chg":-1.85,"momentum":44.8,"momentumLabel":"Prices are falling","idx84":null,"idx85":null,"idx86":null,"icons":99.83,"note":"Ezzcoins' own index from live console prices, read at {{t:2026-10-13T12:01:00+01:00}}."},"fodder":[{"ovr":81,"price":650,"score":280},{"ovr":82,"price":650,"score":340},{"ovr":83,"price":700,"score":410},{"ovr":84,"price":750,"score":830},{"ovr":85,"price":2000,"score":2100},{"ovr":86,"price":5000,"score":4100},{"ovr":87,"price":6800,"score":5500},{"ovr":88,"price":11750,"score":8300},{"ovr":89,"price":19250,"score":11000},{"ovr":90,"price":31250,"score":14000},{"ovr":91,"price":72000,"score":19000}],"moves":[{"tone":"sell","confidence":"medium","ledgerId":"c-2026-10-13-fade-jérémy-doku","title":"Sell Jérémy Doku 84 after its 24% jump, expect it lower in two days","when":"Check {{t:2026-10-15T02:18:00+01:00}}","detail":"Tracked call: in at 17,000 coins. Now 18,500. Sell the spike: a card that jumped in a day often gives part of the jump back within two days. Picked because it is up 23.6% in about a day. This is the strategy's first tracked call. A sell call is a hit if the price is lower at check time."},{"tone":"buy","confidence":"medium","ledgerId":"c-2026-10-13-rebound-myles-lewis-skelly","title":"Buy Myles Lewis-Skelly 88 Future Stars after its 14% fall, sell in two days","when":"Check {{t:2026-10-14T23:00:00+01:00}}","detail":"Tracked call: in at 689,000 coins. Now 717,000. Buy the dip: a playable card that fell sharply in a day often recovers part of the fall within two days. Picked because it is down 13.8% in about a day. This is the strategy's first tracked call. It sells and buys back, so the 5% tax is counted."},{"tone":"watch","confidence":"low","when":"Until {{t:2026-10-15T07:59:00+01:00}}","title":"Quiet midweek: plan your weekend squad now","detail":"Midweek is usually the cheapest time to buy cards you will play at the weekend. The next Rivals rewards come {{t:2026-10-15T07:59:00+01:00}} and add fodder supply."},{"tone":"watch","confidence":"medium","when":"Every update","title":"Fodder: 84s are the best value per point, 88s the dearest","detail":"Cheapest prices: 84s 750 (0.90 coins per Item Score point), 85s 2,000 (0.95 coins per Item Score point), 86s 5,000 (1.22 coins per Item Score point), 87s 6,800 (1.24 coins per Item Score point), 88s 11,750 (1.42 coins per Item Score point). For SBCs that ask for an Item Score, 84s then 85s fill it cheapest. Use fodder in SBCs rather than trading it: selling costs the 5% tax."},{"tone":"watch","confidence":"low","when":"Next few updates","title":"Alexander Isak and other falling cards: wait for the fall to flatten","detail":"Biggest falls in the last day: Alexander Isak 88 Destined for Glory -74.5%; Francesco Pio Esposito 77 Rare -35.8%; Santiago Ramos Mingo 75 Rare -25.5%; Ian Rush 88 Base Icon -21.1%. Buy only cards you will play, and wait for two steady updates before buying."},{"tone":"watch","confidence":"medium","when":"Until {{t:2026-10-13T18:00:00+01:00}}","title":"5x 80+ Upgrade SBC ends soon","detail":"It costs about 7.5K coins to complete. Compare that with what you get before you build."}],"sbcs":[{"name":"Carlos Espí","cost":"42.6K","expires":"About 3 days left","note":"Earn a special Future Stars Carlos Espí."},{"name":"Weslley Pinto Batista","cost":"12.6K","expires":"About 2 days left","note":"Earn a special Squad Foundations Weslley Pinto Batista"},{"name":"Liga F POTM September","cost":"1.16M","expires":"About 21 days left","note":"Earn the Liga F Player of the Month for September."},{"name":"LALIGA POTM September","cost":"1.34M","expires":"About 17 days left","note":"Earn the LALIGA Player of the Month for September."},{"name":"Premier League POTM September","cost":"19.7K","expires":"About 17 days left","note":"Earn the Premier League Player of the Month for September."},{"name":"Bundesliga POTM September","cost":"721.5K","expires":"About 16 days left","note":"Earn the Bundesliga Player of the Month for September."},{"name":"Serie A POTM September","cost":"93K","expires":"About 16 days left","note":"Earn the Serie A Player of the Month for September."},{"name":"3x 79+ Upgrade","cost":"6.6K","expires":"About 6 days left","note":"New today. Earn a pack containing 3 Gold Player Items, rated 79 or higher."}],"drops":[{"detail":"Ultimate Scream, UEFA Road to the Knockouts, Hall of FUT Unleashed and Black Friday Thunderstruck, from EA's roadmap. Exact dates not announced.","expected":"Season 2, from 22 Oct","firstSeen":"2026-09-30T19:20:05Z","ftr":false,"official":true,"sheriff":false,"sources":[{"title":"FUTBIN · FC 27 promo teams confirmed","url":"https://www.futbin.com/news/articles/1778/fc-27-promo-teams-confirmed"}],"status":"confirmed","title":"Season 2 campaigns"}],"fallers":[{"name":"Alexander Isak","version":"Destined for Glory","ovr":88,"pct":-74.48,"price":"−356,000 coins","eaId":50565379},{"name":"Francesco Pio Esposito","version":"Rare","ovr":77,"pct":-35.82,"price":"−2,400 coins","eaId":277327},{"name":"Santiago Ramos Mingo","version":"Rare","ovr":75,"pct":-25.51,"price":"−2,500 coins","eaId":252072},{"name":"Ian Rush","version":"Base Icon","ovr":88,"pct":-21.1,"price":"−65,000 coins","eaId":247703},{"name":"Nobel Mendy","version":"Rare","ovr":75,"pct":-20.75,"price":"−1,100 coins","eaId":276633},{"name":"Virgil van Dijk","version":"Rare","ovr":88,"pct":-20.29,"price":"−3,500 coins","eaId":203376},{"name":"Gilberto Mora","version":"Future Stars","ovr":87,"pct":-19.17,"price":"−23,000 coins","eaId":50411047},{"name":"Andrea Pirlo","version":"Base Icon","ovr":90,"pct":-15.76,"price":"−104,000 coins","eaId":7763}],"risers":[{"name":"Barbara Bonansea","version":"Rare","ovr":82,"pct":247.62,"price":"+5,200 coins","eaId":227072},{"name":"Ethan Nwaneri","version":"Rare","ovr":75,"pct":102.7,"price":"+3,800 coins","eaId":50603455},{"name":"Myles Lewis-Skelly","version":"Rare","ovr":78,"pct":28.21,"price":"+1,100 coins","eaId":278773},{"name":"Orkun Kökçü","version":"Destined for Glory","ovr":86,"pct":20.0,"price":"+6,500 coins","eaId":50574893},{"name":"Saki Kumagai","version":"Rare","ovr":81,"pct":18.75,"price":"+900 coins","eaId":226997},{"name":"Josh Acheampong","version":"Rare","ovr":75,"pct":16.07,"price":"+900 coins","eaId":71651},{"name":"Mohamed Salah","version":"Team of the week","ovr":88,"pct":15.24,"price":"+25,000 coins","eaId":50540979},{"name":"Jaap Stam","version":"Base Hero","ovr":87,"pct":13.46,"price":"+172,000 coins","eaId":5740}],"meta":[{"name":"Racheal Kundananji","ovr":81,"pos":"ST","price":1700,"eaId":272076,"priceState":0,"at":"2026-10-13T11:00:34Z","src":"FUT.GG","priceAt":"2026-10-13T11:00:34Z","note":"Meta 90 at ST: the best Ezzcoins meta rating for up to 3K"},{"name":"Bremer","ovr":86,"pos":"CB","price":5600,"eaId":239580,"priceState":0,"at":"2026-10-13T11:00:34Z","src":"FUT.GG","priceAt":"2026-10-13T11:00:34Z","note":"Meta 91 at CB: the best Ezzcoins meta rating for up to 6K"},{"name":"Debinha","ovr":87,"pos":"CAM","price":8500,"eaId":226893,"priceState":0,"at":"2026-10-13T11:00:34Z","src":"FUT.GG","priceAt":"2026-10-13T11:00:34Z","note":"Meta 91 at CAM: the best Ezzcoins meta rating for up to 12K"},{"name":"Mapi León","ovr":88,"pos":"CB","price":11750,"eaId":236479,"priceState":0,"at":"2026-10-13T11:00:34Z","src":"FUT.GG","priceAt":"2026-10-13T11:00:34Z","note":"Meta 91 at CB: the best Ezzcoins meta rating for up to 25K"},{"name":"Tabitha Chawinga","ovr":87,"pos":"ST","price":16000,"eaId":278219,"priceState":0,"at":"2026-10-13T11:00:34Z","src":"FUT.GG","priceAt":"2026-10-13T11:00:34Z","note":"Meta 91 at ST: the best Ezzcoins meta rating for up to 50K"},{"name":"Sophia Wilson","ovr":88,"pos":"ST","price":65000,"eaId":264012,"priceState":0,"at":"2026-10-13T11:00:34Z","src":"FUT.GG","priceAt":"2026-10-13T11:00:34Z","note":"Meta 93 at ST: the best Ezzcoins meta rating for up to 100K"},{"name":"Khvicha Kvaratskhelia","ovr":89,"pos":"RM","price":78500,"eaId":247635,"priceState":0,"at":"2026-10-13T11:00:34Z","src":"FUT.GG","priceAt":"2026-10-13T11:00:34Z","note":"Meta 92 at RM: the best Ezzcoins meta rating for up to 200K"},{"name":"Caroline Graham Hansen","ovr":89,"pos":"RW","price":208000,"eaId":227102,"priceState":0,"at":"2026-10-13T11:00:34Z","src":"FUT.GG","priceAt":"2026-10-13T11:00:34Z","note":"Meta 93 at RW: the best Ezzcoins meta rating for up to 400K"}],"news":[{"kind":"data","source":"Ezzcoins","title":"Top 100 index 98.9 (-1.9% in a day)","detail":"Momentum 45: prices are falling. ICON index 99.83 (-1.7%)."},{"kind":"data","source":"Ezzcoins","title":"Fodder prices","detail":"84s 750, 85s 2,000, 86s 5,000, 87s 6,800, 88s 11,750, 89s 19,250."},{"kind":"data","source":"Ezzcoins","title":"Biggest falls in the last day","detail":"Alexander Isak 88 Destined for Glory -74.5% (−356,000 coins); Francesco Pio Esposito 77 Rare -35.8% (−2,400 coins); Santiago Ramos Mingo 75 Rare -25.5% (−2,500 coins)."},{"kind":"data","source":"Ezzcoins","title":"Biggest rises in the last day","detail":"Barbara Bonansea 82 Rare +247.6% (+5,200 coins); Ethan Nwaneri 75 Rare +102.7% (+3,800 coins); Myles Lewis-Skelly 78 Rare +28.2% (+1,100 coins)."},{"kind":"official","source":"Ezzcoins","title":"1 new SBC today","detail":"3x 79+ Upgrade (6.6K)."},{"kind":"official","source":"Ezzcoins","title":"4 new special cards in the last day","detail":"Including Franculino 84 Future Stars, Arda Okan Kurtulan 84 Future Stars, Ilhan Fakili 84 Future Stars, Ousmane Diabate 84 Future Stars."}],"events":[{"date":"2026-10-14T18:00:00+01:00","title":"Team of the Week","impact":"supply","confirmed":true,"detail":"The new Team of the Week goes into packs."},{"date":"2026-10-15T07:59:00+01:00","title":"Rivals rewards","impact":"supply","confirmed":true,"detail":"Weekly Rivals rewards are paid out; expect more fodder and tradeable cards on the market."},{"confirmed":true,"date":"2026-10-22T08:59:00+02:00","detail":"Future Stars lands before this. Season 2 brings Ultimate Scream, UEFA Road to the Knockouts, Hall of FUT Unleashed and Black Friday Thunderstruck, per EA's roadmap as reported by FUTBIN.","impact":"both","title":"Season 1 ends · Season 2 starts"},{"allDay":true,"confirmed":true,"date":"2026-10-25T03:00:00+02:00","detail":"Rivals rewards stay at the same UTC time, so from 29 October they arrive an hour earlier on local clocks in Europe.","impact":"info","title":"Clocks go back in Europe"}],"corrections":[{"date":"2026-10-13T04:15:00Z","section":"What's moving the game","what":"Dropped the \"3,137 coins\" price for Risser FS 85 and the fallers' price column.","why":"FUT.GG's momentum page shows 3,137 as the coin change, not the card price."},{"date":"2026-10-12T20:13:19Z","section":"Moves right now","what":"Changed the fodder move from \"check whether 85s dropped to 1,500\" to 84s at 700; 85s now 2,300.","why":"FUT.GG's cheapest-by-rating lists 85s at 2,300, so the 1,500 reading was a single listing."},{"date":"2026-10-11T22:14:18Z","section":"Hot SBCs","what":"Added Weslley Pinto Batista (11.8K); dropped 3x 79+ Upgrade to keep eight rows.","why":"FUT.GG's player SBC page lists Weslley Pinto Batista again, so the last update's removal was wrong."},{"date":"2026-10-11T18:13:03Z","section":"Hot SBCs","what":"Added TOTW Upgrade (12K) and Max. 86 Base Hero Upgrade (85K); dropped Weslley Pinto Batista.","why":"FUT.GG's upgrade page lists TOTW Upgrade and the Hero upgrade again, so the last update's removal was wrong."},{"date":"2026-10-11T17:13:22Z","section":"Hot SBCs","what":"Removed Tarciane (Destined for Glory) and TOTW Upgrade; added Base Hero Matchday Player Pick (115K).","why":"FUT.GG's expiring-soon and player SBC pages no longer list Tarciane or TOTW Upgrade, and list the Hero pick."},{"date":"2026-10-11T16:14:07Z","section":"Moves right now","what":"Changed the fodder move from \"84s and 86s tie\" to 84s at 750 cheapest per point; 86s now 4,600.","why":"FUT.GG's cheapest-by-rating lists 86s at 4,600, so the 3,200 reading was a single listing."},{"date":"2026-10-11T09:12:58Z","section":"Moves right now","what":"Replaced the \"85s read 1,000\" fodder move with 84s at 700 (0.84 per point); 85s now 2,300.","why":"FUT.GG's cheapest-by-rating lists 85s at 2,300, so the 1,000 reading was a single listing."},{"date":"2026-10-10T19:12:46Z","section":"Moves right now","what":"Replaced the De Bruyne 86 TOTW sell move with a note on the live Player of the Month SBCs.","why":"FUT.GG's momentum page no longer lists De Bruyne, so the −23.1% figure was stale."},{"date":"2026-10-10T17:13:34Z","section":"Moves right now","what":"Removed Marmoush 84 TOTW from the TOTW fall move; dropped the Destined for Glory Challenge 4 and Premier League POTM SBC rows; added EFL Championship Future Stars Pick and 3x 79+ Upgrade.","why":"FUT.GG's momentum page no longer lists Marmoush, and its challenge and player SBC pages no longer show those two rows."},{"date":"2026-10-10T13:13:43Z","section":"Moves right now","what":"Removed Hadj Moussa from the TOTW fall move; added De Bruyne 86 −19.7% and Sullivan −11.1%.","why":"FUT.GG's momentum page no longer lists Hadj Moussa; De Bruyne and Sullivan are on it."},{"date":"2026-10-10T08:13:14Z","section":"Moves right now","what":"Replaced Cancelo, De Bruyne and Baena in the TOTW fall move with Shea Charles 80 −16.0%, Mastantuono 80 −14.9% and Reus 80 −8.9%.","why":"FUT.GG's momentum page no longer lists Cancelo, De Bruyne or Baena among the fallers."},{"date":"2026-10-09T21:13:47Z","section":"Moves right now","what":"Removed the Hero cards falling move and replaced it with a don't-invest note on the one-source Ramos SBC leak.","why":"FUT.GG's momentum page no longer lists Berbatov or any other Hero card among the fallers."},{"date":"2026-10-09T20:13:32Z","section":"Moves right now","what":"Replaced the Hero move's Kuyt −12.7% and Kluivert −11.4% with Berbatov 87 −9.0%; fodder now 84s at 850 and 85s at 2,200 tied.","why":"FUT.GG's momentum page no longer lists Kuyt or Kluivert, and its cheapest-by-rating shows 84s at 850 and 85s at 2,200."},{"date":"2026-10-09T17:13:27Z","section":"Calendar","what":"Removed the \"Destined for Glory Team 3 (not confirmed)\" event and listed Future Stars Team 1 as live.","why":"FUT.GG's in-packs page now lists 15 Future Stars cards, so the promo is live and no third DFG squad was found."},{"date":"2026-10-09T15:14:10Z","section":"Moves right now","what":"Replaced \"85s at 1,500 are cheapest per point\" with 84s at 850 (1.02, tied with 85s at 1.05); dropped the 87 floor of 1,100.","why":"FUT.GG now lists 85s at 2,200 and 87s at 6,500, so the 1,500 and 1,100 readings were single listings."}],"sources":[{"title":"Ezzcoins price feed (FUT.GG data)","url":"https://ezzcoins.com/prices.html"},{"title":"EA SPORTS FC 27 ratings","url":"https://www.ea.com/games/ea-sports-fc/ratings"}],"pricesUpdatedAt":"2026-10-13T11:00:34Z"}
+{
+  "corrections": [
+    {
+      "date": "2026-10-13T04:15:00Z",
+      "section": "What's moving the game",
+      "what": "Dropped the \"3,137 coins\" price for Risser FS 85 and the fallers' price column.",
+      "why": "FUT.GG's momentum page shows 3,137 as the coin change, not the card price."
+    },
+    {
+      "date": "2026-10-12T20:13:19Z",
+      "section": "Moves right now",
+      "what": "Changed the fodder move from \"check whether 85s dropped to 1,500\" to 84s at 700; 85s now 2,300.",
+      "why": "FUT.GG's cheapest-by-rating lists 85s at 2,300, so the 1,500 reading was a single listing."
+    },
+    {
+      "date": "2026-10-11T22:14:18Z",
+      "section": "Hot SBCs",
+      "what": "Added Weslley Pinto Batista (11.8K); dropped 3x 79+ Upgrade to keep eight rows.",
+      "why": "FUT.GG's player SBC page lists Weslley Pinto Batista again, so the last update's removal was wrong."
+    },
+    {
+      "date": "2026-10-11T18:13:03Z",
+      "section": "Hot SBCs",
+      "what": "Added TOTW Upgrade (12K) and Max. 86 Base Hero Upgrade (85K); dropped Weslley Pinto Batista.",
+      "why": "FUT.GG's upgrade page lists TOTW Upgrade and the Hero upgrade again, so the last update's removal was wrong."
+    },
+    {
+      "date": "2026-10-11T17:13:22Z",
+      "section": "Hot SBCs",
+      "what": "Removed Tarciane (Destined for Glory) and TOTW Upgrade; added Base Hero Matchday Player Pick (115K).",
+      "why": "FUT.GG's expiring-soon and player SBC pages no longer list Tarciane or TOTW Upgrade, and list the Hero pick."
+    },
+    {
+      "date": "2026-10-11T16:14:07Z",
+      "section": "Moves right now",
+      "what": "Changed the fodder move from \"84s and 86s tie\" to 84s at 750 cheapest per point; 86s now 4,600.",
+      "why": "FUT.GG's cheapest-by-rating lists 86s at 4,600, so the 3,200 reading was a single listing."
+    },
+    {
+      "date": "2026-10-11T09:12:58Z",
+      "section": "Moves right now",
+      "what": "Replaced the \"85s read 1,000\" fodder move with 84s at 700 (0.84 per point); 85s now 2,300.",
+      "why": "FUT.GG's cheapest-by-rating lists 85s at 2,300, so the 1,000 reading was a single listing."
+    },
+    {
+      "date": "2026-10-10T19:12:46Z",
+      "section": "Moves right now",
+      "what": "Replaced the De Bruyne 86 TOTW sell move with a note on the live Player of the Month SBCs.",
+      "why": "FUT.GG's momentum page no longer lists De Bruyne, so the −23.1% figure was stale."
+    },
+    {
+      "date": "2026-10-10T17:13:34Z",
+      "section": "Moves right now",
+      "what": "Removed Marmoush 84 TOTW from the TOTW fall move; dropped the Destined for Glory Challenge 4 and Premier League POTM SBC rows; added EFL Championship Future Stars Pick and 3x 79+ Upgrade.",
+      "why": "FUT.GG's momentum page no longer lists Marmoush, and its challenge and player SBC pages no longer show those two rows."
+    },
+    {
+      "date": "2026-10-10T13:13:43Z",
+      "section": "Moves right now",
+      "what": "Removed Hadj Moussa from the TOTW fall move; added De Bruyne 86 −19.7% and Sullivan −11.1%.",
+      "why": "FUT.GG's momentum page no longer lists Hadj Moussa; De Bruyne and Sullivan are on it."
+    },
+    {
+      "date": "2026-10-10T08:13:14Z",
+      "section": "Moves right now",
+      "what": "Replaced Cancelo, De Bruyne and Baena in the TOTW fall move with Shea Charles 80 −16.0%, Mastantuono 80 −14.9% and Reus 80 −8.9%.",
+      "why": "FUT.GG's momentum page no longer lists Cancelo, De Bruyne or Baena among the fallers."
+    },
+    {
+      "date": "2026-10-09T21:13:47Z",
+      "section": "Moves right now",
+      "what": "Removed the Hero cards falling move and replaced it with a don't-invest note on the one-source Ramos SBC leak.",
+      "why": "FUT.GG's momentum page no longer lists Berbatov or any other Hero card among the fallers."
+    },
+    {
+      "date": "2026-10-09T20:13:32Z",
+      "section": "Moves right now",
+      "what": "Replaced the Hero move's Kuyt −12.7% and Kluivert −11.4% with Berbatov 87 −9.0%; fodder now 84s at 850 and 85s at 2,200 tied.",
+      "why": "FUT.GG's momentum page no longer lists Kuyt or Kluivert, and its cheapest-by-rating shows 84s at 850 and 85s at 2,200."
+    },
+    {
+      "date": "2026-10-09T17:13:27Z",
+      "section": "Calendar",
+      "what": "Removed the \"Destined for Glory Team 3 (not confirmed)\" event and listed Future Stars Team 1 as live.",
+      "why": "FUT.GG's in-packs page now lists 15 Future Stars cards, so the promo is live and no third DFG squad was found."
+    },
+    {
+      "date": "2026-10-09T15:14:10Z",
+      "section": "Moves right now",
+      "what": "Replaced \"85s at 1,500 are cheapest per point\" with 84s at 850 (1.02, tied with 85s at 1.05); dropped the 87 floor of 1,100.",
+      "why": "FUT.GG now lists 85s at 2,200 and 87s at 6,500, so the 1,500 and 1,100 readings were single listings."
+    }
+  ],
+  "drops": [
+    {
+      "detail": "Ultimate Scream, UEFA Road to the Knockouts, Hall of FUT Unleashed and Black Friday Thunderstruck, from EA's roadmap. Exact dates not announced.",
+      "expected": "Season 2, from 22 Oct",
+      "firstSeen": "2026-09-30T19:20:05Z",
+      "ftr": false,
+      "official": true,
+      "sheriff": false,
+      "sources": [
+        {
+          "title": "FUTBIN · FC 27 promo teams confirmed",
+          "url": "https://www.futbin.com/news/articles/1778/fc-27-promo-teams-confirmed"
+        }
+      ],
+      "status": "confirmed",
+      "title": "Season 2 campaigns"
+    }
+  ],
+  "events": [
+    {
+      "confirmed": true,
+      "date": "2026-10-15T08:59:00+02:00",
+      "detail": "Weekly Rivals rewards are paid out; expect a supply bump of fodder and tradeable cards.",
+      "impact": "supply",
+      "title": "Rivals rewards"
+    },
+    {
+      "confirmed": true,
+      "date": "2026-10-22T08:59:00+02:00",
+      "detail": "Future Stars lands before this. Season 2 brings Ultimate Scream, UEFA Road to the Knockouts, Hall of FUT Unleashed and Black Friday Thunderstruck, per EA's roadmap as reported by FUTBIN.",
+      "impact": "both",
+      "title": "Season 1 ends · Season 2 starts"
+    },
+    {
+      "allDay": true,
+      "confirmed": true,
+      "date": "2026-10-25T03:00:00+02:00",
+      "detail": "Rivals rewards stay at the same UTC time, so from 29 October they arrive an hour earlier on local clocks in Europe.",
+      "impact": "info",
+      "title": "Clocks go back in Europe"
+    }
+  ],
+  "fallers": [
+    {
+      "name": "Gilberto Mora",
+      "ovr": 87,
+      "pct": -14.41,
+      "price": "–",
+      "version": "Future Stars"
+    },
+    {
+      "name": "Anis Hadj Moussa",
+      "ovr": 80,
+      "pct": -12.94,
+      "price": "–",
+      "version": "Team of the Week"
+    },
+    {
+      "name": "Vicky López",
+      "ovr": 90,
+      "pct": -11.15,
+      "price": "–",
+      "version": "Future Stars"
+    },
+    {
+      "name": "Robin Risser",
+      "ovr": 85,
+      "pct": -10.37,
+      "price": "–",
+      "version": "Future Stars"
+    },
+    {
+      "name": "Mika Godts",
+      "ovr": 88,
+      "pct": -9.26,
+      "price": "–",
+      "version": "Future Stars"
+    },
+    {
+      "name": "Carragher",
+      "ovr": 86,
+      "pct": -8.22,
+      "price": "–",
+      "version": "Base Hero"
+    },
+    {
+      "name": "Brugts",
+      "ovr": 85,
+      "pct": -7.87,
+      "price": "–",
+      "version": "Team of the Week"
+    },
+    {
+      "name": "Crouch",
+      "ovr": 85,
+      "pct": -6.75,
+      "price": "–",
+      "version": "Base Hero"
+    }
+  ],
+  "fodder": [
+    {
+      "ovr": 81,
+      "price": 650,
+      "score": 280
+    },
+    {
+      "ovr": 82,
+      "price": 650,
+      "score": 340
+    },
+    {
+      "ovr": 83,
+      "price": 700,
+      "score": 410
+    },
+    {
+      "ovr": 84,
+      "price": 800,
+      "score": 830
+    },
+    {
+      "ovr": 85,
+      "price": 2400,
+      "score": 2100
+    },
+    {
+      "ovr": 86,
+      "price": 4900,
+      "score": 4100
+    },
+    {
+      "ovr": 87,
+      "price": 6900,
+      "score": 5500
+    },
+    {
+      "ovr": 88,
+      "price": 11000,
+      "score": 8300
+    },
+    {
+      "ovr": 89,
+      "price": 19500,
+      "score": 11000
+    },
+    {
+      "ovr": 90,
+      "price": 30250,
+      "score": 14000
+    },
+    {
+      "ovr": 91,
+      "price": 72000,
+      "score": 19000
+    }
+  ],
+  "index": {
+    "icons": 99.83,
+    "idx100": 98.9,
+    "idx100Chg": -1.85,
+    "idx84": 800,
+    "idx85": 2400,
+    "idx86": 4900,
+    "momentum": 44.8,
+    "momentumLabel": "Prices are falling",
+    "note": "Top 100, Icons and momentum are Ezzcoins' own index read at {{t:2026-10-13T11:00:34Z}}, because FUTBIN's market page returned 403 this run. The 84–86 figures (800, 2,400 and 4,900) are FUT.GG's cheapest prices read this run."
+  },
+  "meta": [
+    {
+      "name": "João Neves",
+      "note": "#4 on FUT.GG's best cheap players (price from an earlier update)",
+      "ovr": 88,
+      "pos": "CM",
+      "price": 30000
+    },
+    {
+      "name": "Messi",
+      "note": "#8 on FUT.GG's best cheap players (price from an earlier update)",
+      "ovr": 89,
+      "pos": "CAM",
+      "price": 32000
+    }
+  ],
+  "moves": [
+    {
+      "confidence": "low",
+      "detail": "FUT.GG: Mora FS 87 −14.4%, Hadj Moussa TOTW 80 −12.9%, Vicky López FS 90 −11.2%, Risser FS 85 −10.4%, Godts FS 88 −9.3%. The page lists no risers. Buy only what you play and wait for the falls to flatten.",
+      "title": "Future Stars and TOTW cards keep falling: wait before buying",
+      "tone": "watch",
+      "when": "Next few updates"
+    },
+    {
+      "confidence": "medium",
+      "detail": "FUT.GG: 84s at 800 (0.96 coins per Item Score point), 85s at 2,400 (1.14), 86s at 4,900 (1.20), 87s at 6,900 (1.25). 84s are cheapest per point by more than 0.1. Use fodder in SBCs, don't trade it: selling costs the 5% tax.",
+      "title": "Fodder: 84s are the cheapest per Item Score point",
+      "tone": "watch",
+      "when": "Every update"
+    },
+    {
+      "confidence": "low",
+      "detail": "FUT.GG lists Premier League POTM at 18.75K, Serie A at 90K, Bundesliga at 700K, Liga F at 1.125M and LALIGA at 1.3M. Compare the SBC cost with the reward card's price before building; costs are FUT.GG's.",
+      "title": "Player of the Month SBCs are live: check cost against the card",
+      "tone": "watch",
+      "when": "While they are live"
+    },
+    {
+      "confidence": "low",
+      "detail": "Rivals rewards pay out then. After the last payout the 86 floor fell to 750 and was back at 4,200 within an hour, so don't treat one low reading as real; check two updates in a row.",
+      "title": "Rivals payout can dump fodder: wait for two readings",
+      "tone": "watch",
+      "when": "Around {{t:2026-10-15T08:59:00+02:00}}"
+    }
+  ],
+  "news": [
+    {
+      "detail": "FUT.GG's momentum page has Mora FS 87 at −14.4%, Hadj Moussa TOTW 80 at −12.9% and Vicky López FS 90 at −11.2%. No risers are listed.",
+      "kind": "data",
+      "source": "FUT.GG",
+      "title": "Falls led by Future Stars and TOTW cards"
+    },
+    {
+      "detail": "FUT.GG: 84s are 800, 85s 2,400, 86s 4,900, 87s 6,900 and 88s 11,000.",
+      "kind": "data",
+      "source": "FUT.GG",
+      "title": "Fodder prices"
+    },
+    {
+      "detail": "FUT.GG: Mora FS 87 −14.4%, Godts FS 88 −9.3%, Vicky López FS 90 −11.2%, Risser FS 85 −10.4%. Base Hero Carragher 86 is down 8.2%, Crouch 85 6.8%.",
+      "kind": "data",
+      "source": "FUT.GG",
+      "title": "Future Stars and Hero cards keep falling"
+    },
+    {
+      "detail": "FUT.GG lists Liga F (1.125M), LALIGA (1.3M), Bundesliga (700K), Serie A (90K) and Premier League (18.75K) POTM SBCs. Costs are FUT.GG's.",
+      "kind": "data",
+      "source": "FUT.GG",
+      "title": "New Player of the Month SBCs"
+    },
+    {
+      "detail": "EA published Title Update v1.0.4 for FC 27 on 7 October (EA news page, read this run). Patch notes were not read.",
+      "kind": "official",
+      "source": "EA",
+      "title": "Title Update v1.0.4 is out"
+    },
+    {
+      "detail": "Rivals and Champions now pay several times FC 26's 500–600 coins per match, and far more rewards are tradeable. Expect bigger supply dumps on reward days and sharper weekly swings.",
+      "kind": "official",
+      "source": "EA Pitch Notes",
+      "title": "Matches pay several times more coins"
+    }
+  ],
+  "platform": "console",
+  "risers": [],
+  "sbcs": [
+    {
+      "cost": "85K",
+      "expires": "Ends soon",
+      "name": "Max. 86 Base Hero Upgrade",
+      "note": "Upgrade SBC; on FUT.GG's expiring-soon page. This run's list comes from FUT.GG because FUTBIN returned 403."
+    },
+    {
+      "cost": "6.75K",
+      "expires": "Ends soon",
+      "name": "5x 80+ Upgrade",
+      "note": "Upgrade SBC; on the expiring-soon page."
+    },
+    {
+      "cost": "–",
+      "expires": "Ends soon",
+      "name": "Future Stars Challenge 1",
+      "note": "Challenge SBC; on the expiring-soon page, no cost shown."
+    },
+    {
+      "cost": "11K",
+      "expires": "",
+      "name": "Süper Lig Future Stars Pick",
+      "note": "Future Stars player pick."
+    },
+    {
+      "cost": "14K",
+      "expires": "",
+      "name": "EFL Championship Future Stars Pick",
+      "note": "Future Stars player pick."
+    },
+    {
+      "cost": "115K",
+      "expires": "",
+      "name": "Base Hero Matchday Player Pick",
+      "note": "Player pick SBC."
+    },
+    {
+      "cost": "41K",
+      "expires": "",
+      "name": "Carlos Espí",
+      "note": "Player SBC."
+    },
+    {
+      "cost": "11.8K",
+      "expires": "",
+      "name": "Weslley Pinto Batista",
+      "note": "Player SBC."
+    }
+  ],
+  "source": "scheduled",
+  "sources": [
+    {
+      "title": "FUT.GG · Cheapest by rating",
+      "url": "https://www.fut.gg/cheapest-by-rating/"
+    },
+    {
+      "title": "FUT.GG · Momentum",
+      "url": "https://www.fut.gg/players/momentum/"
+    },
+    {
+      "title": "FUT.GG · Player SBCs",
+      "url": "https://www.fut.gg/sbc/category/players/"
+    },
+    {
+      "title": "FUT.GG · Upgrade SBCs",
+      "url": "https://www.fut.gg/sbc/category/upgrades/"
+    },
+    {
+      "title": "FUT.GG · Challenges",
+      "url": "https://www.fut.gg/sbc/category/challenges/"
+    },
+    {
+      "title": "FUT.GG · Expiring soon",
+      "url": "https://www.fut.gg/sbc/category/expiring-soon/"
+    },
+    {
+      "title": "EA · FC 27 Launch Update Pitch Notes",
+      "url": "https://www.ea.com/games/ea-sports-fc/fc-27/news/pitch-notes-fc27-launch-update"
+    },
+    {
+      "title": "EA Help · How Rivals works",
+      "url": "https://help.ea.com/en/articles/ea-sports-fc/ultimate-team-rivals/"
+    },
+    {
+      "title": "EA Help · Gallery Sets and rewards",
+      "url": "https://help.ea.com/en/articles/ea-sports-fc/gallery-hub/"
+    },
+    {
+      "title": "EA · FC 27 news",
+      "url": "https://www.ea.com/games/ea-sports-fc/fc-27/news"
+    },
+    {
+      "title": "FUT.GG · Players in packs",
+      "url": "https://www.fut.gg/players/in-packs/"
+    },
+    {
+      "title": "FUTBIN · Market index (Ezzcoins reading)",
+      "url": "https://www.futbin.com/market"
+    }
+  ],
+  "updatedAt": "2026-10-13T11:13:11Z",
+  "verdict": {
+    "detail": "FUT.GG: Mora FS 87 is down 14.4%, Hadj Moussa TOTW 80 12.9%, Vicky López FS 90 11.2% and Risser FS 85 10.4%; the page shows only fallers. Ezzcoins' own index reads Top 100 at 98.9 (-1.85%) with momentum 44.8 (prices are falling), read at {{t:2026-10-13T11:00:34Z}}. 84s are 800, 85s 2,400 and 86s 4,900.",
+    "headline": "Future Stars, TOTW and Hero cards keep sliding and nothing is rising; hold unless you need a card.",
+    "label": "Hold",
+    "tone": "hold"
+  }
+}
