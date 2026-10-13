@@ -102,12 +102,40 @@
     const graded = calls.filter(c => c.status === 'hit' || c.status === 'miss');
     const hits = graded.filter(c => c.status === 'hit');
     const resultVals = graded.filter(c => c.tone === 'buy' && c.result != null && c.result !== '').map(c => Number(c.result)).filter(Number.isFinite);
+    // Lifetime totals: the call list is trimmed to the latest 60, the record keeps every graded call.
+    const r = state.ledger?.record, n = r ? (+r.hit || 0) + (+r.miss || 0) : 0;
+    if (r && n >= graded.length) return {
+      graded: n, hits: +r.hit || 0, winRate: n ? (+r.hit || 0) / n * 100 : null,
+      avg: +r.buyN > 0 ? (+r.buySum || 0) / +r.buyN : null, since: r.since
+    };
     return {
       graded: graded.length,
       hits: hits.length,
       winRate: graded.length ? (hits.length / graded.length * 100) : null,
       avg: resultVals.length ? resultVals.reduce((a,b)=>a+b,0)/resultVals.length : null
     };
+  }
+
+  const STRATEGY_STATUS = {
+    active: ['buy', 'Active', 'Used for new calls'],
+    retest: ['watch', 'Retest', 'Back after a pause, at low confidence'],
+    new: ['hold', 'Untested', 'No graded calls yet'],
+    paused: ['sell', 'Paused', 'Recent calls lost after tax']
+  };
+  const pct = v => v == null || !Number.isFinite(+v) ? '–' : `${+v > 0 ? '+' : ''}${(+v).toFixed(1)}%`;
+  const shortDate = iso => { const d = new Date(iso); return Number.isNaN(d.getTime()) ? '' : d.toLocaleDateString([], {day:'numeric', month:'short'}); };
+
+  function strategiesHTML() {
+    const board = Array.isArray(state.ledger?.strategyBoard) ? state.ledger.strategyBoard : [];
+    if (!board.length) return '';
+    return `<div class="ez-strats"><div class="ez-strats-head">How each strategy is doing</div>${board.map(b => {
+      const [tone, label, hint] = STRATEGY_STATUS[b.status] || STRATEGY_STATUS.new;
+      const n = (+b.hit || 0) + (+b.miss || 0);
+      const line = n ? `${b.hit} of ${n} hit · ${pct(b.avg)} average after tax` + (+b.recentN && +b.recentN < n ? ` · last ${b.recentN}: ${pct(b.recentAvg)}` : '') : hint;
+      const until = b.status === 'paused' && b.pausedUntil ? ` · back ${shortDate(b.pausedUntil)}` : '';
+      return `<div class="ez-strat"><div class="ez-strat-top"><span class="ez-strat-name">${esc(b.name)}</span><span class="ez-pill ${tone}" title="${esc(hint)}">${esc(label)}</span></div>
+        <div class="ez-strat-line">${esc(line + until)}</div></div>`;
+    }).join('')}<div class="ez-disclaimer">A strategy is judged on its last 12 graded calls. Under 50% hits or a negative average after tax pauses it for 7 days.</div></div>`;
   }
 
   function bestFodder() {
@@ -162,12 +190,63 @@
     const avg = st.avg == null ? '—' : `${st.avg > 0 ? '+' : ''}${st.avg.toFixed(1)}%`;
     return `
       <div class="ez-metric ${st.winRate != null && st.winRate >= 60 ? 'ez-positive':''}">${wr}</div>
-      <div class="ez-metric-label">graded-call win rate</div>
-      <div class="ez-mini-row"><span>Graded calls</span><span>${st.graded}</span></div>
+      <div class="ez-metric-label">graded-call win rate${st.since ? ` since ${esc(shortDate(st.since))}` : ''}</div>
+      <div class="ez-mini-row"><span>Graded calls, all time</span><span>${st.graded}</span></div>
       <div class="ez-mini-row"><span>Hits</span><span>${st.hits}</span></div>
       <div class="ez-mini-row"><span>Avg BUY return after tax</span><span>${avg}</span></div>
+      ${strategiesHTML()}
       <button class="ez-btn ghost" data-ez-record>Open full history</button>
-      <div class="ez-disclaimer">Voided or pending calls are excluded. Grading stays based on your existing ledger rules.</div>`;
+      <div class="ez-disclaimer">Voided and open calls are excluded. Every call is graded automatically at its check time against the live price, after the 5% tax.</div>`;
+  }
+
+  // ---- 6 PM UK daily drop: times are worked out here, so the clock is right even if the read is old.
+  const UK_PARTS = new Intl.DateTimeFormat('en-GB', {timeZone:'Europe/London', year:'numeric', month:'numeric', day:'numeric', hour:'numeric', minute:'numeric', second:'numeric', hourCycle:'h23'});
+  function ukParts(ms) {
+    const p = {}; for (const {type, value} of UK_PARTS.formatToParts(new Date(ms))) p[type] = +value;
+    return p;
+  }
+  function ukWall(y, m, d, h) {   // the UTC time of a UK wall-clock time (day overflow is fine)
+    const guess = Date.UTC(y, m - 1, d, h);
+    const p = ukParts(guess);
+    return guess - (Date.UTC(p.year, p.month - 1, p.day, p.hour, p.minute, p.second) - guess);
+  }
+  function dropClock(now = Date.now()) {
+    const p = ukParts(now), today = ukWall(p.year, p.month, p.day, 18);
+    const prev = today <= now ? today : ukWall(p.year, p.month, p.day - 1, 18);
+    const next = today > now ? today : ukWall(p.year, p.month, p.day + 1, 18);
+    const np = ukParts(next);
+    return {prev, next, after: now - prev < 3 * 3600000, friday: new Date(Date.UTC(np.year, np.month - 1, np.day)).getUTCDay() === 5};
+  }
+  function span(ms) {
+    const m = Math.max(0, Math.round(ms / 60000)), h = Math.floor(m / 60);
+    return h ? `${h}h ${String(m % 60).padStart(2, '0')}m` : `${m}m`;
+  }
+  const localTime = ms => new Date(ms).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+  function clockHTML() {
+    const c = dropClock(), now = Date.now();
+    if (c.after) return `<span class="ez-drop-k">Today's drop landed</span><strong>${span(now - c.prev)} ago</strong>
+      <small>Sell window runs to about ${esc(localTime(c.prev + 3 * 3600000))} your time · next drop in ${span(c.next - now)}</small>`;
+    return `<span class="ez-drop-k">Next drop${c.friday ? ' · Friday promo night' : ''}</span><strong>${span(c.next - now)}</strong>
+      <small>${esc(new Date(c.next).toLocaleString([], {weekday:'short', hour:'2-digit', minute:'2-digit'}))} your time · 6 PM UK</small>`;
+  }
+  function dropRow(label, a) {
+    if (!a) return '';
+    const measuring = (a.n || 0) < 5;
+    const [tone, pill] = a.tone === 'buy' ? ['buy', 'Buy before'] : a.tone === 'hold' ? ['hold', 'Buy after'] : ['watch', measuring ? 'Measuring' : 'No edge'];
+    return `<div class="ez-drop-row" data-tone="${tone}"><div class="ez-drop-row-top"><span class="ez-drop-what">${esc(label)}</span><span class="ez-pill ${tone}">${pill}</span></div>
+      <p>${esc(replaceTimeTokens(a.text))}</p></div>`;
+  }
+  function dropHTML() {
+    const d = state.snapshot?.dailyDrop;
+    const cell = v => v == null || !Number.isFinite(+v) ? '<td class="ez-muted">–</td>' : `<td class="${+v > 1 ? 'ez-positive' : +v < -1 ? 'ez-danger' : ''}">${pct(v)}</td>`;
+    const recent = Array.isArray(d?.recent) ? d.recent.slice(0, 5) : [];
+    const table = recent.length ? `<div class="ez-drop-table-wrap"><table class="ez-drop-table"><caption>Last ${recent.length} drops: change from just before 6 PM to about 8 PM UK</caption>
+      <thead><tr><th scope="col">Day</th><th scope="col">84s</th><th scope="col">85s</th><th scope="col">86s</th><th scope="col">Top 100</th></tr></thead>
+      <tbody>${recent.map(r => `<tr><th scope="row">${esc(new Date(r.date + 'T12:00:00Z').toLocaleDateString([], {weekday:'short', day:'numeric'}))}${r.friday ? ' <span class="ez-drop-fri">Promo night</span>' : ''}</th>${cell(r.chg?.f84)}${cell(r.chg?.f85)}${cell(r.chg?.f86)}${cell(r.chg?.i100)}</tr>`).join('')}</tbody></table></div>` : '';
+    const rows = d ? `<div class="ez-drop-group">${esc(d.group || '')} · ${esc(String(d.measured ?? 0))} drops measured so far</div>${dropRow('84 to 86 fodder', d.fodder)}${dropRow('Expensive meta cards', d.meta)}`
+      : '<p class="ez-drop-group">The drop record appears with the next market read.</p>';
+    return `<div class="ez-drop-top"><div class="ez-drop-clock" data-ez-drop-clock>${clockHTML()}</div><div class="ez-drop-rows">${rows}</div></div>${table}
+      ${d ? `<div class="ez-disclaimer">${esc(d.method || '')} Past moves are no promise: a new SBC or promo can change any evening.</div>` : ''}`;
   }
 
   function fodderHTML() {
@@ -284,6 +363,7 @@
       <div class="ez-grid">
         <section class="ez-card wide" id="ez-trades"><h3>Trade calls</h3><div class="ez-card-sub">Live calls from the latest market read. Confidence is not a win chance.</div>${tradesHTML()}</section>
         <section class="ez-card" id="ez-record"><h3>Track record</h3><div class="ez-card-sub">Only graded calls count</div>${trackHTML()}</section>
+        <section class="ez-card wide" id="ez-drop"><h3>6 PM daily drop</h3><div class="ez-card-sub">How prices moved around EA's recent content drops, measured by Ezzcoins</div>${dropHTML()}</section>
         <section class="ez-card" id="ez-fodder"><h3>Best fodder value</h3><div class="ez-card-sub">Coins per Item Score point</div>${fodderHTML()}</section>
         <section class="ez-card wide" id="ez-budget"><h3>My Coins</h3><div class="ez-card-sub">Turn the current market read into a budget plan</div>${budgetHTML()}</section>
         <section class="ez-card" id="ez-coach"><h3>Coach shortcuts</h3><div class="ez-card-sub">One tap instead of thinking of a prompt</div>${coachHTML()}</section>
@@ -318,6 +398,7 @@
     <div class="tx-hero" id="tx-hero"><div id="tx-board"></div><div id="tx-meter"></div></div>
     <nav class="tx-jump" aria-label="Trading sections">
       <button type="button" data-tx-go="tx-calls">Trade calls</button>
+      <button type="button" data-tx-go="tx-drop">6 PM drop</button>
       <button type="button" data-tx-go="tx-fodder">Fodder</button>
       <button type="button" data-tx-go="tx-movers">Movers</button>
       <button type="button" data-tx-go="tx-players">Meta cards</button>
@@ -325,6 +406,7 @@
       <button type="button" class="tx-jump-plan" data-tx-plan>Plan my coins</button>
     </nav>
     <div class="tx-row tx-split"><div class="tx-slot" id="tx-calls"></div><div class="tx-slot" id="tx-record"></div></div>
+    <div class="tx-row"><div class="tx-slot" id="tx-drop"></div></div>
     <div class="tx-row tx-split tx-narrow-first"><div class="tx-slot" id="tx-fodder"></div><div class="tx-slot" id="tx-movers"></div></div>
     <div class="tx-row"><div class="tx-slot" id="tx-players"></div></div>
     <div class="tx-row tx-split tx-even"><div class="tx-slot" id="tx-chart"></div><div class="tx-slot" id="tx-pulse"></div></div>
@@ -349,7 +431,7 @@
       const ad = trading.querySelector(':scope > .ezz-ad'); if (ad) trading.append(ad);
     }
     // Fresh dashboard sections replace the previous ones on every refresh.
-    const dyn = [['tx-calls','ez-trades'],['tx-record','ez-record'],['tx-players','ez-players'],['tx-alerts','ez-alerts']];
+    const dyn = [['tx-calls','ez-trades'],['tx-record','ez-record'],['tx-drop','ez-drop'],['tx-players','ez-players'],['tx-alerts','ez-alerts']];
     for (const [slot] of dyn) byId(slot).replaceChildren();
     for (const [slot, id] of dyn) { const el = byId(id); if (el) byId(slot).append(el); }
     const when = byId('metaWhen')?.textContent.trim(), sub = byId('ez-players')?.querySelector('.ez-card-sub');
@@ -543,6 +625,8 @@
     });
     $('#refreshBtn')?.addEventListener('click', refresh);
     setInterval(refresh, 60000);
+    // The drop clock ticks between data refreshes.
+    setInterval(() => { if (!document.hidden) $$('[data-ez-drop-clock]').forEach(el => { el.innerHTML = clockHTML(); }); }, 20000);
     document.addEventListener('visibilitychange', () => { if(!document.hidden) refresh(); });
   }
 

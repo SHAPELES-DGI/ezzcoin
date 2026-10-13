@@ -13,8 +13,20 @@ index, trending and cheapest-card files from scripts/market_extras.py, the SBC l
 scripts/update_sbcs.py, new cards from the card catalogue and EA's ratings (data/players.json).
 
 How the desk learns: every call follows one of a few written strategies. Each graded call adds a
-lesson. A strategy with 3+ graded calls and under 50% hits is paused (no new calls) for 7 days and
-then gets one retest at low confidence; one with 70%+ hits is used first and at high confidence.
+lesson and is added to lifetime totals (data/ledger.json "record" and "strategies"), which survive
+the trimming of old calls. A strategy is judged on its last 12 graded calls, so one that stops
+working later in the season is caught: with 3+ of them and under 50% hits or a negative average
+result after tax, it is paused (no new calls) for 7 days and then gets one retest at low
+confidence. Strategies are tried in order of their expected result after tax (the recent average,
+pulled toward 0% while there are few calls), and one with 70%+ hits and a positive average is
+called at high confidence. "strategyBoard" in the ledger is the public scoreboard.
+
+Reliability: a call is only made when two price readings about an hour apart agree, so a single
+glitched or mispriced listing can't trigger one.
+
+Daily drop: every evening the desk records how the 84/85/86 floors and the Top 100 index moved from
+just before EA's 6 PM UK content drop to about 8 PM (data/ledger.json "dropLog"), and the snapshot's
+"dailyDrop" turns the recent record into timing advice. Fridays (promo nights) are measured apart.
 
 Usage: python3 scripts/desk.py   (standard library only)
 """
@@ -40,7 +52,11 @@ FEED_FRESH = timedelta(minutes=60)   # older feeds don't set or grade prices
 CALLS_PER_DAY = 2
 CALL_GAP = timedelta(hours=3)        # time between the day's two calls
 PAUSE = timedelta(days=7)
-KEEP_CALLS, KEEP_LESSONS, KEEP_POINTS = 60, 40, 500
+RECENT = 12                          # graded calls per strategy that decide pausing and confidence
+PRIOR = 3                            # expected result is pulled toward 0% as if there were 3 break-even calls
+CONFIRM_GAP = 15                     # % a price may differ from the reading an hour earlier and still agree
+TAX_BREAK_EVEN = 100 / 95 * 100 - 100  # a resale must rise 5.26% just to cover the 5% tax
+KEEP_CALLS, KEEP_LESSONS, KEEP_POINTS, KEEP_DROPS = 60, 40, 500, 42
 FEED = {"label_src": "Ezzcoins price feed", "url": "https://ezzcoins.com/prices.html"}
 SITE_SOURCES = [{"title": "Ezzcoins price feed (FUT.GG data)", "url": "https://ezzcoins.com/prices.html"},
                 {"title": "EA SPORTS FC 27 ratings", "url": "https://www.ea.com/games/ea-sports-fc/ratings"}]
@@ -55,7 +71,10 @@ STRATEGIES = {
              "why": "a card that jumped in a day often gives part of the jump back within two days"},
     "rewards": {"name": "Rivals rewards dip",
                 "why": "Rivals rewards flood the market with fodder on Thursday morning, and SBC demand lifts it again by the weekend"},
+    "drop": {"name": "Buy before the 6 PM drop",
+             "why": "this fodder rating has risen after most recent 6 PM content drops by more than the 5% tax"},
 }
+ORDER = ["rewards", "drop", "weekend", "rebound", "fade"]
 
 
 # ---------------------------------------------------------------- helpers
@@ -134,6 +153,8 @@ class Market:
         self.trending = read("trending.json", {}).get("cards", [])
         snaps = read(".cache/price-snaps.json", [])
         self.day_ago = self._snap_near(snaps, 24, 6)
+        self.hour_ago = self._snap_near(snaps, 1, 0.5)
+        self.hist = [p for p in read("history.json", {}).get("points", []) if parse(p.get("t"))]
 
     def _info(self):
         info = {}
@@ -180,6 +201,38 @@ class Market:
         cards = self.cheapest.get(str(ovr)) or []
         return cards[0]["price"] if cards else None
 
+    def earlier(self, i):
+        """The card's price in the snapshot from about an hour ago, if there is one."""
+        p = (self.hour_ago or {}).get("p", {}).get(str(i))
+        return int(p) if p else None
+
+    def steady(self, i):
+        """True when the current price and the reading about an hour earlier agree within CONFIRM_GAP%."""
+        p, p1 = self.prices.get(i), self.earlier(i)
+        return bool(p and p1 and abs(p / p1 - 1) * 100 <= CONFIRM_GAP)
+
+    def move_confirmed(self, i, pct):
+        """A day-long move is real if the hour-old reading already showed at least half of it and the
+        current price agrees with that reading. One glitched listing can't pass both."""
+        p0 = (self.day_ago or {}).get("p", {}).get(str(i))
+        p1 = self.earlier(i)
+        if not (p0 and p1 and self.steady(i)):
+            return False
+        earlier_pct = (p1 / p0 - 1) * 100
+        return earlier_pct <= pct / 2 if pct < 0 else earlier_pct >= pct / 2
+
+    def floor_steady(self, ovr, gap=25):
+        """True when the cheapest card at this rating agrees with the previous 84/85/86 reading (8-90 minutes old)."""
+        now, key = self.floor(ovr), f"f{ovr}"
+        for p in reversed(self.hist):
+            age = self.t - parse(p["t"])
+            if age < timedelta(minutes=8):
+                continue
+            if age > timedelta(minutes=90) or not p.get(key):
+                return False
+            return bool(now and abs(now / p[key] - 1) * 100 <= gap)
+        return False
+
     def moves_24h(self, min_price=5000):
         """(pct, coin change, id) for cards worth min_price+ against the snapshot from about a day ago."""
         if not self.day_ago:
@@ -220,6 +273,111 @@ def phase(t):
     return "midweek"
 
 
+# ---------------------------------------------------------------- daily 6 PM drop
+
+DROP_HOUR = 18                      # EA's daily content drop, UK time
+DROP_MIN = 5                        # recorded drops of a kind before the desk gives timing advice
+DROP_KEYS = {"f84": "84s", "f85": "85s", "f86": "86s", "i100": "Top 100 index"}
+
+
+def drop_time(day):
+    return datetime(day.year, day.month, day.day, DROP_HOUR, tzinfo=UK).astimezone(timezone.utc)
+
+
+def readings():
+    """(time, values) for the 84/85/86 floors and the Top 100 index: the desk's 10-minute points plus
+    market_extras' hourly points, oldest first."""
+    pts = []
+    for p in read("history.json", {}).get("points", []):
+        at = parse(p.get("t"))
+        if at:
+            pts.append((at, {k: p.get(k) for k in DROP_KEYS}))
+    for row in read("market-index.json", {}).get("points", []):
+        at = parse(row[0]) if row else None
+        if at and len(row) >= 5:
+            pts.append((at, {"i100": row[1], "f84": row[2], "f85": row[3], "f86": row[4]}))
+    pts.sort(key=lambda p: p[0])
+    return pts
+
+
+def nearest(pts, aim, lo, hi):
+    inside = [p for p in pts if lo <= p[0] <= hi]
+    return min(inside, key=lambda p: abs(p[0] - aim)) if inside else None
+
+
+def drop_log(ledger, t, pts=None):
+    """Record, once per evening, how prices moved from just before 6 PM UK to about 8 PM."""
+    log = ledger.setdefault("dropLog", [])
+    have = {d.get("date") for d in log}
+    pts = readings() if pts is None else pts
+    today = t.astimezone(UK).date()
+    for back in range(14):
+        day = today - timedelta(days=back)
+        drop = drop_time(day)
+        if day.isoformat() in have or t < drop + timedelta(hours=3):
+            continue
+        before = nearest(pts, drop - timedelta(minutes=15), drop - timedelta(minutes=90), drop - timedelta(minutes=1))
+        after = nearest(pts, drop + timedelta(hours=2), drop + timedelta(minutes=90), drop + timedelta(hours=3))
+        if not before or not after:
+            continue
+        chg = {}
+        for k in DROP_KEYS:
+            a, b = before[1].get(k), after[1].get(k)
+            if k == "i100" and a == b:
+                continue  # an index to two decimals never sits still for two hours: the reading was stale
+            if a and b and abs(b / a - 1) < 0.5:  # a bigger jump is a basket rebase or a bad reading
+                chg[k] = round((b / a - 1) * 100, 1)
+        if chg:
+            log.append({"date": day.isoformat(), "weekday": day.weekday(), "before": iso(before[0]), "after": iso(after[0]), "chg": chg})
+    log.sort(key=lambda d: d["date"])
+    ledger["dropLog"] = log[-KEEP_DROPS:]
+    return ledger["dropLog"]
+
+
+def drop_stats(log, friday, keys):
+    """Average move across the last 14 recorded drops of one kind (Friday promo nights or the rest)."""
+    rows = [d for d in log if (d.get("weekday") == 4) == friday][-14:]
+    vals = []
+    for d in rows:
+        v = [d["chg"][k] for k in keys if k in d.get("chg", {})]
+        if v:
+            vals.append(sum(v) / len(v))
+    n = len(vals)
+    return {"n": n, "avg": round(sum(vals) / n, 1) if n else None,
+            "up": sum(1 for v in vals if v > 1), "down": sum(1 for v in vals if v < -1)}
+
+
+def drop_advice(s, what, drop):
+    """Turn a drop record into a tone and a sentence. Times are tokens the site shows in local time."""
+    n, avg, up, down = s["n"], s["avg"], s["up"], s["down"]
+    if n < DROP_MIN:
+        return {**s, "tone": "watch", "text": f"Still measuring: {n} drop{'' if n == 1 else 's'} of this kind recorded so far. Advice starts after {DROP_MIN}."}
+    buy_by, sell_from = tok(drop - timedelta(minutes=15)), tok(drop + timedelta(minutes=90))
+    if avg >= 2 and up >= 0.6 * n:
+        tax = (" That beats the 5% tax on average." if avg > TAX_BREAK_EVEN
+               else " That is less than the 5% tax, so use it to time cards you need anyway, not to flip.")
+        return {**s, "tone": "buy", "text": f"{what} rose after {up} of the last {n} drops ({avg:+.1f}% on average): buy what you need before {buy_by}, sell spares from {sell_from}.{tax}"}
+    if avg <= -2 and down >= 0.6 * n:
+        return {**s, "tone": "hold", "text": f"{what} fell after {down} of the last {n} drops ({avg:+.1f}% on average): sell spares before {buy_by} and buy after {sell_from}."}
+    return {**s, "tone": "watch", "text": f"{what} had no steady move around the last {n} drops ({up} up, {down} down, {avg:+.1f}% on average): no timing edge."}
+
+
+def daily_drop(log, t):
+    today = t.astimezone(UK).date()
+    drop = drop_time(today)
+    prev = drop if drop <= t else drop_time(today - timedelta(days=1))
+    nxt = drop if drop > t else drop_time(today + timedelta(days=1))
+    friday = nxt.astimezone(UK).weekday() == 4
+    fodder = drop_advice(drop_stats(log, friday, ("f84", "f85", "f86")), "84 to 86 fodder", nxt)
+    meta = drop_advice(drop_stats(log, friday, ("i100",)), "The Top 100 index (expensive meta cards)", nxt)
+    recent = [{"date": d["date"], "friday": d.get("weekday") == 4, "chg": d["chg"]} for d in log[-7:]][::-1]
+    return {"nextAt": iso(nxt), "prevAt": iso(prev), "friday": friday,
+            "group": "Friday promo drops" if friday else "Weekday drops",
+            "measured": len(log), "fodder": fodder, "meta": meta, "recent": recent,
+            "method": "Change from the last reading before 6 PM UK to the one nearest 8 PM UK, from Ezzcoins' own price feed. "
+                      "Fridays, when promos usually land, are measured separately from other days."}
+
+
 # ---------------------------------------------------------------- ledger: grading
 
 def strategy_record(calls):
@@ -233,6 +391,68 @@ def strategy_record(calls):
             if g and (r["last"] is None or g > r["last"]):
                 r["last"] = g
     return rec
+
+
+def tally(ledger):
+    """Add each newly graded call to the lifetime totals once. Old calls are trimmed from the list,
+    but the totals keep them, so the track record and the strategy record never forget."""
+    rec = ledger.setdefault("record", {"hit": 0, "miss": 0, "sum": 0.0, "buyN": 0, "buySum": 0.0, "since": None})
+    stats = ledger.setdefault("strategies", {})
+    new = [c for c in ledger.get("calls", []) if c.get("status") in ("hit", "miss") and not c.get("counted")]
+    for c in sorted(new, key=lambda c: c.get("gradedAt") or c.get("madeAt") or ""):
+        res = c.get("result") if isinstance(c.get("result"), (int, float)) else 0.0
+        hit = c["status"] == "hit"
+        rec["hit" if hit else "miss"] += 1
+        rec["sum"] = round(rec["sum"] + res, 2)
+        if c.get("tone") == "buy":
+            rec["buyN"] += 1
+            rec["buySum"] = round(rec["buySum"] + res, 2)
+        if c.get("madeAt") and (not rec["since"] or c["madeAt"] < rec["since"]):
+            rec["since"] = c["madeAt"]
+        k = c.get("strategy")
+        if k:
+            s = stats.setdefault(k, {"hit": 0, "miss": 0, "sum": 0.0, "recent": [], "last": None})
+            s["hit" if hit else "miss"] += 1
+            s["sum"] = round(s["sum"] + res, 2)
+            s["recent"] = (s["recent"] + [[c["id"], res, hit]])[-RECENT:]
+            g = c.get("gradedAt") or c.get("madeAt")
+            if g and (not s["last"] or g > s["last"]):
+                s["last"] = g
+        c["counted"] = True
+    return rec
+
+
+def standing(s, t):
+    """How a strategy stands now, from its lifetime totals and its last RECENT graded calls."""
+    s = s or {}
+    hit, miss = s.get("hit", 0), s.get("miss", 0)
+    recent = s.get("recent") or []
+    rn = len(recent)
+    rhit = sum(1 for r in recent if r[2])
+    rsum = sum(r[1] for r in recent)
+    ravg = rsum / rn if rn else None
+    bad = rn >= 3 and (rhit / rn < 0.5 or ravg < 0)
+    last = parse(s.get("last")) if s.get("last") else None
+    paused = bool(bad and last and t - last < PAUSE)
+    status = "new" if not rn else "paused" if paused else "retest" if bad else "active"
+    conf = "low" if bad else "high" if (rn >= 3 and rhit / rn >= 0.7 and ravg > 0) else "medium"
+    return {"hit": hit, "miss": miss, "n": hit + miss, "avg": round(s.get("sum", 0) / (hit + miss), 1) if hit + miss else None,
+            "recentN": rn, "recentHit": rhit, "recentAvg": round(ravg, 1) if ravg is not None else None,
+            "expected": rsum / (rn + PRIOR), "status": status, "confidence": conf,
+            "pausedUntil": iso(last + PAUSE) if paused else None}
+
+
+def strategy_board(ledger, t):
+    """The public scoreboard: every strategy, its record and whether the desk is using it."""
+    stats = ledger.get("strategies", {})
+    board = []
+    for k in ORDER:
+        st = standing(stats.get(k), t)
+        board.append({"key": k, "name": STRATEGIES[k]["name"], "why": STRATEGIES[k]["why"],
+                      **{f: st[f] for f in ("hit", "miss", "avg", "recentN", "recentHit", "recentAvg", "status", "confidence", "pausedUntil")}})
+    rank = {"active": 0, "retest": 1, "new": 2, "paused": 3}
+    board.sort(key=lambda b: (rank[b["status"]], -(b["recentAvg"] or 0), ORDER.index(b["key"])))
+    return board
 
 
 def ref_price(mk, ref):
@@ -274,20 +494,22 @@ def grade(mk, ledger, t):
                 graded.append(c)
             elif late > timedelta(hours=12):
                 c.update({"status": "void", "note": (c.get("note", "") + f" Voided {iso(t)}: exit price unreadable 12 hours past due.").strip()})
-    rec = strategy_record(ledger.get("calls", []))
+    tally(ledger)
+    stats = ledger.get("strategies", {})
     for c in graded:
         k = c.get("strategy")
-        r = rec.get(k, {"hit": 0, "miss": 0})
-        n = r["hit"] + r["miss"]
-        tally = f'{STRATEGIES[k]["name"]} is now {r["hit"]} of {n}.' if k in STRATEGIES else ""
+        st = standing(stats.get(k), t)
+        record = (f'{STRATEGIES[k]["name"]} is now {st["hit"]} of {st["n"]}'
+                  + (f', averaging {st["avg"]:+.1f}% after tax.' if st["avg"] is not None else ".")) if k in STRATEGIES else ""
         move = f'{coins(c["entry"])} → {coins(c["exit"])}'
         if c["status"] == "hit":
-            text = f'Hit: {c["title"]} ({move}, {c["result"]:+.1f}%). It worked because {STRATEGIES[k]["why"]}. {tally}' if k in STRATEGIES \
+            text = f'Hit: {c["title"]} ({move}, {c["result"]:+.1f}%). It worked because {STRATEGIES[k]["why"]}. {record}' if k in STRATEGIES \
                 else f'Hit: {c["title"]} ({move}, {c["result"]:+.1f}%).'
         else:
-            paused = k in STRATEGIES and n >= 3 and r["hit"] / n < 0.5
-            text = (f'Miss: {c["title"]} ({move}, {c["result"]:+.1f}%). The idea that {STRATEGIES[k]["why"]} did not hold this time. {tally}'
-                    + (" The strategy is paused for 7 days." if paused else "")) if k in STRATEGIES else f'Miss: {c["title"]} ({move}, {c["result"]:+.1f}%).'
+            paused = k in STRATEGIES and st["status"] == "paused"
+            text = (f'Miss: {c["title"]} ({move}, {c["result"]:+.1f}%). The idea that {STRATEGIES[k]["why"]} did not hold this time. {record}'
+                    + (" Its recent calls lose after tax, so the strategy is paused for 7 days." if paused else "")) if k in STRATEGIES \
+                else f'Miss: {c["title"]} ({move}, {c["result"]:+.1f}%).'
         c["lesson"] = text
         lessons.append({"date": iso(t), "text": text, "kind": c["status"], "callId": c["id"]})
     keep = [l for l in lessons if l.get("kind") == "tip" and l.get("status") == "proven"]
@@ -298,8 +520,9 @@ def grade(mk, ledger, t):
 
 # ---------------------------------------------------------------- ledger: new calls
 
-def candidates(mk, t, used):
-    """Possible calls now, as (strategy, call fields)."""
+def candidates(mk, t, used, log=()):
+    """Possible calls now, as (strategy, call fields). Every price a call relies on must agree with the
+    reading about an hour earlier, so one glitched listing can't trigger a call."""
     out = []
     ph = phase(t)
     meta_ok = lambda i: (mk.info.get(i, {}).get("meta") or 0) >= max(84, (mk.info.get(i, {}).get("ovr") or 0))
@@ -307,7 +530,8 @@ def candidates(mk, t, used):
     # Buy before the weekend: Tuesday evening to Thursday, check Friday 20:00 UK.
     check = next_weekday(t, 4, 20)
     if timedelta(hours=24) <= check - t <= timedelta(hours=72) and ph in ("midweek", "prefriday", "rewards"):
-        pool = [i for i, p in mk.prices.items() if 8000 <= p <= 150000 and mk.info.get(i, {}).get("base") and meta_ok(i) and i not in used]
+        pool = [i for i, p in mk.prices.items() if 8000 <= p <= 150000 and mk.info.get(i, {}).get("base") and meta_ok(i) and i not in used
+                and mk.steady(i)]
         pool.sort(key=lambda i: -(mk.info[i]["meta"] - 6 * math.log10(mk.prices[i])))
         if pool:
             i = pool[0]
@@ -317,7 +541,8 @@ def candidates(mk, t, used):
 
     moves = mk.moves_24h(10000)
     # Buy the dip: a playable card worth 10K+ that fell 10%+ in a day.
-    dips = sorted((m for m in moves if m[0] <= -10 and meta_ok(m[2]) and m[2] not in used and mk.prices.get(m[2], 0) >= 10000), key=lambda m: m[0])
+    dips = sorted((m for m in moves if m[0] <= -10 and meta_ok(m[2]) and m[2] not in used and mk.prices.get(m[2], 0) >= 10000
+                   and mk.move_confirmed(m[2], m[0])), key=lambda m: m[0])
     if dips:
         pct, _, i = dips[0]
         out.append(("rebound", {"tone": "buy", "rule": "buy_after_tax", "item": i, "checkAt": t + timedelta(hours=48),
@@ -326,7 +551,8 @@ def candidates(mk, t, used):
 
     # Sell the spike: a card worth 10K+ that rose 15%+ in a day.
     spikes = sorted((m for m in moves if m[0] >= 15 and m[2] not in used and mk.prices.get(m[2], 0) >= 10000
-                     and mk.prices[m[2]] - m[1] >= 5000 and (mk.info.get(m[2], {}).get("ovr") or 0) >= 80), key=lambda m: -m[0])
+                     and mk.prices[m[2]] - m[1] >= 5000 and (mk.info.get(m[2], {}).get("ovr") or 0) >= 80
+                     and mk.move_confirmed(m[2], m[0])), key=lambda m: -m[0])
     if spikes:
         pct, _, i = spikes[0]
         out.append(("fade", {"tone": "sell", "rule": "sell_lower", "item": i, "checkAt": t + timedelta(hours=48),
@@ -334,11 +560,29 @@ def candidates(mk, t, used):
                              "why": f"up {pct:.1f}% in about a day"}))
 
     # Rivals rewards dip: Thursday morning, buy the cheapest 86 (not 81-84, which sit at a hard floor).
+    # Needs two agreeing floor readings: a one-reading dump after the payout once reverted within the hour.
     f86 = mk.floor(86)
-    if ph == "rewards" and f86 and f86 > 1000:
+    if ph == "rewards" and f86 and f86 > 1000 and mk.floor_steady(86):
         out.append(("rewards", {"tone": "buy", "rule": "buy_after_tax", "floor": 86, "checkAt": next_weekday(t, 5, 12),
                                 "title": "Buy 86-rated fodder after Rivals rewards, sell or use by Saturday",
                                 "why": f"the cheapest 86 is {coins(f86)} coins"}))
+
+    # Buy before the 6 PM drop: only for a rating that rose after at least 70% of the last 4+ recorded
+    # drops of the same kind, by more than the tax on average. Bought 15 min to 2 h before, checked at 8 PM.
+    drop = drop_time(t.astimezone(UK).date())
+    if log and timedelta(minutes=15) <= drop - t <= timedelta(hours=2):
+        friday = drop.astimezone(UK).weekday() == 4
+        best = None
+        for o in (84, 85, 86):
+            s = drop_stats(log, friday, (f"f{o}",))
+            if s["n"] >= 4 and s["avg"] > TAX_BREAK_EVEN + 0.7 and s["up"] >= 0.7 * s["n"] and mk.floor(o) and mk.floor_steady(o):
+                if best is None or s["avg"] > best[1]["avg"]:
+                    best = (o, s)
+        if best:
+            o, s = best
+            out.append(("drop", {"tone": "buy", "rule": "buy_after_tax", "floor": o, "checkAt": drop + timedelta(hours=2),
+                                 "title": f"Buy {o}-rated fodder before the 6 PM drop, sell after 8 PM",
+                                 "why": f"{o}s rose after {s['up']} of the last {s['n']} {'Friday' if friday else 'weekday'} drops, {s['avg']:+.1f}% on average"}))
     return out
 
 
@@ -354,27 +598,21 @@ def make_calls(mk, ledger, t):
         return None
     used = {int(c["ref"]["eaId"]) for c in calls if (c.get("ref") or {}).get("eaId") and parse(c.get("madeAt")) and t - parse(c["madeAt"]) < timedelta(days=7)}
     used_strategies = {c.get("strategy") for c in made_today}
-    rec = strategy_record(calls)
+    stats = ledger.get("strategies", {})
 
-    def standing(k):
-        r = rec.get(k, {"hit": 0, "miss": 0, "last": None})
-        n = r["hit"] + r["miss"]
-        rate = r["hit"] / n if n else None
-        paused = n >= 3 and rate < 0.5 and r["last"] and t - r["last"] < PAUSE
-        conf = "low" if (n >= 3 and rate < 0.5) else "high" if (n >= 3 and rate >= 0.7) else "medium"
-        return paused, conf, (rate if rate is not None else 0.5), n
-
+    # Try strategies in order of their expected result after tax: a proven strategy first, an untested one
+    # (expected 0%) next, and one being retested after a pause last.
     options = []
-    for k, f in candidates(mk, t, used):
-        paused, conf, rate, n = standing(k)
-        if paused or k in used_strategies:
+    for k, f in candidates(mk, t, used, ledger.get("dropLog", [])):
+        st = standing(stats.get(k), t)
+        if st["status"] == "paused" or k in used_strategies:
             continue
-        options.append((-rate, k, f, conf, n))
+        options.append((-st["expected"], ORDER.index(k), k, f, st))
     if not options:
         return None
-    order = ["rewards", "weekend", "rebound", "fade"]
-    options.sort(key=lambda o: (o[0], order.index(o[1])))
-    _, k, f, conf, n = options[0]
+    options.sort(key=lambda o: o[:2])
+    _, _, k, f, st = options[0]
+    conf, n = st["confidence"], st["n"]
     entry = mk.prices.get(f["item"]) if "item" in f else mk.floor(f["floor"])
     if not entry:
         return None
@@ -387,12 +625,16 @@ def make_calls(mk, ledger, t):
         ref = {"label": f"Cheapest {f['floor']} · console", "source": FEED["label_src"], "url": FEED["url"], "kind": "floor", "ovr": f["floor"]}
     slug = (ref.get("name") or f"{f.get('floor')}floor").lower()
     slug = "".join(ch if ch.isalnum() else "-" for ch in slug).strip("-")[:24]
-    record = rec.get(k, {"hit": 0, "miss": 0})
+    picked = f["why"] if k == "drop" else f"it is {f['why']}"
+    record = (f'This strategy is {st["hit"]} of {n} so far, averaging {st["avg"]:+.1f}% after tax. ' if n
+              else "This is the strategy's first tracked call. ")
+    if st["status"] == "retest":
+        record += "It was paused after losing calls, so this is a low-confidence retest. "
     call = {"id": f"c-{today.isoformat()}-{k}-{slug}", "madeAt": iso(t), "tone": f["tone"], "title": f["title"], "confidence": conf,
             "ref": ref, "rule": f["rule"], "strategy": k, "entryAt": iso(t), "entry": entry, "entryRecordedAt": iso(mk.published),
-            "checkAt": iso(f["checkAt"]), "exit": None, "status": "open", "result": None,
-            "note": (f'{STRATEGIES[k]["name"]}: {STRATEGIES[k]["why"]}. Picked because it is {f["why"]}. '
-                     + (f'This strategy is {record["hit"]} of {n} so far. ' if n else "This is the strategy's first tracked call. ")
+            "checkAt": iso(f["checkAt"]), "exit": None, "status": "open", "result": None, "confirmed": True,
+            "note": (f'{STRATEGIES[k]["name"]}: {STRATEGIES[k]["why"]}. Picked because {picked}. '
+                     + "Two price readings about an hour apart agree on this price. " + record
                      + ("It sells and buys back, so the 5% tax is counted." if f["rule"] == "buy_after_tax" else "A sell call is a hit if the price is lower at check time."))}
     if any(x["id"] == call["id"] for x in calls):
         call["id"] += "-" + t.strftime("%H%M")
@@ -707,8 +949,15 @@ BACKUP = ".cache/desk-ledger.json"  # Actions cache, not git
 
 
 def restore_own_calls(ledger):
-    """Put back the desk's calls and lessons if another writer replaced data/ledger.json."""
+    """Put back the desk's calls, lessons, lifetime totals and drop log if another writer replaced data/ledger.json."""
     saved = read(BACKUP, {})
+    size = {"record": lambda r: (r or {}).get("hit", 0) + (r or {}).get("miss", 0),
+            "strategies": lambda s: sum(v.get("hit", 0) + v.get("miss", 0) for v in (s or {}).values()),
+            "dropLog": lambda d: len(d or [])}
+    for key, measure in size.items():
+        if saved.get(key) and measure(saved[key]) > measure(ledger.get(key)):
+            ledger[key] = saved[key]
+            print(f"desk: restored {key} from the backup")
     have = {c.get("id") for c in ledger.get("calls", [])}
     lost = [c for c in saved.get("calls", []) if c.get("strategy") and c.get("id") not in have]
     if not lost:
@@ -741,7 +990,10 @@ def main():
     ledger = read("ledger.json", {"calls": [], "lessons": []})
     restore_own_calls(ledger)
     graded = grade(mk, ledger, t)
+    log = drop_log(ledger, t)
     new_call = make_calls(mk, ledger, t)
+    tally(ledger)
+    ledger["strategyBoard"] = strategy_board(ledger, t)
     ph = phase(t)
     board = fodder_board(mk) or prev.get("fodder", [])
     sbcs, sbcs_live = sbc_list(t)
@@ -779,6 +1031,7 @@ def main():
         "fodder": board, "moves": moves, "sbcs": sbcs, "drops": drops(prev, t), "fallers": fallers, "risers": risers,
         "meta": meta_cards(mk) or prev.get("meta", []), "news": news_items(mk, sbcs_live, fallers, risers, board, t),
         "events": events(prev, t), "corrections": prev.get("corrections", [])[:15], "sources": SITE_SOURCES,
+        "dailyDrop": daily_drop(log, t),
         "pricesUpdatedAt": iso(mk.published) if mk.published else prev.get("pricesUpdatedAt"),
     }
     write("snapshot.json", strip_name(snap))
@@ -795,7 +1048,8 @@ def main():
     update_watched(mk, t)
     update_top(mk, t)
     print(f"desk: {phase(t)} · verdict {snap['verdict']['tone']} · {len(moves)} moves · {len(sbcs)} SBCs · "
-          f"graded {len(graded)} · new call: {new_call['title'] if new_call else 'none'} · feed {'fresh' if mk.fresh else 'stale'}")
+          f"graded {len(graded)} · new call: {new_call['title'] if new_call else 'none'} · {len(log)} drops measured · "
+          f"feed {'fresh' if mk.fresh else 'stale'}")
 
 
 if __name__ == "__main__":

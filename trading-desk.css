@@ -100,6 +100,48 @@
 #tx-layout .ez-mini-row span:last-child{font-weight:700;font-variant-numeric:tabular-nums;color:var(--tx-ink)}
 #tx-layout #ez-record .ez-btn{margin:14px 0 10px;min-height:42px;padding:0 16px;border-radius:12px;border:1px solid var(--tx-line);background:var(--tx-sunk);color:var(--tx-ink);font:600 14px var(--tx-body)}
 
+/* Strategy scoreboard (inside Track record) */
+#tx-layout .ez-strats{margin-top:16px;padding-top:14px;border-top:1px solid var(--tx-line);display:grid;gap:10px}
+#tx-layout .ez-strats-head{font:700 15px/1 var(--tx-display);letter-spacing:.06em;text-transform:uppercase;color:var(--tx-muted)}
+#tx-layout .ez-strat{background:var(--tx-sunk);border:1px solid #262b5a;border-radius:12px;padding:11px 12px}
+#tx-layout .ez-strat-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+#tx-layout .ez-strat-name{font:600 15px/1.25 var(--tx-body);color:var(--tx-ink)}
+#tx-layout .ez-strat-line{margin-top:5px;font-size:13px;line-height:1.45;color:var(--tx-muted);font-variant-numeric:tabular-nums}
+#tx-layout .ez-strat .ez-pill.buy,#tx-layout .ez-drop-row .ez-pill.buy{--tone:var(--tx-buy)}
+#tx-layout .ez-strat .ez-pill.sell,#tx-layout .ez-drop-row .ez-pill.sell{--tone:var(--tx-sell)}
+#tx-layout .ez-strat .ez-pill.hold,#tx-layout .ez-drop-row .ez-pill.hold{--tone:var(--tx-hold)}
+#tx-layout .ez-strat .ez-pill.watch,#tx-layout .ez-drop-row .ez-pill.watch{--tone:var(--tx-watch)}
+
+/* 6 PM daily drop */
+#tx-layout #ez-drop{display:grid;gap:12px}
+#tx-layout #ez-drop>h3,#tx-layout #ez-drop>.ez-card-sub{margin-bottom:0!important}
+#tx-layout .ez-drop-clock{display:grid;gap:4px;padding:14px 16px;border-radius:14px;background:#090c27;border:1px solid #2a2f62}
+#tx-layout .ez-drop-k{font:600 13px/1.25 var(--tx-body);color:var(--tx-muted)}
+#tx-layout .ez-drop-clock strong{font:700 34px/1.05 var(--tx-display);color:var(--tx-cyan);font-variant-numeric:tabular-nums}
+#tx-layout .ez-drop-clock small{font-size:13px;line-height:1.4;color:var(--tx-faint)}
+#tx-layout .ez-drop-group{font-size:13px;color:var(--tx-muted)}
+#tx-layout .ez-drop-row{--tone:var(--tx-watch);padding:12px 14px;border-radius:12px;background:var(--tx-sunk);border:1px solid #262b5a;border-left:4px solid var(--tone)}
+#tx-layout .ez-drop-row[data-tone=buy]{--tone:var(--tx-buy)}
+#tx-layout .ez-drop-row[data-tone=hold]{--tone:var(--tx-hold)}
+#tx-layout .ez-drop-row-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+#tx-layout .ez-drop-what{font:700 16px/1.2 var(--tx-display);letter-spacing:.04em;text-transform:uppercase;color:var(--tx-ink)}
+#tx-layout .ez-drop-row p{margin:6px 0 0;font-size:14px;line-height:1.55;color:#c4c8e8}
+#tx-layout .ez-drop-table-wrap{overflow-x:auto}
+#tx-layout .ez-drop-table caption{caption-side:top;text-align:left;font-size:12px;color:var(--tx-faint);padding-bottom:8px}
+#tx-layout .ez-drop-table th[scope=row]{font:600 14px/1.2 var(--tx-body)!important;color:var(--tx-ink)!important;text-align:left;white-space:nowrap;padding:9px 8px!important;border-bottom:1px solid var(--tx-line-soft)!important}
+#tx-layout .ez-drop-table td{text-align:right;font-variant-numeric:tabular-nums;padding:9px 8px!important}
+#tx-layout .ez-drop-table th[scope=col]{text-align:right}
+#tx-layout .ez-drop-table th[scope=col]:first-child{text-align:left}
+#tx-layout .ez-drop-table .ez-positive{color:var(--tx-buy)!important}
+#tx-layout .ez-drop-table .ez-danger{color:var(--tx-sell)!important}
+#tx-layout .ez-drop-table .ez-muted{color:var(--tx-faint)}
+#tx-layout .ez-drop-fri{font-size:11px;font-weight:700;color:var(--tx-gold);margin-left:4px}
+#tx-layout .ez-drop-top{display:grid;gap:12px}
+#tx-layout .ez-drop-rows{display:grid;gap:10px;align-content:start}
+@media(min-width:900px){
+  #tx-layout .ez-drop-top{grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:18px;align-items:start}
+}
+
 /* Fodder board */
 #tx-layout table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
 #tx-layout th{font:600 12px/1.2 var(--tx-body)!important;letter-spacing:0!important;text-transform:none!important;color:var(--tx-faint)!important;padding:0 8px 10px!important;border-bottom:1px solid var(--tx-line)!important}
@@ -182,5 +224,7 @@
   #tx-layout .ez-player-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
   #tx-layout .ez-player-art{height:124px!important}
   #tx-layout td{font-size:14px}
+  #tx-layout .ez-drop-clock strong{font-size:30px}
+  #tx-layout .ez-drop-table td,#tx-layout .ez-drop-table th[scope=row]{padding:8px 5px!important;font-size:13px!important}
 }
 @media(prefers-reduced-motion:reduce){#tx-layout *{transition:none!important}}
