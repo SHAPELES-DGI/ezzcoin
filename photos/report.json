@@ -5,11 +5,6 @@
 "ovr": 85,
 "why": "no Wikidata footballer with this name and a photo"
 },
-"226385": {
-"name": "Cristian Espinoza",
-"ovr": 76,
-"why": "no Wikidata footballer with this name and a photo"
-},
 "231866": {
 "name": "Rodrigo Hernández Cascante",
 "ovr": 90,
@@ -110,6 +105,11 @@
 "ovr": 74,
 "why": "no Wikidata footballer with this name and a photo"
 },
+"269237": {
+"name": "Arda Okan Kurtulan",
+"ovr": 69,
+"why": "no Wikidata footballer with this name and a photo"
+},
 "272137": {
 "name": "Sara Ortega Ruiz",
 "ovr": 73,
@@ -140,6 +140,11 @@
 "ovr": 69,
 "why": "no Wikidata footballer with this name and a photo"
 },
+"277211": {
+"name": "Franculino Djú",
+"ovr": 74,
+"why": "no Wikidata footballer with this name and a photo"
+},
 "279541": {
 "name": "Trent Koné-Doherty",
 "ovr": 59,
@@ -163,6 +168,11 @@
 "70967": {
 "name": "Carlos Espí Escrihuela",
 "ovr": 77,
+"why": "no Wikidata footballer with this name and a photo"
+},
+"72170": {
+"name": "Ilhan Fakili",
+"ovr": 64,
 "why": "no Wikidata footballer with this name and a photo"
 },
 "73014": {
@@ -189,8 +199,13 @@
 "name": "Divine Mukasa",
 "ovr": 69,
 "why": "no Wikidata footballer with this name and a photo"
+},
+"84016": {
+"name": "Ousmane Diabate",
+"ovr": 65,
+"why": "no Wikidata footballer with this name and a photo"
 }
 },
-"photos": 780,
-"players": 893
+"photos": 781,
+"players": 897
 }
