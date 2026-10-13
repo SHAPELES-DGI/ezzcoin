@@ -20,7 +20,7 @@ jobs:
           sparse-checkout: scripts
           fetch-depth: 1
       - name: Fetch FUT.GG's newest public prices
-        run: python3 scripts/live_prices.py --out "$RUNNER_TEMP/live"
+        run: python3 scripts/live_prices.py --out "$RUNNER_TEMP/live" --check "$RUNNER_TEMP/check"
       # The live branch always holds one commit that is replaced each time, so price history
       # never builds up in the repository. Pushing it does not rebuild or redeploy the site.
       - name: Publish to the live branch
@@ -35,3 +35,17 @@ jobs:
           git add live-prices.json stamp.json
           git commit -q -m "Live FC 27 prices"
           git push -q -f "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" live
+      # Every run that reached FUT.GG records its time on the tiny `check` branch (one commit, replaced
+      # each time), so pages can show "Ezzcoins checked 1 min ago" even when FUT.GG had nothing new.
+      - name: Record the check time
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd "$RUNNER_TEMP/check" 2>/dev/null || exit 0
+          [ -f check.json ] || exit 0
+          git init -q -b check
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add check.json
+          git commit -q -m "Price check"
+          git push -q -f "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" check

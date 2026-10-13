@@ -4,6 +4,8 @@
 Started every few minutes by the Ezzcoins server. Reads FUT.GG's public price manifest and
 downloads the three price files only when FUT.GG has published new ones since the last run.
 Writes live-prices.json (same format as data/live-prices.json) and a small stamp.json into --out.
+With --check DIR it also writes DIR/check.json on every run that reached FUT.GG, new prices or not,
+so the site can show when Ezzcoins last checked (the `check` branch).
 Never connects to an EA account and never retries past an access denial.
 """
 import argparse
@@ -54,9 +56,15 @@ def build(manifest):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--out", required=True, help="directory for live-prices.json and stamp.json")
+    parser.add_argument("--check", help="directory for check.json, the time of this successful check")
     args = parser.parse_args()
     manifest = get_json(MANIFEST)
     urls = {n: f"https://r2.fut.gg/27/{n}.v{manifest['_version']}.{manifest[n]}.json" for n in FILES}
+    if args.check:
+        stamps = manifest.get("_published_at", {})
+        check = {"checkedAt": utc(), "sourcePublishedAt": {k: utc(stamps[f]) for k, f in (("console", "player-prices-ps5-dyn"), ("pc", "player-prices-pc-dyn")) if f in stamps}}
+        Path(args.check).mkdir(parents=True, exist_ok=True)
+        (Path(args.check) / "check.json").write_text(json.dumps(check, separators=(",", ":")) + "\n")
     if last_sources() == urls:
         print("FUT.GG has not published new prices since the last run; nothing to publish", flush=True)
         return
