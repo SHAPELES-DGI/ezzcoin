@@ -20,6 +20,11 @@
 "ovr": 89,
 "why": "no Wikidata footballer with this name and a photo"
 },
+"238230": {
+"name": "Jaminton Campaz",
+"ovr": 76,
+"why": "no Wikidata footballer with this name and a photo"
+},
 "239231": {
 "name": "Marc Cucurella Saseta",
 "ovr": 86,
@@ -35,6 +40,11 @@
 "ovr": 69,
 "why": "no Wikidata footballer with this name and a photo"
 },
+"242907": {
+"name": "Bryan Reynolds",
+"ovr": 74,
+"why": "no Wikidata footballer with this name and a photo"
+},
 "243032": {
 "name": "Hugo Duro Perales",
 "ovr": 77,
@@ -48,6 +58,11 @@
 "246641": {
 "name": "Chiamaka Nnadozie",
 "ovr": 85,
+"why": "no Wikidata footballer with this name and a photo"
+},
+"257957": {
+"name": "Marco Rente",
+"ovr": 68,
 "why": "no Wikidata footballer with this name and a photo"
 },
 "259565": {
@@ -100,6 +115,11 @@
 "ovr": 74,
 "why": "no Wikidata footballer with this name and a photo"
 },
+"268703": {
+"name": "Nicolò Cambiaghi",
+"ovr": 76,
+"why": "no Wikidata footballer with this name and a photo"
+},
 "269186": {
 "name": "Orri Óskarsson",
 "ovr": 74,
@@ -143,6 +163,11 @@
 "277211": {
 "name": "Franculino Djú",
 "ovr": 74,
+"why": "no Wikidata footballer with this name and a photo"
+},
+"277485": {
+"name": "Sidiki Chérif",
+"ovr": 72,
 "why": "no Wikidata footballer with this name and a photo"
 },
 "279541": {
@@ -209,8 +234,13 @@
 "name": "Ousmane Diabate",
 "ovr": 65,
 "why": "no Wikidata footballer with this name and a photo"
+},
+"86629": {
+"name": "André Henrique da Silva Martins",
+"ovr": 70,
+"why": "no Wikidata footballer with this name and a photo"
 }
 },
-"photos": 782,
-"players": 899
+"photos": 790,
+"players": 913
 }
