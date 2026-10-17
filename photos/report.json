@@ -115,6 +115,11 @@
 "ovr": 88,
 "why": "no Wikidata footballer with this name and a photo"
 },
+"266895": {
+"name": "Nicolò Tresoldi",
+"ovr": 75,
+"why": "no Wikidata footballer with this name and a photo"
+},
 "267974": {
 "name": "Mexx Meerdink",
 "ovr": 74,
@@ -138,6 +143,11 @@
 "272137": {
 "name": "Sara Ortega Ruiz",
 "ovr": 73,
+"why": "no Wikidata footballer with this name and a photo"
+},
+"272612": {
+"name": "Brajan Gruda",
+"ovr": 77,
 "why": "no Wikidata footballer with this name and a photo"
 },
 "273564": {
@@ -210,6 +220,11 @@
 "ovr": 78,
 "why": "no Wikidata footballer with this name and a photo"
 },
+"75263": {
+"name": "Peio Canales Urtasun",
+"ovr": 73,
+"why": "no Wikidata footballer with this name and a photo"
+},
 "75272": {
 "name": "Will Lankshear",
 "ovr": 70,
@@ -218,6 +233,11 @@
 "75320": {
 "name": "Ismaëlo Ganiou",
 "ovr": 77,
+"why": "no Wikidata footballer with this name and a photo"
+},
+"80674": {
+"name": "Pedro Fernández",
+"ovr": 73,
 "why": "no Wikidata footballer with this name and a photo"
 },
 "80911": {
@@ -246,6 +266,6 @@
 "why": "no Wikidata footballer with this name and a photo"
 }
 },
-"photos": 790,
-"players": 914
+"photos": 797,
+"players": 925
 }
