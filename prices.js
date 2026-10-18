@@ -3,8 +3,8 @@
   const $ = id => document.getElementById(id);
   const number = value => value.toLocaleString('en-US');
   const escape = value => String(value ?? '').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
-  const normalize = value => String(value ?? '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
-  let feed = null, cards = [], filtered = [], shown = 0, busy = false, dayAgo = null;
+  const normalize = window.EzzcoinsSite.normalize;
+  let feed = null, cards = [], filtered = [], shown = 0, busy = false, dayAgo = null, catalogue = null, agoChecked = 0, quoteError = false;
   // 24h change: today's price against the recorded price from about a day ago (data/day-ago.json).
   const MOVER_MIN = 1000; // mover sorts skip cards under this many coins, where one listing swings the percentage
   const change = (id, price, platform) => {
@@ -18,34 +18,15 @@
     const quote = window.EzzcoinsMarket.lookup(feed, card.id, platform);
     if (!quote) return 'Not in market feed';
     if (quote.status === 0) return 'No listing recorded';
-    return feed.statusLabels[String(quote.status)] || 'No market price';
+    return feed.statusLabels?.[String(quote.status)] || 'No market price';
   };
-  function buildCards(roster, extras) {
-    const cols = Object.fromEntries(roster.cols.map((col, i) => [col, i]));
-    const byId = new Map(roster.rows.map(row => {
-      const card = { id: +row[cols.id], name: row[cols.name], full: row[cols.full], rating: +row[cols.ovr],
-        position: row[cols.pos], club: row[cols.club], nation: row[cols.nation], version: 'Base', type: 'base', url: 'https://www.fut.gg/players/' };
-      return [card.id, card];
-    }));
-    const ec = Object.fromEntries(extras.cols.map((col, i) => [col, i]));
-    for (const row of extras.rows) {
-      const version = row[ec.version];
-      const type = /icon/i.test(version) ? 'icon' : /hero/i.test(version) ? 'hero' : row[ec.id] === row[ec.baseId] ? 'base' : 'special';
-      byId.set(row[ec.id], { id: row[ec.id], name: row[ec.name], rating: row[ec.ovr], position: row[ec.pos],
-        club: row[ec.club], nation: row[ec.nation], version, type, url: row[ec.url] });
-    }
-    for (const row of feed.rows) if (!byId.has(row[0])) {
-      byId.set(row[0], { id: row[0], name: 'Card details unavailable', rating: null, position: '', club: '', version: 'Exact item ID ' + row[0], type: 'unknown', url: '' });
-    }
-    return [...byId.values()].map(card => ({ ...card, key: normalize([card.name, card.full, card.club, card.nation, card.version, card.id].join(' ')) }));
-  }
   function freshness() {
     if (!feed) return;
     const platform = $('platform').value;
     const time = feed.publishedAt[platform];
-    const minutes = Math.max(0, Math.floor((Date.now() - Date.parse(time)) / 60000));
-    const delayed = minutes > 90;
-    $('freshness').textContent = delayed ? 'Delayed prices' : 'Recent price feed';
+    const age = window.EzzcoinsMarket.freshness(time), minutes = age.ageMinutes;
+    const delayed = age.freshness !== 'fresh';
+    $('freshness').textContent = age.freshness === 'fresh' ? 'Current price feed' : age.freshness === 'delayed' ? 'Delayed prices' : 'Outdated prices';
     $('freshness').classList.toggle('stale', delayed);
     const futbin = (feed.primaryCoverage && feed.primaryCoverage[platform]) || 0;
     $('sourceTime').textContent = (futbin > 0 ? 'FUTBIN for ' + number(futbin) + ' cards, FUT.GG for the rest' : 'Source: FUT.GG') + ' · feed: ' + date(time);
@@ -61,11 +42,13 @@
     const platform = $('platform').value;
     const batch = filtered.slice(shown, shown + 50);
     $('results').insertAdjacentHTML('beforeend', batch.map(({ card, price }) => {
-      const quote=window.EzzcoinsMarket.lookup(feed,card.id,platform),origin=feed.quoteMetadata?.[String(card.id)]?.[platform],src=quote?.src||feed.source;
+      const quote=window.EzzcoinsMarket.lookup(feed,card.id,platform),src=quote?.src||feed.source;
+      const name=card.url?`<a href="${escape(card.url)}"${card.url.startsWith('https:')?' target="_blank" rel="noopener"':''}>${escape(card.name)}</a>`:escape(card.name);
+      const graph=quote?`<button class="graph-button" data-price-graph="${quote.id}" data-player-name="${escape(card.name+' · '+card.version)}" data-price-platform="${platform}" aria-label="Price history for ${escape(card.name+' '+card.version)}">Graph</button>`:'';
       const color = card.rating < 65 ? ' bronze' : card.rating < 75 ? ' silver' : '';
       const c = filtered.changes.get(card.id), dir = !c ? '' : c.pct >= 0.05 ? ' up' : c.pct <= -0.05 ? ' down' : ' flat';
       const chg = c ? `<small class="chg${dir}" title="${escape('About 24 hours ago: ' + number(c.ref) + ' coins')}">${changeText(c)} <span>24h</span></small>` : '';
-      return `<tr><td class="player"><strong>${escape(card.name)}</strong><small>${escape(card.version)} · ID ${card.id}</small></td><td>${card.rating ? `<span class="rating${color}">${card.rating}</span>` : '—'}</td><td>${escape(card.position || '—')}</td><td class="club">${escape(card.club || card.nation || '—')}</td><td class="price${price === null ? ' unavailable' : ''}">${price === null ? escape(stateLabel(card, platform)) : number(price) + chg}</td><td><span class="source" title="${escape(date(quote?.at||feed.publishedAt[platform]))}">${escape(src)}</span></td></tr>`;
+      return `<tr><td class="player"><strong>${name}</strong><small>${escape(card.version)} · ID ${card.id}</small></td><td>${card.rating ? `<span class="rating${color}">${card.rating}</span>` : '—'}</td><td>${escape(card.position || '—')}</td><td class="club">${escape(card.club || card.nation || '—')}</td><td class="price${price === null ? ' unavailable' : ''}">${price === null ? escape(stateLabel(card, platform)) : number(price) + chg + (quote?.freshness!=='fresh'?`<small class="quote-age">${quote?.freshness==='delayed'?'Delayed quote':'Outdated quote'}</small>`:'')}</td><td><span class="source" title="${escape((quote?.freshness||'Unknown age')+' · '+date(quote?.at||feed.publishedAt[platform]))}">${escape(src)}</span>${graph}</td></tr>`;
     }).join(''));
     shown += batch.length;
     if (!filtered.length) $('results').innerHTML = '<tr><td colspan="6" class="empty">No cards match these filters. Try a different name, budget or availability.</td></tr>';
@@ -101,24 +84,30 @@
     $('download').disabled = !filtered.length;
     freshness(); renderMore(true);
     const params = new URLSearchParams();
-    if ($('search').value.trim()) params.set('q', $('search').value.trim());
-    if (platform === 'pc') params.set('platform', 'pc');
+    const defaults = {search:'',platform:'console',type:'',minRating:'',maxPrice:'',availability:'priced',sort:'asc'};
+    for (const id of filterIds) { const value=$(id).value.trim(); if(value!==defaults[id])params.set(id==='search'?'q':id,value); }
     history.replaceState(null, '', location.pathname + (params.size ? '?' + params : ''));
     try { localStorage.setItem('ezz-market-platform', platform); } catch (_) { /* storage optional */ }
   }
   async function load(refresh = false) {
     if (busy) return;
-    busy = true; $('refresh').disabled = true;
+    busy = true; quoteError = false; $('refresh').disabled = true;
     try {
-      const [data, roster, extra, ago] = await Promise.all([window.EzzcoinsMarket.load(refresh), window.EzzcoinsMarket.fetchData('players.json'), window.EzzcoinsMarket.fetchData('market-cards.json'),
-        window.EzzcoinsMarket.fetchData('day-ago.json').catch(() => null)]);
-      // Day-old prices are optional: without them the page simply shows no 24h change.
+      const M=window.EzzcoinsMarket;
+      const catalogueRequest=catalogue?Promise.resolve(catalogue):Promise.all([
+        M.fetchData('players.json'),M.fetchData('market-cards.json'),
+        M.fetchData('newcards.json').catch(()=>({cards:[]})),M.fetchData('legends.json').catch(()=>({cards:[]})),M.fetchData('card-ids.json').catch(()=>({}))
+      ]);
+      const agoRequest=Date.now()-agoChecked<3600000?Promise.resolve(null):M.fetchData('day-ago.json').catch(()=>null);
+      const [data,meta,ago]=await Promise.all([M.load(refresh),catalogueRequest,agoRequest]);
+      if(ago){agoChecked=Date.now();dayAgo=null;}
       if (ago && Array.isArray(ago.rows) && ago.cols?.join(',') === 'id,console,pc' && Date.now() - Date.parse(ago.updatedAt) < 6 * 3600000)
         dayAgo = new Map(ago.rows.filter(r => Array.isArray(r) && r.length === 3).map(r => [r[0], [r[1], r[2]]]));
-      feed = data;
-      cards = buildCards(roster, extra);
-      cards.findCardIds = new Set(cards.filter(card => card.type !== 'unknown').map(card => card.id));
+      feed=data;catalogue=meta;
+      cards=window.EzzcoinsPrices.buildCards(meta[0],meta[1],feed,M.lookup,[...(meta[2].cards||[]),...(meta[3].cards||[])],meta[4]);
+      cards.findCardIds=new Set(cards.filter(card=>card.type!=='unknown').map(card=>card.id));
       applyFilters();
+      if(quoteError){$('notice').textContent='The latest price check failed. Previous quotes remain visible with their source times. Try Refresh again.';$('notice').classList.add('error');}
     } catch (error) {
       $('freshness').textContent = feed ? 'Refresh failed' : 'Prices unavailable';
       $('freshness').classList.add('stale');
@@ -143,7 +132,7 @@
     clearTimeout(debounce); debounce = setTimeout(applyFilters, id === 'search' ? 150 : 0);
   });
   $('more').addEventListener('click', () => renderMore());
-  $('refresh').addEventListener('click', () => load(true));
+  $('refresh').addEventListener('click', () => { catalogue=null;agoChecked=0;load(true); });
   $('reset').addEventListener('click', () => {
     for (const id of ['search', 'type', 'minRating', 'maxPrice']) $(id).value = '';
     $('availability').value = 'priced'; $('sort').value = 'asc'; applyFilters();
@@ -153,8 +142,12 @@
   try { savedPlatform = localStorage.getItem('ezz-market-platform') || 'console'; } catch (_) { /* storage optional */ }
   $('platform').value = (params.get('platform') || savedPlatform) === 'pc' ? 'pc' : 'console';
   $('search').value = params.get('q') || '';
+  for(const id of ['type','availability','sort']){const value=params.get(id);if(value!==null&&[...$(id).options].some(o=>o.value===value))$(id).value=value;}
+  for(const id of ['minRating','maxPrice']){const value=params.get(id);if(value!==null&&value!==''&&Number.isFinite(+value)&&+value>=0&&+value<=(id==='minRating'?99:15000000))$(id).value=value;}
   load();
-  setInterval(() => { if (!document.hidden) load(true); }, 60000);
+  window.addEventListener('ezzcoins:quotes',event=>{quoteError=false;if(busy||!catalogue)return;feed=event.detail;cards=window.EzzcoinsPrices.buildCards(catalogue[0],catalogue[1],feed,window.EzzcoinsMarket.lookup,[...(catalogue[2].cards||[]),...(catalogue[3].cards||[])],catalogue[4]);cards.findCardIds=new Set(cards.filter(c=>c.type!=='unknown').map(c=>c.id));applyFilters();});
+  window.addEventListener('ezzcoins:quote-error',()=>{quoteError=true;if(feed){freshness();$('notice').textContent='The last price check failed. Previous quotes remain visible with their source times. Try Refresh again.';}});
+  setInterval(()=>{if(!document.hidden&&Date.now()-agoChecked>=3600000)load();},60000);
 })();
 
 

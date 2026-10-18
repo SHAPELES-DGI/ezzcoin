@@ -6,7 +6,9 @@ const OFF={ST:2,CF:1.5,LW:-1.3,RW:-1.3,LM:.1,RM:.1,CAM:1,CM:4,CDM:5.1,CB:5.9,LB:
 const STARS={CM:[.6,.8],CDM:[.3,.5],CB:[0,.4],LB:[.3,.5],RB:[.3,.5],LWB:[.4,.5],RWB:[.4,.5],GK:[0,0]};
 const STRONG=new Set(['Quick Step+','Rapid+','Finesse Shot+','Technical+','Low Driven Shot+','Power Shot+','Trickster+','Intercept+','Anticipate+','Jockey+','Bruiser+','Footwork+','Far Reach+','Deflector+','Rush Out+','1v1 Close Down+']);
 const MINOR=new Set(['Dead Ball+','Long Throw+','Far Throw+']);
-const STYLES={None:[0,0,0,0,0,0],Basic:[1.65,.9,2.25,2.7,2.1,1.5],Hunter:[6,2.85,0,0,0,0],Shadow:[6,0,0,0,3.9,0],Engine:[3,0,3.6,3.3,0,0],Anchor:[3,0,0,0,4.2,3.9],Finisher:[0,5.25,0,4.95,0,0],Catalyst:[6,0,5.1,0,0,0],Hawk:[3,4.05,0,0,0,3],Glove:[6,9,0,0,0,3],Cat:[0,0,0,6,1.8,9]};
+const STYLES={"None":[0,0,0,0,0,0],"Basic":[1.65,0.9,2.25,2.7,2.1,1.5],"Sniper":[0,3.9,0,0,0,6.6],"Finisher":[0,5.25,0,4.95,0,0],"Deadeye":[0,4.2,4.5,0,0,0],"Marksman":[0,4.65,0,3.6,0,3.15],"Hawk":[3,4.05,0,0,0,3],"Artist":[0,0,4.2,2.7,0,0],"Architect":[0,0,5.25,0,0,6.6],"Powerhouse":[0,0,4.95,0,5.1,0],"Maestro":[0,1.95,2.85,3.45,0,0],"Engine":[3,0,3.6,3.3,0,0],"Sentinel":[0,0,0,0,5.7,3.15],"Guardian":[0,0,0,4.5,5.7,0],"Gladiator":[0,1.95,0,2.7,3.3,0],"Backbone":[0,0,2.55,0,4.2,4.2],"Anchor":[3,0,0,0,4.2,3.9],"Hunter":[6,2.85,0,0,0,0],"Catalyst":[6,0,5.1,0,0,0],"Shadow":[6,0,0,0,3.9,0],"GK Basic":[3,3,3,3,1.8,3],"Wall":[9,3,6,0,0,0],"Shield":[0,0,6,9,1.2,0],"Cat":[0,0,0,6,1.8,9],"Glove":[6,9,0,0,0,3]};
+const GK_STYLES=["None", "GK Basic", "Wall", "Shield", "Cat", "Glove"];
+const PLAYSTYLES={"0":"Finesse Shot","1":"Chip Shot","2":"Power Shot","3":"Dead Ball","5":"Incisive Pass","6":"Pinged Pass","7":"Long Ball Pass","8":"Tiki Taka","9":"Whipped Pass","10":"Jockey","11":"Block","12":"Intercept","13":"Anticipate","14":"Slide Tackle","15":"Bruiser","16":"Technical","17":"Rapid","19":"First Touch","20":"Trickster","21":"Press Proven","22":"Quick Step","23":"Relentless","25":"Acrobatic","26":"Long Throw","28":"Far Throw","29":"Footwork","30":"Cross Claimer","31":"1v1 Close Down","32":"Far Reach","33":"Deflector","34":"Low Driven Shot","35":"Aerial Fortress","36":"Enforcer","37":"Gamechanger","38":"Inventive","39":"Precision Header"};
 const POS={0:'GK',3:'RB',5:'CB',7:'LB',10:'CDM',12:'RM',14:'CM',16:'LM',18:'CAM',23:'RW',25:'ST',27:'LW'};
 // FC 27 Ultimate Team formations, drawn on the pitch from attack to goal. Each slot is "POSITION" + the column it
 // starts in on a 10-column pitch; every slot spans 2 columns, so all boxes are the same size (1 3 5 7 9 = five across).
@@ -29,10 +31,12 @@ const FORMATIONS=Object.fromEntries(Object.entries(ROWS).map(([f,rows])=>[f,rows
 const positions=p=>[...new Set([p.pos,...String(p.alt||'').split(',')].map(v=>v.trim()).filter(v=>W[v]))];
 function meta(p,pos=p.pos,style='None',chem=3){
  if(!W[pos]||!Array.isArray(p.stats)||p.stats.length!==6||p.stats.some(x=>!Number.isFinite(x)))return null;
- const s=p.stats.map((v,i)=>Math.min(99,v+(STYLES[style]?.[i]||0)*chem/3));
+ const validStyle=(p.pos==='GK'?GK_STYLES.includes(style):!GK_STYLES.includes(style))?style:'None';
+ const level=Math.max(0,Math.min(3,Number(chem)||0));
+ const s=p.stats.map((v,i)=>Math.min(99,Math.round(v+(STYLES[validStyle]?.[i]||0)*level/3+1e-9)));
  let n=s.reduce((a,v,i)=>a+v*W[pos][i],0)+OFF[pos];
  if(pos!=='GK'){if(s[0]<70&&W[pos][0]>=.25)n-=(70-s[0])*.15;const [sm,wf]=STARS[pos]||[1,1];n+=sm*((p.sm||3)-3)+wf*((p.wf||3)-3);}
- for(const ps of String(p.psp||'').split(',').map(v=>v.trim()).filter(Boolean))n+=MINOR.has(ps)?.5:STRONG.has(ps)?2:1;
+ for(const ps of String(p.psp??p.ps??'').split(',').map(v=>v.trim()).filter(Boolean))n+=MINOR.has(ps)?.5:STRONG.has(ps)?2:1;
  return Math.max(1,Math.min(99,Math.floor(n+.5)));
 }
 const base=p=>p.baseId||p.id;
@@ -49,8 +53,15 @@ function chemistry(squad,slots,manager={}){
 }
 function squadRating(players){if(!players.length)return 0;const avg=players.reduce((a,p)=>a+p.ovr,0)/players.length;return Math.floor((players.reduce((a,p)=>a+p.ovr+Math.max(0,p.ovr-avg),0)/players.length)+1e-9);}
 function autoSquad(pool,slots,budget,locked=[]){
+ if(!Number.isFinite(budget)||budget<=0)return {error:'Enter a positive coin budget.'};
+ if(!Array.isArray(slots)||!slots.length||slots.some(pos=>!W[pos])||locked.length>slots.length)return {error:'Invalid squad positions.'};
  let selected=Array(slots.length).fill(null);const used=new Set();let remaining=budget;
- locked.forEach((p,i)=>{if(p){selected[i]=p;used.add(base(p));remaining-=p.price||0;}});
+ for(let i=0;i<locked.length;i++){const p=locked[i];if(!p)continue;
+  if(!Number.isFinite(p.price)||p.price<=0||!p.usable)return {error:'Every locked player needs a fresh market quote. Unlock unpriced or outdated cards before rebuilding.'};
+  if(!positions(p).includes(slots[i])||meta(p,slots[i])==null)return {error:'A locked player cannot play in this position. Move or unlock that player.'};
+  if(used.has(base(p)))return {error:'Locked players include two versions of the same player. Unlock one version.'};
+  selected[i]=p;used.add(base(p));remaining-=p.price;
+ }
  if(remaining<0)return {error:'Locked players exceed the budget.'};
  // Fill the hardest positions first with cheap valid items, then spend remaining coins on meta improvements.
  const candidates=slots.map(pos=>pool.filter(p=>p.price>0&&p.usable&&positions(p).includes(pos)&&meta(p,pos)!=null).sort((a,b)=>a.price-b.price||meta(b,pos)-meta(a,pos)));
@@ -199,7 +210,24 @@ function evolve(card,evo,choices={}){
  if(missing.length)return {error:'Final stats need more detailed metadata for this card. Select the verified example or open the source planner.',upgrades:upgradeLabels};
  return {card:out,verified:false,upgrades:upgradeLabels};
 }
+function validateState(value){
+ const object=v=>v&&typeof v==='object'&&!Array.isArray(v);
+ const item=n=>Number.isSafeInteger(n)&&n>0;
+ const price=n=>Number.isInteger(n)&&n>0&&n<=15000000;
+ const key=k=>typeof k==='string'&&k.length>0&&k.length<=200;
+ if(value?.version!==1||!Array.isArray(value.trades)||!Array.isArray(value.alerts)||value.trades.length>1000||value.alerts.length>200||!object(value.club)||Object.keys(value.club).length>5000)throw Error('Invalid data file.');
+ for(const t of value.trades)if(!object(t)||!key(t.key)||!item(t.id)||!price(t.buy)||!Number.isInteger(t.quantity)||t.quantity<1||t.quantity>10000||typeof t.date!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(t.date)||(!Number.isFinite(Date.parse(t.date))||new Date(t.date).toISOString().slice(0,10)!==t.date)||(t.sell!=null&&!price(t.sell))||!['console','pc'].includes(t.platform))throw Error('Invalid trade record.');
+ for(const t of value.alerts)if(!object(t)||!key(t.key)||!item(t.id)||!price(t.target)||!['below','above'].includes(t.direction)||!['console','pc'].includes(t.platform)||(t.triggeredAt!=null&&!Number.isFinite(Date.parse(t.triggeredAt))))throw Error('Invalid price target.');
+ for(const rows of [value.trades,value.alerts])if(new Set(rows.map(t=>t.key)).size!==rows.length)throw Error('Duplicate saved record keys.');
+ for(const [id,flags] of Object.entries(value.club))if(!/^[1-9]\d*$/.test(id)||!item(+id)||!object(flags)||Object.keys(flags).some(k=>!['favourite','untradeable'].includes(k))||Object.values(flags).some(v=>typeof v!=='boolean'))throw Error('Invalid favourite or untradeable card.');
+ const s=value.squad;
+ if(!object(s)||!Object.hasOwn(FORMATIONS,s.formation)||!Array.isArray(s.ids)||s.ids.length>11||s.ids.some(n=>n!==null&&!item(n)))throw Error('Invalid saved squad.');
+ if(s.styles!==undefined&&(!Array.isArray(s.styles)||s.styles.length>11||s.styles.some(v=>!Object.hasOwn(STYLES,v))))throw Error('Invalid chemistry style.');
+ if(s.locks!==undefined&&(!Array.isArray(s.locks)||s.locks.length>11||s.locks.some(v=>typeof v!=='boolean')))throw Error('Invalid player locks.');
+ if(s.manager!==undefined&&(!object(s.manager)||Object.entries(s.manager).some(([k,v])=>!['nation','league'].includes(k)||typeof v!=='string'||v.length>200)))throw Error('Invalid manager.');
+ return value;
+}
 function profit(buy,sell,quantity=1){return (Math.floor(sell*.95)-buy)*quantity;}
-const API={W,STYLES,FORMATIONS,ROWS,POS,positions,meta,chemistry,squadRating,autoSquad,requirementRules,individualOK,validateSbc,solveScore,solvePuzzle,eligibility,evolve,profit};
+const API={W,STYLES,GK_STYLES,PLAYSTYLES,validateState,FORMATIONS,ROWS,POS,positions,meta,chemistry,squadRating,autoSquad,requirementRules,individualOK,validateSbc,solveScore,solvePuzzle,eligibility,evolve,profit};
 root.EzzTools=API;if(typeof module!=='undefined')module.exports=API;
 })(typeof globalThis!=='undefined'?globalThis:this);

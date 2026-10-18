@@ -8,6 +8,7 @@ async function render(){const rev=++revision,body=dialog.querySelector('#ezz-gra
  try{const [history,current,sbc]=await Promise.allSettled([M.history(id,platform,days),M.load(),M.fetchData('sbcsolutions.json')]);if(rev!==revision||!dialog.open)return;
  const sourceFailed=history.status==='rejected';let points=history.status==='fulfilled'?history.value.filter(p=>Array.isArray(p)&&p.length===2&&Number.isFinite(p[0])&&Number.isFinite(p[1])&&p[1]>0):[];
  const quote=current.status==='fulfilled'?M.lookup(current.value,id,platform):null;
+ if(quote?.id&&quote.id!==id){id=quote.id;dialog.querySelector('#ezz-graph-name').textContent=name+' · Exact EA item '+id;render();return;}
  if(quote?.price&&Date.parse(quote.at)>Date.now()-days*86400000){const t=Math.floor(Date.parse(quote.at)/1000);if(!points.some(p=>p[0]===t))points.push([t,quote.price]);}
  points.sort((a,b)=>a[0]-b[0]);if(!points.length){body.innerHTML=`<p class="ezz-graph-note">${sourceFailed?'Recorded history could not load. Try again in a moment.':'No recorded market quotes for this item and period yet. History is collected from real source publications.'}</p>`;return;}
  const low=Math.min(...points.map(p=>p[1])),high=Math.max(...points.map(p=>p[1])),first=points[0],last=points.at(-1),change=(last[1]-first[1])/first[1]*100;
@@ -22,5 +23,5 @@ async function render(){const rev=++revision,body=dialog.querySelector('#ezz-gra
  }catch(error){if(rev===revision)body.textContent='Price history could not load. Refresh and try again.';}
 }
 window.EzzcoinsPriceHistory={open(options){const numeric=Number(options.id);if(!Number.isSafeInteger(numeric)||numeric<=0)return;ensure();id=numeric;name=options.name||'Item '+id;platform=options.platform==='pc'?'pc':'console';dialog.querySelector('#ezz-graph-name').textContent=name+' · Exact EA item '+id;dialog.querySelector('#ezz-graph-platform').value=platform;if(!dialog.open)dialog.showModal();render();}};
-document.addEventListener('click',e=>{const b=e.target.closest('[data-price-graph]');if(b)window.EzzcoinsPriceHistory.open({id:b.dataset.priceGraph,name:b.dataset.playerName,platform:document.getElementById('platform')?.value});});
+document.addEventListener('click',e=>{const b=e.target.closest('[data-price-graph]');if(b)window.EzzcoinsPriceHistory.open({id:b.dataset.priceGraph,name:b.dataset.playerName,platform:b.dataset.pricePlatform||document.getElementById('platform')?.value});});
 })();

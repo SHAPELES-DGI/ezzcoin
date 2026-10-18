@@ -44,6 +44,7 @@ jobs:
           node scripts/test_home_prices.cjs
           node scripts/test_market_sync.cjs
           node scripts/test_builders.cjs
+          node scripts/test_site_audit.cjs
           node scripts/test_player_tools.cjs
           python3 scripts/test_home_sync.py
           python3 scripts/test_baked_prices.py

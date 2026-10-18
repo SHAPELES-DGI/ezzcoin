@@ -3,3 +3,6 @@
 label.search{background:none!important;border:0!important;border-radius:0!important;padding:0!important}
 /* 24h change under each price */
 td.price small.chg{display:block;margin-top:2px;font:600 11px/1.3 system-ui,-apple-system,sans-serif;color:var(--muted);white-space:nowrap}td.price small.chg span{font-weight:500;opacity:.75}td.price small.chg.up{color:var(--green)}td.price small.chg.down{color:#ff8fa3}.th-sub{display:block;font-weight:500;letter-spacing:.02em;text-transform:none;font-size:10px;margin-top:2px}
+
+.player a{color:inherit;text-decoration-color:var(--gold)}.graph-button{display:block;margin-top:6px;min-height:32px;padding:4px 9px;font-size:11px}
+.quote-age{display:block;color:#ffd166;font:11px/1.5 system-ui;margin-top:3px}

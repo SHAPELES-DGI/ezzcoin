@@ -156,7 +156,7 @@
         <a class="ez-market-link" href="prices.html">Explore the market <span aria-hidden="true">↗</span></a></div>
       <div class="ez-hero-stats">
         <div><span>Console quotes</span><strong>${quotes == null ? '—' : coins(quotes)}</strong><small>${esc(humanTime(state.market?.publishedAt?.console))}</small></div>
-        <div><span>Price checks</span><strong>Every 15 min</strong><small>Page checks every minute</small></div>
+        <div><span>Price checks</span><strong>Every minute</strong><small>Source publication times vary</small></div>
         <div><span>Market commentary</span><strong>${esc(humanTime(s?.updatedAt))}</strong><small>${fresh ? 'Latest stored read' : 'Older read · review before acting'}</small></div>
       </div>
       <details class="ez-market-brief"><summary><span class="ez-pill hold">MARKET READ</span><span>${esc(v.label || 'Waiting for a market read')}</span><span class="ez-brief-toggle">+</span></summary>

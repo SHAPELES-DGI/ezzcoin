@@ -194,7 +194,7 @@ def main():
     market = {"updatedAt": iso(t), "at": at, "source": "Ezzcoins", "srcLabel": "Ezzcoins index",
               "note": "Ezzcoins' own index from live console prices of every tradeable card (FUTBIN's index can't be read automatically).",
               # FUTBIN's Index 84/85/86 can't be rebuilt; the floors are coin prices, under their own keys.
-              "labels": {"idx100": "Top 100 index", "icons": "ICON index"},
+              "labels": {"idx100": "Top 100 index", "icons": "ICON index", "floor84": "Typical 84 low", "floor85": "Typical 85 low", "floor86": "Typical 86 low"},
               "idx100": round(idx100, 2) if idx100 else None, "idx100Chg": change(points, 1, idx100, t),
               "floor84": round(floors[84]) if floors[84] else None, "floor84Chg": change(points, 2, floors[84], t),
               "floor85": round(floors[85]) if floors[85] else None, "floor85Chg": change(points, 3, floors[85], t),

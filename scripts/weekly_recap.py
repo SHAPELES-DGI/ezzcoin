@@ -198,7 +198,7 @@ def body_html(d, up, paths, past=()):
     fl = d["floors"]
     stat = lambda k, name: (f'<div class="st"><small>{name}</small><b>{coins(fl[k][1]) if k != "i100" else f"{fl[k][1]:.1f}"}</b>'
                             f'<i class="{"up" if (fl[k][2] or 0) > 0 else "down" if (fl[k][2] or 0) < 0 else ""}">{fmt_pct(fl[k][2])}</i></div>') if k in fl else ""
-    stats = "".join(stat(k, n) for k, n in (("f84", "84 floor"), ("f85", "85 floor"), ("f86", "86 floor"), ("i100", "Top 100 index")))
+    stats = "".join(stat(k, n) for k, n in (("f84", "Typical 84 low"), ("f85", "Typical 85 low"), ("f86", "Typical 86 low"), ("i100", "Top 100 index")))
     table = lambda rows, cls: ('<table class="movers-t"><thead><tr><th>Card</th><th>Start</th><th>End</th><th>Change</th></tr></thead><tbody>'
                                + "".join(f'<tr><td>{card_link(r[1], d, paths, up)}</td><td>{coins(r[2])}</td><td>{coins(r[3])}</td><td class="{cls}">{fmt_pct(r[0])}</td></tr>' for r in rows)
                                + "</tbody></table>") if rows else '<p class="muted">Not enough recorded prices yet.</p>'
@@ -223,7 +223,7 @@ def body_html(d, up, paths, past=()):
         + f'<h2>Biggest risers</h2>{table(d["rise"], "up")}<h2>Biggest fallers</h2>{table(d["fall"], "down")}'
         + f'<h2>New special cards</h2>{news}<h2>Trade calls graded</h2>{calls_html}<h2>Around the 6 PM drops</h2>{drops_html}'
         + f'<p class="muted method">Console prices from Ezzcoins\' own feed. Movers compare each card worth {coins(MOVER_MIN)}+ coins at its first recorded price of the week with its last. '
-          'Floors are the cheapest card at each rating. Trade calls are made and graded automatically, after the 5% tax.</p>'
+          'Typical lows are the median of the three cheapest recorded cards at each rating. Trade calls are made and graded automatically, after the 5% tax.</p>'
         + f'<p><a class="btn" href="{up}#trading">See today\'s trade calls</a></p></article>'
         + f'<nav class="related" aria-label="More"><p><a href="{up}guides/">FC 27 trading guides ›</a></p>{past_html}</nav>')
 
