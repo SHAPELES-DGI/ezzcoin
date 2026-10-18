@@ -393,32 +393,66 @@ def strategy_record(calls):
     return rec
 
 
+GRADED_FIELDS = ("strategy", "tone", "status", "result", "entry", "exit", "exitRecordedAt", "madeAt", "gradedAt")
+
+
+def merge_graded(into, other):
+    """Join two stores of graded calls (id -> how it was graded). When both hold a call, its first grading wins."""
+    for cid, g in (other or {}).items():
+        if not isinstance(g, dict) or g.get("status") not in ("hit", "miss"):
+            continue
+        mine = into.get(cid)
+        if mine is None or (g.get("gradedAt") or "~") < (mine.get("gradedAt") or "~"):
+            into[cid] = g
+    return into
+
+
+def settle_known_calls(ledger):
+    """A call that is already in the graded store keeps that grade, even if an older copy of
+    data/ledger.json still shows it open: it is never graded (or counted) a second time."""
+    graded = ledger.get("graded") or {}
+    for c in ledger.get("calls", []):
+        g = graded.get(c.get("id"))
+        if g and c.get("status") in ("pending", "open", "hit", "miss"):
+            c.update({k: g[k] for k in ("status", "result", "entry", "exit", "exitRecordedAt", "gradedAt") if g.get(k) is not None})
+            c["counted"] = True
+
+
 def tally(ledger):
-    """Add each newly graded call to the lifetime totals once. Old calls are trimmed from the list,
-    but the totals keep them, so the track record and the strategy record never forget."""
-    rec = ledger.setdefault("record", {"hit": 0, "miss": 0, "sum": 0.0, "buyN": 0, "buySum": 0.0, "since": None})
-    stats = ledger.setdefault("strategies", {})
-    new = [c for c in ledger.get("calls", []) if c.get("status") in ("hit", "miss") and not c.get("counted")]
-    for c in sorted(new, key=lambda c: c.get("gradedAt") or c.get("madeAt") or ""):
-        res = c.get("result") if isinstance(c.get("result"), (int, float)) else 0.0
-        hit = c["status"] == "hit"
+    """Lifetime totals, rebuilt on every run from ledger["graded"]: one entry per graded call, keyed by its id.
+    Old calls are trimmed from the list but stay in the graded store, so the track record never forgets,
+    and a call can't be counted twice, even when another writer puts back an older data/ledger.json."""
+    graded = ledger.get("graded")
+    if not isinstance(graded, dict):
+        graded = ledger["graded"] = {}
+    for c in ledger.get("calls", []):
+        if c.get("status") in ("hit", "miss") and c.get("id"):
+            if c["id"] not in graded:
+                graded[c["id"]] = {k: c.get(k) for k in GRADED_FIELDS}
+            c["counted"] = True
+    rec = {"hit": 0, "miss": 0, "sum": 0.0, "buyN": 0, "buySum": 0.0, "since": None}
+    stats = {}
+    for cid, g in sorted(graded.items(), key=lambda kv: (kv[1].get("gradedAt") or kv[1].get("madeAt") or "", kv[0])):
+        res = g.get("result") if isinstance(g.get("result"), (int, float)) else 0.0
+        hit = g.get("status") == "hit"
         rec["hit" if hit else "miss"] += 1
         rec["sum"] = round(rec["sum"] + res, 2)
-        if c.get("tone") == "buy":
+        if g.get("tone") == "buy":
             rec["buyN"] += 1
             rec["buySum"] = round(rec["buySum"] + res, 2)
-        if c.get("madeAt") and (not rec["since"] or c["madeAt"] < rec["since"]):
-            rec["since"] = c["madeAt"]
-        k = c.get("strategy")
+        if g.get("madeAt") and (not rec["since"] or g["madeAt"] < rec["since"]):
+            rec["since"] = g["madeAt"]
+        k = g.get("strategy")
         if k:
             s = stats.setdefault(k, {"hit": 0, "miss": 0, "sum": 0.0, "recent": [], "last": None})
             s["hit" if hit else "miss"] += 1
             s["sum"] = round(s["sum"] + res, 2)
-            s["recent"] = (s["recent"] + [[c["id"], res, hit]])[-RECENT:]
-            g = c.get("gradedAt") or c.get("madeAt")
-            if g and (not s["last"] or g > s["last"]):
-                s["last"] = g
-        c["counted"] = True
+            s["recent"] = (s["recent"] + [[cid, res, hit]])[-RECENT:]
+            when = g.get("gradedAt") or g.get("madeAt")
+            if when and (not s["last"] or when > s["last"]):
+                s["last"] = when
+    ledger["record"] = rec
+    ledger["strategies"] = stats
     return rec
 
 
@@ -949,25 +983,30 @@ BACKUP = ".cache/desk-ledger.json"  # Actions cache, not git
 
 
 def restore_own_calls(ledger):
-    """Put back the desk's calls, lessons, lifetime totals and drop log if another writer replaced data/ledger.json."""
+    """Put back the desk's graded calls, open calls, lessons and drop log if another writer replaced
+    data/ledger.json. The lifetime totals aren't copied: tally() rebuilds them from the graded store."""
     saved = read(BACKUP, {})
-    size = {"record": lambda r: (r or {}).get("hit", 0) + (r or {}).get("miss", 0),
-            "strategies": lambda s: sum(v.get("hit", 0) + v.get("miss", 0) for v in (s or {}).values()),
-            "dropLog": lambda d: len(d or [])}
-    for key, measure in size.items():
-        if saved.get(key) and measure(saved[key]) > measure(ledger.get(key)):
-            ledger[key] = saved[key]
-            print(f"desk: restored {key} from the backup")
+    if not isinstance(ledger.get("graded"), dict):
+        ledger["graded"] = {}
+    before = len(ledger["graded"])
+    merge_graded(ledger["graded"], saved.get("graded"))
+    merge_graded(ledger["graded"], {c["id"]: {k: c.get(k) for k in GRADED_FIELDS} for c in saved.get("calls", [])
+                                    if c.get("id") and c.get("status") in ("hit", "miss")})
+    if len(ledger["graded"]) > before:
+        print(f"desk: restored {len(ledger['graded']) - before} graded calls from the backup")
+    if saved.get("dropLog") and len(saved["dropLog"]) > len(ledger.get("dropLog") or []):
+        ledger["dropLog"] = saved["dropLog"]
+        print("desk: restored dropLog from the backup")
     have = {c.get("id") for c in ledger.get("calls", [])}
     lost = [c for c in saved.get("calls", []) if c.get("strategy") and c.get("id") not in have]
-    if not lost:
-        return
-    ids = {c["id"] for c in lost}
-    ledger.setdefault("calls", []).extend(lost)
-    ledger["calls"].sort(key=lambda c: c.get("madeAt") or "")
-    texts = {l.get("text") for l in ledger.setdefault("lessons", [])}
-    ledger["lessons"] += [l for l in saved.get("lessons", []) if l.get("callId") in ids and l.get("text") not in texts]
-    print(f"desk: restored {len(lost)} of its own calls")
+    if lost:
+        ids = {c["id"] for c in lost}
+        ledger.setdefault("calls", []).extend(lost)
+        ledger["calls"].sort(key=lambda c: c.get("madeAt") or "")
+        texts = {l.get("text") for l in ledger.setdefault("lessons", [])}
+        ledger["lessons"] += [l for l in saved.get("lessons", []) if l.get("callId") in ids and l.get("text") not in texts]
+        print(f"desk: restored {len(lost)} of its own calls")
+    settle_known_calls(ledger)
 
 
 def backup_own_calls(ledger):

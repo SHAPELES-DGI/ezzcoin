@@ -78,14 +78,42 @@ assert desk.standing(None, t)["status"] == "new" and desk.standing(None, t)["exp
 board = desk.strategy_board({"strategies": {"rebound": s, "fade": good}}, t)
 assert [b["key"] for b in board][0] == "fade" and board[-1]["key"] == "rebound" and len(board) == len(desk.STRATEGIES)
 
-# A wiped ledger gets its lifetime totals and drop log back from the backup.
-saved = {"record": {"hit": 5, "miss": 2}, "strategies": {"fade": good}, "dropLog": [{"date": "2026-10-01"}], "calls": []}
+# A wiped ledger gets its graded calls and drop log back from the backup, and the totals are rebuilt from them.
+def g(i, status, result, strategy="fade", hours=0):
+    return {"strategy": strategy, "tone": "sell", "status": status, "result": result,
+            "madeAt": desk.iso(t - timedelta(days=3)), "gradedAt": desk.iso(t - timedelta(hours=hours + i))}
+
+saved = {"graded": {f"b{i}": g(i, "hit" if i < 5 else "miss", 2.0) for i in range(7)},
+         "dropLog": [{"date": "2026-10-01"}], "calls": []}
 orig = desk.read
 desk.read = lambda name, fb: saved if name == desk.BACKUP else orig(name, fb)
 wiped = {"calls": [], "lessons": [], "record": {"hit": 1, "miss": 0}}
 desk.restore_own_calls(wiped)
+desk.tally(wiped)
+assert (wiped["record"]["hit"], wiped["record"]["miss"]) == (5, 2) and wiped["strategies"]["fade"]["hit"] == 5, wiped["record"]
+assert len(wiped["dropLog"]) == 1
+
+# Another writer puts back an older data/ledger.json every hour: inflated totals, and a call that is
+# already graded shown as open again. The call is never graded or counted twice.
+done = dict(call(9, "sell_lower", 2, 10000, "fade"), status="miss", result=-12.7, exit=11270, gradedAt=desk.iso(t - timedelta(hours=1)))
+saved = {"graded": {"c9": {k: done.get(k) for k in desk.GRADED_FIELDS}}, "calls": [done]}
+desk.read = lambda name, fb: saved if name == desk.BACKUP else orig(name, fb)
+for run in range(5):
+    stale = {"calls": [dict(call(9, "sell_lower", 2, 10000, "fade"))], "lessons": [],
+             "record": {"hit": 79, "miss": 142}, "strategies": {"fade": {"hit": 1, "miss": 7, "sum": -67.6, "recent": [], "last": None}}}
+    desk.restore_own_calls(stale)
+    newly = desk.grade(mk, stale, t)
+    desk.tally(stale)
+    assert newly == [] and stale["calls"][0]["status"] == "miss" and stale["calls"][0]["result"] == -12.7, stale["calls"][0]
+    assert (stale["record"]["hit"], stale["record"]["miss"]) == (0, 1), stale["record"]
+    assert (stale["strategies"]["fade"]["miss"], len(stale["strategies"]["fade"]["recent"])) == (1, 1)
+    assert stale["lessons"] == []                                   # no second lesson for the same call
 desk.read = orig
-assert wiped["record"]["hit"] == 5 and "fade" in wiped["strategies"] and len(wiped["dropLog"]) == 1
+
+# The same call id graded twice in the store's two sources keeps its first grading.
+store = {"x": {"status": "miss", "result": -14.1, "gradedAt": "2026-10-17T23:00:00Z"}}
+desk.merge_graded(store, {"x": {"status": "miss", "result": -12.7, "gradedAt": "2026-10-17T23:30:00Z"}})
+assert store["x"]["result"] == -14.1
 
 # ---------------------------------------------------------------- two readings must agree
 class ConfirmMarket(desk.Market):
