@@ -24,7 +24,10 @@
   graph.dataset.playerName = document.querySelector('h1')?.textContent || 'Player';
   const builder = document.createElement('a'); builder.href = new URL('tools.html#squad', root); builder.textContent = 'Squad Builder';
   const evo = document.createElement('a'); evo.href = new URL('tools.html#evolutions', root); evo.textContent = 'Evolution Builder';
-  controls.append(graph, builder, evo); box.parentElement.after(controls);
+  const compare = document.createElement('a'); compare.href = new URL('compare.html', root);
+  if (Number.isSafeInteger(item) && item > 0) compare.href += '?ids=' + item + '&add=1';
+  compare.textContent = 'Compare player';
+  controls.append(graph, compare, builder, evo); box.parentElement.after(controls);
   const status = document.createElement('p'); status.className = 'ezz-profile-freshness';
   status.setAttribute('aria-live', 'polite'); controls.after(status);
   const footer = document.getElementById('price-source');

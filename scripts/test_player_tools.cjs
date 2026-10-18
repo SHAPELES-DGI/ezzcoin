@@ -16,6 +16,10 @@ async function test({reward=false,item='123',path='/p/player-123/'}={}) {
   const context={URL,Date,Number,AbortSignal,location:{pathname:path},document:{currentScript:{src:'https://ezzcoins.com/player-tools.js'},getElementById:id=>id==='px'?box:footer,querySelector:()=>heading,createTextNode:s=>s,createElement:tag=>{const e=new Element(tag);elements.push(e);return e;}},window:{EzzcoinsMarket:M,addEventListener:(type,fn)=>{events[type]=fn;}},setInterval:fn=>timers.push(fn),fetch:async()=>({ok:false})};
   await vm.runInNewContext(fs.readFileSync('player-tools.js','utf8'),context);
   const graph=elements.find(e=>e.tagName==='BUTTON');
+  const compare=elements.find(e=>e.tagName==='A'&&e.textContent==='Compare player');
+  assert(compare); assert.equal(new URL(compare.href).pathname,'/compare.html');
+  assert.equal(new URL(compare.href).searchParams.get('ids'),item);
+  assert.equal(new URL(compare.href).searchParams.get('add'),'1');
   if(reward){assert(box.textContent.includes('not tradeable'));assert(!box.textContent.includes('1,500'));assert(graph.disabled);return;}
   assert(box.textContent.includes('1,500'));assert(box.textContent.includes('LIVE'));
   events['ezzcoins:quote-error']();for(const timer of timers)timer();assert(box.textContent.includes('CHECK FAILED'));

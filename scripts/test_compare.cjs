@@ -1,0 +1,18 @@
+const assert=require('node:assert/strict'),fs=require('node:fs'),C=require('../tools-core.js'),K=require('../compare-core.js');
+const names=['players','newcards','legends','card-ids','card-renders','builder-items','market-cards','playstyles'];
+const data=Object.fromEntries(names.map(n=>[n+'.json',JSON.parse(fs.readFileSync(require('node:path').join(__dirname,'../data/'+n+'.json'),'utf8'))]));
+const pool=K.catalogue(data);assert(pool.length>19000);assert.equal(new Set(pool.map(p=>p.id)).size,pool.length);
+const base=pool.find(p=>p.id===277643),special=pool.find(p=>p.id===84163723);
+assert(base&&special);assert.notDeepEqual(base.stats,special.stats);assert.equal(base.version,'Gold');assert.equal(special.version,'Star Performer');assert.equal(special.psp,'');
+assert.equal(K.score(base,'CB','Shadow',3),null);assert.equal(K.score(base,'RW','Hunter',3),C.meta(base,'RW','Hunter',3));
+const mk=(id,stats,extra={})=>({id,name:'P'+id,pos:'ST',alt:'',stats:Array(6).fill(stats),sm:3,wf:3,...extra});
+const cards=[mk(1,80),mk(2,90),mk(3,99)],fresh={price:1000,usable:true},quote=id=>id===3?{price:100,usable:false}:id===2?{price:2000,usable:true}:fresh;
+const opts={pos:'ST',chem:3,budget:1500,choices:{},quote};
+assert.equal(K.verdict(cards,opts).best.p.id,1);assert.equal(K.verdict(cards,{...opts,budget:0}).best.p.id,2);assert.equal(K.verdict(cards,{...opts,budget:0}).value.p.id,1);
+assert.equal(K.verdict(cards,{...opts,budget:999}),null);assert.equal(K.verdict(cards,{...opts,pos:'GK'}),null);
+assert.equal(K.verdict(cards,{...opts,quote:()=>null}),null);
+assert.equal(K.verdict(cards,{...opts,quote:()=>({price:null,usable:true,status:1})}),null);
+const tied=K.verdict([mk(1,80),mk(2,80)],{...opts,budget:0,quote:id=>({price:id===1?2000:1000,usable:true})});assert.equal(tied.ties.length,2);assert.equal(tied.best.p.id,2);
+assert(!K.styles(mk(1,80)).includes('Glove'));assert(K.styles(mk(1,80,{pos:'GK'})).includes('Glove'));assert(!K.styles(mk(1,80,{pos:'GK'})).includes('Hunter'));
+const noStats=K.catalogue({'players.json':{cols:[],rows:[]},'newcards.json':{cards:[{eaId:99,name:'Missing',ovr:90,pos:'ST',baseId:1}]}})[0];assert.equal(noStats.stats,undefined);assert.equal(noStats.psp,undefined);assert.equal(K.score(noStats,'ST','None',3),null);
+console.log('Comparison: exact versions, missing stats, position eligibility, shared meta, budget, stale/untradeable quotes, ties and GK styles pass.');
