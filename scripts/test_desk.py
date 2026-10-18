@@ -174,6 +174,57 @@ offer = [c for c in desk.candidates(dm, dm.t, set(), log) if c[0] == "drop"]
 assert offer and offer[0][1]["floor"] in (84, 85, 86) and offer[0][1]["checkAt"] == datetime(2026, 10, 14, 19, 0, tzinfo=timezone.utc), offer
 assert not [c for c in desk.candidates(dm, dm.t, set(), log[:3]) if c[0] == "drop"]   # too few drops measured
 
+# ---------------------------------------------------------------- Thursday's slot for the Rivals rewards dip
+class SlotMarket:
+    fresh = True
+    published = t
+    prices = {1: 20000}
+    info = {1: {"name": "Dip Card", "ovr": 86, "version": "Rare"}}
+
+    def label(self, i):
+        return "Dip Card 86"
+
+    def floor(self, ovr):
+        return 3500
+
+
+def offers(t, ks):
+    out = []
+    for k in ks:
+        if k == "rewards":
+            out.append(("rewards", {"tone": "buy", "rule": "buy_after_tax", "floor": 86, "checkAt": t + timedelta(days=2),
+                                    "title": "Buy 86-rated fodder after Rivals rewards", "why": "the cheapest 86 is 3,500 coins"}))
+        else:
+            out.append((k, {"tone": "buy", "rule": "buy_after_tax", "item": 1, "checkAt": t + timedelta(days=2),
+                            "title": "Buy Dip Card", "why": "down 20% in about a day"}))
+    return out
+
+
+def slot_case(now, ks):
+    """One call already made on the desk's day (00:28 Zurich), then the desk looks at the offers `ks`."""
+    first = datetime(now.year, now.month, now.day, tzinfo=desk.DESK_TZ).replace(hour=0, minute=28).astimezone(timezone.utc)
+    led = {"calls": [{"id": "c-first", "madeAt": desk.iso(first), "strategy": "weekend", "status": "open"}]}
+    orig_c = desk.candidates
+    desk.candidates = lambda mk, tt, used, log=(): offers(tt, ks)
+    try:
+        made = desk.make_calls(SlotMarket(), led, now)
+    finally:
+        desk.candidates = orig_c
+    return made and made["strategy"]
+
+thu_night = datetime(2026, 10, 15, 1, 30, tzinfo=timezone.utc)      # Thu 03:30 Zurich, before the payout
+thu_payout = datetime(2026, 10, 15, 8, 30, tzinfo=timezone.utc)     # Thu 09:30 UK, the rewards window
+thu_after = datetime(2026, 10, 15, 13, 30, tzinfo=timezone.utc)     # Thu 14:30 UK, the window has closed
+wed = datetime(2026, 10, 14, 12, 0, tzinfo=timezone.utc)
+assert slot_case(thu_night, ["rebound"]) is None                    # the last slot is kept for Thursday morning
+assert slot_case(thu_payout, ["rebound", "rewards"]) == "rewards"   # and the rewards dip gets it
+assert slot_case(thu_after, ["rebound"]) == "rebound"               # after the window anything may use it
+assert slot_case(wed, ["rebound"]) == "rebound"                     # other days are unchanged
+assert desk.rewards_slot_open(datetime(2026, 10, 14, 22, 30, tzinfo=timezone.utc))      # Thu 00:30 Zurich, still Wed in the UK
+assert not desk.rewards_slot_open(datetime(2026, 10, 14, 21, 30, tzinfo=timezone.utc))  # Wed 23:30 Zurich
+assert desk.rewards_slot_open(datetime(2026, 10, 29, 13, 30, tzinfo=timezone.utc))      # Thu 13:30 GMT after the clocks change
+assert not desk.rewards_slot_open(datetime(2026, 10, 29, 14, 0, tzinfo=timezone.utc))
+
 dd = desk.daily_drop(log, datetime(2026, 10, 13, 18, 30, tzinfo=timezone.utc))
 assert dd["prevAt"] == "2026-10-13T17:00:00Z" and dd["nextAt"] == "2026-10-14T17:00:00Z" and not dd["friday"]
 print("Desk: lifetime totals, strategy pausing by result, two-reading checks and the 6 PM drop record pass")

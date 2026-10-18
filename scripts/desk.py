@@ -620,6 +620,15 @@ def candidates(mk, t, used, log=()):
     return out
 
 
+def rewards_slot_open(t):
+    """True on the desk's Thursday until the Rivals rewards window closes (Thursday 14:00 UK time).
+    The desk's day is Zurich time, so it starts an hour before Thursday begins in the UK."""
+    if t.astimezone(DESK_TZ).weekday() != 3:
+        return False
+    local = t.astimezone(UK)
+    return local.weekday() == 2 or (local.weekday() == 3 and local.hour < 14)
+
+
 def make_calls(mk, ledger, t):
     if not mk.fresh:
         return None
@@ -633,13 +642,16 @@ def make_calls(mk, ledger, t):
     used = {int(c["ref"]["eaId"]) for c in calls if (c.get("ref") or {}).get("eaId") and parse(c.get("madeAt")) and t - parse(c["madeAt"]) < timedelta(days=7)}
     used_strategies = {c.get("strategy") for c in made_today}
     stats = ledger.get("strategies", {})
+    # Keep one of Thursday's calls for the Rivals rewards dip. Calls made overnight once used up both
+    # of the day's calls hours before the payout, so the desk couldn't buy the dump that followed.
+    keep_slot = (rewards_slot_open(t) and "rewards" not in used_strategies and len(made_today) >= CALLS_PER_DAY - 1)
 
     # Try strategies in order of their expected result after tax: a proven strategy first, an untested one
     # (expected 0%) next, and one being retested after a pause last.
     options = []
     for k, f in candidates(mk, t, used, ledger.get("dropLog", [])):
         st = standing(stats.get(k), t)
-        if st["status"] == "paused" or k in used_strategies:
+        if st["status"] == "paused" or k in used_strategies or (keep_slot and k != "rewards"):
             continue
         options.append((-st["expected"], ORDER.index(k), k, f, st))
     if not options:
