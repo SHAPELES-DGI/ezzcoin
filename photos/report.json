@@ -5,11 +5,6 @@
 "ovr": 85,
 "why": "no Wikidata footballer with this name and a photo"
 },
-"231866": {
-"name": "Rodrigo Hernández Cascante",
-"ovr": 90,
-"why": "2 footballers with this name"
-},
 "236532": {
 "name": "Robin Koch",
 "ovr": 79,
@@ -185,6 +180,16 @@
 "ovr": 72,
 "why": "no Wikidata footballer with this name and a photo"
 },
+"277811": {
+"name": "Mathias de Amorim",
+"ovr": 73,
+"why": "no Wikidata footballer with this name and a photo"
+},
+"278326": {
+"name": "Alphadjo Cissè",
+"ovr": 66,
+"why": "no Wikidata footballer with this name and a photo"
+},
 "279541": {
 "name": "Trent Koné-Doherty",
 "ovr": 59,
@@ -208,6 +213,11 @@
 "70967": {
 "name": "Carlos Espí Escrihuela",
 "ovr": 77,
+"why": "no Wikidata footballer with this name and a photo"
+},
+"72006": {
+"name": "Milton Delgado",
+"ovr": 73,
 "why": "no Wikidata footballer with this name and a photo"
 },
 "72170": {
@@ -235,6 +245,11 @@
 "ovr": 77,
 "why": "no Wikidata footballer with this name and a photo"
 },
+"77033": {
+"name": "William Gomes C. Santos",
+"ovr": 77,
+"why": "no Wikidata footballer with this name and a photo"
+},
 "80674": {
 "name": "Pedro Fernández",
 "ovr": 73,
@@ -255,6 +270,11 @@
 "ovr": 67,
 "why": "no Wikidata footballer with this name and a photo"
 },
+"82948": {
+"name": "Flávio Ferreira Gonçalves",
+"ovr": 66,
+"why": "no Wikidata footballer with this name and a photo"
+},
 "84016": {
 "name": "Ousmane Diabate",
 "ovr": 65,
@@ -266,6 +286,6 @@
 "why": "no Wikidata footballer with this name and a photo"
 }
 },
-"photos": 797,
-"players": 925
+"photos": 802,
+"players": 932
 }
