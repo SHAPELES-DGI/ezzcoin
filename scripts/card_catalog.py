@@ -1,6 +1,7 @@
 """Keep new-card records and FC 27 artwork in sync with exact EA item metadata."""
 import json
 from datetime import datetime, timezone
+from player_details import styles, merge as merge_details, apply_base
 
 
 def read(path, fallback):
@@ -25,7 +26,7 @@ def extract(player):
     return {"eaId": item, "baseId": player.get("basePlayerEaId"), "name": name,
             "version": player.get("rarityName", ""), "ovr": player["overall"],
             "pos": player.get("position", ""), "alt": ",".join(player.get("alternativePositions") or []),
-            "club": (player.get("club") or {}).get("name", ""),
+            "club": (player.get("uniqueClub") or player.get("club") or {}).get("name", ""),
             "league": (player.get("league") or {}).get("name", ""),
             "nation": (player.get("nation") or {}).get("name", ""),
             "sm": player.get("skillMoves"), "wf": player.get("weakFoot"),
@@ -38,10 +39,16 @@ def extract(player):
             "excluded": bool(player.get("isEvolutionPlayerItem") or player.get("isProvisional")),
             "checkedAt": datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z"),
             "gender": 1 if player.get("gender") == 2 else 0, "foot": player.get("foot", ""),
-            "height": player.get("height"), "age": player.get("age")}
+            "height": player.get("height"), "age": player.get("age"),
+            **({'ps': styles(player['playStylePlusEaIds'], True),
+                'pls': styles([i for i in player['playStyleEaIds'] if i not in player['playStylePlusEaIds']]),
+                'psAt': datetime.now(timezone.utc).isoformat(timespec='seconds').replace('+00:00','Z')}
+               if isinstance(player.get('playStyleEaIds'), list) and isinstance(player.get('playStylePlusEaIds'), list)
+               and styles(player['playStylePlusEaIds'], True) is not None and styles(player['playStyleEaIds']) is not None else {})}
 
 
 def publish(data, metadata, prices, published_at, quote_metadata=None):
+    details = merge_details(data, metadata)
     catalog = read(data / "newcards.json", {"cards": []})
     ids = read(data / "card-ids.json", {})
     renders = read(data / "card-renders.json", {})
@@ -113,7 +120,7 @@ def publish(data, metadata, prices, published_at, quote_metadata=None):
             cards.append(card)
             existing[item] = card
             added += 1
-        for field in ("eaId", "baseId", "name", "version", "ovr", "pos", "alt", "club", "league", "nation", "sm", "wf", "stats", "added", "createdAt", "url", "src", "isIcon", "isHero", "isGallery", "gender", "foot"):
+        for field in ("eaId", "baseId", "name", "version", "ovr", "pos", "alt", "club", "league", "nation", "sm", "wf", "stats", "added", "createdAt", "url", "src", "isIcon", "isHero", "isGallery", "gender", "foot", "height", "age", "ps", "pls", "psAt"):
             if record.get(field) is not None:
                 card[field] = record[field]
         # Preserve old FUTBIN keys so saved watchlist entries and existing URLs survive.
@@ -122,6 +129,11 @@ def publish(data, metadata, prices, published_at, quote_metadata=None):
     for card in cards + legends.get("cards", []):
         key = str(card.get("gid") or card.get("fid"))
         item = ids.get(key) or card.get("eaId") or card.get("gid")
+        verified = details.get(str(item))
+        if verified and verified.get('ovr') == card.get('ovr'):
+            for field in ('eaId','baseId','pos','alt','club','league','nation','sm','wf','stats','gender','foot','height','age','ps','pls','psAt'):
+                if verified.get(field) is not None:
+                    card[field] = verified[field]
         quote = prices.get(int(item)) if item else None
         if quote:
             source = (quote_metadata or {}).get(str(item), {}).get("console", {})
@@ -142,7 +154,8 @@ def publish(data, metadata, prices, published_at, quote_metadata=None):
     # Stable key order, so an unchanged artwork map is never rewritten (it is 2 MB).
     renders = dict(sorted(renders.items(), key=lambda kv: (0, int(kv[0]), "") if kv[0].isdigit() else (1, 0, kv[0])))
     write(data / "card-renders.json", renders)
-    if base_added or positions_updated:
+    verified_changes = apply_base(roster, details) if roster else 0
+    if base_added or positions_updated or verified_changes:
         roster["count"] = len(roster["rows"])
         roster["updatedAt"] = datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
         roster["discoverySource"] = "FUT.GG FC 27 item index"

@@ -11,6 +11,7 @@ Standard library only.
 """
 import json, math, os, re, sys, time, urllib.parse, urllib.request
 from datetime import date, datetime, timezone
+from player_details import load as load_details, apply_base
 
 BASE = os.environ.get("EZZ_EA_BASE", "https://www.ea.com")
 SLUG = "ea-sports-fc"
@@ -131,9 +132,9 @@ def row(p, gender):
     alt = ",".join(label(a, "shortLabel") for a in (p.get("alternatePositions") or []) if label(a, "shortLabel"))
     st = p.get("stats") or {}
     if pos == "GK":
-        spd = stat(st, "pac")
+        spd = stat(st, "gkSpeed")
         if spd is None and stat(st, "acceleration") is not None and stat(st, "sprintSpeed") is not None:
-            spd = round((stat(st, "acceleration") + stat(st, "sprintSpeed")) / 2)
+            spd = math.floor(.6 * stat(st, "acceleration") + .4 * stat(st, "sprintSpeed") + .5)
         six = [stat(st, "gkDiving"), stat(st, "gkHandling"), stat(st, "gkKicking"), stat(st, "gkReflexes"), spd, stat(st, "gkPositioning")]
     else:
         six = [stat(st, k) for k in ("pac", "sho", "pas", "dri", "def", "phy")]
@@ -182,8 +183,10 @@ def main():
             if not record.get("excluded") and not record.get("isSpecial") and record.get("baseId") == r[0] and record.get("ovr") == r[4] and record.get("pos") == r[5] and isinstance(record.get("alt"), str):
                 r[6] = record["alt"]
     rows.sort(key=lambda r: (-(r[4] or 0), r[1]))
+    apply_base({'cols':COLS, 'rows':rows}, load_details(os.path.dirname(out)))
     n = len(rows)
-    complete = sum(1 for r in rows if r[4] and r[5] and r[7] and all(v is not None for v in r[16:22]))
+    complete = sum(1 for r in rows if r[4] and r[5] and r[7]
+                   and all(v is not None for i,v in enumerate(r[16:22]) if not (r[5]=='GK' and i==4)))
     doc = {"updatedAt": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
            "source": "EA SPORTS FC 27 ratings", "apiUrl": f"{BASE}/games/{SLUG}/ratings (Next.js data route)",
            "count": n, "cols": COLS, "rows": rows}

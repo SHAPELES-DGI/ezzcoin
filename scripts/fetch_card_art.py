@@ -2,6 +2,7 @@
 """Cache rendered FC 27 card artwork URLs from the matching FUT.GG card pages."""
 import concurrent.futures, html, json, os, re, sys, unicodedata, urllib.request, subprocess
 from html.parser import HTMLParser
+from player_details import load as load_details
 ROOT = sys.argv[1] if len(sys.argv) > 1 else "."
 MIN_OVR = 75  # same cutoff as scripts/build_pages.py
 NEW_PER_RUN = 300  # new FUT.GG page lookups per run; the rest follow on later runs
@@ -108,7 +109,15 @@ try:
     playstyles = stored_playstyles.get("cards", {}) if stored_playstyles.get("_version") == 2 else {}
 except (OSError, ValueError, AttributeError):
     playstyles = {}
-todo = [(item, info) for item, info in candidates().items() if item not in cached or item not in playstyles]
+details = load_details(os.path.join(ROOT, 'data'))
+exact = json.load(open(os.path.join(ROOT, 'data', 'card-ids.json'), encoding='utf-8'))
+for item in candidates():
+    record = details.get(str(exact.get(item, item)))
+    if record:
+        playstyles[item] = record['pls']
+verified = {item for item in candidates() if str(exact.get(item, item)) in details}
+todo = [(item, info) for item, info in candidates().items()
+        if item not in verified and (item not in cached or item not in playstyles)]
 waiting = max(0, len(todo) - NEW_PER_RUN)
 todo = todo[:NEW_PER_RUN]
 if todo:
@@ -116,7 +125,7 @@ if todo:
         for item, url, styles in pool.map(fetch, todo):
             if url:
                 cached[item] = url
-            if styles:
+            if styles is not None:
                 playstyles[str(item)] = ", ".join(styles)
 os.makedirs(os.path.dirname(PATH), exist_ok=True)
 with open(PATH, "w", encoding="utf-8") as fh:

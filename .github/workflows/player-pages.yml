@@ -2,7 +2,7 @@ name: Player pages
 on:
   push:
     branches: [main]
-    paths: [data/players.json, data/newcards.json, data/legends.json, scripts/build_pages.py, scripts/fetch_card_art.py, scripts/chem.min.js, scripts/meta.py, flags/codes.json]
+    paths: [data/players.json, data/newcards.json, data/legends.json, data/player-details.json, scripts/player_details.py, scripts/build_pages.py, scripts/fetch_card_art.py, scripts/chem.min.js, scripts/meta.py, flags/codes.json]
   workflow_dispatch:
   # Every 4 hours too, so artwork for newly added pages fills in a few hundred cards at a time.
   schedule:
@@ -28,6 +28,7 @@ jobs:
             git reset -q --hard origin/main
             python3 scripts/fetch_card_art.py .
             python3 scripts/build_pages.py .
+            python3 scripts/test_player_pages.py
             git add -A p sitemap.xml data/card-art.json data/card-renders.json data/playstyles.json
             if git diff --cached --quiet; then echo "No changes"; exit 0; fi
             git commit -q -m "Rebuild player pages"

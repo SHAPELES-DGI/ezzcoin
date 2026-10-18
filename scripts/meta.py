@@ -24,7 +24,7 @@ OFF = {"ST": 2.0, "CF": 1.5, "LW": -1.3, "RW": -1.3, "LM": .1, "RM": .1, "CAM": 
 SMWF = {"ST": (1, 1), "CF": (1, 1), "LW": (1, 1), "RW": (1, 1), "LM": (1, 1), "RM": (1, 1), "CAM": (1, 1),
         "CM": (.6, .8), "CDM": (.3, .5), "LB": (.3, .5), "RB": (.3, .5), "LWB": (.4, .5), "RWB": (.4, .5), "CB": (0, .4), "GK": (0, 0)}
 PS_STRONG = {"Quick Step+", "Rapid+", "Finesse Shot+", "Technical+", "Low Driven Shot+", "Power Shot+", "Trickster+",
-             "Intercept+", "Anticipate+", "Jockey+", "Bruiser+", "Footwork+", "Far Reach+", "Deflector+", "Rush Out+"}
+             "Intercept+", "Anticipate+", "Jockey+", "Bruiser+", "Footwork+", "Far Reach+", "Deflector+", "Rush Out+", "1v1 Close Down+"}
 PS_MINOR = {"Dead Ball+", "Long Throw+", "Far Throw+"}
 
 

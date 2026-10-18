@@ -24,7 +24,7 @@ const style=document.createElement("style");style.textContent=`
 .ea-type{position:absolute;left:12%;right:12%;top:86%;text-align:center;font-size:3.4cqw;font-weight:bold;z-index:2}
 .card-art.ea-item{width:184px;max-width:100%;height:auto;min-height:0}
 `;document.head.append(style);
-async function repairDetail(){const match=location.pathname.match(/-(\d+)\/?$/);if(!match)return;await load();const id=Number(match[1]),special=id>=1e9,key=special?id-1e9:id,c=get(ids[key]||key,key,special);if(!c)return;const current=document.querySelector(".card-art");if(!current)return;const box=document.createElement("div");box.innerHTML=html(c,"card-art");const next=current.nextElementSibling;current.replaceWith(box.firstElementChild);if(next?.classList.contains("card-fallback"))next.hidden=true}
+async function repairDetail(){const match=location.pathname.match(/-(\d+)(?:\/index\.html)?\/?$/);if(!match)return;await load();const id=Number(match[1]),special=id>=1e9,key=special?id-1e9:id,c=get(Number(document.getElementById("px")?.dataset.item)||ids[key]||key,key,special);if(!c)return;const current=document.querySelector(".card-art");if(!current)return;const box=document.createElement("div");box.innerHTML=html(c,"card-art");const next=current.nextElementSibling;const replacement=box.firstElementChild;current.replaceWith(replacement);if(next?.classList.contains("card-fallback")){next.hidden=true;if(replacement.tagName==="IMG")replacement.addEventListener("error",()=>{replacement.hidden=true;next.hidden=false;},{once:true})}}
 window.EzzcoinsCardArt={load,get,html};
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",()=>repairDetail().catch(()=>{}),{once:true});else repairDetail().catch(()=>{});
 })();

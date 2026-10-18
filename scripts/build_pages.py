@@ -14,9 +14,11 @@ Usage: python3 scripts/build_pages.py [site root]   (standard library only)
 GitHub runs it automatically (.github/workflows/player-pages.yml) whenever data/players.json or data/newcards.json changes.
 """
 import html, json, os, re, shutil, sys, unicodedata
+from urllib.parse import quote
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from meta import meta  # noqa: E402  (same folder)
+from player_details import load as load_details, apply_base
 
 ROOT = sys.argv[1] if len(sys.argv) > 1 else "."
 BASE = os.environ.get("EZZ_BASE", "https://ezzcoins.com/")
@@ -26,12 +28,13 @@ SLUG_MAP = {"ø": "o", "Ø": "o", "ß": "ss", "ł": "l", "Ł": "l", "æ": "ae", 
             "œ": "oe", "đ": "d", "Đ": "d", "ı": "i", "ð": "d", "þ": "th"}
 ST_OUT = ["PAC", "SHO", "PAS", "DRI", "DEF", "PHY"]
 ST_GK = ["DIV", "HAN", "KIC", "REF", "SPD", "POS"]
-CSS_V = "28"
+CSS_V = "20261018-audit"
 SPECIAL = 1000000000  # special-card ids on the site: SPECIAL + FUT.GG card id (gid) or FUTBIN card id (fid)
 CARD_ART = {}
 CARD_IDS = json.load(open(os.path.join(ROOT, "data", "card-ids.json")))
 CARD_RENDERS = json.load(open(os.path.join(ROOT, "data", "card-renders.json"), encoding="utf-8"))
 REGULAR_PLAYSTYLES = {}
+DETAILS = {}
 BAKE_MOVE = 0.20  # rewrite a page's baked price only when the live price moved more than 20%
 BAKE_MIN = 1000   # ... and by at least this many coins (cheap cards jump 30% between 700 and 1,000)
 LIVE = {}          # EA item id -> (console price or None, state) from data/live-prices.json
@@ -209,7 +212,7 @@ def card_art_image(item, name, fallback):
         src = record["url"]
     else:
         # Official layered cards are filled by card-art.js.
-        return f'<div class="card-art" aria-label="{e(name)} FC 27 card"></div><div class="card-fallback" hidden>{fallback}</div>'
+        return f'<div class="card-art" hidden aria-label="{e(name)} FC 27 card"></div><div class="card-fallback">{fallback}</div>'
     return (f'<img class="card-art" src="{src}" alt="{e(name)} FC 27 Ultimate Team card" width="240" height="336" '
             f'loading="eager" decoding="async" onerror="this.hidden=true;this.nextElementSibling.hidden=false">'
             f'<div class="card-fallback" hidden>{fallback}</div>')
@@ -268,8 +271,7 @@ def chem_box(x, up):
     data = json.dumps([int(v) for v in x["s"]])
     return (f'<section class="chem" id="chem" data-s="{e(data)}" data-pos="{e(x["p"])}" data-alt="{e(x["a"] or "")}" data-ovr="{x["o"]}" '
             f'data-sm="{e(x["sm"] or "")}" data-wf="{e(x["wf"] or "")}" data-ps="{e(x["ps"] or "")}"><h2>Chemistry style</h2>'
-            f'<p class="chem-note">Turn on JavaScript to see this card with each chemistry style.</p></section>'
-            f'<script src="{up}market-data.js?v=20261013-fix"></script><script src="{up}p/chem.js?v={CSS_V}" defer></script>')
+            f'<p class="chem-note">Turn on JavaScript to see this card with each chemistry style.</p></section>')
 
 
 ADSENSE = "<script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5351346431839799\" crossorigin=\"anonymous\"></script>"
@@ -277,7 +279,9 @@ ADSENSE = "<script async src=\"https://pagead2.googlesyndication.com/pagead/js/a
 
 CSS += "\n/* Approved FIFA 18–20-inspired colour theme for every player page. */\n:root{--bg:#080d29;--surface:#1c1b42;--sunk:#24254f;--ink:#f7f8ff;--muted:#bcc0df;--line:#48436e;--gold:#38e6ed;--buy:#55e4b0;--sell:#ff7cac}\nbody{background:radial-gradient(ellipse at 0 12%,#6223bd35,transparent 48%),radial-gradient(ellipse at 100% 55%,#16b5d820,transparent 48%),#080d29}\n.top{position:relative;border-bottom:2px solid #6245bd;background:linear-gradient(110deg,#20184c,#111a3d);border-radius:0 0 12px 12px;overflow:hidden}.top:after{content:\"\";position:absolute;right:0;bottom:0;width:95px;height:3px;background:#ff42ab;transform:skewX(-35deg)}.nav a{padding:8px 11px;border:1px solid #6555a4;border-radius:6px;color:#43edf0}.nav a:hover{background:#35e4e9;color:#08132c}.home span{background:linear-gradient(180deg,#ffe59a,#e3a93a);background-clip:text;-webkit-background-clip:text;color:transparent}\nh1{font-style:italic;color:#f8f8ff;text-shadow:2px 2px 0 #5a30904d}.sub{color:#c2c1e0}.crumb,.crumb a{color:#b6b5d9}.crumb a:hover{color:#43edf0}\n.px{background:linear-gradient(125deg,#352363,#1d2048);border-color:#7a5bb5;box-shadow:0 6px 25px #07071f35;border-left:3px solid #32e4e8}.px b{color:#4aeced}.px span{color:#d1c9e5}.mt,.st,.chem{background:linear-gradient(140deg,#2a2253,#17203e);border-color:#59497f}.mt{border-top:3px solid #f947ad}.st b{color:#64e5c5}.chem{border-top:3px solid #38e6ed}.chem h2{color:#f5f0ff}.chem-lv button[aria-pressed=true]{background:linear-gradient(100deg,#31e5e9,#30b7fb);color:#07132d}.chem select{border-color:#68618e}.chem-best button:hover{border-color:#39e8ee}.tag{background:linear-gradient(100deg,#e043ac,#8639d9);color:#fff}.facts dt{color:#a5a8db}.facts dd{color:#f1efff}.more a{background:linear-gradient(120deg,#242047,#151d3d);border-color:#534373}.playstyle{background:#1c2146;border-color:#605183;color:#f1efff}.playstyle-plus{background:#30281b;color:#f8e2b1;border-color:#e3c07566}.playstyle-icon{width:26px;height:26px;flex:none;display:block;overflow:visible}.playstyle{gap:6px;padding:5px 8px;font-size:11px;line-height:1.3}footer{border-top-color:#4f427a}a:focus-visible,button:focus-visible,select:focus-visible{outline:3px solid #49eff2;outline-offset:3px}::selection{background:#c53493;color:white}\n@media(max-width:600px){.top{border-radius:0;padding:12px}.nav{gap:6px}.nav a{padding:7px 8px}.px{width:100%;text-align:left}.hero{gap:20px}.sub{font-size:14px}}\n"
 
-CSS += "\n/* Comfortable player pages on phones; tablet/PC layout stays unchanged. */\n@media(max-width:600px){\n body{font-size:15px;overflow-x:clip}.top{gap:8px;padding:10px 12px;min-height:64px}.home{font-size:1.3rem}.home img{width:30px;height:30px}.nav{gap:6px}.nav a{display:flex;align-items:center;justify-content:center;min-height:44px;padding:8px;font-size:12px;letter-spacing:.3px}main{padding:18px 14px 30px}.crumb{font-size:12px;margin-bottom:20px;line-height:1.6}.hero{gap:22px;grid-template-columns:1fr;justify-items:center;text-align:center}.hero>div:last-child{width:100%;min-width:0}h1{font-size:32px;line-height:1.12;margin-bottom:8px}.sub{font-size:14px;line-height:1.6}.side{width:min(240px,100%)}.card-art{width:220px;max-width:100%}.playstyles{width:100%;gap:8px}.playstyle{min-height:38px;font-size:12px;padding:6px 9px}.playstyle-icon{width:28px;height:28px}.kv{display:grid;grid-template-columns:1fr;gap:12px;width:100%}.px{display:grid;width:100%;padding:18px;text-align:left;margin-top:16px}.px b{font-size:29px}.px span{font-size:12px}.mt{width:100%;min-height:68px;text-align:left;padding:13px 16px}.stats{width:100%;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:16px}.st{padding:13px 10px;min-width:0}.st b{font-size:25px}.chem{padding:17px 14px;margin-top:20px;text-align:left;width:100%}.chem-top{gap:12px}.chem-sel{flex-basis:100%;flex-wrap:wrap}.chem-sel span{width:100%;font-size:12px}.chem select{width:100%;font-size:16px;min-height:48px;padding:11px}.chem-lv{width:100%;display:grid;grid-template-columns:repeat(3,1fr)}.chem-lv button{min-height:46px;font-size:14px}.chem-best{gap:8px;line-height:1.6}.chem-best button{min-height:44px;padding:8px 12px;font-size:13px}.chem-boost{font-size:14px;line-height:1.6}.chem-note{font-size:12px;line-height:1.65}.facts{grid-template-columns:112px minmax(0,1fr);gap:10px 12px;margin-top:22px}.facts dt{font-size:12px;line-height:1.6}.facts dd{font-size:15px;line-height:1.6;overflow-wrap:anywhere}.mtnote{font-size:13px;line-height:1.7}.more a{min-height:52px;padding:12px;gap:10px}.more .m{font-size:12px}.tag{font-size:12px;padding:6px 10px}a:focus-visible,button:focus-visible,select:focus-visible{outline-offset:2px}\n}\n"
+CSS += "\n.st b.q3{color:var(--gold)}.st b.q4{color:var(--sell)}.mt-positions{grid-column:1/-1;min-width:0}.mt{min-width:0}.chem-lv{display:grid;grid-template-columns:repeat(4,1fr)}\n"
+
+CSS += "\n/* Comfortable player pages on phones; tablet/PC layout stays unchanged. */\n@media(max-width:600px){\n body{font-size:15px;overflow-x:clip}.top{gap:8px;padding:10px 12px;min-height:64px}.home{font-size:1.3rem}.home img{width:30px;height:30px}.nav{gap:6px}.nav a{display:flex;align-items:center;justify-content:center;min-height:44px;padding:8px;font-size:12px;letter-spacing:.3px}main{padding:18px 14px 30px}.crumb{font-size:12px;margin-bottom:20px;line-height:1.6}.hero{gap:22px;grid-template-columns:1fr;justify-items:center;text-align:center}.hero>div:last-child{width:100%;min-width:0}h1{font-size:32px;line-height:1.12;margin-bottom:8px}.sub{font-size:14px;line-height:1.6}.side{width:min(240px,100%)}.card-art{width:220px;max-width:100%}.playstyles{width:100%;gap:8px}.playstyle{min-height:38px;font-size:12px;padding:6px 9px}.playstyle-icon{width:28px;height:28px}.kv{display:grid;grid-template-columns:1fr;gap:12px;width:100%}.px{display:grid;width:100%;padding:18px;text-align:left;margin-top:16px}.px b{font-size:29px}.px span{font-size:12px}.mt{width:100%;min-height:68px;text-align:left;padding:13px 16px}.stats{width:100%;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:16px}.st{padding:13px 10px;min-width:0}.st b{font-size:25px}.chem{padding:17px 14px;margin-top:20px;text-align:left;width:100%}.chem-top{gap:12px}.chem-sel{flex-basis:100%;flex-wrap:wrap}.chem-sel span{width:100%;font-size:12px}.chem select{width:100%;font-size:16px;min-height:48px;padding:11px}.chem-lv{width:100%;display:grid;grid-template-columns:repeat(4,1fr)}.chem-lv button{min-height:46px;font-size:14px}.chem-best{gap:8px;line-height:1.6}.chem-best button{min-height:44px;padding:8px 12px;font-size:13px}.chem-boost{font-size:14px;line-height:1.6}.chem-note{font-size:12px;line-height:1.65}.facts{grid-template-columns:112px minmax(0,1fr);gap:10px 12px;margin-top:22px}.facts dt{font-size:12px;line-height:1.6}.facts dd{font-size:15px;line-height:1.6;overflow-wrap:anywhere}.mtnote{font-size:13px;line-height:1.7}.more a{min-height:52px;padding:12px;gap:10px}.more .m{font-size:12px}.tag{font-size:12px;padding:6px 10px}a:focus-visible,button:focus-visible,select:focus-visible{outline-offset:2px}\n}\n"
 
 def head(title, desc, canon, up, image=None):
     return (f'<!doctype html>{BANNER}<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
@@ -285,7 +289,10 @@ def head(title, desc, canon, up, image=None):
             f'<meta property="og:type" content="website"><meta property="og:title" content="{e(title)}"><meta property="og:description" content="{e(desc)}">'
             f'<meta property="og:url" content="{e(canon)}"><meta property="og:image" content="{e(image or BASE + "icon-512.png")}"><meta name="theme-color" content="#080d29">'
             f'<link rel="icon" href="{up}favicon-32.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="{up}apple-touch-icon.png">'
-            f'<script src="{up}card-art.js?v=20261006-ps1" defer></script><link rel="manifest" href="{up}manifest.webmanifest">{FONTS}<link rel="stylesheet" href="{up}p/style.css?v={CSS_V}">{ADSENSE}<script src="{up}ezz-ads.js?v=1" defer></script></head><body>'
+            f'<script src="{up}card-art.js?v={CSS_V}" defer></script><script src="{up}market-data.js?v={CSS_V}" defer></script>'
+            f'<script src="{up}price-history.js?v={CSS_V}" defer></script><script src="{up}player-tools.js?v={CSS_V}" defer></script>'
+            f'<script src="{up}p/chem.js?v={CSS_V}" defer></script><link rel="stylesheet" href="{up}price-history.css?v={CSS_V}">'
+            f'<link rel="manifest" href="{up}manifest.webmanifest">{FONTS}<link rel="stylesheet" href="{up}p/style.css?v={CSS_V}">{ADSENSE}<script src="{up}ezz-ads.js?v=1" defer></script></head><body>'
             f'<header class="top"><a class="home" href="{up}"><img src="{up}mark.svg" alt="" width="34" height="34"><b>Ezz<span>coins</span></b></a>'
             f'<nav class="nav"><a href="{up}#players">Database</a><a href="{up}p/">All players</a></nav></header>')
 
@@ -341,19 +348,19 @@ def baked_price(path, item):
     return new, None
 
 
-def price_box(path, item):
-    price, txt = baked_price(path, item)
+def price_box(path, item, reward=False):
+    price, txt = (None, 'Reward card · not tradeable') if reward else baked_price(path, item)
     if price:
-        return (f'<div class="px" id="px" data-price="{price}"><b><i class="coin"></i>{price:,}</b>'
+        return (f'<div class="px" id="px" data-price="{price}" data-item="{e(item)}"><b><i class="coin"></i>{price:,}</b>'
                 f'<span class="price-updated">Recent console price</span></div>'), price
-    return f'<div class="px" id="px"><span class="none">{e(txt)}</span></div>', None
+    return f'<div class="px" id="px" data-item="{e(item)}" data-reward="{str(reward).lower()}"><span class="none">{e(txt)}</span></div>', None
 
 
 def page_item(x):
     """The EA item id a page's price is listed under (same lookup as the page's script)."""
     if "key" not in x:
-        return x["id"]
-    return CARD_IDS.get(str(x["key"])) or x.get("eaId") or x["key"]
+        return x.get("eaId") or x["id"]
+    return CARD_IDS.get(str(x["key"])) or x.get("eaId") or (x["key"] if x["key"] > 16777216 else None)
 
 
 AD_BOX = '<div class="ezz-ad" hidden aria-label="Advertisement"></div>'
@@ -415,22 +422,14 @@ def player_page(x, codes, by_club, by_nat, specials_of, credits):
         more += f'<h2>More from {e(x["c"])}</h2>' + card_list(mates, codes, up, lambda y: y["p"])
     if natmates:
         more += f'<h2>More from {e(x["nat"])}</h2>' + card_list(natmates, codes, up, lambda y: y["c"])
-    script = ("<script>(()=>{const id=%s,el=document.getElementById('px'),g=f=>window.EzzcoinsMarket.fetchData(f).catch(()=>null);"
-              "const load=()=>Promise.all([g('prices.json'),g('topprices.json'),g('live-prices.json')]).then(([a,b,live])=>{"
-              "const rows=live&&Array.isArray(live.rows)?live.rows:[],row=rows.find(r=>Number(r[0])===Number(id))||(Number(id)<16777216?rows.find(r=>Number(r[0])===Number(id)+50331648):null)||null;"
-              "const meta=row&&live.quoteMetadata&&live.quoteMetadata[String(row[0])]&&live.quoteMetadata[String(row[0])].console;const lp=row&&row[3]===0&&row[1]>0?{price:row[1],at:meta&&meta.at||live.publishedAt.console,src:meta&&meta.src||live.source}:null;"
-              "const c=lp||[a&&a.players&&a.players[id],b&&b.players&&b.players[id]].filter(p=>p&&p.price>0&&Number.isFinite(Date.parse(p.at))).sort((x,y)=>Date.parse(y.at)-Date.parse(x.at))[0];"
-              "if(!c)return;const m=Math.round((Date.now()-Date.parse(c.at))/6e4),h=Math.floor(m/60),ago=m<1?'just now':m<60?m+' min ago':h<48?h+' h ago':Math.floor(h/24)+' days ago';"
-              "const label=c.src==='FUT.GG'?'FUT.GG feed updated':'Console price from '+(c.src||'FUTBIN');"
-              "el.innerHTML='<b><i class=\"coin\"></i>'+Number(c.price).toLocaleString('en-US')+'</b><span class=price-updated>LIVE</span>';el.querySelector('.price-updated').title=new Date(c.at).toLocaleString();document.getElementById('price-source').textContent=label+' · '+ago;});load();setInterval(load,300000)})()</script>"
-              ) % json.dumps(str(x["id"]))
+    script = ""
     pc = credits.get(str(x["id"]))
     pimg, pcredit = photo(credits, x["id"], x["n"], up)
     art_photo = card_art_photo(CARD_ART.get(str(x["id"])), x["n"])
     if art_photo:
         pimg = art_photo
     fallback_card = big_card(tier, x["o"], x["p"], x["q"] or x["n"], x["s"], lab, flag(codes, x["nat"], up, True), x["c"], pimg)
-    full_art = card_art_image(x["id"], x["n"], fallback_card)
+    full_art = card_art_image(page_item(x), x["n"], fallback_card)
     style_row = playstyle_row(x.get("pls"))
     return (head(title, desc, canon, up, BASE + "photos/" + pc["img"] if pc else None) +
             f'<main><div class="crumb"><a href="{up}">Ezzcoins</a> › <a href="{up}p/">Player pages</a> › {e(x["n"])}</div>'
@@ -439,7 +438,7 @@ def player_page(x, codes, by_club, by_nat, specials_of, credits):
             + (f' · {flag(codes, x["nat"], up)}{e(x["nat"])}' if x["nat"] else "") + '</div>'
             f'<div class="kv">{px}{meta_box(mt, x["o"])}</div>'
             f'<div class="stats">{stats}</div>{chem_box(x, up)}<dl class="facts">{dl}</dl>' + (f'<p class="mtnote">{e(MT_NOTE)}</p>' if mt else "") +
-            f'<a class="btn" href="{up}#q={e(x["n"])}">Watch on Ezzcoins</a></div></div>'
+            f'<a class="btn" href="{up}#q={e(quote(x["n"], safe=""))}">Watch on Ezzcoins</a></div></div>'
             f'{AD_BOX}<section class="more">{more}</section></main>{script}' + foot(up, True))
 
 
@@ -465,9 +464,9 @@ def ps_norm(lst, plus):
 def ps_text(x):
     """PlayStyles+ line for a special card: its own once checked, else the base card's, marked as such."""
     own = ", ".join(t.strip() for t in str(x.get("ps") or "").split(",") if t.strip())
-    if x.get("leg") or x.get("psChk"):
-        return own or ("None" if x.get("psChk") else "")
-    return f"{own} (base card; this card's are being checked)" if own else "Being checked"
+    if x.get("psChk"):
+        return own or "None"
+    return "Not verified for this card"
 
 
 PLAYSTYLE_ICON_SLUGS = {"acrobatic":"acrobatic","chip shot":"chip-shot","dead ball":"dead-ball","finesse shot":"finesse-shot","gamechanger":"game-changer","low driven shot":"low-driven-shot","power shot":"power-shot","precision header":"precision-header","incisive pass":"incisive-pass","inventive":"inventive","long ball pass":"long-ball-pass","pinged pass":"pinged-pass","tiki taka":"tiki-taka","whipped pass":"whipped-pass","first touch":"first-touch","press proven":"press-proven","rapid":"rapid","technical":"technical","trickster":"trickster","aerial fortress":"aerial-fortress","anticipate":"anticipate","block":"block","intercept":"intercept","jockey":"jockey","slide tackle":"slide-tackle","bruiser":"bruiser","enforcer":"enforcer","long throw":"long-throw","quick step":"quick-step","relentless":"relentless","1v1 close down":"rush-out","cross claimer":"cross-claimer","deflector":"deflector","far reach":"far-reach","far throw":"far-throw","footwork":"footwork"}
@@ -498,7 +497,7 @@ def special_page(x, codes, specials, credits):
     title = f'{x["n"]} {ver} FC 27 – {x["o"]} {x["p"]} stats & price | Ezzcoins'
     mt = meta(x["p"], x["a"], x["s"], x["sm"], x["wf"], x["ps"]) if has else {}
     mt_txt = f'. Meta rating {next(iter(mt.values()))} ({next(iter(mt))})' if mt else ""
-    px, price = price_box(x["path"], page_item(x))
+    px, price = price_box(x["path"], page_item(x), "fut champions" in x["ver"].lower())
     desc = (f'{x["n"]}\'s {ver} card in EA SPORTS FC 27 Ultimate Team: {x["o"]}-rated {x["p"]}'
             + (f' for {x["c"]}' if x["c"] else "") + (f', {x["nat"]}' if x["nat"] else "")
             + (f". {stats_txt}" if stats_txt else "") + mt_txt
@@ -524,16 +523,7 @@ def special_page(x, codes, specials, credits):
     script = ("<script>(()=>{const n=document.querySelector('.fc-name.sig'),fit=()=>{if(!n||!n.clientWidth)return;n.style.fontSize='';"
               "let f=parseFloat(getComputedStyle(n).fontSize);while(n.scrollWidth>n.clientWidth+1&&f>16){f--;n.style.fontSize=f+'px'}};"
               "fit();document.fonts&&document.fonts.ready.then(fit)})()</script>"
-              "<script>(()=>{const id=%s,key=%s,el=document.getElementById('px'),g=f=>window.EzzcoinsMarket.fetchData(f).catch(()=>null);"
-              "const load=()=>Promise.all([g('card-ids.json'),g(%s),g('live-prices.json')]).then(([ids,b,live])=>{"
-              "const n=b&&Array.isArray(b.cards)?b.cards.find(c=>String(c.gid!=null&&c.gid!==''?c.gid:c.fid)===key):null;"
-              "const item=ids&&ids[key]||n&&n.eaId||n&&n.gid||Number(key);"
-              "const row=live&&Array.isArray(live.rows)?live.rows.find(r=>Number(r[0])===Number(item)):null;"
-              "if(!row||row[3]!==0||!(row[1]>0)){const state=row&&row[3];el.textContent=/FUT Champions/i.test(n&&n.version||'')?'Reward card · not tradeable':state===1?'SBC card · not tradeable':state===2?'Objective card · not tradeable':state===4?'Reward card · not tradeable':state===3?'Not tradeable':state===0?'No listings':'Price unavailable';return}"
-              "const q=live.quoteMetadata&&live.quoteMetadata[String(item)]&&live.quoteMetadata[String(item)].console;const c={price:row[1],at:q&&q.at||live.publishedAt.console,src:q&&q.src||live.source};"
-              "const m=Math.max(0,Math.round((Date.now()-Date.parse(c.at))/6e4)),h=Math.floor(m/60),ago=m<1?'just now':m<60?m+' min ago':h<48?h+' h ago':Math.floor(h/24)+' days ago';"
-              "el.innerHTML='<b><i class=\\\"coin\\\"></i>'+Number(c.price).toLocaleString('en-US')+'</b><span class=price-updated>LIVE</span>';el.querySelector('.price-updated').title=new Date(c.at).toLocaleString();document.getElementById('price-source').textContent='Console · '+c.src+' · '+ago;});load();setInterval(load,300000)})()</script>"
-              ) % (json.dumps(str(x["id"])), json.dumps(str(x["key"])), json.dumps("legends.json" if leg else "newcards.json"))
+              )
     bid = x.get("pid")
     pc = credits.get(str(bid)) if bid else None
     pimg, pcredit = photo(credits, bid, x["n"], up)
@@ -550,7 +540,7 @@ def special_page(x, codes, specials, credits):
             + (f' · {flag(codes, x["nat"], up)}{e(x["nat"])}' if x["nat"] else "") + '</div>'
             f'<div class="kv">{px}{meta_box(mt, x["o"])}</div>'
             + (f'<div class="stats">{stats}</div>{chem_box(x, up)}' if has else '<p class="nostats">This card\'s own stats appear here after one of the next ' + ("price" if leg else "hourly") + ' updates.</p>')
-            + f'<dl class="facts">{dl}</dl>' + (f'<p class="mtnote">{e(MT_NOTE)}</p>' if mt else "") + f'<a class="btn" href="{up}#q={e(x["n"])}">Watch on Ezzcoins</a></div></div>'
+            + f'<dl class="facts">{dl}</dl>' + (f'<p class="mtnote">{e(MT_NOTE)}</p>' if mt else "") + f'<a class="btn" href="{up}#q={e(quote(x["n"], safe=""))}">Watch on Ezzcoins</a></div></div>'
             f'{AD_BOX}<section class="more">{more}</section></main>{script}' + foot(up, True))
 
 
@@ -579,7 +569,7 @@ def credits_page(credits, allp, legends_by_id=None):
 def list_page(groups, codes, total, specials, legends=()):
     up = "../"
     title = "FC 27 player pages: stats and prices | Ezzcoins"
-    desc = f"Stats, PlayStyles and console prices for all {total} EA SPORTS FC 27 Ultimate Team players rated {MIN_OVR} or higher."
+    desc = f"Stats, PlayStyles and console prices for {total} base players rated {MIN_OVR} or higher, plus special cards, Icons, Heroes and FUT Gallery."
     body = (f'<h2>New special cards</h2>' + card_list(specials, codes, up, lambda y: y["ver"]) if specials else "")
     for leg, label in (("icon", "Icons"), ("hero", "Heroes"), ("gallery", "FUT Gallery")):
         items = sorted((y for y in legends if y.get("leg") == leg), key=lambda y: (-y["o"], y["n"]))
@@ -591,12 +581,13 @@ def list_page(groups, codes, total, specials, legends=()):
               "for(const h of document.querySelectorAll('.more h2')){const ul=h.nextElementSibling;h.hidden=ul&&![...ul.children].some(li=>!li.hidden)}})})()</script>")
     return (head(title, desc, BASE + "p/", up) +
             f'<main><div class="crumb"><a href="{up}">Ezzcoins</a> › Player pages</div><h1>FC 27 player pages</h1>'
-            f'<p class="sub">All {total} players rated {MIN_OVR} or higher in EA SPORTS FC 27, with stats, PlayStyles+ and console prices.</p>'
-            f'<input class="find" id="find" type="search" placeholder="Find a player" autocomplete="off"><section class="more">{body}</section></main>{script}' + foot(up))
+            f'<p class="sub">{total} base players rated {MIN_OVR} or higher, plus {len(specials) + len(legends)} special, Icon, Hero and FUT Gallery cards.</p>'
+            f'<input class="find" id="find" type="search" placeholder="Find a player" aria-label="Find a player" autocomplete="off"><section class="more">{body}</section></main>{script}' + foot(up))
 
 
 def main():
-    global CARD_ART, REGULAR_PLAYSTYLES
+    global CARD_ART, REGULAR_PLAYSTYLES, DETAILS
+    DETAILS = load_details(os.path.join(ROOT, 'data'))
     try:
         CARD_ART = json.load(open(os.path.join(ROOT, "data", "card-art.json"), encoding="utf-8"))
     except (OSError, ValueError):
@@ -608,6 +599,7 @@ def main():
         REGULAR_PLAYSTYLES = {}
 
     data = json.load(open(os.path.join(ROOT, "data", "players.json"), encoding="utf-8"))
+    apply_base(data, DETAILS)
     codes = json.load(open(os.path.join(ROOT, "flags", "codes.json"), encoding="utf-8"))
     cpath = os.path.join(ROOT, "photos", "credits.json")
     credits = json.load(open(cpath, encoding="utf-8")) if os.path.exists(cpath) else {}
@@ -624,7 +616,11 @@ def main():
              "nat": get(r, "nation") or "", "g": get(r, "gender"), "sm": get(r, "sm"), "wf": get(r, "wf"), "ft": get(r, "foot") or "",
              "h": get(r, "height"), "age": get(r, "age"), "ps": get(r, "psp") or "",
              "s": [get(r, f"s{k}") for k in range(1, 7)]}
-        x["pls"] = ps_norm(REGULAR_PLAYSTYLES.get(str(x["id"]), ""), False)
+        detail = next((p for p in DETAILS.values() if p.get('baseId') == x['id'] and p.get('ovr') == x['o']
+                       and p.get('pos') == x['p'] and p['eaId'] - x['id'] in (0,50331648,67108864)), None)
+        if detail:
+            x['eaId'] = detail['eaId']
+        x["pls"] = ps_norm(detail['pls'] if detail else REGULAR_PLAYSTYLES.get(str(x["id"]), ""), False)
         x["path"] = f'{slug(x["n"])}-{x["id"]}/' if x["o"] >= MIN_OVR else ""
         allp[x["id"]] = x
         byname.setdefault(slug(x["n"]), []).append(x)
@@ -641,7 +637,11 @@ def main():
             cards = json.load(open(npath, encoding="utf-8")).get("cards") or []
         except (ValueError, AttributeError):
             cards = []
-    for c in cards:
+    for original in cards:
+        c = dict(original)
+        detail = DETAILS.get(str(CARD_IDS.get(str(c.get('gid') or c.get('fid'))) or c.get('eaId') or c.get('gid')))
+        if detail and detail.get('ovr') == c.get('ovr'):
+            c.update({k:v for k,v in detail.items() if v is not None and k not in ('name','version','added')})
         key = c.get("gid") if c.get("gid") not in (None, "") else c.get("fid")
         if not c.get("name") or key in (None, ""):
             continue
@@ -656,7 +656,7 @@ def main():
             b = next((h for h in hits if c.get("club") and h["c"] == c.get("club")), None) or (max(hits, key=lambda h: h["o"]) if hits else None)
         st = c.get("stats") if isinstance(c.get("stats"), list) and len(c["stats"]) == 6 else [None] * 6
         sx = {"id": SPECIAL + key, "key": key, "n": c["name"], "o": int(c.get("ovr") or 0), "p": c.get("pos") or (b["p"] if b else ""),
-              "a": c.get("alt") or "", "c": (b["c"] if b else "") or c.get("club") or "", "l": c.get("league") or (b["l"] if b else ""),
+              "a": c.get("alt") or "", "c": c.get("club") or (b["c"] if b else ""), "l": c.get("league") or (b["l"] if b else ""),
               "nat": c.get("nation") or (b["nat"] if b else ""), "sm": c.get("sm"), "wf": c.get("wf"),
               "s": [None if v in (None, "") else v for v in st], "ver": c.get("version") or "", "added": c.get("added") or "", "base": b,
               "eaId": c.get("eaId")}
@@ -666,8 +666,7 @@ def main():
         sx["pls"] = ps_norm(c.get("pls"), False) if sx["psChk"] else ""
         if not sx["pls"]:
             sx["pls"] = ps_norm(REGULAR_PLAYSTYLES.get(str(key), ""), False)
-        sx["ps"] = (ps_norm(c.get("ps"), True) if sx["psChk"] else
-                    b["ps"] if b and (str(c.get("baseId") or "").isdigit() or (c.get("club") and b["c"] == c.get("club"))) else "")
+        sx["ps"] = ps_norm(c.get("ps"), True) if sx["psChk"] else ""
         # Name on the card: EA's card name for the same player ("João Félix", "Álex Baena") when the base card is
         # certainly the same person (linked id, same club, or the only player with that name); else the last word.
         sure = b is not None and (str(c.get("baseId") or "").isdigit() or (c.get("club") and b["c"] == c.get("club"))
@@ -689,7 +688,11 @@ def main():
         except (ValueError, AttributeError):
             lcards = []
     seen = {y["id"] for y in specials}
-    for c in lcards:
+    for original in lcards:
+        c = dict(original)
+        detail = DETAILS.get(str(CARD_IDS.get(str(c.get('gid') or c.get('fid'))) or c.get('eaId') or c.get('gid')))
+        if detail and detail.get('ovr') == c.get('ovr'):
+            c.update({k:v for k,v in detail.items() if v is not None and k not in ('name','version','added')})
         try:
             key = int(c.get("gid") if c.get("gid") not in (None, "") else c.get("fid"))
         except (TypeError, ValueError):
@@ -705,9 +708,10 @@ def main():
         lx = {"id": SPECIAL + key, "key": key, "leg": leg, "n": c["name"], "full": c.get("full") or "", "o": int(c.get("ovr") or 0),
               "p": c.get("pos") or "", "a": c.get("alt") or "", "c": c.get("club") or "", "l": c.get("league") or "", "nat": c.get("nation") or "",
               "sm": c.get("sm"), "wf": c.get("wf"), "s": [None if v in (None, "") else v for v in st], "ver": ver, "added": "",
-              "base": None, "ps": ps_norm(c["ps"], True) if c.get("ps") else "", "cn": card_name(c["name"]) if len(c["name"]) > 14 else c["name"],
+              "base": None, "ps": ps_norm(c["ps"], True) if c.get("psAt") else "", "cn": card_name(c["name"]) if len(c["name"]) > 14 else c["name"],
               "eaId": c.get("eaId")}
-        lx["pls"] = ps_norm(REGULAR_PLAYSTYLES.get(str(key), ""), False)
+        lx['psChk'] = bool(c.get('psAt'))
+        lx["pls"] = ps_norm(c.get('pls') if lx['psChk'] else REGULAR_PLAYSTYLES.get(str(key), ""), False)
         lx["pid"] = lx["id"] if str(lx["id"]) in credits else None  # photo saved under the card's own id
         lx["path"] = f'{slug(lx["n"])}-{slug(ver)}-{lx["id"]}/'
         legends.append(lx)

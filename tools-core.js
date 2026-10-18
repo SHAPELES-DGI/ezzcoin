@@ -4,7 +4,7 @@
 const W={ST:[.30,.30,.05,.22,0,.13],CF:[.28,.26,.10,.28,0,.08],LW:[.33,.20,.12,.30,0,.05],RW:[.33,.20,.12,.30,0,.05],LM:[.32,.15,.18,.28,.02,.05],RM:[.32,.15,.18,.28,.02,.05],CAM:[.22,.20,.25,.30,0,.03],CM:[.18,.10,.28,.22,.10,.12],CDM:[.18,0,.20,.10,.30,.22],CB:[.30,0,.07,.03,.40,.20],LB:[.33,0,.15,.14,.26,.12],RB:[.33,0,.15,.14,.26,.12],LWB:[.33,0,.16,.16,.23,.12],RWB:[.33,0,.16,.16,.23,.12],GK:[.27,.15,.03,.30,.05,.20]};
 const OFF={ST:2,CF:1.5,LW:-1.3,RW:-1.3,LM:.1,RM:.1,CAM:1,CM:4,CDM:5.1,CB:5.9,LB:2.8,RB:2.8,LWB:2.8,RWB:2.8,GK:.2};
 const STARS={CM:[.6,.8],CDM:[.3,.5],CB:[0,.4],LB:[.3,.5],RB:[.3,.5],LWB:[.4,.5],RWB:[.4,.5],GK:[0,0]};
-const STRONG=new Set(['Quick Step+','Rapid+','Finesse Shot+','Technical+','Low Driven Shot+','Power Shot+','Trickster+','Intercept+','Anticipate+','Jockey+','Bruiser+','Footwork+','Far Reach+','Deflector+','Rush Out+']);
+const STRONG=new Set(['Quick Step+','Rapid+','Finesse Shot+','Technical+','Low Driven Shot+','Power Shot+','Trickster+','Intercept+','Anticipate+','Jockey+','Bruiser+','Footwork+','Far Reach+','Deflector+','Rush Out+','1v1 Close Down+']);
 const MINOR=new Set(['Dead Ball+','Long Throw+','Far Throw+']);
 const STYLES={None:[0,0,0,0,0,0],Basic:[1.65,.9,2.25,2.7,2.1,1.5],Hunter:[6,2.85,0,0,0,0],Shadow:[6,0,0,0,3.9,0],Engine:[3,0,3.6,3.3,0,0],Anchor:[3,0,0,0,4.2,3.9],Finisher:[0,5.25,0,4.95,0,0],Catalyst:[6,0,5.1,0,0,0],Hawk:[3,4.05,0,0,0,3],Glove:[6,9,0,0,0,3],Cat:[0,0,0,6,1.8,9]};
 const POS={0:'GK',3:'RB',5:'CB',7:'LB',10:'CDM',12:'RM',14:'CM',16:'LM',18:'CAM',23:'RW',25:'ST',27:'LW'};

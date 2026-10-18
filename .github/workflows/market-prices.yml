@@ -44,6 +44,7 @@ jobs:
           node scripts/test_home_prices.cjs
           node scripts/test_market_sync.cjs
           node scripts/test_builders.cjs
+          node scripts/test_player_tools.cjs
           python3 scripts/test_home_sync.py
           python3 scripts/test_baked_prices.py
           python3 scripts/test_desk.py
@@ -84,11 +85,13 @@ jobs:
           key: market-cache-${{ github.run_id }}-${{ github.run_attempt }}
       - name: Rebuild player pages for newly discovered cards
         run: python3 scripts/build_pages.py .
+      - name: Audit every generated player page
+        run: python3 scripts/test_player_pages.py
       - name: Commit refreshed prices
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/evolutions.json data/builder-items.json data/price-history index.html data/history.json data/ledger.json data/legends.json data/sbcsolutions.json data/snapshot.json data/prices.json data/topprices.json data/trending.json data/players.json data/live-prices.json data/market-cards.json data/futbin-prices.json data/market.json data/cheapest.json data/market-index.json data/ut-positions.json data/newcards.json data/card-ids.json data/card-renders.json data/day-ago.json p recap sitemap.xml
+          git add data/player-details.json data/evolutions.json data/builder-items.json data/price-history index.html data/history.json data/ledger.json data/legends.json data/sbcsolutions.json data/snapshot.json data/prices.json data/topprices.json data/trending.json data/players.json data/live-prices.json data/market-cards.json data/futbin-prices.json data/market.json data/cheapest.json data/market-index.json data/ut-positions.json data/newcards.json data/card-ids.json data/card-renders.json data/day-ago.json p recap sitemap.xml
           if ! git diff --cached --quiet; then
             git commit -m "Refresh FC 27 cards, artwork, player pages and market prices"
             # Another data/page workflow can push between fetch and push.
