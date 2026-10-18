@@ -10,3 +10,8 @@
 .pitch-row>.slot,.pitch-row:last-child>.slot{width:100%;max-width:none;min-height:118px;height:100%;flex:none}
 .pitch-row>.slot b{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;line-height:1.15}
 @media(max-width:760px){.pitch{padding:10px 8px}.pitch-row{column-gap:4px}.pitch-row>.slot,.pitch-row:last-child>.slot{min-height:104px;padding:6px 3px}.pitch-row>.slot b{font-size:10px}.pitch-row>.slot small{line-height:1.2}}
+/* A filled pitch slot is the card: the card picture fills the slot (its art already shows the name), with the slot position above and meta and chemistry below. */
+.pitch-row>.slot.has-card{padding:5px 4px 6px;gap:3px;justify-content:space-between}
+.pitch-row>.slot.has-card img{width:100%;height:auto;max-width:150px;object-fit:contain;flex:0 1 auto;min-height:0}
+.pitch-row>.slot.has-card>b{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media(max-width:760px){.pitch-row>.slot.has-card{padding:3px 2px 4px;gap:2px}.pitch-row>.slot.has-card img{width:100%;height:auto}}
