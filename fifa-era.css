@@ -21,3 +21,7 @@ footer{border-top-color:#454069!important}::selection{background:#c53493;color:w
 .fifa-hero .trust-line{margin-top:14px;display:inline-flex;gap:8px;align-items:flex-start;padding:8px 12px;border-radius:10px;background:#0b103a99;border:1px solid #37f0ed55;color:#f2f6ff;font-size:13px;line-height:1.45;font-weight:600}
 .fifa-hero .trust-line span{color:#37f0ed}
 .card-head .card-link{text-decoration:none;color:#37f0ed}
+/* Computers: the player search in the header is a real search bar, not a squeezed icon. The status text gives way instead. */
+@media(min-width:761px){.top-row>.search{flex:1 1 320px;min-width:280px;max-width:460px}.top-row>.status{flex:0 1 auto;min-width:0;max-width:560px}.top-row>.status::before{content:"";order:1;flex-basis:100%;height:0}.top-row>.status>a,.top-row>.status>button{order:2}.top-row>.status>#updatedText{flex:1 1 0;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.top-row>.search input{flex:1 1 auto;width:100%}}
+@media(min-width:761px) and (max-width:1100px){.top-row>.search{min-width:220px;flex-basis:250px}}
+@media(min-width:761px) and (max-width:900px){.top-row>.status>#updatedText{white-space:normal;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-height:1.3}}

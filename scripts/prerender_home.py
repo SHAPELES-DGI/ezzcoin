@@ -37,6 +37,20 @@ def plain(text):
     return TOKEN.sub(one, str(text or "")).strip()
 
 
+def saved_at(snap):
+    """'Saved update from 19 Oct 18:42 UTC' as a <time data-pre> the page turns into local time
+    if the live data can't load. Empty when the snapshot has no valid time."""
+    try:
+        t = datetime.fromisoformat(str(snap.get("updatedAt") or "").replace("Z", "+00:00"))
+    except ValueError:
+        return ""
+    if t.tzinfo is None:
+        t = t.replace(tzinfo=timezone.utc)
+    t = t.astimezone(timezone.utc)
+    stamp = t.isoformat().replace("+00:00", "Z")
+    return f'Saved update from <time data-pre datetime="{esc(stamp)}">{t.day} {t.strftime("%b %H:%M")} UTC</time>'
+
+
 def read_block(snap):
     v = snap.get("verdict") or {}
     head = plain(v.get("headline")) or "Latest market read"
@@ -48,14 +62,16 @@ def sbc_block(snap):
     if not sbcs:
         return '<div class="empty">Active SBCs load with the market read.</div>'
     items = ", ".join(esc(plain(s["name"])) + (f" ({esc(s['cost'])})" if s.get("cost") not in (None, "", "–") else "") for s in sbcs[:8])
-    return f'<div class="empty">Active SBCs: {items}.</div>'
+    when = saved_at(snap)
+    return f'<div class="empty">{when + " · " if when else ""}Active SBCs: {items}.</div>'
 
 
 def news_block(snap):
     news = [n for n in snap.get("news") or [] if n.get("title")]
     if not news:
         return '<li class="muted">No news in this update.</li>'
-    out = []
+    when = saved_at(snap)
+    out = [f'<li class="muted" style="display:block">{when}.</li>'] if when else []
     for n in news[:6]:
         kind = n.get("kind")
         cls = "official" if kind == "official" else "leak" if kind == "leak" else ""
