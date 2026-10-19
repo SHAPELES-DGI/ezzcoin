@@ -6,6 +6,10 @@ Standard library only.
 import html
 import json
 import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from site_nav import bottom_nav, nav_css  # noqa: E402  (phone tab bar shared with every page)
 
 BASE = os.environ.get("EZZ_BASE", "https://ezzcoins.com/")
 BANNER = "<!-- © 2026 Ezzcoins. All rights reserved. Copying or reuse of this code is not permitted. -->"
@@ -45,13 +49,13 @@ def page(*, title, desc, path, up, body, crumbs, schema=(), scripts=(), image=No
             f'<meta property="og:url" content="{e(canon)}"><meta property="og:image" content="{e(image or BASE + "icon-512.png")}"><meta name="theme-color" content="#080d29">'
             f'<link rel="icon" href="{up}favicon-32.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="{up}apple-touch-icon.png">'
             f'<link rel="manifest" href="{up}manifest.webmanifest">{FONTS}<link rel="stylesheet" href="{up}p/style.css?v={CSS_V}">'
-            f'<link rel="stylesheet" href="{up}pages.css?v={PAGES_V}">{blocks}{js}{ADSENSE}<script src="{up}ezz-ads.js?v=1" defer></script></head><body class="ez-page">'
+            f'<link rel="stylesheet" href="{up}pages.css?v={PAGES_V}">{blocks}{js}{nav_css(up)}{ADSENSE}<script src="{up}ezz-ads.js?v=1" defer></script></head><body class="ez-page has-bnav">'
             f'<header class="top"><a class="home" href="{up}"><img src="{up}mark.svg" alt="" width="34" height="34"><b>Ezz<span>coins</span></b></a>'
             f'<nav class="nav"><a href="{up}guides/">Guides</a><a href="{up}recap/">Recap</a><a href="{up}prices.html">Prices</a></nav></header>'
             f'<main><div class="crumb">{trail}</div>{body}<div class="ezz-ad" hidden aria-label="Advertisement"></div></main>'
             f'<footer><p class="trust">{e(TRUST)}</p>Ratings: EA SPORTS FC 27. Prices come from FUTBIN when it can be reached and from FUT.GG otherwise. Ezzcoins is not endorsed by or '
             f'affiliated with EA or its licensors, and not affiliated with FUTBIN, FUT.GG, FUTWIZ or EasySBC. '
-            f'<a href="{up}privacy.html">Privacy and cookies</a></footer></body></html>\n')
+            f'<a href="{up}privacy.html">Privacy and cookies</a></footer>' + bottom_nav(up) + '</body></html>\n')
 
 
 def write(root, path, text):

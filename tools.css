@@ -15,3 +15,7 @@
 .pitch-row>.slot.has-card img{width:100%;height:auto;max-width:150px;object-fit:contain;flex:0 1 auto;min-height:0}
 .pitch-row>.slot.has-card>b{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 @media(max-width:760px){.pitch-row>.slot.has-card{padding:3px 2px 4px;gap:2px}.pitch-row>.slot.has-card img{width:100%;height:auto}}
+/* One-word logo, same as every other page. */
+.brand b{font:inherit;letter-spacing:inherit}
+/* Phones: the quotes box stays short so the builders start sooner. */
+@media(max-width:600px){.feed-panel>small{display:none}.feed-panel{padding:12px 14px}.feed-panel p{margin:8px 0 10px;font-size:14px;line-height:1.45}.tool-intro{gap:14px;margin-bottom:18px}.tool-intro h1{font-size:30px;line-height:1.05}.tool-intro .eyebrow{font-size:11px}.pitch-row>.slot strong,.pitch-row>.slot b,.pitch-row>.slot small{font-size:11px}}

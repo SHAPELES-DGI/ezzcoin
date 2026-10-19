@@ -19,6 +19,7 @@ from urllib.parse import quote
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from meta import meta  # noqa: E402  (same folder)
 from player_details import load as load_details, apply_base
+from site_nav import bottom_nav, nav_css  # noqa: E402  (phone tab bar shared with other pages)
 
 ROOT = sys.argv[1] if len(sys.argv) > 1 else "."
 BASE = os.environ.get("EZZ_BASE", "https://ezzcoins.com/")
@@ -28,7 +29,7 @@ SLUG_MAP = {"ø": "o", "Ø": "o", "ß": "ss", "ł": "l", "Ł": "l", "æ": "ae", 
             "œ": "oe", "đ": "d", "Đ": "d", "ı": "i", "ð": "d", "þ": "th"}
 ST_OUT = ["PAC", "SHO", "PAS", "DRI", "DEF", "PHY"]
 ST_GK = ["DIV", "HAN", "KIC", "REF", "SPD", "POS"]
-CSS_V = "20261018-audit"
+CSS_V = "20261019-phone"
 SPECIAL = 1000000000  # special-card ids on the site: SPECIAL + FUT.GG card id (gid) or FUTBIN card id (fid)
 CARD_ART = {}
 CARD_IDS = json.load(open(os.path.join(ROOT, "data", "card-ids.json")))
@@ -282,6 +283,15 @@ CSS += "\n/* Approved FIFA 18–20-inspired colour theme for every player page. 
 CSS += "\n.st b.q3{color:var(--gold)}.st b.q4{color:var(--sell)}.mt-positions{grid-column:1/-1;min-width:0}.mt{min-width:0}.chem-lv{display:grid;grid-template-columns:repeat(4,1fr)}\n"
 
 CSS += "\n/* Comfortable player pages on phones; tablet/PC layout stays unchanged. */\n@media(max-width:600px){\n body{font-size:15px;overflow-x:clip}.top{gap:8px;padding:10px 12px;min-height:64px}.home{font-size:1.3rem}.home img{width:30px;height:30px}.nav{gap:6px}.nav a{display:flex;align-items:center;justify-content:center;min-height:44px;padding:8px;font-size:12px;letter-spacing:.3px}main{padding:18px 14px 30px}.crumb{font-size:12px;margin-bottom:20px;line-height:1.6}.hero{gap:22px;grid-template-columns:1fr;justify-items:center;text-align:center}.hero>div:last-child{width:100%;min-width:0}h1{font-size:32px;line-height:1.12;margin-bottom:8px}.sub{font-size:14px;line-height:1.6}.side{width:min(240px,100%)}.card-art{width:220px;max-width:100%}.playstyles{width:100%;gap:8px}.playstyle{min-height:38px;font-size:12px;padding:6px 9px}.playstyle-icon{width:28px;height:28px}.kv{display:grid;grid-template-columns:1fr;gap:12px;width:100%}.px{display:grid;width:100%;padding:18px;text-align:left;margin-top:16px}.px b{font-size:29px}.px span{font-size:12px}.mt{width:100%;min-height:68px;text-align:left;padding:13px 16px}.stats{width:100%;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:16px}.st{padding:13px 10px;min-width:0}.st b{font-size:25px}.chem{padding:17px 14px;margin-top:20px;text-align:left;width:100%}.chem-top{gap:12px}.chem-sel{flex-basis:100%;flex-wrap:wrap}.chem-sel span{width:100%;font-size:12px}.chem select{width:100%;font-size:16px;min-height:48px;padding:11px}.chem-lv{width:100%;display:grid;grid-template-columns:repeat(4,1fr)}.chem-lv button{min-height:46px;font-size:14px}.chem-best{gap:8px;line-height:1.6}.chem-best button{min-height:44px;padding:8px 12px;font-size:13px}.chem-boost{font-size:14px;line-height:1.6}.chem-note{font-size:12px;line-height:1.65}.facts{grid-template-columns:112px minmax(0,1fr);gap:10px 12px;margin-top:22px}.facts dt{font-size:12px;line-height:1.6}.facts dd{font-size:15px;line-height:1.6;overflow-wrap:anywhere}.mtnote{font-size:13px;line-height:1.7}.more a{min-height:52px;padding:12px;gap:10px}.more .m{font-size:12px}.tag{font-size:12px;padding:6px 10px}a:focus-visible,button:focus-visible,select:focus-visible{outline-offset:2px}\n}\n"
+CSS += ("\n/* Phones: the name, price and tools come first and the card follows, so the price is on the first screen. */\n"
+        "@media(max-width:600px){\n"
+        " .hero{row-gap:0}.hero>div:not(.side){display:contents}\n"
+        " .hero>div:not(.side)>*{order:5;width:100%;min-width:0}\n"
+        " .hero>div:not(.side)>h1{order:1}.hero>div:not(.side)>.sub{order:2}\n"
+        " .hero>div:not(.side)>.kv,.hero>div:not(.side)>.ezz-profile-tools,.hero>div:not(.side)>.ezz-profile-freshness,.hero>div:not(.side)>.ezz-report-open,.hero>div:not(.side)>.ezz-report{order:3}\n"
+        " .hero>.side{order:4;margin:22px auto 4px}.hero>div:not(.side)>.ezz-report-open{width:auto;justify-self:center}\n"
+        " .card-xl .fc-stats small,.st small,.side .playstyles .playstyles-title,.fc-foot span,.mt-positions small{font-size:11px}\n"
+        "}\n")
 
 def head(title, desc, canon, up, image=None):
     return (f'<!doctype html>{BANNER}<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
@@ -292,7 +302,7 @@ def head(title, desc, canon, up, image=None):
             f'<script src="{up}card-art.js?v={CSS_V}" defer></script><script src="{up}market-data.js?v={CSS_V}" defer></script>'
             f'<script src="{up}price-history.js?v={CSS_V}" defer></script><script src="{up}player-tools.js?v={CSS_V}" defer></script>'
             f'<script src="{up}p/chem.js?v={CSS_V}" defer></script><link rel="stylesheet" href="{up}price-history.css?v={CSS_V}">'
-            f'<link rel="manifest" href="{up}manifest.webmanifest">{FONTS}<link rel="stylesheet" href="{up}p/style.css?v={CSS_V}">{ADSENSE}<script src="{up}ezz-ads.js?v=1" defer></script></head><body>'
+            f'<link rel="manifest" href="{up}manifest.webmanifest">{FONTS}<link rel="stylesheet" href="{up}p/style.css?v={CSS_V}">{nav_css(up)}{ADSENSE}<script src="{up}ezz-ads.js?v=1" defer></script></head><body class="has-bnav">'
             f'<header class="top"><a class="home" href="{up}"><img src="{up}mark.svg" alt="" width="34" height="34"><b>Ezz<span>coins</span></b></a>'
             f'<nav class="nav"><a href="{up}#players">Database</a><a href="{up}p/">All players</a></nav></header>')
 
@@ -368,7 +378,7 @@ AD_BOX = '<div class="ezz-ad" hidden aria-label="Advertisement"></div>'
 
 def foot(up, price_note=False):
     return (f'<footer>' + ('<p id="price-source" aria-live="polite"></p>' if price_note else '') + f'Ratings: EA SPORTS FC 27. Prices come from FUTBIN when it can be reached and from FUT.GG otherwise. Ezzcoins is a free, fan-made site, not endorsed by or affiliated with EA or its licensors, and not affiliated with FUTBIN, FUT.GG, FUTWIZ or EasySBC. It never sells coins, accounts or boosting. '
-            f'<a href="{up}p/credits/">Photo credits</a> · <a href="{up}privacy.html">Privacy and cookies</a></footer></body></html>')
+            f'<a href="{up}p/credits/">Photo credits</a> · <a href="{up}privacy.html">Privacy and cookies</a></footer>' + bottom_nav(up, "players") + '</body></html>')
 
 
 def flag(codes, nation, up, big=False):

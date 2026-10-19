@@ -26,7 +26,7 @@ function playerRow(p,position,attrs=''){
 function updateQuotes(data){
  quotes=data;for(const p of squad.filter(Boolean)){const q=M.lookup(data,p.id,platform);p.price=q?.price;p.usable=q?.usable||false;}for(const p of pool){const q=M.lookup(data,p.id,platform);p.price=q?.price;p.usable=q?.usable||false;p.priceAt=q?.at;}
  const f=M.freshness(data.publishedAt[platform]);$('feed-state').className='badge '+f.freshness;$('feed-state').textContent=f.freshness==='fresh'?'Current quotes':f.freshness==='delayed'?'Delayed quotes':'Outdated quotes';
- $('feed-detail').textContent=`Last successful source publication: ${new Date(data.publishedAt[platform]).toLocaleString()} · ${f.ageMinutes??'?'} minutes ago. ${data.coverage?.[platform+'Priced']?.toLocaleString()||''} market quotes. Page polls every minute; upstream publication times vary.`;
+ $('feed-detail').textContent=`Prices updated ${f.ageMinutes??'?'} min ago (${new Date(data.publishedAt[platform]).toLocaleString([],{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})})${data.coverage?.[platform+'Priced']?' · '+data.coverage[platform+'Priced'].toLocaleString()+' cards priced':''}. Checks every minute.`;
  renderSquad();renderSquadResults();renderEvoResults();renderTrades();renderAlerts();checkAlerts();
  if(evoCurrent)renderEvolution();if($('sbc-solution').dataset.hasSolution)message('Prices changed after the SBC solution was calculated. Run the solver again before buying.');
 }

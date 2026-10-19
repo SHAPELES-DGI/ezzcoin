@@ -58,3 +58,41 @@
 
 @media(max-width:600px){.ezz-main .hscroll{margin-inline:-12px;padding-left:12px;padding-right:12px;scroll-padding-left:12px}
 .ezz-prices th{letter-spacing:.03em}.ezz-prices th:nth-child(1){width:40%}.ezz-prices th:nth-child(3){width:17%}.ezz-prices th:nth-child(5){width:32%}.ezz-prices th.price-col{white-space:normal}}
+
+/* Watchlist jump link: shown on phones only (see below). */
+.pl-watch-jump{display:none}
+
+/* Phones, 19 Oct: tidier Players rows, a reachable watchlist, bigger tap targets and no label under 10px. */
+@media(max-width:600px){
+ /* Players list: the name gets the row's width; the price sits above the star and Compare on the right. */
+ .ezz-main .pl-row{grid-template-columns:42px minmax(0,1fr) 112px;grid-template-areas:"o n l" "m s s" "d d d";column-gap:10px;row-gap:10px;align-items:start}
+ .ezz-main .pl-name b{line-height:1.2}
+ .ezz-main .pl-name .pl-mob{margin-top:4px;line-height:1.45}
+ .ezz-main .pl-name .pl-mob .sp-tag{display:inline-block;max-width:100%;margin:0 6px 2px 0;vertical-align:1px;font-size:11px}
+ .ezz-main .pl-acts{width:112px;flex-wrap:wrap;justify-content:flex-end;gap:6px 4px}
+ .ezz-main .pl-acts .pl-px{flex:0 0 100%;display:flex;justify-content:flex-end;text-align:right;font-size:12px;line-height:1.3}
+ .ezz-main .pl-compare{min-height:44px;padding:4px 6px;font-size:11px}
+
+ /* Watchlist: with players in it, it comes first on the Players tab; otherwise a link jumps down to it. */
+ .ezz-main #plCard>.card-head>a.pl-watch-jump{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:8px 12px;border:1px solid #6555a4;border-radius:8px;color:#43edf0;font:700 12px/1 var(--font-display);letter-spacing:.06em;text-transform:uppercase;text-decoration:none}
+ .ezz-main #players:has(#watchList .wl-row) #watchCard{order:-2}
+ .ezz-main #players:has(#watchList .wl-row) #plCard>.card-head>a.pl-watch-jump{display:none}
+
+ /* Tap targets: the small round stars keep their look but take a 44px tap area; "Show why" gets a full-height button. */
+ .ezz-main .fcard .pl-star{width:32px;height:32px}
+ .ezz-main .fcard .pl-star::after{content:"";position:absolute;inset:-6px;border-radius:50%}
+ .ezz-main #tx-layout .ez-trade-more{min-height:44px;padding:0 6px 0 0;display:inline-flex;align-items:center}
+ .ezz-main footer a{display:inline-block;padding:8px 2px}
+
+ /* Small labels: section labels and badges at 11px, the logo tag at 10px. */
+ .ezz-main .brand-tag{font-size:10px}
+ .ezz-main .rowhead .eyebrow,.ezz-main .fifa-hero-kicker,.ezz-main .card-head .eyebrow,.ezz-main .status .pill{font-size:11px}
+}
+@media(max-width:600px){
+ .ezz-main #livePill,.ezz-main #plCard .card-head .eyebrow{font-size:11px}
+ .ezz-main .card-head .card-link{display:inline-flex;align-items:center;min-height:40px}
+}
+@media(max-width:600px){
+ .ezz-prices td.player small,.ezz-prices th,.ezz-prices .th-sub,.ezz-prices .eyebrow{font-size:11px}
+ .ezz-prices header .back{display:inline-flex;align-items:center;min-height:40px}
+}
