@@ -17,7 +17,7 @@ const state=()=>({pos:$('compare-position').value,chem:Number($('compare-chem').
 const quote=id=>M.lookup(quotes,id,state().platform);
 const say=text=>{$('compare-status').textContent=text;};
 function persist(){try{localStorage.setItem(key,JSON.stringify({ids,choices}));}catch{}const s=state(),u=new URL(location.href);u.search='';if(ids.length)u.searchParams.set('ids',ids.join(','));u.searchParams.set('pos',s.pos);u.searchParams.set('chem',s.chem);u.searchParams.set('platform',s.platform);if(s.budget)u.searchParams.set('budget',s.budget);const used=Object.fromEntries(ids.filter(id=>choices[id]&&choices[id]!=='None').map(id=>[id,choices[id]]));if(Object.keys(used).length)u.searchParams.set('styles',JSON.stringify(used));history.replaceState(null,'',u);}
-const image=p=>{try{const u=new URL(p.image);return u.protocol==='https:'&&u.hostname==='game-assets.fut.gg'?u.href:'';}catch{return '';}};
+const image=p=>{try{const u=new URL(p.image);return u.protocol==='https:'&&u.hostname==='game-assets.fut.gg'?(window.EzzCardImg?window.EzzCardImg.local(u.href):u.href):'';}catch{return '';}};
 const art=p=>image(p)?`<img loading="lazy" src="${esc(image(p))}" alt="${esc(p.name+' '+p.version)} card">`:`<span class="card-placeholder" aria-label="Card artwork unavailable">${p.ovr}</span>`;
 const chips=(value,plus=false)=>value==null?'<small>Unverified</small>':value?String(value).split(',').map(v=>`<span class="ps-chip${plus?' plus':''}">${esc(v.trim())}</span>`).join(''):'<small>None</small>';
 function search(){

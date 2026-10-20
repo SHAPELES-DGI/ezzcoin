@@ -7,7 +7,7 @@ for(const id of ['formation','sbc-formation']){const sel=$(id);if(!sel)continue;
  sel.innerHTML=Object.entries(groups).map(([n,label])=>`<optgroup label="${label}">${Object.keys(C.FORMATIONS).filter(f=>f[0]===n).map(f=>`<option>${f}</option>`).join('')}</optgroup>`).join('');sel.value=C.FORMATIONS[keep]?keep:'4-3-3';}
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const coins=v=>Number.isFinite(v)?Math.round(v).toLocaleString('en-US'):'Unavailable';
-const safeImage=url=>{try{const u=new URL(url);return u.protocol==='https:'&&u.hostname==='game-assets.fut.gg'?u.href:'';}catch{return '';}};
+const safeImage=url=>{try{const u=new URL(url);return u.protocol==='https:'&&u.hostname==='game-assets.fut.gg'?(window.EzzCardImg?window.EzzCardImg.local(u.href):u.href):'';}catch{return '';}};
 const message=text=>{$('notice').textContent=text;$('notice').hidden=!text;};
 const empty=()=>({version:1,trades:[],alerts:[],club:{},squad:{formation:'4-3-3',ids:[],styles:[],manager:{}},updatedAt:new Date().toISOString()});
 let storageKey='ezz.tools.device.v1',state,storageOK=true;

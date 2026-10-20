@@ -44,6 +44,12 @@ class PlayerPages(unittest.TestCase):
                 for key in ('href','src'):
                     value=attrs.get(key,''); url=urlsplit(value)
                     if not value or url.scheme or url.netloc or value.startswith('#'): continue
+                    if '/card-img/' in url.path:
+                        # Card pictures live in the server's copy (scripts/server/ezzcoins-cards-sync), not in git:
+                        # each must carry FUT.GG's address of the same file as its fallback.
+                        self.assertTrue(attrs.get('data-remote','').startswith('https://game-assets.fut.gg/'),(str(path),value))
+                        self.assertTrue(attrs['data-remote'].endswith('/'+url.path.rsplit('/',1)[1]),(str(path),value))
+                        continue
                     target=(path.parent/unquote(url.path)).resolve()
                     if value.split('?')[0].endswith('/') or target.is_dir(): target=target/'index.html'
                     self.assertTrue(target.exists(),(str(path),value))

@@ -29,7 +29,7 @@ SLUG_MAP = {"ø": "o", "Ø": "o", "ß": "ss", "ł": "l", "Ł": "l", "æ": "ae", 
             "œ": "oe", "đ": "d", "Đ": "d", "ı": "i", "ð": "d", "þ": "th"}
 ST_OUT = ["PAC", "SHO", "PAS", "DRI", "DEF", "PHY"]
 ST_GK = ["DIV", "HAN", "KIC", "REF", "SPD", "POS"]
-CSS_V = "20261019-phone"
+CSS_V = "20261020-cards"
 SPECIAL = 1000000000  # special-card ids on the site: SPECIAL + FUT.GG card id (gid) or FUTBIN card id (fid)
 CARD_ART = {}
 CARD_IDS = json.load(open(os.path.join(ROOT, "data", "card-ids.json")))
@@ -203,8 +203,13 @@ def photo(credits, pid, name, up):
 
 
 
-def card_art_image(item, name, fallback):
-    """Full FC item render from Fodder; show the designed fallback if an item render is missing."""
+CARD_FILE = re.compile(r"^https://game-assets\.fut\.gg/.*/futgg-player-item-card/(27-\d+\.[0-9a-f]+\.webp)$")
+
+
+def card_art_image(item, name, fallback, up="../../"):
+    """Full FC item render; show the designed fallback if an item render is missing.
+    The picture loads from the server's copy in card-img/ (scripts/server/ezzcoins-cards-sync), then from
+    FUT.GG, and only if both fail does the designed card show."""
     if item in (None, ""):
         return fallback
     item = CARD_IDS.get(str(item), item)
@@ -214,8 +219,10 @@ def card_art_image(item, name, fallback):
     else:
         # Official layered cards are filled by card-art.js.
         return f'<div class="card-art" hidden aria-label="{e(name)} FC 27 card"></div><div class="card-fallback">{fallback}</div>'
-    return (f'<img class="card-art" src="{src}" alt="{e(name)} FC 27 Ultimate Team card" width="240" height="336" '
-            f'loading="eager" decoding="async" onerror="this.hidden=true;this.nextElementSibling.hidden=false">'
+    own = CARD_FILE.match(src)
+    first, remote = (f"{up}card-img/{own.group(1)}", f' data-remote="{e(src)}"') if own else (src, "")
+    return (f'<img class="card-art" src="{e(first)}"{remote} alt="{e(name)} FC 27 Ultimate Team card" width="240" height="336" '
+            f'loading="eager" decoding="async" onerror="if(this.dataset.remote){{this.src=this.dataset.remote;this.removeAttribute(\'data-remote\')}}else{{this.hidden=true;this.nextElementSibling.hidden=false}}">'
             f'<div class="card-fallback" hidden>{fallback}</div>')
 
 
@@ -223,7 +230,8 @@ def card_art_photo(url, name):
     """Use the FUT.GG player render inside the site's designed card frame."""
     if not url:
         return ""
-    return f'<img class="fc-photo" src="{e(url)}" alt="{e(name)} FC 27 player image" width="155" height="205" loading="eager" decoding="async">'
+    # Lazy: inside the hidden designed card it only loads if that card is ever shown.
+    return f'<img class="fc-photo" src="{e(url)}" alt="{e(name)} FC 27 player image" width="155" height="205" loading="lazy" decoding="async">'
 
 
 def card_name(name):
@@ -299,7 +307,7 @@ def head(title, desc, canon, up, image=None):
             f'<meta property="og:type" content="website"><meta property="og:title" content="{e(title)}"><meta property="og:description" content="{e(desc)}">'
             f'<meta property="og:url" content="{e(canon)}"><meta property="og:image" content="{e(image or BASE + "icon-512.png")}"><meta name="theme-color" content="#080d29">'
             f'<link rel="icon" href="{up}favicon-32.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="{up}apple-touch-icon.png">'
-            f'<script src="{up}card-art.js?v={CSS_V}" defer></script><script src="{up}market-data.js?v={CSS_V}" defer></script>'
+            f'<script src="{up}card-img.js?v={CSS_V}"></script><script src="{up}card-art.js?v={CSS_V}" defer></script><script src="{up}market-data.js?v={CSS_V}" defer></script>'
             f'<script src="{up}price-history.js?v={CSS_V}" defer></script><script src="{up}player-tools.js?v={CSS_V}" defer></script>'
             f'<script src="{up}p/chem.js?v={CSS_V}" defer></script><link rel="stylesheet" href="{up}price-history.css?v={CSS_V}">'
             f'<link rel="manifest" href="{up}manifest.webmanifest">{FONTS}<link rel="stylesheet" href="{up}p/style.css?v={CSS_V}">{nav_css(up)}{ADSENSE}<script src="{up}ezz-ads.js?v=1" defer></script></head><body class="has-bnav">'

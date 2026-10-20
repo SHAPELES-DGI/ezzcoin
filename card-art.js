@@ -4,7 +4,7 @@ const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&
 async function read(name){const r=await fetch(new URL("data/"+name,root),{cache:"no-store"});if(!r.ok)throw Error(name);return r.json()}
 async function load(force=false){if(force)pending=null;if(!pending)pending=Promise.all([read("card-renders.json"),read("card-ids.json")]).then(([a,b])=>{cards=a;ids=b;return a}).catch(e=>{pending=null;throw e});return pending}
 function get(item,key,special=false){return cards[String(item)]||(special?cards["f:"+key]:null)||null}
-function html(c,cls="fc-render",name=c.name){if(c.url)return '<img class="'+cls+'" src="'+esc(c.url)+'" alt="'+esc(name)+' '+esc(c.ovr)+' '+esc(c.version)+' FC 27 card" loading="lazy" decoding="async">';
+function html(c,cls="fc-render",name=c.name){if(c.url)return '<img class="'+cls+'" src="'+esc(window.EzzCardImg?window.EzzCardImg.local(c.url):c.url)+'" alt="'+esc(name)+' '+esc(c.ovr)+' '+esc(c.version)+' FC 27 card" loading="lazy" decoding="async">';
  const short=c.name.trim().split(/\s+/).pop(),stats=(c.stats||[]).map((n,i)=>'<span><small>'+["PAC","SHO","PAS","DRI","DEF","PHY"][i]+'</small><b>'+esc(n)+'</b></span>').join("");
  return '<div class="'+cls+' ea-item" role="img" aria-label="'+esc(c.name)+' '+esc(c.ovr)+' '+esc(c.version)+' FC 27 card"><img class="ea-frame" src="'+esc(c.frame)+'" alt=""><img class="ea-face" src="'+esc(c.portrait)+'" alt=""><div class="ea-rating">'+esc(c.ovr)+'<small>'+esc(c.pos)+'</small></div><div class="ea-name">'+esc(short)+'</div><div class="ea-stats">'+stats+'</div><div class="ea-type">'+esc(c.version)+'</div></div>'
 }
