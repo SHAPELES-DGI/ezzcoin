@@ -129,13 +129,22 @@
   setInterval(render, 60000);
   try { update(await M.load()); }
   catch { failed = true; const badge = box.querySelector('.price-updated'); if (badge) badge.textContent = 'CHECK FAILED'; text('Price check failed. The displayed saved quote may be outdated.'); }
+  // "Ezzcoins checked N min ago": the server's copy in live/ first; GitHub's copy only if that is missing or over 10 minutes old.
   async function loadCheck() {
-    try {
-      const r = await fetch('https://raw.githubusercontent.com/SHAPELES-DGI/ezzcoin/check/check.json?t=' + Math.floor(Date.now()/60000), {cache:'no-store', signal:AbortSignal.timeout(10000)});
-      if (!r.ok) return;
-      const time = Date.parse((await r.json()).checkedAt);
-      if (Number.isFinite(time) && time <= Date.now() + 300000) { checkedAt = time; render(); }
-    } catch {}
+    const read = async (url, own) => {
+      try {
+        const r = await fetch(url, {cache: own ? 'no-cache' : 'no-store', signal: AbortSignal.timeout(10000)});
+        if (!r.ok) return null;
+        const time = Date.parse((await r.json()).checkedAt);
+        return Number.isFinite(time) && time <= Date.now() + 300000 ? time : null;
+      } catch { return null; }
+    };
+    let time = await read(new URL('live/check.json', root).href, true);
+    if (time == null || Date.now() - time > 10 * 60000) {
+      const github = await read('https://raw.githubusercontent.com/SHAPELES-DGI/ezzcoin/check/check.json?t=' + Math.floor(Date.now()/60000), false);
+      if (github != null && (time == null || github > time)) time = github;
+    }
+    if (time != null) { checkedAt = time; render(); }
   }
   loadCheck();
 })();

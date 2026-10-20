@@ -5,18 +5,27 @@
   let cached = null;
   let pending = null;
   let loadedAt = 0;
-  // Fast lane: the live branch is republished within minutes of each FUT.GG price release.
-  // Used only while its copy is fresh; otherwise the main-branch copies below are compared as before.
-  const LIVE_BASE = 'https://raw.githubusercontent.com/SHAPELES-DGI/ezzcoin/live/';
+  // Fast lane: the live branch is republished within minutes of each FUT.GG price release. Ezzcoins' server
+  // copies it into live/ every 30 seconds, so visitors load it from ezzcoins.com; GitHub's copy is the fallback
+  // (also for the GitHub Pages backup of the site, which has no live/ folder).
+  // A copy is used only while it is fresh; otherwise the main-branch copies below are compared as before.
+  const LIVE_BASES = [new URL('live/', root).href, 'https://raw.githubusercontent.com/SHAPELES-DGI/ezzcoin/live/'];
   const LIVE_FILES = new Set(['live-prices.json']);
   async function fetchLive(name) {
-    const response = await fetch(LIVE_BASE + name + '?t=' + Math.floor(Date.now() / 60000), { cache: 'no-store', signal: AbortSignal.timeout(10000) });
-    if (!response.ok) throw new Error('Live copy unavailable');
-    const data = await response.json();
-    const published = Date.parse(data?.publishedAt?.console || '') || 0;
-    validate(data);
-    if (Date.now() - published > 30 * 60000 || Date.now() - Date.parse(data.publishedAt.pc) > 30 * 60000) throw new Error('Live copy is stale');
-    return data;
+    for (const base of LIVE_BASES) {
+      try {
+        // Own server: revalidate by ETag, so an unchanged 440 KB file costs a few bytes. GitHub: bypass its CDN cache.
+        const own = base.startsWith(root.href);
+        const response = await fetch(base + name + (own ? '' : '?t=' + Math.floor(Date.now() / 60000)), { cache: own ? 'no-cache' : 'no-store', signal: AbortSignal.timeout(10000) });
+        if (!response.ok) throw new Error('Live copy unavailable');
+        const data = await response.json();
+        const published = Date.parse(data?.publishedAt?.console || '') || 0;
+        validate(data);
+        if (Date.now() - published > 30 * 60000 || Date.now() - Date.parse(data.publishedAt.pc) > 30 * 60000) throw new Error('Live copy is stale');
+        return data;
+      } catch (_) { /* Try the next copy. */ }
+    }
+    throw new Error('Live copy unavailable');
   }
   async function fetchData(name) {
     if (!/^(?:[a-z-]+|price-history\/[0-9]{2})\.json$/.test(name)) throw new Error('Invalid data filename');
