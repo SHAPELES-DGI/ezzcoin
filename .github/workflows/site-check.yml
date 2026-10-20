@@ -1,0 +1,68 @@
+name: Site check
+# Every 15 minutes: is ezzcoins.com up, and are its prices updating? If not, open a "site-down" issue,
+# which GitHub emails to the repository owner; close it again by itself once everything works.
+# GitHub may start scheduled runs some minutes late.
+on:
+  schedule:
+    - cron: '7-59/15 * * * *'
+  workflow_dispatch:
+    inputs:
+      test_alert:
+        description: 'Open a clearly marked test alert (it closes on the next normal run)'
+        type: boolean
+        default: false
+permissions:
+  contents: read
+  issues: write
+concurrency:
+  group: site-check
+  cancel-in-progress: false
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check ezzcoins.com and report
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TEST_ALERT: ${{ inputs.test_alert }}
+        run: |
+          problems=""
+          fetch() { curl -fsS -m 20 --retry 2 --retry-delay 15 --retry-all-errors -A "Ezzcoins site check" "$1"; }
+          if ! home=$(fetch https://ezzcoins.com/ 2>&1); then
+            problems="${problems}- The website doesn't load: $(printf '%s' "$home" | tail -1)"$'\n'
+          elif ! printf '%s' "$home" | grep -q "Ezzcoins"; then
+            problems="${problems}- The website answers, but not with the Ezzcoins page."$'\n'
+          fi
+          if ! check=$(fetch https://ezzcoins.com/live/check.json 2>&1); then
+            problems="${problems}- The live prices on the server don't load: $(printf '%s' "$check" | tail -1)"$'\n'
+          else
+            age=$(python3 -c 'import json,sys,datetime as d; t=json.loads(sys.argv[1])["checkedAt"]; print(int((d.datetime.now(d.timezone.utc)-d.datetime.fromisoformat(t.replace("Z","+00:00"))).total_seconds()//60))' "$check" 2>/dev/null || echo 9999)
+            if [ "$age" -gt 60 ]; then
+              problems="${problems}- Prices haven't been checked for ${age} minutes (normally every 3)."$'\n'
+            fi
+          fi
+          if [ "$TEST_ALERT" = "true" ]; then
+            problems="- TEST: this alert was started by hand to check that alerts reach you. Nothing is wrong."$'\n'
+          fi
+          echo "${problems:-All good: the website loads and prices are current.}"
+
+          repo="$GITHUB_REPOSITORY"
+          open=$(gh issue list -R "$repo" --label site-down --state open --json number --jq '.[0].number // empty')
+          if [ -n "$problems" ]; then
+            [ -n "$open" ] && { echo "Alert #$open is already open."; exit 0; }
+            gh label create site-down -R "$repo" --color B60205 --description "ezzcoins.com is not working" --force >/dev/null
+            title="ezzcoins.com is not working"; [ "$TEST_ALERT" = "true" ] && title="TEST: ezzcoins.com alert (nothing is wrong)"
+            body="@${GITHUB_REPOSITORY_OWNER} the automatic site check found a problem at $(date -u '+%d %b %H:%M') UTC:
+
+          ${problems}
+          **What to do**
+          1. Open Hostinger, go to your VPS and click **Restart**. Everything starts again by itself after about 2 minutes.
+          2. If only the website is down, open the VPS web console and run \`systemctl restart caddy\`.
+          3. If Hostinger itself is down, point the ezzcoins.com A records to GitHub Pages (185.199.108.153, 185.199.109.153, 185.199.110.153, 185.199.111.153); GitHub keeps an up-to-date copy of the site. Switch back afterwards.
+
+          This issue closes by itself as soon as the check passes again."
+            gh issue create -R "$repo" --label site-down --title "$title" --body "$(printf '%s' "$body" | sed 's/^          //')"
+          elif [ -n "$open" ]; then
+            gh issue close "$open" -R "$repo" --comment "Working again: the automatic check passed at $(date -u '+%d %b %H:%M') UTC."
+          fi
