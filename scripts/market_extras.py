@@ -87,6 +87,39 @@ def card_info():
     return info
 
 
+def ensure_card_art(ids, fetch=None):
+    """Give every listed card its exact FUT.GG card picture.
+
+    The artwork rotation in update_market_prices.py works down from the highest ratings, so cheap
+    low-rated cards (often the biggest % risers) may have no picture yet. Fetch the missing ones now,
+    in one request of up to 30 ids, so they show in the same update. Returns how many were added.
+    """
+    renders = read(DATA / "card-renders.json", {})
+    missing = [i for i in dict.fromkeys(int(i) for i in ids if i) if str(i) not in renders][:30]
+    if not missing:
+        return 0
+    try:
+        if fetch is None:
+            from update_market_prices import metadata_batch as fetch
+        _records, details = fetch(missing)
+    except Exception as error:  # never let artwork stop the market update
+        print(f"Trending artwork unavailable: {error}")
+        return 0
+    added = 0
+    for item in missing:
+        d = details.get(str(item)) or {}
+        url = d.get("cardImageUrl")
+        # Same check as card_catalog.extract: the image must be this exact FC 27 item.
+        if url and not d.get("excluded") and url.startswith("https://game-assets.fut.gg/") and f"/2027/futgg-player-item-card/27-{item}." in url:
+            renders[str(item)] = {"url": url, "name": d.get("name"), "ovr": d.get("ovr"), "pos": d.get("pos"), "version": d.get("version")}
+            added += 1
+    if added:
+        renders = dict(sorted(renders.items(), key=lambda kv: (0, int(kv[0]), "") if kv[0].isdigit() else (1, 0, kv[0])))
+        write_if_changed(DATA / "card-renders.json", renders, ignore=())
+    print(f"Trending artwork: {added} of {len(missing)} missing card pictures added")
+    return added
+
+
 def basket_index(state, key, prices, pick, t):
     """Chain-linked price index over a fixed basket. pick(prices) -> ids for a new basket."""
     b = state.get(key)
@@ -225,6 +258,8 @@ def main():
                     "label": f"Biggest price rises · {hours} h", "cards": cards}
         if cards:
             write_if_changed(DATA / "trending.json", trending, ignore=("updatedAt", "at"))
+            # Every trending card shows its player picture, including cheap low-rated risers.
+            ensure_card_art(c["eaId"] for c in cards)
 
     # Cheapest tradeable cards at each rating (SBC fodder).
     ratings = {}
