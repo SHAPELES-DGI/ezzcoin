@@ -14,7 +14,7 @@ from site_nav import bottom_nav, nav_css  # noqa: E402  (phone tab bar shared wi
 BASE = os.environ.get("EZZ_BASE", "https://ezzcoins.com/")
 BANNER = "<!-- © 2026 Ezzcoins. All rights reserved. Copying or reuse of this code is not permitted. -->"
 CSS_V = "28"            # p/style.css, same as scripts/build_pages.py
-PAGES_V = "20261013-2"  # pages.css and guides.js
+PAGES_V = "20261021-paper"  # pages.css and guides.js
 FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
          '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;1,800&family=Barlow:wght@400;600&family=IBM+Plex+Mono:wght@500&display=swap">')
 ADSENSE = ('<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5351346431839799" '

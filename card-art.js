@@ -1,11 +1,17 @@
 (()=>{"use strict";
-const root=new URL("./",document.currentScript.src);let cards={},ids={},pending;
+const root=new URL("./",document.currentScript.src);let cards={},ids={},pending,partial=false,full=false,more=null;const known=new Set();
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 // Revalidated by ETag: an unchanged file costs a few bytes. A forced reload reuses data under 5 minutes old.
 async function read(name){const r=await fetch(new URL("data/"+name,root),{cache:"no-cache"});if(!r.ok)throw Error(name);return r.json()}
 let loadedAt=0;
-async function load(force=false){if(force&&Date.now()-loadedAt>3e5)pending=null;if(!pending)pending=Promise.all([read("card-renders.json"),read("card-ids.json")]).then(([a,b])=>{cards=a;ids=b;loadedAt=Date.now();return a}).catch(e=>{pending=null;throw e});return pending}
-function get(item,key,special=false){return cards[String(item)]||(special?cards["f:"+key]:null)||null}
+async function load(force=false){if(force&&Date.now()-loadedAt>3e5)pending=null;if(!pending)pending=Promise.all([read("card-renders.json"),read("card-ids.json")]).then(([a,b])=>{cards=a;ids=b;loadedAt=Date.now();partial=false;full=true;return a}).catch(e=>{pending=null;throw e});return pending}
+// The home page first adds only the pictures its rows show (data/home-cards.json). A card outside that slice
+// loads the full list once, then "ezzcoins:card-art" tells the page to draw its rows again.
+function add(slice){if(full||!slice)return;Object.assign(cards,slice.renders||{});for(const k of Object.keys(slice.renders||{}))known.add(k);for(const k of slice.none||[])known.add(String(k));partial=true}
+function loadRest(){if(more)return;more=load(true).then(()=>window.dispatchEvent(new CustomEvent("ezzcoins:card-art"))).catch(()=>{more=null})}
+let homeP=null,homeAt=0;
+function loadHome(){if(homeP&&Date.now()-homeAt<3e5)return homeP;homeAt=Date.now();return homeP=read("home-cards.json").then(t=>{add(t);return t}).catch(e=>{homeP=null;throw e})}
+function get(item,key,special=false){const c=cards[String(item)]||(special?cards["f:"+key]:null)||null;if(!c&&partial&&!full&&item!=null&&!known.has(String(item)))loadRest();return c}
 function html(c,cls="fc-render",name=c.name){if(c.url)return '<img class="'+cls+'" src="'+esc(window.EzzCardImg?window.EzzCardImg.local(c.url):c.url)+'" alt="'+esc(name)+' '+esc(c.ovr)+' '+esc(c.version)+' FC 27 card" loading="lazy" decoding="async">';
  const short=c.name.trim().split(/\s+/).pop(),stats=(c.stats||[]).map((n,i)=>'<span><small>'+["PAC","SHO","PAS","DRI","DEF","PHY"][i]+'</small><b>'+esc(n)+'</b></span>').join("");
  return '<div class="'+cls+' ea-item" role="img" aria-label="'+esc(c.name)+' '+esc(c.ovr)+' '+esc(c.version)+' FC 27 card"><img class="ea-frame" src="'+esc(c.frame)+'" alt=""><img class="ea-face" src="'+esc(c.portrait)+'" alt=""><div class="ea-rating">'+esc(c.ovr)+'<small>'+esc(c.pos)+'</small></div><div class="ea-name">'+esc(short)+'</div><div class="ea-stats">'+stats+'</div><div class="ea-type">'+esc(c.version)+'</div></div>'
@@ -27,7 +33,7 @@ const style=document.createElement("style");style.textContent=`
 .card-art.ea-item{width:184px;max-width:100%;height:auto;min-height:0}
 `;document.head.append(style);
 async function repairDetail(){const match=location.pathname.match(/-(\d+)(?:\/index\.html)?\/?$/);if(!match)return;await load();const id=Number(match[1]),special=id>=1e9,key=special?id-1e9:id,c=get(Number(document.getElementById("px")?.dataset.item)||ids[key]||key,key,special);if(!c)return;const current=document.querySelector(".card-art");if(!current)return;const box=document.createElement("div");box.innerHTML=html(c,"card-art");const next=current.nextElementSibling;const replacement=box.firstElementChild;current.replaceWith(replacement);if(next?.classList.contains("card-fallback")){next.hidden=true;if(replacement.tagName==="IMG")replacement.addEventListener("error",()=>{replacement.hidden=true;next.hidden=false;},{once:true})}}
-window.EzzcoinsCardArt={load,get,html};
+window.EzzcoinsCardArt={load,loadHome,get,html,add,get full(){return full}};
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",()=>repairDetail().catch(()=>{}),{once:true});else repairDetail().catch(()=>{});
 })();
 

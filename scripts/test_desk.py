@@ -76,7 +76,41 @@ g = desk.standing(good, t)
 assert g["status"] == "active" and g["confidence"] == "high" and abs(g["expected"] - 1.5) < 1e-9, g
 assert desk.standing(None, t)["status"] == "new" and desk.standing(None, t)["expected"] == 0
 board = desk.strategy_board({"strategies": {"rebound": s, "fade": good}}, t)
-assert [b["key"] for b in board][0] == "fade" and board[-1]["key"] == "rebound" and len(board) == len(desk.STRATEGIES)
+assert [b["key"] for b in board][0] == "fade" and [b["key"] for b in board][-2:] == ["rebound", "slide"] and len(board) == len(desk.STRATEGIES)
+assert board[-1]["status"] == "off"                                 # sell the slide never runs without a paper test
+
+# ---------------------------------------------------------------- paper test
+# Enough losing paper calls switch a strategy off, whatever its live record; a passing test ranks it higher.
+lose, win = {"n": 14, "hit": 3, "avg": -11.9}, {"n": 14, "hit": 11, "avg": 6.5}
+assert desk.standing(good, t, "fade", lose)["status"] == "off"
+assert desk.standing(good, t, "fade", {"n": 14, "hit": 6, "avg": 2.0})["status"] == "off"      # under half hit
+assert desk.standing(good, t, "fade", {"n": 5, "hit": 0, "avg": -9.0})["status"] == "active"   # too few to judge
+w = desk.standing(None, t, "slide", win)
+assert w["status"] == "new" and w["expected"] > 1 and w["test"] == win, w
+assert desk.standing(None, t, "slide", None)["status"] == "off"
+assert desk.standing(None, t, "rewards", lose)["status"] == "new"   # rewards and drop aren't paper-tested
+board = desk.strategy_board({"strategies": {"fade": good}, "backtest": {"strategies": {"fade": lose, "slide": win}}}, t)
+by = {b["key"]: b for b in board}
+assert by["fade"]["status"] == "off" and by["slide"]["status"] == "new" and by["slide"]["test"]["hit"] == 11
+assert board[-1]["status"] == "off"
+
+# The paper test replays the live rules on recorded prices: a playable card that fell 20% and kept falling.
+import backtest  # noqa: E402
+H = 3600
+now = int(t.timestamp()) // H * H
+info = {1: {"ovr": 88, "meta": 90, "base": True}, 2: {"ovr": 85, "meta": 80, "base": True}}
+falls = [(now - h * H, 100000 if h > 60 else 80000 if h > 49 else 60000) for h in range(100, 0, -1)]
+series = {1: falls, 2: [(a, p) for a, p in falls]}
+calls = backtest.paper_calls(series, info, t)
+assert [c["item"] for c in calls["rebound"]] == [1] and calls["rebound"][0]["result"] < 0, calls   # card 2 isn't meta
+assert calls["slide"][0]["hit"] and calls["slide"][0]["result"] == 25.0, calls["slide"]
+assert calls["fade"] == []
+s = backtest.summary(calls)
+assert s["slide"]["n"] == 1 and s["rebound"]["hit"] == 0
+# One wrong reading a day earlier is not a move.
+blip = [(a, 20000 if a == now - 74 * H else 100000) for a, _ in falls]
+blipped = backtest.paper_calls({1: blip}, info, t)
+assert blipped["fade"] == [] and blipped["rebound"] == [], blipped        # a +400% "jump" from one low reading
 
 # A wiped ledger gets its graded calls and drop log back from the backup, and the totals are rebuilt from them.
 def g(i, status, result, strategy="fade", hours=0):

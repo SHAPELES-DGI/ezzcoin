@@ -25,12 +25,13 @@
     return null;
   }
 
-  const STATUS = {active: 'Active', retest: 'Retest after a pause', new: 'Untested so far', paused: 'Paused'};
+  const STATUS = {active: 'Active', retest: 'Retest after a pause', new: 'Untested so far', paused: 'Paused', off: 'Off: loses in the paper test'};
   function strategy(ledger, key) {
     const b = (ledger?.strategyBoard || []).find(x => x.key === key);
     if (!b) return '';
     const n = (+b.hit || 0) + (+b.miss || 0);
-    const line = n ? `${b.hit} of ${n} graded calls hit, ${pct(b.avg)} on average after the 5% tax.` : 'No graded calls yet: the first ones are graded automatically at their check time.';
+    const line = (n ? `${b.hit} of ${n} graded calls hit, ${pct(b.avg)} on average after the 5% tax.` : 'No graded calls yet: the first ones are graded automatically at their check time.')
+      + (b.test && +b.test.n ? ` Replayed on recently recorded prices: ${b.test.hit} of ${b.test.n} paper calls hit, ${pct(b.test.avg)} on average.` : '');
     return `<div class="strat"><div class="strat-top"><b>${esc(b.name)}</b><span class="pill ${esc(b.status)}">${esc(STATUS[b.status] || b.status)}</span></div><p>${esc(line)}</p></div>`;
   }
 

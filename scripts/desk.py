@@ -21,8 +21,15 @@ confidence. Strategies are tried in order of their expected result after tax (th
 pulled toward 0% while there are few calls), and one with 70%+ hits and a positive average is
 called at high confidence. "strategyBoard" in the ledger is the public scoreboard.
 
+Paper trading (scripts/backtest.py): every run replays the price-move and weekend strategies on the prices
+recorded over the last days and grades those paper calls like real ones. A strategy whose paper calls hit under
+half the time or lose after tax is switched off ("off" on the scoreboard) until the market changes, so it can't
+pile up public misses first. A strategy with no real calls yet ("slide") must pass its paper test before it is
+used.
+
 Reliability: a call is only made when two price readings about an hour apart agree, so a single
-glitched or mispriced listing can't trigger one.
+glitched or mispriced listing can't trigger one, and a day-long move is measured from the middle of the
+readings around a day ago, so one wrong old reading can't create a move either.
 
 Daily drop: every evening the desk records how the 84/85/86 floors and the Top 100 index moved from
 just before EA's 6 PM UK content drop to about 8 PM (data/ledger.json "dropLog"), and the snapshot's
@@ -69,12 +76,16 @@ STRATEGIES = {
                 "why": "a playable card that fell sharply in a day often recovers part of the fall within two days"},
     "fade": {"name": "Sell the spike",
              "why": "a card that jumped in a day often gives part of the jump back within two days"},
+    "slide": {"name": "Sell the slide",
+              "why": "a playable card that fell sharply in a day often keeps falling for another two days"},
     "rewards": {"name": "Rivals rewards dip",
                 "why": "Rivals rewards flood the market with fodder on Thursday morning, and SBC demand lifts it again by the weekend"},
     "drop": {"name": "Buy before the 6 PM drop",
              "why": "this fodder rating has risen after most recent 6 PM content drops by more than the 5% tax"},
 }
-ORDER = ["rewards", "drop", "weekend", "rebound", "fade"]
+ORDER = ["rewards", "drop", "weekend", "rebound", "slide", "fade"]
+BACKTESTED = {"rebound": 10, "slide": 10, "fade": 10, "weekend": 3}   # paper calls needed before the test counts
+NEEDS_TEST = {"slide"}                # never used without a passing paper test
 
 
 # ---------------------------------------------------------------- helpers
@@ -152,6 +163,7 @@ class Market:
         self.cheapest = read("cheapest.json", {}).get("ratings", {})
         self.trending = read("trending.json", {}).get("cards", [])
         snaps = read(".cache/price-snaps.json", [])
+        self.snaps = snaps
         self.day_ago = self._snap_near(snaps, 24, 6)
         self.hour_ago = self._snap_near(snaps, 1, 0.5)
         self.hist = [p for p in read("history.json", {}).get("points", []) if parse(p.get("t"))]
@@ -201,6 +213,19 @@ class Market:
         cards = self.cheapest.get(str(ovr)) or []
         return cards[0]["price"] if cards else None
 
+    def base_24h(self, i):
+        """The card's price about a day ago: the middle of the readings within 2.5 hours of the day-old snapshot,
+        so one wrong reading then can't make a move now."""
+        day = self.day_ago or {}
+        p0 = day.get("p", {}).get(str(i))
+        if not p0:
+            return None
+        if not hasattr(self, "_around"):
+            at = parse(day.get("t"))
+            self._around = [x for x in getattr(self, "snaps", []) if at and parse(x.get("t")) and abs(parse(x["t"]) - at) <= timedelta(hours=2.5)]
+        xs = sorted(int(x["p"][str(i)]) for x in self._around if x.get("p", {}).get(str(i)))
+        return xs[len(xs) // 2] if xs else int(p0)
+
     def earlier(self, i):
         """The card's price in the snapshot from about an hour ago, if there is one."""
         p = (self.hour_ago or {}).get("p", {}).get(str(i))
@@ -214,7 +239,7 @@ class Market:
     def move_confirmed(self, i, pct):
         """A day-long move is real if the hour-old reading already showed at least half of it and the
         current price agrees with that reading. One glitched listing can't pass both."""
-        p0 = (self.day_ago or {}).get("p", {}).get(str(i))
+        p0 = self.base_24h(i)
         p1 = self.earlier(i)
         if not (p0 and p1 and self.steady(i)):
             return False
@@ -238,8 +263,8 @@ class Market:
         if not self.day_ago:
             return []
         out = []
-        for k, p0 in self.day_ago["p"].items():
-            p = self.prices.get(int(k))
+        for k in self.day_ago["p"]:
+            p, p0 = self.prices.get(int(k)), self.base_24h(int(k))
             if p and p0 and max(p, p0) >= min_price:
                 out.append(((p / p0 - 1) * 100, p - p0, int(k)))
         return out
@@ -456,8 +481,15 @@ def tally(ledger):
     return rec
 
 
-def standing(s, t):
-    """How a strategy stands now, from its lifetime totals and its last RECENT graded calls."""
+def paper_passes(test, need):
+    """True/False once a strategy has enough paper calls (hits at least half the time and wins after tax), else None."""
+    if not need or not test or test.get("n", 0) < need:
+        return None
+    return test["hit"] / test["n"] >= 0.5 and test["avg"] > 0
+
+
+def standing(s, t, key=None, test=None):
+    """How a strategy stands now, from its lifetime totals, its last RECENT graded calls and its paper test."""
     s = s or {}
     hit, miss = s.get("hit", 0), s.get("miss", 0)
     recent = s.get("recent") or []
@@ -470,21 +502,29 @@ def standing(s, t):
     paused = bool(bad and last and t - last < PAUSE)
     status = "new" if not rn else "paused" if paused else "retest" if bad else "active"
     conf = "low" if bad else "high" if (rn >= 3 and rhit / rn >= 0.7 and ravg > 0) else "medium"
+    passes = paper_passes(test, BACKTESTED.get(key))
+    expected = rsum / (rn + PRIOR)
+    if passes is False or (passes is None and key in NEEDS_TEST):
+        status, conf, paused = "off", "low", False
+    elif passes:
+        w = min(test["n"], 6)        # a passing paper test counts like up to 6 extra calls
+        expected = (rsum + test["avg"] * w) / (rn + w + PRIOR)
     return {"hit": hit, "miss": miss, "n": hit + miss, "avg": round(s.get("sum", 0) / (hit + miss), 1) if hit + miss else None,
             "recentN": rn, "recentHit": rhit, "recentAvg": round(ravg, 1) if ravg is not None else None,
-            "expected": rsum / (rn + PRIOR), "status": status, "confidence": conf,
-            "pausedUntil": iso(last + PAUSE) if paused else None}
+            "expected": expected, "status": status, "confidence": conf,
+            "pausedUntil": iso(last + PAUSE) if paused else None,
+            "test": {f: test[f] for f in ("n", "hit", "avg")} if test and key in BACKTESTED else None}
 
 
 def strategy_board(ledger, t):
     """The public scoreboard: every strategy, its record and whether the desk is using it."""
-    stats = ledger.get("strategies", {})
+    stats, tests = ledger.get("strategies", {}), ledger.get("backtest", {}).get("strategies", {})
     board = []
     for k in ORDER:
-        st = standing(stats.get(k), t)
+        st = standing(stats.get(k), t, k, tests.get(k))
         board.append({"key": k, "name": STRATEGIES[k]["name"], "why": STRATEGIES[k]["why"],
-                      **{f: st[f] for f in ("hit", "miss", "avg", "recentN", "recentHit", "recentAvg", "status", "confidence", "pausedUntil")}})
-    rank = {"active": 0, "retest": 1, "new": 2, "paused": 3}
+                      **{f: st[f] for f in ("hit", "miss", "avg", "recentN", "recentHit", "recentAvg", "status", "confidence", "pausedUntil", "test")}})
+    rank = {"active": 0, "retest": 1, "new": 2, "paused": 3, "off": 4}
     board.sort(key=lambda b: (rank[b["status"]], -(b["recentAvg"] or 0), ORDER.index(b["key"])))
     return board
 
@@ -583,6 +623,13 @@ def candidates(mk, t, used, log=()):
                                 "title": f"Buy {mk.label(i)} after its {abs(pct):.0f}% fall, sell in two days",
                                 "why": f"down {abs(pct):.1f}% in about a day"}))
 
+    # Sell the slide: the same falls, the opposite bet (it runs only while its paper calls win).
+    if dips:
+        pct, _, i = dips[0]
+        out.append(("slide", {"tone": "sell", "rule": "sell_lower", "item": i, "checkAt": t + timedelta(hours=48),
+                              "title": f"Sell {mk.label(i)} after its {abs(pct):.0f}% fall, expect it lower in two days",
+                              "why": f"down {abs(pct):.1f}% in about a day"}))
+
     # Sell the spike: a card worth 10K+ that rose 15%+ in a day.
     spikes = sorted((m for m in moves if m[0] >= 15 and m[2] not in used and mk.prices.get(m[2], 0) >= 10000
                      and mk.prices[m[2]] - m[1] >= 5000 and (mk.info.get(m[2], {}).get("ovr") or 0) >= 80
@@ -641,7 +688,7 @@ def make_calls(mk, ledger, t):
         return None
     used = {int(c["ref"]["eaId"]) for c in calls if (c.get("ref") or {}).get("eaId") and parse(c.get("madeAt")) and t - parse(c["madeAt"]) < timedelta(days=7)}
     used_strategies = {c.get("strategy") for c in made_today}
-    stats = ledger.get("strategies", {})
+    stats, tests = ledger.get("strategies", {}), ledger.get("backtest", {}).get("strategies", {})
     # Keep one of Thursday's calls for the Rivals rewards dip. Calls made overnight once used up both
     # of the day's calls hours before the payout, so the desk couldn't buy the dump that followed.
     keep_slot = (rewards_slot_open(t) and "rewards" not in used_strategies and len(made_today) >= CALLS_PER_DAY - 1)
@@ -650,8 +697,8 @@ def make_calls(mk, ledger, t):
     # (expected 0%) next, and one being retested after a pause last.
     options = []
     for k, f in candidates(mk, t, used, ledger.get("dropLog", [])):
-        st = standing(stats.get(k), t)
-        if st["status"] == "paused" or k in used_strategies or (keep_slot and k != "rewards"):
+        st = standing(stats.get(k), t, k, tests.get(k))
+        if st["status"] in ("paused", "off") or k in used_strategies or (keep_slot and k != "rewards"):
             continue
         options.append((-st["expected"], ORDER.index(k), k, f, st))
     if not options:
@@ -1029,6 +1076,26 @@ def backup_own_calls(ledger):
         pass
 
 
+# ---------------------------------------------------------------- paper test
+
+def paper_test(mk, ledger, t):
+    """Re-test the price-move and weekend strategies on the recorded prices (scripts/backtest.py). Keeps the last
+    result for up to a day when this run has no price history (the workflow skips it if it can't be restored)."""
+    import backtest
+    try:
+        series = backtest.load(DATA / "price-history")
+        result = backtest.summary(backtest.paper_calls(series, mk.info, t, (phase, next_weekday, UK))) if series else {}
+    except Exception as error:  # a broken test must never stop the desk
+        print(f"desk: paper test failed: {error}")
+        result = {}
+    old = ledger.get("backtest") or {}
+    if result:
+        ledger["backtest"] = {"at": iso(t), "strategies": result}
+    elif not (parse(old.get("at")) and t - parse(old["at"]) <= timedelta(days=1)):
+        ledger.pop("backtest", None)
+    return ledger.get("backtest")
+
+
 # ---------------------------------------------------------------- main
 
 def main():
@@ -1041,6 +1108,7 @@ def main():
     ledger = read("ledger.json", {"calls": [], "lessons": []})
     restore_own_calls(ledger)
     graded = grade(mk, ledger, t)
+    paper_test(mk, ledger, t)
     log = drop_log(ledger, t)
     new_call = make_calls(mk, ledger, t)
     tally(ledger)
