@@ -173,6 +173,41 @@ def snapshot_near(snaps, t, hours, min_hours):
     return best
 
 
+def trending_rises(prices, snaps, t, info):
+    """(window hours, [(rise, card id)] largest first) for cards worth TREND_MIN+ that rose 3%+ over about a day.
+
+    FUT.GG's feed sometimes shows a wrong price for one update (a 10,000-coin listing for a 1,000-coin card, or a
+    sudden low). So the starting price is the middle of the readings around a day ago (one odd reading can't set
+    it), and the rise must already show in the reading from about an hour ago, without the price having jumped by
+    more than half since then. A real riser that jumped within the last hour appears an hour later.
+    """
+    ref = snapshot_near(snaps, t, 24, 6) or snapshot_near(snaps, t, 24, 1)
+    if not ref:
+        return None, []
+    ref_t = parse(ref["t"])
+    hours = round((t - ref_t).total_seconds() / 3600)
+    around = [s for s in snaps if abs(parse(s["t"]) - ref_t) <= timedelta(hours=2.5)]
+    hour_ago = snapshot_near(snaps, t, 1, 0.8)
+    if hour_ago is ref:
+        hour_ago = None          # under two hours of snapshots: nothing to confirm with yet
+    rises = []
+    for i, p in prices.items():
+        key = str(i)
+        if p < TREND_MIN or i not in info or key not in ref["p"]:
+            continue
+        readings = sorted(s["p"][key] for s in around if key in s["p"])
+        base = readings[len(readings) // 2]          # the middle reading (the higher one of an even count)
+        if not p > base * 1.03:
+            continue
+        if hour_ago is not None:
+            p1 = hour_ago["p"].get(key)
+            if not p1 or p1 <= base * 1.03 or p > p1 * 1.5:
+                continue
+        rises.append((p / base - 1, i))
+    rises.sort(reverse=True)
+    return hours, rises
+
+
 def momentum_label(m):
     return ("Prices are rising fast" if m >= 65 else "Prices are rising" if m >= 55 else "Prices are steady" if m > 45
             else "Prices are falling" if m > 35 else "Prices are falling fast")
@@ -239,16 +274,8 @@ def main():
     write_if_changed(DATA / "market-index.json", {**state, "updatedAt": iso(t)}, ignore=("updatedAt",))
 
     # Trending: biggest rises over about a day (or the longest window the snapshots cover, at least an hour).
-    ref = snapshot_near(snaps, t, 24, 6) or snapshot_near(snaps, t, 24, 1)
-    if ref:
-        hours = round((t - parse(ref["t"])).total_seconds() / 3600)
-        rises = []
-        for i, p in prices.items():
-            p0 = ref["p"].get(str(i))
-            c = info.get(i)
-            if c and p >= TREND_MIN and p0 and p > p0 * 1.03:
-                rises.append((p / p0 - 1, i))
-        rises.sort(reverse=True)
+    hours, rises = trending_rises(prices, snaps, t, info)
+    if hours is not None:
         cards = []
         for n, (r, i) in enumerate(rises[:24], 1):
             c = info[i]

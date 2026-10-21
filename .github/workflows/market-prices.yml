@@ -52,6 +52,7 @@ jobs:
           (cd scripts && python3 test_price_history.py)
           python3 scripts/test_weekly_recap.py
           python3 scripts/test_trending_art.py
+          python3 scripts/test_trending_glitches.py
       - name: Discover FC 27 cards, prices and matching artwork
         run: python3 scripts/update_market_prices.py --metadata-batches 16
       - name: Refresh active SBCs and solution costs
@@ -60,8 +61,43 @@ jobs:
       - name: Refresh Evolution rules and SBC item metadata
         run: python3 scripts/update_builders.py --batches 6 --details 12 --min-age 3600
         continue-on-error: true
+      # The 64 price-history files change on every run, so they live on their own "history" branch, which
+      # holds one commit that is replaced each time (like the live and check branches). In the main branch
+      # they grew the repository by about 170 MB a day.
+      # If the history can't be fetched, this run skips recording (rather than publishing an empty history over
+      # the real one) and everything else still updates.
+      - name: Restore price history (history branch)
+        id: history
+        run: |
+          for attempt in 1 2 3; do
+            if git fetch -q --depth=1 origin history; then
+              rm -rf data/price-history
+              git archive FETCH_HEAD price-history | tar -x -C data
+              break
+            fi
+            sleep 10
+          done
+          count=$(ls data/price-history/*.json 2>/dev/null | wc -l)
+          echo "Price history files: $count"
+          if [ "$count" -eq 64 ]; then echo "ok=true" >> "$GITHUB_OUTPUT"; else echo "::warning::Price history unavailable; not recorded this run"; fi
       - name: Retain recorded player prices
+        if: steps.history.outputs.ok == 'true'
         run: python3 scripts/record_price_history.py
+      - name: Publish price history (history branch)
+        if: steps.history.outputs.ok == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          out="$RUNNER_TEMP/history"
+          rm -rf "$out" && mkdir -p "$out/price-history"
+          cp data/price-history/*.json "$out/price-history/"
+          cd "$out"
+          git init -q -b history
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add price-history
+          git commit -q -m "Price history"
+          git push -q -f "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" history
       - name: Sync Home and trading prices
         run: python3 scripts/sync_home_prices.py
       - name: Market index, trending cards and cheapest cards by rating
@@ -93,7 +129,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/player-details.json data/evolutions.json data/builder-items.json data/price-history index.html data/history.json data/ledger.json data/legends.json data/sbcsolutions.json data/snapshot.json data/prices.json data/topprices.json data/trending.json data/players.json data/live-prices.json data/market-cards.json data/futbin-prices.json data/market.json data/cheapest.json data/market-index.json data/ut-positions.json data/newcards.json data/card-ids.json data/card-renders.json data/day-ago.json p recap sitemap.xml
+          git add data/player-details.json data/evolutions.json data/builder-items.json index.html data/history.json data/ledger.json data/legends.json data/sbcsolutions.json data/snapshot.json data/prices.json data/topprices.json data/trending.json data/players.json data/live-prices.json data/market-cards.json data/futbin-prices.json data/market.json data/cheapest.json data/market-index.json data/ut-positions.json data/newcards.json data/card-ids.json data/card-renders.json data/day-ago.json p recap sitemap.xml
           if ! git diff --cached --quiet; then
             git commit -m "Refresh FC 27 cards, artwork, player pages and market prices"
             # Another data/page workflow can push between fetch and push.

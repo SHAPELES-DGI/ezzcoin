@@ -1,7 +1,9 @@
 name: Site check
-# Every 15 minutes: is ezzcoins.com up, and are its prices updating? If not, open a "site-down" issue,
-# which GitHub emails to the repository owner; close it again by itself once everything works.
-# GitHub may start scheduled runs some minutes late.
+# Every 15 minutes: is ezzcoins.com up, and are its prices updating? If not, check again 3 minutes later (short
+# network blips between GitHub and the server happen), and if it still fails open a "site-down" issue, which GitHub
+# emails to the repository owner. The alert says whether the server itself is still running: it starts a price
+# update on GitHub every 3 minutes, so a recent one means the server is alive. The issue closes by itself once
+# everything works. GitHub may start scheduled runs some minutes late.
 on:
   schedule:
     - cron: '7-59/15 * * * *'
@@ -14,38 +16,60 @@ on:
 permissions:
   contents: read
   issues: write
+  actions: read
 concurrency:
   group: site-check
   cancel-in-progress: false
 jobs:
   check:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     steps:
       - name: Check ezzcoins.com and report
         env:
           GH_TOKEN: ${{ github.token }}
           TEST_ALERT: ${{ inputs.test_alert }}
         run: |
-          problems=""
           fetch() { curl -fsS -m 20 --retry 2 --retry-delay 15 --retry-all-errors -A "Ezzcoins site check" "$1"; }
-          if ! home=$(fetch https://ezzcoins.com/ 2>&1); then
-            problems="${problems}- The website doesn't load: $(printf '%s' "$home" | tail -1)"$'\n'
-          elif ! printf '%s' "$home" | grep -q "Ezzcoins"; then
-            problems="${problems}- The website answers, but not with the Ezzcoins page."$'\n'
-          fi
-          if ! check=$(fetch https://ezzcoins.com/live/check.json 2>&1); then
-            problems="${problems}- The live prices on the server don't load: $(printf '%s' "$check" | tail -1)"$'\n'
-          else
-            age=$(python3 -c 'import json,sys,datetime as d; t=json.loads(sys.argv[1])["checkedAt"]; print(int((d.datetime.now(d.timezone.utc)-d.datetime.fromisoformat(t.replace("Z","+00:00"))).total_seconds()//60))' "$check" 2>/dev/null || echo 9999)
-            if [ "$age" -gt 60 ]; then
-              problems="${problems}- Prices haven't been checked for ${age} minutes (normally every 3)."$'\n'
+          check_site() {
+            problems=""
+            if ! home=$(fetch https://ezzcoins.com/ 2>&1); then
+              problems="${problems}- The website doesn't load: $(printf '%s' "$home" | tail -1)"$'\n'
+            elif ! printf '%s' "$home" | grep -q "Ezzcoins"; then
+              problems="${problems}- The website answers, but not with the Ezzcoins page."$'\n'
             fi
+            if ! check=$(fetch https://ezzcoins.com/live/check.json 2>&1); then
+              problems="${problems}- The live prices on the server don't load: $(printf '%s' "$check" | tail -1)"$'\n'
+            else
+              age=$(python3 -c 'import json,sys,datetime as d; t=json.loads(sys.argv[1])["checkedAt"]; print(int((d.datetime.now(d.timezone.utc)-d.datetime.fromisoformat(t.replace("Z","+00:00"))).total_seconds()//60))' "$check" 2>/dev/null || echo 9999)
+              if [ "$age" -gt 60 ]; then
+                problems="${problems}- Prices haven't been checked for ${age} minutes (normally every 3)."$'\n'
+              fi
+            fi
+          }
+          check_site
+          if [ -n "$problems" ] && [ "$TEST_ALERT" != "true" ]; then
+            printf 'First check failed:\n%s\nChecking again in 3 minutes.\n' "$problems"
+            sleep 180
+            check_site
           fi
+
+          # The server starts a price update on GitHub every 3 minutes: a recent one means it is switched on and online.
+          last=$(gh api "repos/$GITHUB_REPOSITORY/actions/workflows/live-prices.yml/runs?event=workflow_dispatch&per_page=1" --jq '.workflow_runs[0].created_at' 2>/dev/null || true)
+          ago=$(python3 -c 'import sys,datetime as d; print(int((d.datetime.now(d.timezone.utc)-d.datetime.fromisoformat(sys.argv[1].replace("Z","+00:00"))).total_seconds()//60))' "$last" 2>/dev/null || echo "")
+          if [ -n "$ago" ] && [ "$ago" -le 10 ]; then
+            server="**Your server is still running**: it started a price update ${ago} minutes ago. So the problem is the website program or the connection to it, not the server itself. Try step 2 first."
+          elif [ -n "$ago" ]; then
+            server="**Your server seems to be down or frozen**: it hasn't started a price update for ${ago} minutes (normally every 3). Restart it (step 1)."
+          else
+            server="Couldn't tell whether the server itself is running."
+          fi
+
           if [ "$TEST_ALERT" = "true" ]; then
             problems="- TEST: this alert was started by hand to check that alerts reach you. Nothing is wrong."$'\n'
           fi
           echo "${problems:-All good: the website loads and prices are current.}"
+          echo "$server"
 
           repo="$GITHUB_REPOSITORY"
           open=$(gh issue list -R "$repo" --label site-down --state open --json number --jq '.[0].number // empty')
@@ -56,6 +80,8 @@ jobs:
             body="@${GITHUB_REPOSITORY_OWNER} the automatic site check found a problem at $(date -u '+%d %b %H:%M') UTC:
 
           ${problems}
+          ${server}
+
           **What to do**
           1. Open Hostinger, go to your VPS and click **Restart**. Everything starts again by itself after about 2 minutes.
           2. If only the website is down, open the VPS web console and run \`systemctl restart caddy\`.

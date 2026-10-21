@@ -204,7 +204,7 @@ def guide_html(g):
                "mainEntityOfPage": BASE + path, "image": BASE + "icon-512.png"}]
     return path, page(title=f"{g['title']} · Ezzcoins", desc=g["desc"], path=path, up=up, body=body,
                       crumbs=[("Ezzcoins", ""), ("Guides", "guides/"), (g["h1"], None)], schema=schema,
-                      scripts=("market-data.js?v=20261013-fix", "guides.js?v=20261013-1"))
+                      scripts=("market-data.js?v=20261021-lean", "guides.js?v=20261013-1"))
 
 
 def hub_html():

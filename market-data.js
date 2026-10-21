@@ -32,19 +32,31 @@
     if (LIVE_FILES.has(name)) {
       try { return await fetchLive(name); } catch (_) { /* Fall back to the main-branch copies. */ }
     }
-    // Compare deployment and repository copies: either CDN can lag a refresh.
-    // Use the newest timestamp and retain either host as an availability fallback.
-    const urls = [new URL('data/' + name, root).href,
-                  'https://raw.githubusercontent.com/SHAPELES-DGI/ezzcoin/main/data/' + name];
-    const candidates = await Promise.allSettled(urls.map(async url => {
-      try {
-        const response = await fetch(url + '?t=' + Math.floor(Date.now() / 60000), { cache: 'no-store', signal: AbortSignal.timeout(15000) });
-        if (response.ok) return await response.json();
-      } catch (_) { /* Try the deployed snapshot. */ }
-      throw new Error('Snapshot unavailable');
-    }));
-    const available = candidates.filter(r => r.status === 'fulfilled').map(r => r.value);
+    // The site's own copy first. The server pulls every update within a minute, and it revalidates by ETag, so an
+    // unchanged file costs a few bytes instead of a full download. GitHub's copy is only fetched when the own copy
+    // is missing, broken or more than 30 minutes old (then the newer of the two wins).
+    // Price history lives on its own "history" branch (replaced on every update, so it doesn't grow the
+    // repository); the site's own data/ copy only exists on the GitHub Pages backup.
+    const github = name.startsWith('price-history/')
+      ? 'https://raw.githubusercontent.com/SHAPELES-DGI/ezzcoin/history/' + name
+      : 'https://raw.githubusercontent.com/SHAPELES-DGI/ezzcoin/main/data/' + name;
     const time = data => name==='live-prices.json'?Math.min(Date.parse(data.publishedAt?.console)||0,Date.parse(data.publishedAt?.pc)||0):Date.parse(data.retrievedAt || data.updatedAt || data.at || '') || 0;
+    const get = async (url, own) => {
+      // GitHub: bypass its CDN cache.
+      const response = await fetch(own ? url : url + '?t=' + Math.floor(Date.now() / 60000), { cache: own ? 'no-cache' : 'no-store', signal: AbortSignal.timeout(15000) });
+      if (!response.ok) throw new Error('Snapshot unavailable');
+      const data = await response.json();
+      if (name === 'live-prices.json') validate(data);
+      return data;
+    };
+    const available = [];
+    try {
+      const mine = await get(new URL('data/' + name, root).href, true);
+      const at = time(mine);
+      if (!at || Date.now() - at < 30 * 60000) return mine;
+      available.push(mine);
+    } catch (_) { /* Use GitHub's copy. */ }
+    try { available.push(await get(github, false)); } catch (_) { /* Keep the own copy, if any. */ }
     available.sort((a, b) => time(b) - time(a));
     if (name === 'live-prices.json') {
       for (const value of available) { try { validate(value); return value; } catch (_) {} }
@@ -73,7 +85,8 @@
   }
   async function load(force = false) {
     if (pending) return pending;
-    if (!force && cached && Date.now() - loadedAt < 300000) return cached;
+    // Several parts of a page refresh every minute; a forced reload within 50 seconds of the last one shares it.
+    if (cached && Date.now() - loadedAt < (force ? 50000 : 300000)) return cached;
     pending = (async () => {
       const next = validate(await fetchData('live-prices.json'));
       cached = next;
