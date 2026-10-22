@@ -55,9 +55,19 @@
 "ovr": 85,
 "why": "no Wikidata footballer with this name and a photo"
 },
+"257484": {
+"name": "Thijs Oosting",
+"ovr": 65,
+"why": "no Wikidata footballer with this name and a photo"
+},
 "257957": {
 "name": "Marco Rente",
 "ovr": 68,
+"why": "no Wikidata footballer with this name and a photo"
+},
+"259105": {
+"name": "Pablo Rodríguez Delgado",
+"ovr": 69,
 "why": "no Wikidata footballer with this name and a photo"
 },
 "259565": {
@@ -110,6 +120,11 @@
 "ovr": 88,
 "why": "no Wikidata footballer with this name and a photo"
 },
+"266123": {
+"name": "Oliver Provstgaard",
+"ovr": 70,
+"why": "no Wikidata footballer with this name and a photo"
+},
 "266518": {
 "name": "Niko Tsakiris",
 "ovr": 71,
@@ -128,6 +143,11 @@
 "268703": {
 "name": "Nicolò Cambiaghi",
 "ovr": 76,
+"why": "no Wikidata footballer with this name and a photo"
+},
+"269182": {
+"name": "Antonio Raimondo",
+"ovr": 70,
 "why": "no Wikidata footballer with this name and a photo"
 },
 "269186": {
@@ -270,6 +290,11 @@
 "ovr": 72,
 "why": "no Wikidata footballer with this name and a photo"
 },
+"81410": {
+"name": "Adem Arous",
+"ovr": 63,
+"why": "no Wikidata footballer with this name and a photo"
+},
 "81539": {
 "name": "Divine Mukasa",
 "ovr": 69,
@@ -296,6 +321,6 @@
 "why": "no Wikidata footballer with this name and a photo"
 }
 },
-"photos": 805,
-"players": 937
+"photos": 818,
+"players": 955
 }
