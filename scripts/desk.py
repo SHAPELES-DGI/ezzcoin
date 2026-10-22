@@ -22,8 +22,8 @@ pulled toward 0% while there are few calls), and one with 70%+ hits and a positi
 called at high confidence. "strategyBoard" in the ledger is the public scoreboard.
 
 Paper trading (scripts/backtest.py): every run replays the price-move and weekend strategies on the prices
-recorded over the last days and grades those paper calls like real ones. A strategy whose paper calls hit under
-half the time or lose after tax is switched off ("off" on the scoreboard) until the market changes, so it can't
+recorded over the last days and grades those paper calls like real ones. A strategy whose paper calls hit half
+the time or less, or lose after tax, is switched off ("off" on the scoreboard) until the market changes, so it can't
 pile up public misses first. A strategy with no real calls yet ("slide") must pass its paper test before it is
 used.
 
@@ -482,10 +482,11 @@ def tally(ledger):
 
 
 def paper_passes(test, need):
-    """True/False once a strategy has enough paper calls (hits at least half the time and wins after tax), else None."""
+    """True/False once a strategy has enough paper calls (hits more than half the time and wins after tax), else None.
+    Exactly half is a coin flip: a strategy at 7 of 14 once switched on and off between runs."""
     if not need or not test or test.get("n", 0) < need:
         return None
-    return test["hit"] / test["n"] >= 0.5 and test["avg"] > 0
+    return test["hit"] / test["n"] > 0.5 and test["avg"] > 0
 
 
 def standing(s, t, key=None, test=None):

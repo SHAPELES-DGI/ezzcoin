@@ -84,6 +84,7 @@ assert board[-1]["status"] == "off"                                 # sell the s
 lose, win = {"n": 14, "hit": 3, "avg": -11.9}, {"n": 14, "hit": 11, "avg": 6.5}
 assert desk.standing(good, t, "fade", lose)["status"] == "off"
 assert desk.standing(good, t, "fade", {"n": 14, "hit": 6, "avg": 2.0})["status"] == "off"      # under half hit
+assert desk.standing(None, t, "slide", {"n": 14, "hit": 7, "avg": 8.3})["status"] == "off"     # exactly half: a coin flip
 assert desk.standing(good, t, "fade", {"n": 5, "hit": 0, "avg": -9.0})["status"] == "active"   # too few to judge
 w = desk.standing(None, t, "slide", win)
 assert w["status"] == "new" and w["expected"] > 1 and w["test"] == win, w

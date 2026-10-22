@@ -124,7 +124,7 @@
     retest: ['watch', 'Retest', 'Back after a pause, at low confidence'],
     new: ['hold', 'Untested', 'No graded calls yet'],
     paused: ['sell', 'Paused', 'Recent calls lost after tax'],
-    off: ['sell', 'Off', 'Its paper calls on recent prices hit under half the time or lose after tax']
+    off: ['sell', 'Off', 'Its paper calls on recent prices hit half the time or less, or lose after tax']
   };
   const pct = v => v == null || !Number.isFinite(+v) ? '–' : `${+v > 0 ? '+' : ''}${(+v).toFixed(1)}%`;
   const shortDate = iso => { const d = new Date(iso); return Number.isNaN(d.getTime()) ? '' : d.toLocaleDateString([], {day:'numeric', month:'short'}); };
@@ -140,7 +140,7 @@
       const test = b.test && +b.test.n ? `Paper test on recent prices: ${b.test.hit} of ${b.test.n} hit · ${pct(b.test.avg)} average` : '';
       return `<div class="ez-strat"><div class="ez-strat-top"><span class="ez-strat-name">${esc(b.name)}</span><span class="ez-pill ${tone}" title="${esc(hint)}">${esc(label)}</span></div>
         <div class="ez-strat-line">${esc(line + until)}</div>${test ? `<div class="ez-strat-line">${esc(test)}</div>` : ''}</div>`;
-    }).join('')}<div class="ez-disclaimer">A strategy is judged on its last 12 graded calls. Under 50% hits or a negative average after tax pauses it for 7 days. Every 10 minutes the price-move and weekend strategies are also replayed on recently recorded prices; one whose paper calls hit under half the time or lose after tax is switched off.</div></div>`;
+    }).join('')}<div class="ez-disclaimer">A strategy is judged on its last 12 graded calls. Under 50% hits or a negative average after tax pauses it for 7 days. Every 10 minutes the price-move and weekend strategies are also replayed on recently recorded prices; one whose paper calls hit half the time or less, or lose after tax, is switched off.</div></div>`;
   }
 
   function bestFodder() {
