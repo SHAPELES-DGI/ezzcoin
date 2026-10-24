@@ -5,6 +5,11 @@
 "ovr": 85,
 "why": "no Wikidata footballer with this name and a photo"
 },
+"220337": {
+"name": "Junior Alonso",
+"ovr": 74,
+"why": "no Wikidata footballer with this name and a photo"
+},
 "236532": {
 "name": "Robin Koch",
 "ovr": 79,
@@ -160,6 +165,11 @@
 "ovr": 69,
 "why": "no Wikidata footballer with this name and a photo"
 },
+"271839": {
+"name": "Selina Vobian",
+"ovr": 77,
+"why": "no Wikidata footballer with this name and a photo"
+},
 "272137": {
 "name": "Sara Ortega Ruiz",
 "ovr": 73,
@@ -238,6 +248,11 @@
 "70967": {
 "name": "Carlos Espí Escrihuela",
 "ovr": 77,
+"why": "no Wikidata footballer with this name and a photo"
+},
+"71178": {
+"name": "Saïd El Mala",
+"ovr": 78,
 "why": "no Wikidata footballer with this name and a photo"
 },
 "72006": {
@@ -321,6 +336,6 @@
 "why": "no Wikidata footballer with this name and a photo"
 }
 },
-"photos": 834,
-"players": 971
+"photos": 837,
+"players": 977
 }
