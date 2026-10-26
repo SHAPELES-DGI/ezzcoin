@@ -65,6 +65,11 @@
         <p class="muted">Change from just before 6 PM to about 8 PM UK. ${esc(d.measured)} evenings measured so far.</p>`;
       return out;
     },
+    board(s, l) {
+      const keys = (l?.strategyBoard || []).map(b => b.key);
+      return keys.length ? keys.map(k => strategy(l, k)).join('') + '<p class="muted">Updated with every market read. Paused and Off strategies make no new calls.</p>'
+        : '<p class="muted">The scoreboard appears with the next market read.</p>';
+    },
     hype(s, l) {
       const r = (s?.risers || []).slice(0, 5);
       const list = r.length ? `<ol class="movers">${r.map(x => `<li><span>${esc(x.name)} ${esc(x.ovr ?? '')} <small>${esc(x.version && x.version !== 'Rare' ? x.version : '')}</small></span><b class="up">${pct(x.pct)}</b></li>`).join('')}</ol>
