@@ -144,11 +144,11 @@ GUIDES = [
                 "A promo card that drops 30% in an evening can drop another 30% by Sunday. Wait until two price updates agree and the fall flattens before buying, and buy cards you will play rather than cards you hope will bounce back.",
             ]),
             ("How new cards were priced in October 2026", [
-                "Ezzcoins saw 255 new special cards worth 10,000 coins or more arrive on the market between 6 and 26 October 2026 and followed each from its first hourly price reading:",
+                "Ezzcoins followed 129 new promo cards worth 10,000 coins or more (Team of the Week, Future Stars, Ultimate Scream, Star Performer and others) that arrived on the market between 6 and 26 October 2026, from each card's first hourly price reading:",
                 {"table": {"head": ["Time after first price", "Typical change", "Cheaper than first price"],
-                           "rows": [["1 hour", "−10%", "76%"], ["3 hours", "−24%", "82%"], ["6 hours", "−29%", "91%"], ["24 hours", "−51%", "97%"], ["3 days", "−56%", "97%"]],
+                           "rows": [["1 hour", "−9%", "76%"], ["3 hours", "−18%", "83%"], ["6 hours", "−24%", "93%"], ["24 hours", "−34%", "97%"], ["3 days", "−44%", "97%"]],
                            "note": "Median change of each card's console price, compared with its first reading after release."}},
-                "Half of the price was gone within a day, and almost every card was cheaper after 24 hours. If you want a new promo card, waiting a day has been worth about half its price. If you pack one you don't need, the first hours are the best time to sell it.",
+                "A third of the price was gone within a day, and almost every card was cheaper after 24 hours. Team of the Week cards levelled off after their first evening, while other promo cards kept falling for several days (see the Team of the Week guide). If you want a new promo card, waiting at least a day has been worth about a third of its price. If you pack one you don't need, the first hours are the best time to sell it.",
                 "The most common arrival times were 6 PM UK on Wednesdays and Fridays, when new promos and Team of the Week usually land.",
             ]),
         ],
@@ -415,7 +415,7 @@ GUIDES = [
                 "EA keeps 5% of every sale, so a card must rise more than 5% before you make a single coin, and cheap cards need more because of the market's price steps. In October 2026 a typical card worth 10,000+ coins moved less than 1% over two days, which is why most quick flips lose. Before every buy, write down the price you must sell at for a profit worth your time. The break-even table in the small-budget guide does the maths.",
             ]),
             ("Step 2: never pay first-hour promo prices", [
-                "New promo cards start expensive and fall fast. Of the 255 new special cards worth 10,000+ coins that Ezzcoins saw arrive in October, the typical one was 24% cheaper three hours after its first price and 51% cheaper a day later, and 97% were cheaper after 24 hours. If you want a new card, wait at least a day. If you pack one you don't need, the first hours are the best time to sell it.",
+                "New promo cards start expensive and fall fast. Of the 129 new promo cards worth 10,000+ coins that Ezzcoins followed in October, the typical one was 18% cheaper three hours after its first price and 34% cheaper a day later, and 97% were cheaper after 24 hours. If you want a new card, wait at least a day. If you pack one you don't need, the first hours are the best time to sell it.",
             ]),
             ("Step 3: sell into spikes, don't buy them", [
                 "When a card you own jumps 25% or more in a day and you don't need it, selling paid off nearly 9 times in 10 in Ezzcoins' data. Buying a card because it is trending lost money nearly 9 times in 10.",
@@ -435,6 +435,171 @@ GUIDES = [
         ],
         "live": ("calc", "Profit after tax"),
         "related": ["small-budget-bidding", "promo-night"],
+    },
+    {
+        "slug": "fodder-by-day",
+        "num": "12",
+        "published": "2026-10-26",
+        "short": "Fodder by day",
+        "title": "When to Buy SBC Fodder in FC 27: Prices by Day of the Week",
+        "h1": "Fodder by day",
+        "desc": "Which day of the week FC 27 SBC fodder (85 to 88 rated) was cheapest and most expensive in October 2026, from Ezzcoins' hourly price records, and how much the day mattered compared with the hour.",
+        "lead": "If you do a lot of SBCs, the day you buy your fodder matters more than most players think. Ezzcoins tracked the cheapest card at every rating every hour for three weeks. One day stood out as cheap, and one as expensive.",
+        "steps": [("Buy", "On Thursday, after Rivals rewards."),
+                  ("Avoid", "Wednesday, the most expensive day."),
+                  ("Plan", "Stock up for the week, not the evening.")],
+        "sections": [
+            ("How we measured it", [
+                "From 5 to 26 October 2026, Ezzcoins read the console price of the cheapest 85, 86, 87 and 88-rated card every hour. Fodder prices also drift up and down from week to week, so each reading is compared with the middle price over the surrounding seven days. That shows which days were cheap or expensive within their own week.",
+            ]),
+            ("The days compared", [
+                {"table": {"head": ["Day", "85", "86", "87", "88"],
+                           "rows": [["Monday", "0%", "+2.2%", "+0.8%", "+2.3%"], ["Tuesday", "+2.2%", "+6.7%", "+1.6%", "+4.7%"],
+                                    ["Wednesday", "+13.6%", "+7.5%", "+7.8%", "+2.1%"], ["Thursday", "−8.3%", "−6.0%", "−5.0%", "−7.0%"],
+                                    ["Friday", "0%", "−1.0%", "0%", "+2.3%"], ["Saturday", "0%", "−4.1%", "−1.5%", "−1.1%"], ["Sunday", "0%", "0%", "0%", "0%"]],
+                           "note": "Median price of the cheapest card at each rating on that day, compared with the median over the surrounding week. Console, 5 to 26 October 2026."}},
+                "Thursday was the cheapest day for every rating, 5 to 8% below the week's typical price: Rivals rewards pay out that morning and players list the fodder from their reward packs. Wednesday was the most expensive day for 85s to 87s, up to 14% above the week. Tuesday was also on the high side.",
+            ]),
+            ("Day matters more than hour", [
+                "Within a day, the hour made less difference. Most hours were within a few percent of the day's typical price, with no time that was reliably cheap. The one evening effect worth knowing is EA's 6 PM UK content drop: across 23 evenings, the cheapest 85 was 3.8% cheaper and the cheapest 86 3.2% cheaper two hours later than just before 6 PM.",
+            ]),
+            ("Fodder can get dearer from week to week", [
+                {"table": {"head": ["Week starting", "Cheapest 86", "Cheapest 87", "Cheapest 88"],
+                           "rows": [["5 Oct", "4,500", "6,500", "10,800"], ["12 Oct", "4,100", "5,950", "10,600"], ["19 Oct", "5,000", "6,900", "12,000"]],
+                           "note": "Median of each week's hourly readings, in coins, console."}},
+                "Fodder got cheaper in the second week and then 15 to 20% dearer in the third, most likely because new SBCs needed high-rated cards. A big SBC can move fodder prices far more than the day of the week, so check the live board before a large purchase.",
+            ]),
+            ("What to do", [
+                {"list": ["Buy the fodder you will need for the coming week on Thursday, once the rewards dip has come through.",
+                          "Avoid buying large amounts on Tuesday and Wednesday unless an SBC you want is about to end.",
+                          "In the evening, wait until after the 6 PM drop if you can.",
+                          "Only stock up on fodder you are fairly sure to use: reselling costs 5% and the dip isn't guaranteed every week."]},
+                "This is three weeks of data at the start of FC 27, so each weekday appears only three times. Treat it as a pattern worth knowing, not a law; Ezzcoins will update it as the season goes on.",
+            ]),
+        ],
+        "live": ("fodder", "Cheapest fodder right now"),
+        "related": ["rivals-rewards-dip", "fodder-value"],
+    },
+    {
+        "slug": "launch-market",
+        "num": "13",
+        "published": "2026-10-26",
+        "short": "The launch market",
+        "title": "The FC 27 Launch Market: What Rose and What Fell in the First Three Weeks",
+        "h1": "The launch market",
+        "desc": "How FC 27 card prices moved from early to late October 2026, from Ezzcoins' hourly records: Icons and Heroes up about 21%, the most expensive cards up most, cheap gold cards flat, and fodder swinging week to week.",
+        "lead": "The first weeks of a new FC are when the market changes fastest. Ezzcoins compared the price of every card on the market in early October with its price three weeks later. The winners and losers weren't the ones most players expect.",
+        "steps": [("Rose", "Icons, Heroes and the most expensive cards."),
+                  ("Flat", "Ordinary gold cards up to 82."),
+                  ("Fell", "New promo cards, right after release.")],
+        "sections": [
+            ("How we measured it", [
+                "For every card worth 1,000 coins or more, Ezzcoins took the middle of its hourly console prices on 6 and 7 October and on 24 and 25 October 2026, and compared the two. Only cards that were on the market at both times count, so this shows how existing cards held their value, not how new promo cards priced in.",
+            ]),
+            ("What happened, by type of card", [
+                {"table": {"head": ["Cards", "Number", "Typical change", "Share that rose"],
+                           "rows": [["Gold 75 to 82", "419", "0%", "45%"], ["Gold 83 to 84", "82", "+8.3%", "66%"], ["Gold 85 to 86", "88", "+3.4%", "60%"],
+                                    ["Gold 87 to 88", "46", "+12.6%", "72%"], ["Gold 89 and up", "27", "−2.4%", "30%"],
+                                    ["Promo cards already out on 6 Oct", "118", "+9.8%", "76%"], ["Icons", "131", "+20.8%", "98%"], ["Heroes", "89", "+22.0%", "96%"]],
+                           "note": "Median change from 6 and 7 October to 24 and 25 October 2026, console. \"Gold\" means base rare cards."}},
+                "Icons and Heroes were the clearest story: almost every one rose, by about a fifth. Promo cards that were already out at the start of October also gained. Ordinary gold cards rated up to 82 went nowhere on balance, and the very top base golds, 89 and up, slipped.",
+            ]),
+            ("The more expensive the card, the more it rose", [
+                {"table": {"head": ["Price on 6 to 7 Oct", "Number", "Typical change", "Share that fell"],
+                           "rows": [["1,000 to 10,000", "920", "+6.7%", "35%"], ["10,000 to 50,000", "192", "+7.0%", "29%"], ["50,000 to 250,000", "176", "+9.5%", "36%"],
+                                    ["250,000 to 1 million", "270", "+23.5%", "13%"], ["1 million and up", "123", "+16.2%", "9%"]],
+                           "note": "Same cards and dates, grouped by their starting price."}},
+                "Cards above 250,000 coins rose the most and fell the least. A likely reason is that coins keep entering the game as players earn rewards and sell their packs, while the supply of the rarest cards grows slowly, so more coins chase the same few cards.",
+            ]),
+            ("Icons and Heroes week by week", [
+                "The rise wasn't a single jump. The typical Icon was about 1% above its early-October price on 8 October, 5% on the 10th, 12% on the 16th, 15% from the 18th to the 22nd and 21% by the 24th. Heroes followed almost the same path.",
+                "Not every one rose: John Arne Riise's Hero card fell 15% and Zico's Icon about 9%. The biggest risers were Aya Miyama (from about 540,000 to 940,000 coins), Marinette Pichon (+55%) and Jay-Jay Okocha (+48%).",
+            ]),
+            ("Fodder swung, new cards fell", [
+                "Mid-rated gold cards moved with SBC demand rather than steadily: the typical 83 or 84 was 35% below its early-October price on 18 October and 8% above it on the 24th. And new promo cards behaved completely differently from the cards above: the typical new one lost about a third of its price in its first day (see Promo-night patience).",
+            ]),
+            ("What it means and what it doesn't", [
+                {"list": ["In these weeks, holding Icons, Heroes and high-end cards preserved coins better than holding cheap gold cards.",
+                          "Buying new promo cards at release lost coins; buying established cards didn't.",
+                          "Three weeks at the start of a game is not a season. Big promos or new versions of popular players can turn a rising card around quickly, and every sale costs 5%."]},
+            ]),
+        ],
+        "live": None,
+        "related": ["promo-night", "dips-and-spikes"],
+    },
+    {
+        "slug": "console-vs-pc",
+        "num": "14",
+        "published": "2026-10-26",
+        "short": "Console vs PC",
+        "title": "FC 27 Console vs PC Prices: Why One Price Doesn't Fit Both",
+        "h1": "Console vs PC prices",
+        "desc": "How different FC 27 Transfer Market prices were on console and PC in October 2026, which cards differed most, and why you should always check the price for your own platform.",
+        "lead": "Ultimate Team has separate Transfer Markets: console (PlayStation and Xbox) and PC. Price sites show both, but many players read whichever comes first. Ezzcoins compared the two for every card, and the gap is bigger than most people think.",
+        "steps": [("Check", "The price for your own platform."),
+                  ("Expect", "PC to be dearer for the most expensive cards."),
+                  ("Don't", "Assume a gap stays the same.")],
+        "sections": [
+            ("The overall gap changed week to week", [
+                {"table": {"head": ["Date", "Cards compared", "PC vs console (typical)", "Cheaper on PC"],
+                           "rows": [["8 Oct", "2,033", "−5.0%", "53%"], ["12 Oct", "2,143", "0%", "47%"], ["16 Oct", "1,884", "+4.5%", "37%"],
+                                    ["20 Oct", "2,051", "0%", "45%"], ["24 Oct", "1,998", "+7.0%", "33%"], ["26 Oct", "2,159", "+8.3%", "32%"]],
+                           "note": "Cards worth 1,000+ coins on console with a price on both platforms, read at about 8 AM UK each day."}},
+                "In early October PC was slightly cheaper than console for just over half of the cards. By late October it had turned around: the typical card was about 8% dearer on PC, and only a third were cheaper there. The two markets have different players, different pack openings and different coin supplies, so they drift apart.",
+            ]),
+            ("Which cards differ most", [
+                {"table": {"head": ["Console price", "Cards", "PC vs console (typical)", "Dearer on PC", "Within 10%"],
+                           "rows": [["1,000 to 10,000", "1,316", "+8.3%", "59%", "27%"], ["10,000 to 50,000", "263", "−1.9%", "36%", "65%"],
+                                    ["50,000 to 250,000", "193", "+5.6%", "60%", "39%"], ["250,000 to 1 million", "270", "+13.8%", "86%", "33%"],
+                                    ["1 million and up", "117", "+26.3%", "96%", "13%"]],
+                           "note": "26 October 2026, about 8 AM UK."}},
+                "The most expensive cards showed the biggest and most consistent gap: above 1 million coins, almost every card was dearer on PC, typically by about a quarter. Mid-priced cards from 10,000 to 50,000 coins were the closest, with two in three within 10%. Cheap cards were the least predictable: one in seven was either at least twice as expensive or at most half the price on PC.",
+            ]),
+            ("Why it matters", [
+                "If you play on PC and plan a trade or an SBC from console prices, you can be out by a quarter on a big card, and the 5% tax leaves no room for that. The same goes the other way. A gap between the two markets is not a trading opportunity either: coins can't move between platforms.",
+            ]),
+            ("How to use Ezzcoins on PC", [
+                "Every price graph on a player page has a platform switch, and the price table can show PC prices. Set it once to your platform. The trade desk's calls and the guides use console prices, so on PC treat them as a guide to the pattern, not to the exact numbers.",
+            ]),
+        ],
+        "live": None,
+        "related": ["small-budget-bidding", "launch-market"],
+    },
+    {
+        "slug": "team-of-the-week",
+        "num": "15",
+        "published": "2026-10-26",
+        "short": "Team of the Week",
+        "title": "Team of the Week Cards in FC 27: When to Buy and When to Sell",
+        "h1": "Team of the Week",
+        "desc": "How FC 27 Team of the Week card prices moved after release in October 2026 compared with other promo cards: when they bottomed out, how far they fell, and when to buy or sell.",
+        "lead": "A new Team of the Week arrives every Wednesday at 6 PM UK. Ezzcoins followed every TOTW card from its first price and compared them with the other promo cards released in October. They behave very differently.",
+        "steps": [("Sell", "A packed TOTW card in its first hours."),
+                  ("Buy", "TOTW from Thursday evening, not on Wednesday."),
+                  ("Wait", "Several days for other promo cards.")],
+        "sections": [
+            ("How we measured it", [
+                "Between 6 and 26 October 2026 three Teams of the Week were released, on 7, 14 and 21 October, each at 6 to 7 PM UK. Ezzcoins followed the 71 TOTW cards priced at 1,000 coins or more, and 57 cards from other promos (Future Stars, Ultimate Scream, Star Performer and others), from each card's first hourly console price. The typical TOTW card started at about 14,500 coins.",
+            ]),
+            ("TOTW drops on the first evening, then levels off", [
+                {"table": {"head": ["After release", "TOTW (typical)", "Other promos (typical)"],
+                           "rows": [["1 hour", "−6%", "−15%"], ["6 hours", "−17%", "−40%"], ["1 day", "−17%", "−49%"], ["2 days", "−19%", "−53%"],
+                                    ["3 days", "−18%", "−57%"], ["6 days", "−18%", "−63%"]],
+                           "note": "Median change from each card's first price. Console, October 2026. Fewer cards have 6-day prices because the last release was on 21 October."}},
+                "Team of the Week cards lost about a sixth of their price in the first six hours and then hardly moved for the rest of the week. Other promo cards fell much further and for much longer: about half their price in a day, and close to two thirds by day six.",
+            ]),
+            ("When the bottom came", [
+                "For TOTW cards, the lowest price of the week typically came about one day after release, and by day seven the typical card was about 9% above that low. Other promo cards kept falling: their lowest point typically came almost five days after release, and they were about 17% above it by day seven.",
+            ]),
+            ("What to do", [
+                {"list": ["If you pack a TOTW card you don't need, sell it on the first evening: most of the fall happens in the first six hours.",
+                          "If you want a TOTW card, buy it from Thursday evening onwards. Waiting longer saved little, and the price often edged up again later in the week.",
+                          "For other promo cards, patience paid much more: waiting four or five days typically saved more than half the release price.",
+                          "Remember that TOTW cards can rise when the player keeps playing well and gets another in-form, or fall when demand moves on. A single week's pattern is a guide, not a promise."]},
+            ]),
+        ],
+        "live": None,
+        "related": ["promo-night", "launch-market"],
     },
 ]
 BY_SLUG = {g["slug"]: g for g in GUIDES}
@@ -482,12 +647,12 @@ def hub_html():
     cards = "".join(f'<a class="guide-card" href="{g["slug"]}/"><span class="o">{g["num"]}</span><span class="n">{e(g["h1"])}</span>'
                     f'<span class="d">{e(g["lead"])}</span></a>' for g in GUIDES)
     body = (f'<p class="kicker">The Ezzcoins playbook</p><h1>FC 27 trading guides</h1>'
-            f'<p class="lead">Eleven guides to trading FC 27 Ultimate Team with your eyes open. The first six cover the setups Ezzcoins trades and grades; the rest are built on the site\'s own hourly price records, from what happens after dips and spikes to how often a single price reading is wrong. Most show live data from the site.</p>'
+            f'<p class="lead">Fifteen guides to trading FC 27 Ultimate Team with your eyes open. The first six cover the setups Ezzcoins trades and grades; the rest are built on the site\'s own hourly price records, from what happens after dips and spikes to when fodder is cheapest, how Team of the Week cards are priced and how console and PC prices differ. Most show live data from the site.</p>'
             f'<div class="guide-grid">{cards}</div><p class="more-links"><a href="{up}recap/">This week\'s market recap ›</a></p>')
     schema = [{"@context": "https://schema.org", "@type": "CollectionPage", "name": "FC 27 trading guides", "url": BASE + "guides/",
                "hasPart": [{"@type": "Article", "headline": g["title"], "url": BASE + f"guides/{g['slug']}/"} for g in GUIDES]}]
     return "guides/", page(title="FC 27 Trading Guides · Ezzcoins", path="guides/", up=up, body=body, schema=schema,
-                           desc="Free FC 27 Ultimate Team trading guides: SBC fodder value, the Rivals rewards dip, midweek buying, promo nights, the 5% tax, dips and spikes, price glitches, the meta rating and a beginner's plan.",
+                           desc="Free FC 27 Ultimate Team trading guides built on real price data: SBC fodder timing, the Rivals rewards dip, promo and Team of the Week prices, the 5% tax, dips and spikes, console vs PC, the meta rating and a beginner's plan.",
                            crumbs=[("Ezzcoins", ""), ("Guides", None)])
 
 
