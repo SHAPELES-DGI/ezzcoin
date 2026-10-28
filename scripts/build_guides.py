@@ -16,7 +16,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from site_page import BASE, e, page, write  # noqa: E402
 
 ROOT = sys.argv[1] if len(sys.argv) > 1 else os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
-UPDATED = "2026-10-26"   # bump when a guide's text changes
+UPDATED = "2026-10-28"   # bump when a guide's text changes
 FIRST = "2026-10-13"     # first six guides published; later ones carry their own "published" date
 
 PUBLISHER = {"@type": "Organization", "name": "Ezzcoins", "url": BASE, "logo": {"@type": "ImageObject", "url": BASE + "icon-512.png"}}
@@ -601,6 +601,202 @@ GUIDES = [
         "live": None,
         "related": ["promo-night", "launch-market"],
     },
+    {
+        "slug": "big-cards-by-day",
+        "published": "2026-10-28",
+        "num": "16",
+        "short": "Big cards by day",
+        "title": "When to Buy and Sell Expensive FC 27 Cards: The Weekend Premium",
+        "h1": "Big cards by day",
+        "desc": "Which days and hours FC 27 cards worth 10,000 and 100,000+ coins were cheapest and dearest in October 2026: a small weekend premium, a midweek low, and why the swing is smaller than the 5% tax.",
+        "lead": "Fodder is cheapest on Thursday, but most players also buy and sell bigger cards for their squads. Ezzcoins measured how the price of cards worth 10,000 and 100,000+ coins moved through the week, hour by hour.",
+        "steps": [("Buy", "Squad cards from Tuesday to Thursday."),
+                  ("Sell", "Cards you don't need on Friday evening or Saturday."),
+                  ("Remember", "The swing is smaller than the tax: don't flip it.")],
+        "sections": [
+            ("How we measured it", [
+                "For every card worth 10,000 coins or more on console, Ezzcoins compared each hourly price from 9 to 25 October 2026 with the same card's median over the surrounding week, three and a half days either side. That removes the slow rise or fall of a card over the month and leaves the weekly rhythm. We then averaged across 988 cards, 593 of them worth 100,000 coins or more.",
+            ]),
+            ("The week, day by day", [
+                {"table": {"head": ["Day (UK)", "Cards 10K+", "Cards 100K+"],
+                           "rows": [["Monday", "+0.5%", "+0.5%"], ["Tuesday", "−0.2%", "−0.5%"], ["Wednesday", "+0.1%", "−0.5%"], ["Thursday", "−1.2%", "−0.5%"],
+                                    ["Friday", "+0.6%", "+1.5%"], ["Saturday", "+1.1%", "+1.7%"], ["Sunday", "+0.9%", "+1.3%"]],
+                           "note": "Average price compared with the same card's typical price that week. Console, 9 to 25 October 2026."}},
+                "Expensive cards were cheapest from Tuesday to Thursday and dearest from Friday to Sunday, when players build their squads for Champions weekend. Cards worth 10,000+ coins as a whole were also cheapest on Thursday (−1.2%), the same dip fodder shows when Rivals reward packs are opened and listed.",
+            ]),
+            ("The dearest and cheapest hours", [
+                "For cards worth 100,000+ coins, the most expensive four-hour slots were Friday 8 PM to midnight and Saturday 4 AM to noon UK, about 2.5% above the week's typical price. The cheapest was Wednesday evening, about 1.4% below, followed by the early hours of Thursday. Across a whole day the hour made little difference: every four-hour block averaged within about 1% of typical.",
+            ]),
+            ("Why you can't flip the weekly rhythm", [
+                "The gap between the cheapest and the dearest moment of the week was about 4% for cards worth 100,000+ coins. EA's tax takes 5% of every sale, so buying on Wednesday evening and selling on Saturday morning would still have lost coins on a typical card. On a 500,000-coin card the weekly swing is worth about 20,000 coins, but the tax on the sale is 25,000.",
+                "Where the rhythm does pay is when you were going to trade anyway. If you are buying a card to play with, buying it midweek instead of at the weekend saved about 2%. If you are selling a card you no longer use, listing it on Friday evening or Saturday morning fetched a little more.",
+            ]),
+            ("When the pattern breaks", [
+                "Promos override the weekly rhythm. A strong Friday promo floods the market with new cards and can push prices down at exactly the moment they would normally peak, and a big SBC can lift one card on any day. Treat the weekly pattern as a tie-breaker, not as a reason to trade on its own.",
+                "These figures cover two full weeks early in FC 27. Ezzcoins will rerun them as more weeks are recorded.",
+            ]),
+        ],
+        "live": None,
+        "related": ["fodder-by-day", "midweek-specials"],
+    },
+    {
+        "slug": "daily-moves",
+        "published": "2026-10-28",
+        "num": "17",
+        "short": "Normal price moves",
+        "title": "How Much Do FC 27 Prices Move in a Day? What Counts as a Real Move",
+        "h1": "Normal price moves",
+        "desc": "How much FC 27 card prices normally move in an hour and in a day, by price range, measured on every card in October 2026, and how big a move has to be before it means anything.",
+        "lead": "A card is 10% cheaper than yesterday. Is that a bargain, or just a normal day? It depends almost entirely on what the card costs. Ezzcoins measured how far every card's price normally moves, so you can tell a real move from noise.",
+        "steps": [("Know", "What a normal day looks like for the card's price range."),
+                  ("Ignore", "Moves inside that normal range."),
+                  ("Act", "Only on moves well outside it, confirmed twice.")],
+        "sections": [
+            ("How we measured it", [
+                "Ezzcoins compared every card's console price with its price an hour later and a day later, for every card worth 1,000 coins or more, from 5 to 28 October 2026: about 2,100 cards in all. The tables show how big a move was typical, and how big a move only happened on the busiest days.",
+            ]),
+            ("A normal day, by price", [
+                {"table": {"head": ["Card price", "Typical move in a day", "1 day in 4, at least", "1 day in 10, at least"],
+                           "rows": [["1,000 to 5,000", "12%", "26%", "50%"], ["5,000 to 20,000", "5%", "11%", "24%"], ["20,000 to 100,000", "5%", "9%", "16%"],
+                                    ["100,000 to 500,000", "4%", "7%", "12%"], ["500,000 and up", "3%", "6%", "11%"]],
+                           "note": "Size of the change in console price over 24 hours, up or down. 5 to 28 October 2026."}},
+                "For a card worth half a million coins, a 3% move in a day is ordinary and 11% happens about one day in ten. For a card worth 3,000 coins, a 12% move is ordinary and a 50% move happens about one day in ten. The same 10% fall can be news on an Icon and nothing at all on cheap fodder.",
+            ]),
+            ("Hour by hour", [
+                {"table": {"head": ["Card price", "Price unchanged after an hour", "Typical hourly move", "1 hour in 20, at least"],
+                           "rows": [["1,000 to 5,000", "35%", "6%", "31%"], ["5,000 to 20,000", "32%", "2%", "15%"], ["20,000 to 100,000", "14%", "2%", "9%"],
+                                    ["100,000 to 500,000", "9%", "2%", "8%"], ["500,000 and up", "12%", "2%", "10%"]],
+                           "note": "Change in console price from one hourly reading to the next."}},
+                "About a third of cheap cards didn't move at all from one hour to the next, and the rest often jumped by a whole price step. Expensive cards moved a little almost every hour.",
+            ]),
+            ("Why cheap cards look so jumpy", [
+                "Much of it is the market's price steps. Below 10,000 coins prices move in steps of 100, so a 1,200-coin card that moves a single step has changed by more than 8%. A 600,000-coin card moves in steps of 1,000, a sixth of a percent. Cheap cards also have many listings at the floor price, and the cheapest one can disappear and come back within minutes.",
+            ]),
+            ("How to use this", [
+                {"list": ["Before reacting to a move, check what a normal day looks like for that price range in the table above.",
+                          "For cards under 5,000 coins, ignore anything below about 25% unless it lasts for more than a day.",
+                          "For cards worth 100,000+ coins, a move of more than about 12% in a day is unusual and worth a closer look.",
+                          "Always wait for a second price update: an unusual move from a single reading is often a glitch (see Price glitches).",
+                          "Remember the 5% tax: a move smaller than about 6% can't be traded profitably, however real it is."]},
+            ]),
+            ("How Ezzcoins uses it", [
+                "This is why Ezzcoins' Trending list only includes cards worth 5,000+ coins, why the trade desk only calls moves on cards worth 10,000+, and why both need a move to show in two readings an hour apart before they treat it as real.",
+            ]),
+        ],
+        "live": ("hype", "Biggest rises in the last day"),
+        "related": ["price-glitches", "dips-and-spikes"],
+    },
+    {
+        "slug": "trading-glossary",
+        "published": "2026-10-28",
+        "num": "18",
+        "short": "Trading glossary",
+        "title": "FC 27 Ultimate Team Trading Glossary: The Terms Explained",
+        "h1": "Trading glossary",
+        "desc": "Plain-English explanations of the FC 27 Ultimate Team trading terms used on Ezzcoins and across the community: BIN, sniping, the EA tax, floors, fodder, SBCs, Evolutions, meta cards, TOTW, extinct cards and more.",
+        "lead": "Trading talk is full of shorthand. This glossary explains the terms used on Ezzcoins and across the FC community in plain English, with what each one means for your coins.",
+        "steps": [("Read", "The terms you meet most: BIN, tax, floor, fodder."),
+                  ("Learn", "How the market's rules shape every trade."),
+                  ("Use", "The guides linked here to go deeper.")],
+        "sections": [
+            ("Buying and selling", [
+                {"list": ["Buy Now (BIN): the fixed price at which a seller lets you buy a card instantly. Price sites, Ezzcoins included, show the lowest current Buy Now.",
+                          "Bid: an offer in a card's auction. The highest bid when the timer runs out wins, unless someone uses Buy Now first.",
+                          "Sniping: searching for cards listed far below their usual price and buying them before anyone else. Done by hand, it is a normal part of trading.",
+                          "Mass bidding: placing many low bids on the same card, hoping to win some below the Buy Now price.",
+                          "Flip: buying a card and selling it again for a profit, usually quickly.",
+                          "Margin: the difference between what you receive after tax and what you paid.",
+                          "Relist: putting an unsold card back on the market, often at a new price."]},
+            ]),
+            ("The market's rules", [
+                {"list": ["EA tax: EA keeps 5% of every sale. You receive the sale price × 0.95, rounded down, so a card must rise about 5.3% before you break even (see Small-budget bidding).",
+                          "Price steps: prices move in fixed steps, 50 coins below 1,000, 100 up to 10,000, 250 up to 50,000, 500 up to 100,000 and 1,000 above that.",
+                          "Price range: EA sets a minimum and maximum price for each card, and you can't list it outside that range.",
+                          "Maximum price: the highest price the market allows, 15,000,000 coins. A price site showing exactly that usually means there were no real listings.",
+                          "Break-even price: the lowest sale price that gives back what you paid after tax.",
+                          "Max buy: the highest price you can pay for a card and still make the margin you want when you sell."]},
+            ]),
+            ("Prices and movements", [
+                {"list": ["Floor: the cheapest price a card, or the cheapest card at a rating, currently sells for.",
+                          "Extinct: a card with no listings at all. Its price shows as the maximum, or not at all.",
+                          "Price glitch: a single wrong price reading, often from one mispriced listing (see Price glitches).",
+                          "Dip and spike: a sharp fall or rise in a card's price, usually measured over a day (see Dips and spikes).",
+                          "Market crash: a broad fall in prices, often when a big promo floods the market with new cards.",
+                          "Supply: how many copies of a card are being listed. Rewards and pack openings raise supply and push prices down."]},
+            ]),
+            ("Cards and squads", [
+                {"list": ["Fodder: cheap cards bought to hand in for SBCs, usually rated 83 to 88.",
+                          "SBC (Squad Building Challenge): a task where you hand in a squad that meets set rules in return for a reward. Handed-in cards leave the game, which is why SBCs create lasting demand.",
+                          "Evolutions (Evos): upgrades that improve a card that meets certain requirements, which can raise demand for those cards.",
+                          "Meta card: a card that plays far better than its overall rating suggests, usually fast with good skill moves and weak foot. Ezzcoins' meta rating estimates this (see The meta rating).",
+                          "PlayStyle and PlayStyle+: special abilities on a card. A PlayStyle+ is the stronger version and can add a lot to a card's value.",
+                          "Chemistry: how well the players in a squad link through club, league and nation. Chemistry styles boost certain stats.",
+                          "Tradeable and untradeable: untradeable cards can't be sold on the market, so their price doesn't matter for trading.",
+                          "Quick sell: discarding a card to EA for a small fixed amount of coins instead of selling it on the market."]},
+            ]),
+            ("Promos and the weekly cycle", [
+                {"list": ["Team of the Week (TOTW): upgraded cards for players who played well in real matches, released every Wednesday at 6 PM UK (see Team of the Week).",
+                          "In-form: a boosted version of a player's card, such as a TOTW card.",
+                          "Promo: a themed set of special cards released over a week or more, usually on Friday at 6 PM UK.",
+                          "Content drop: new content EA releases every evening at 6 PM UK.",
+                          "Icons and Heroes: cards of retired legends. They are among the most expensive cards and behaved very differently from ordinary cards in October 2026 (see The launch market).",
+                          "Rivals rewards: weekly rewards for Division Rivals, paid on Thursday morning UK time. Their packs cause the Thursday dip.",
+                          "Champions (FUT Champions): the weekend competition, which lifts demand for meta cards from Friday evening."]},
+            ]),
+            ("Ezzcoins' own terms", [
+                {"list": ["Meta rating: Ezzcoins' estimate of how well a card plays at each position it can play, from its stats, skill moves, weak foot and PlayStyles+.",
+                          "Two-reading rule: Ezzcoins only trusts a price, a move or a call when two readings about an hour apart agree.",
+                          "Trade call: a written buy or sell suggestion from the Ezzcoins desk, with an entry price and a check time, graded automatically after tax (see How calls are graded).",
+                          "Paper test: replaying a strategy on recorded prices to see whether its calls would have made coins, before using it for real."]},
+            ]),
+        ],
+        "live": ("calc", "Profit after tax"),
+        "related": ["small-budget-bidding", "first-100k"],
+    },
+    {
+        "slug": "trading-safely",
+        "published": "2026-10-28",
+        "num": "19",
+        "short": "Trading safely",
+        "title": "Trading Safely in FC 27: How to Avoid Scams, Bans and Lost Coins",
+        "h1": "Trading safely",
+        "desc": "How to protect your FC 27 Ultimate Team account and coins while trading: why buying coins and using bots puts your account at risk, how coin and login scams work, and the habits that keep your club safe.",
+        "lead": "The fastest way to lose a club isn't a bad trade. It's handing your account to someone else, buying coins, or using a tool that trades for you. Here's how to trade without putting your club at risk.",
+        "steps": [("Never", "Share your EA login or buy coins."),
+                  ("Protect", "Your account with EA's login verification."),
+                  ("Trade", "By hand, at a human pace.")],
+        "sections": [
+            ("Don't buy coins", [
+                "Buying FC coins from a website or a seller breaks EA's rules. The coins usually reach you through deliberately overpriced trades, which EA can spot: the coins can be removed, your Transfer Market access can be restricted, and the account can be banned. Some sellers also ask for your EA login to \"deliver\" the coins, which hands them your whole club.",
+                "No legitimate coin seller exists in EA's eyes. Ezzcoins never sells coins, accounts or boosting, and never links to anyone who does.",
+            ]),
+            ("Don't let anything trade for you", [
+                "Bots, auto-buyers and browser extensions that search, bid or buy automatically also break EA's rules, whatever they promise. They need access to your account, they trade at a pace no person can, and that is exactly what EA's systems look for. Searching or bidding at a very high pace for a long time, even by hand, can lead to a temporary block on the Transfer Market.",
+            ]),
+            ("How scams usually work", [
+                {"list": ["Free coins or packs: a message, video or giveaway asks you to log in on a page that looks like EA's. It isn't, and it records your password.",
+                          "Account checks: someone claims to work for EA or a big site and asks for your login or a verification code. EA staff never ask for your password.",
+                          "Coin \"investments\": someone offers to double your coins if you buy their cards at a high price. You pay, they keep the coins.",
+                          "Account selling: buying or sharing a club is against EA's rules, and the original owner can often take it back."]},
+            ]),
+            ("Protect your account", [
+                {"list": ["Turn on login verification for your EA account, so a new device needs a code as well as your password.",
+                          "Use a password you don't use anywhere else.",
+                          "Only log in through the game, the official app or EA's own website, never through a link someone sent you.",
+                          "Never share a login code, even with friends."]},
+                "If you think someone has got into your account, change your password straight away and contact EA's help service through EA's official website.",
+            ]),
+            ("Protect your coins", [
+                "Most coins are lost to ordinary mistakes rather than scams. Count the 5% tax before every buy, don't chase a card in the first hour of a promo, don't buy a card just because it is trending, and spread your coins over more than one card. The Ezzcoins guides show how each of these played out in October 2026.",
+                "Keep it a game. Never spend money you need on FC Points to chase a card, and take a break if trading stops being fun.",
+            ]),
+            ("Ezzcoins and your account", [
+                "Ezzcoins never asks for your EA login and never needs it. Signing in on Ezzcoins, which is only needed to save a watchlist, uses a Google account and has no connection to your EA account. Anyone messaging you in Ezzcoins' name and asking for EA details is not us.",
+            ]),
+        ],
+        "live": None,
+        "related": ["first-100k", "how-calls-are-graded"],
+    },
 ]
 BY_SLUG = {g["slug"]: g for g in GUIDES}
 
@@ -647,12 +843,12 @@ def hub_html():
     cards = "".join(f'<a class="guide-card" href="{g["slug"]}/"><span class="o">{g["num"]}</span><span class="n">{e(g["h1"])}</span>'
                     f'<span class="d">{e(g["lead"])}</span></a>' for g in GUIDES)
     body = (f'<p class="kicker">The Ezzcoins playbook</p><h1>FC 27 trading guides</h1>'
-            f'<p class="lead">Fifteen guides to trading FC 27 Ultimate Team with your eyes open. The first six cover the setups Ezzcoins trades and grades; the rest are built on the site\'s own hourly price records, from what happens after dips and spikes to when fodder is cheapest, how Team of the Week cards are priced and how console and PC prices differ. Most show live data from the site.</p>'
+            f'<p class="lead">Nineteen guides to trading FC 27 Ultimate Team with your eyes open. The first six cover the setups Ezzcoins trades and grades; most of the rest are built on the site\'s own hourly price records, from what happens after dips and spikes to when fodder and big cards are cheapest, how Team of the Week cards are priced and how console and PC prices differ. There is also a glossary of trading terms and a guide to trading safely.</p>'
             f'<div class="guide-grid">{cards}</div><p class="more-links"><a href="{up}recap/">This week\'s market recap ›</a></p>')
     schema = [{"@context": "https://schema.org", "@type": "CollectionPage", "name": "FC 27 trading guides", "url": BASE + "guides/",
                "hasPart": [{"@type": "Article", "headline": g["title"], "url": BASE + f"guides/{g['slug']}/"} for g in GUIDES]}]
     return "guides/", page(title="FC 27 Trading Guides · Ezzcoins", path="guides/", up=up, body=body, schema=schema,
-                           desc="Free FC 27 Ultimate Team trading guides built on real price data: SBC fodder timing, the Rivals rewards dip, promo and Team of the Week prices, the 5% tax, dips and spikes, console vs PC, the meta rating and a beginner's plan.",
+                           desc="Free FC 27 Ultimate Team trading guides built on real price data: SBC fodder timing, the Rivals rewards dip, promo and Team of the Week prices, the 5% tax, dips and spikes, normal price moves, console vs PC, the meta rating, a glossary and trading safely.",
                            crumbs=[("Ezzcoins", ""), ("Guides", None)])
 
 
