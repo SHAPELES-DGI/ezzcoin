@@ -10,6 +10,11 @@
 "ovr": 74,
 "why": "no Wikidata footballer with this name and a photo"
 },
+"225201": {
+"name": "Alejandro Berenguer Remiro",
+"ovr": 79,
+"why": "no Wikidata footballer with this name and a photo"
+},
 "236532": {
 "name": "Robin Koch",
 "ovr": 79,
@@ -290,6 +295,11 @@
 "ovr": 69,
 "why": "no Wikidata footballer with this name and a photo"
 },
+"80454": {
+"name": "Wael Mohya",
+"ovr": 71,
+"why": "no Wikidata footballer with this name and a photo"
+},
 "80674": {
 "name": "Pedro Fernández",
 "ovr": 73,
@@ -320,6 +330,11 @@
 "ovr": 66,
 "why": "no Wikidata footballer with this name and a photo"
 },
+"83510": {
+"name": "Kristian Lonebu",
+"ovr": 65,
+"why": "no Wikidata footballer with this name and a photo"
+},
 "84016": {
 "name": "Ousmane Diabate",
 "ovr": 65,
@@ -329,8 +344,13 @@
 "name": "André Henrique da Silva Martins",
 "ovr": 70,
 "why": "no Wikidata footballer with this name and a photo"
+},
+"87128": {
+"name": "João Guilherme de Souza Crispim",
+"ovr": 63,
+"why": "no Wikidata footballer with this name and a photo"
 }
 },
-"photos": 841,
-"players": 979
+"photos": 855,
+"players": 995
 }
