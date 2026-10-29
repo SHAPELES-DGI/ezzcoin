@@ -1,9 +1,11 @@
 name: Site check
-# Every 15 minutes: is ezzcoins.com up, and are its prices updating? If not, check again 3 minutes later (short
+# Every 15 minutes: is ezzcoins.com up, served by our own server, with ads.txt in place and prices updating? If not,
+# check again 3 minutes later (short
 # network blips between GitHub and the server happen), and if it still fails open a "site-down" issue, which GitHub
 # emails to the repository owner. The alert says whether the server itself is still running: it starts a price
-# update on GitHub every 3 minutes, so a recent one means the server is alive. The issue closes by itself once
-# everything works. GitHub may start scheduled runs some minutes late.
+# update on GitHub every 3 minutes, so a recent one means the server is alive. Each problem says what actually came
+# back (status, address, page title), and an open alert gets an emailed reminder every 6 hours. The issue closes by
+# itself once everything works. GitHub may start scheduled runs some minutes late.
 on:
   schedule:
     - cron: '7-59/15 * * * *'
@@ -30,19 +32,52 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           TEST_ALERT: ${{ inputs.test_alert }}
         run: |
-          fetch() { curl -fsS -m 20 --retry 2 --retry-delay 15 --retry-all-errors -A "Ezzcoins site check" "$1"; }
+          SERVER_IP=187.7.75.8                     # the Hostinger VPS that ezzcoins.com should point to
+          body="$RUNNER_TEMP/body"
+          # probe URL: sets code (HTTP status, 000 if no answer) and ip (the address that answered); the reply is in $body.
+          probe() {
+            local out
+            rm -f "$body"
+            out=$(curl -sS -m 20 --retry 2 --retry-delay 15 --retry-all-errors -A "Ezzcoins site check" -o "$body" -w '%{http_code} %{remote_ip}' "$1" 2>/dev/null) || true
+            code=${out%% *}; ip=${out##* }; [ -n "$code" ] || code=000; [ -n "$ip" ] || ip=unknown
+          }
+          # What actually came back, so an alert says what visitors (and Google) were shown.
+          seen() {
+            python3 - "$body" "$code" "$ip" <<'PY'
+          import re, sys
+          try:
+              b = open(sys.argv[1], "rb").read(6000).decode("utf-8", "replace")
+          except OSError:
+              b = ""
+          m = re.search(r"<title[^>]*>(.*?)</title>", b, re.S | re.I)
+          what = ('page title "' + re.sub(r"\s+", " ", m.group(1)).strip()[:90] + '"') if m else ('starting "' + re.sub(r"\s+", " ", b).strip()[:90] + '"') if b.strip() else "an empty reply"
+          print(f"HTTP {sys.argv[2]} from {sys.argv[3]}, {what}")
+          PY
+          }
           check_site() {
-            problems=""
-            if ! home=$(fetch https://ezzcoins.com/ 2>&1); then
-              problems="${problems}- The website doesn't load: $(printf '%s' "$home" | tail -1)"$'\n'
-            elif ! printf '%s' "$home" | grep -q "Ezzcoins"; then
-              problems="${problems}- The website answers, but not with the Ezzcoins page."$'\n'
+            problems=""; answered=""
+            probe https://ezzcoins.com/
+            answered="$ip"
+            if [ "$code" != 200 ]; then
+              problems="${problems}- The website doesn't load ($(seen))."$'\n'
+            elif ! grep -q "Ezzcoins" "$body"; then
+              problems="${problems}- The website answers, but not with the Ezzcoins page ($(seen))."$'\n'
             fi
-            if ! check=$(fetch https://ezzcoins.com/live/check.json 2>&1); then
-              problems="${problems}- The live prices on the server don't load: $(printf '%s' "$check" | tail -1)"$'\n'
+            if [ "$answered" != unknown ] && [ "$answered" != "$SERVER_IP" ]; then
+              problems="${problems}- ezzcoins.com now points to ${answered} instead of your server (${SERVER_IP}). In Hostinger, open Domains → ezzcoins.com → DNS and set the A record named @ back to ${SERVER_IP}."$'\n'
+            fi
+            probe https://ezzcoins.com/ads.txt
+            if [ "$code" != 200 ] || ! grep -q "pub-5351346431839799" "$body"; then
+              problems="${problems}- ads.txt, which Google AdSense checks, isn't served correctly ($(seen))."$'\n'
+            fi
+            probe https://ezzcoins.com/live/check.json
+            if [ "$code" != 200 ]; then
+              problems="${problems}- The live prices on the server don't load ($(seen))."$'\n'
             else
-              age=$(python3 -c 'import json,sys,datetime as d; t=json.loads(sys.argv[1])["checkedAt"]; print(int((d.datetime.now(d.timezone.utc)-d.datetime.fromisoformat(t.replace("Z","+00:00"))).total_seconds()//60))' "$check" 2>/dev/null || echo 9999)
-              if [ "$age" -gt 60 ]; then
+              age=$(python3 -c 'import json,sys,datetime as d; t=json.load(open(sys.argv[1]))["checkedAt"]; print(int((d.datetime.now(d.timezone.utc)-d.datetime.fromisoformat(t.replace("Z","+00:00"))).total_seconds()//60))' "$body" 2>/dev/null || echo "")
+              if [ -z "$age" ]; then
+                problems="${problems}- The live price check file can't be read ($(seen))."$'\n'
+              elif [ "$age" -gt 60 ]; then
                 problems="${problems}- Prices haven't been checked for ${age} minutes (normally every 3)."$'\n'
               fi
             fi
@@ -58,7 +93,7 @@ jobs:
           last=$(gh api "repos/$GITHUB_REPOSITORY/actions/workflows/live-prices.yml/runs?event=workflow_dispatch&per_page=1" --jq '.workflow_runs[0].created_at' 2>/dev/null || true)
           ago=$(python3 -c 'import sys,datetime as d; print(int((d.datetime.now(d.timezone.utc)-d.datetime.fromisoformat(sys.argv[1].replace("Z","+00:00"))).total_seconds()//60))' "$last" 2>/dev/null || echo "")
           if [ -n "$ago" ] && [ "$ago" -le 10 ]; then
-            server="**Your server is still running**: it started a price update ${ago} minutes ago. So the problem is the website program or the connection to it, not the server itself. Try step 2 first."
+            server="**Your server is still running**: it started a price update ${ago} minutes ago. So the problem is the website program, the domain settings or the connection to the server, not the server itself."
           elif [ -n "$ago" ]; then
             server="**Your server seems to be down or frozen**: it hasn't started a price update for ${ago} minutes (normally every 3). Restart it (step 1)."
           else
@@ -68,13 +103,29 @@ jobs:
           if [ "$TEST_ALERT" = "true" ]; then
             problems="- TEST: this alert was started by hand to check that alerts reach you. Nothing is wrong."$'\n'
           fi
-          echo "${problems:-All good: the website loads and prices are current.}"
+          echo "${problems:-All good: the website, ads.txt and prices are all fine (answered by ${answered}).}"
           echo "$server"
 
           repo="$GITHUB_REPOSITORY"
           open=$(gh issue list -R "$repo" --label site-down --state open --json number --jq '.[0].number // empty')
+          if [ -n "$problems" ] && [ -n "$open" ]; then
+            # Still broken: remind the owner every 6 hours (each comment is emailed), so an alert can't sit unseen for days.
+            since=$(gh api "repos/$repo/issues/$open/comments" --jq 'map(.created_at) | last // empty' 2>/dev/null || true)
+            [ -n "$since" ] || since=$(gh api "repos/$repo/issues/$open" --jq '.created_at')
+            opened=$(gh api "repos/$repo/issues/$open" --jq '.created_at')
+            hours=$(python3 -c 'import sys,datetime as d; n=d.datetime.now(d.timezone.utc); f=lambda s: d.datetime.fromisoformat(s.replace("Z","+00:00")); print(int((n-f(sys.argv[1])).total_seconds()//3600), int((n-f(sys.argv[2])).total_seconds()//3600))' "$since" "$opened")
+            quiet=${hours%% *}; down=${hours##* }
+            if [ "$quiet" -ge 6 ]; then
+              gh issue comment "$open" -R "$repo" --body "@${GITHUB_REPOSITORY_OWNER} reminder: ezzcoins.com has had a problem for about ${down} hours. Latest check at $(date -u '+%d %b %H:%M') UTC:
+
+          ${problems}
+          ${server}" >/dev/null && echo "Reminder posted on alert #$open."
+            else
+              echo "Alert #$open is already open (last note ${quiet} h ago)."
+            fi
+            exit 0
+          fi
           if [ -n "$problems" ]; then
-            [ -n "$open" ] && { echo "Alert #$open is already open."; exit 0; }
             gh label create site-down -R "$repo" --color B60205 --description "ezzcoins.com is not working" --force >/dev/null
             title="ezzcoins.com is not working"; [ "$TEST_ALERT" = "true" ] && title="TEST: ezzcoins.com alert (nothing is wrong)"
             body="@${GITHUB_REPOSITORY_OWNER} the automatic site check found a problem at $(date -u '+%d %b %H:%M') UTC:
@@ -83,12 +134,13 @@ jobs:
           ${server}
 
           **What to do**
-          1. Open Hostinger, go to your VPS and click **Restart**. Everything starts again by itself after about 2 minutes.
-          2. If only the website is down, open the VPS web console and run \`systemctl restart caddy\`.
-          3. If Hostinger itself is down, point the ezzcoins.com A records to GitHub Pages (185.199.108.153, 185.199.109.153, 185.199.110.153, 185.199.111.153); GitHub keeps an up-to-date copy of the site. Switch back afterwards.
+          1. If the problem says ezzcoins.com points to the wrong address, fix the domain's DNS record as described above. Nothing else needs restarting.
+          2. Otherwise open Hostinger, go to your VPS and click **Restart**. Everything starts again by itself after about 2 minutes.
+          3. If only the website is down, open the VPS web console and run \`systemctl restart caddy\`.
+          4. If Hostinger itself is down, point the ezzcoins.com A records to GitHub Pages (185.199.108.153, 185.199.109.153, 185.199.110.153, 185.199.111.153); GitHub keeps an up-to-date copy of the site. Switch back afterwards.
 
-          This issue closes by itself as soon as the check passes again."
+          While this stays broken you get a reminder here every 6 hours. The issue closes by itself as soon as the check passes again."
             gh issue create -R "$repo" --label site-down --title "$title" --body "$(printf '%s' "$body" | sed 's/^          //')"
           elif [ -n "$open" ]; then
-            gh issue close "$open" -R "$repo" --comment "Working again: the automatic check passed at $(date -u '+%d %b %H:%M') UTC."
+            gh issue close "$open" -R "$repo" --comment "Working again: the automatic check passed at $(date -u '+%d %b %H:%M') UTC (answered by ${answered})."
           fi
