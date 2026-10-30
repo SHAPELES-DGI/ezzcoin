@@ -65,6 +65,11 @@
 "ovr": 85,
 "why": "no Wikidata footballer with this name and a photo"
 },
+"255218": {
+"name": "Víctor Guzmán",
+"ovr": 73,
+"why": "no Wikidata footballer with this name and a photo"
+},
 "257484": {
 "name": "Thijs Oosting",
 "ovr": 65,
@@ -340,6 +345,11 @@
 "ovr": 65,
 "why": "no Wikidata footballer with this name and a photo"
 },
+"85833": {
+"name": "Ramiro Árciga",
+"ovr": 70,
+"why": "no Wikidata footballer with this name and a photo"
+},
 "86629": {
 "name": "André Henrique da Silva Martins",
 "ovr": 70,
@@ -352,5 +362,5 @@
 }
 },
 "photos": 855,
-"players": 995
+"players": 997
 }
