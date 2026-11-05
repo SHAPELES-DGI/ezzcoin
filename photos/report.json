@@ -20,6 +20,11 @@
 "ovr": 79,
 "why": "no Wikidata footballer with this name and a photo"
 },
+"235471": {
+"name": "Bartosz Nowak",
+"ovr": 75,
+"why": "no Wikidata footballer with this name and a photo"
+},
 "236532": {
 "name": "Robin Koch",
 "ovr": 79,
@@ -68,6 +73,16 @@
 "246641": {
 "name": "Chiamaka Nnadozie",
 "ovr": 85,
+"why": "no Wikidata footballer with this name and a photo"
+},
+"252929": {
+"name": "Borja Sainz Eguskiza",
+"ovr": 76,
+"why": "no Wikidata footballer with this name and a photo"
+},
+"253714": {
+"name": "Samuel Ballet",
+"ovr": 65,
 "why": "no Wikidata footballer with this name and a photo"
 },
 "255218": {
@@ -195,6 +210,11 @@
 "ovr": 77,
 "why": "no Wikidata footballer with this name and a photo"
 },
+"272723": {
+"name": "Lautaro Di Lollo",
+"ovr": 76,
+"why": "no Wikidata footballer with this name and a photo"
+},
 "273564": {
 "name": "Gift Orban",
 "ovr": 73,
@@ -283,6 +303,11 @@
 "73014": {
 "name": "Cornelia Kramer",
 "ovr": 78,
+"why": "no Wikidata footballer with this name and a photo"
+},
+"74566": {
+"name": "Samuel Mbangula",
+"ovr": 74,
 "why": "no Wikidata footballer with this name and a photo"
 },
 "75263": {
@@ -376,6 +401,6 @@
 "why": "no Wikidata footballer with this name and a photo"
 }
 },
-"photos": 862,
-"players": 1007
+"photos": 872,
+"players": 1022
 }
