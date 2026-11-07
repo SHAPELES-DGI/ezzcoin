@@ -115,6 +115,11 @@
 "ovr": 68,
 "why": "no Wikidata footballer with this name and a photo"
 },
+"260404": {
+"name": "Zaid Romero",
+"ovr": 77,
+"why": "no Wikidata footballer with this name and a photo"
+},
 "261249": {
 "name": "Édouard Michut",
 "ovr": 68,
@@ -148,11 +153,6 @@
 "265057": {
 "name": "Cora Zicai",
 "ovr": 78,
-"why": "no Wikidata footballer with this name and a photo"
-},
-"265898": {
-"name": "Melchie Dumornay",
-"ovr": 88,
 "why": "no Wikidata footballer with this name and a photo"
 },
 "266123": {
@@ -401,6 +401,6 @@
 "why": "no Wikidata footballer with this name and a photo"
 }
 },
-"photos": 872,
-"players": 1022
+"photos": 877,
+"players": 1027
 }
