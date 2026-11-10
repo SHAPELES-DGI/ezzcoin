@@ -360,6 +360,11 @@
 "ovr": 69,
 "why": "no Wikidata footballer with this name and a photo"
 },
+"81724": {
+"name": "Camilo Durán",
+"ovr": 70,
+"why": "no Wikidata footballer with this name and a photo"
+},
 "81863": {
 "name": "Xavi Espart Font",
 "ovr": 67,
@@ -401,6 +406,6 @@
 "why": "no Wikidata footballer with this name and a photo"
 }
 },
-"photos": 879,
-"players": 1029
+"photos": 882,
+"players": 1033
 }
