@@ -85,6 +85,11 @@
 "ovr": 85,
 "why": "no Wikidata footballer with this name and a photo"
 },
+"251769": {
+"name": "Giacomo Calò",
+"ovr": 73,
+"why": "no Wikidata footballer with this name and a photo"
+},
 "252468": {
 "name": "Al Hassan Touré",
 "ovr": 63,
@@ -446,6 +451,6 @@
 "why": "no Wikidata footballer with this name and a photo"
 }
 },
-"photos": 887,
-"players": 1046
+"photos": 888,
+"players": 1048
 }
