@@ -7,13 +7,15 @@ data/newcards.json, a list page at p/index.html, p/cardnames.json (the name and 
 taken from EA's card of the same player) and sitemap.xml at the site root.
 FUT.GG card artwork is refreshed by scripts/fetch_card_art.py and cached in data/card-art.json.
 Each page carries the console price from data/live-prices.json in its HTML, so search engines and link
-previews see it; the browser then loads the newest price. A page keeps its previous baked price until the
+previews see it; the browser then loads the newest price. Pages also carry Ezzcoins' own daily price read
+(data/price-read.json from scripts/price_read.py): range, trend, daily swing, time of day and flip result after tax. A page keeps its previous baked price until the
 market moves more than BAKE_MOVE and BAKE_MIN coins, so the pages are not rewritten on every price refresh.
 
 Usage: python3 scripts/build_pages.py [site root]   (standard library only)
 GitHub runs it automatically (.github/workflows/player-pages.yml) whenever data/players.json or data/newcards.json changes.
 """
 import html, json, os, re, shutil, sys, unicodedata
+from datetime import datetime, timezone
 from urllib.parse import quote
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -29,7 +31,7 @@ SLUG_MAP = {"ø": "o", "Ø": "o", "ß": "ss", "ł": "l", "Ł": "l", "æ": "ae", 
             "œ": "oe", "đ": "d", "Đ": "d", "ı": "i", "ð": "d", "þ": "th"}
 ST_OUT = ["PAC", "SHO", "PAS", "DRI", "DEF", "PHY"]
 ST_GK = ["DIV", "HAN", "KIC", "REF", "SPD", "POS"]
-CSS_V = "20261021-home"
+CSS_V = "20261113-read"
 SPECIAL = 1000000000  # special-card ids on the site: SPECIAL + FUT.GG card id (gid) or FUTBIN card id (fid)
 CARD_ART = {}
 CARD_IDS = json.load(open(os.path.join(ROOT, "data", "card-ids.json")))
@@ -299,17 +301,34 @@ CSS += ("\n/* Phones: the name, price and tools come first and the card follows,
         " .hero>.side{order:4;margin:22px auto 4px}.hero>div:not(.side)>.ezz-report-open{width:auto;justify-self:center}\n"
         " .card-xl .fc-stats small,.st small,.side .playstyles .playstyles-title,.fc-foot span,.mt-positions small{font-size:11px}\n"
         "}\n")
+CSS += ("\n/* Ezzcoins price read: Ezzcoins' own numbers from the prices it recorded (scripts/price_read.py). */\n"
+        ".read{margin-top:34px;padding:20px 22px;background:linear-gradient(140deg,#231f4c,#151c3c);border:1px solid #534373;border-left:3px solid var(--buy);border-radius:12px}"
+        ".read h2{margin:0 0 6px}.read-lede{margin:0 0 14px;color:var(--muted);font-size:.9rem;line-height:1.6}"
+        ".read-points{list-style:none;padding:0;margin:0;display:grid;gap:9px}.read-points li{line-height:1.6;max-width:760px}.read-points b{color:var(--gold);font-weight:700}"
+        ".read-table{overflow-x:auto;margin-top:18px}.read table{border-collapse:collapse;width:100%;max-width:620px;font-size:.92rem}"
+        ".read th,.read td{padding:7px 10px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}"
+        ".read th[scope=row]{text-align:left;font-weight:400;color:var(--muted);white-space:normal}.read thead th{color:var(--ink);font:700 .95rem var(--fd);text-transform:uppercase;letter-spacing:.04em}"
+        ".read-how{margin-top:14px;font-size:.88rem;color:var(--muted)}.read-how summary{cursor:pointer;color:var(--gold);min-height:32px}.read-how p{line-height:1.7;max-width:760px}"
+        ".vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}"
+        "\n@media(max-width:600px){.read{padding:17px 14px;text-align:left}.read th,.read td{padding:7px 6px;font-size:.86rem}.read td{white-space:normal}.read th[scope=row]{min-width:92px}.read-points li{font-size:15px}}\n")
 
 # Player, list and credits pages are generated from the card database, so search engines are asked not to index
-# them and they carry no ads: Google AdSense judged a site of 3,000+ such pages "low value content". The written
-# pages (home, guides, recaps, about) are what the site is indexed and reviewed on. Visitors still reach every
-# player page through the site's links.
+# most of them and they carry no ads: Google AdSense judged a site of 3,000+ such pages "low value content". The
+# written pages (home, guides, recaps, about) are what the site is mainly indexed and reviewed on. Visitors still
+# reach every player page through the site's links.
+# The exception: base cards rated INDEX_MIN_OVR+ and the site's most-watched cards whose page carries a full
+# Ezzcoins price read (a week of recorded prices on 5+ days, in a market that moved) may be indexed and are listed in
+# sitemap.xml: those pages hold Ezzcoins' own numbers, not just a copied price.
 ROBOTS = '<meta name="robots" content="noindex,follow">'
+INDEX_ROBOTS = '<meta name="robots" content="index,follow">'
+INDEX_MIN_OVR = 84
+WATCHED = set()      # EA item ids of the most-watched cards (data/prices.json)
+INDEXED = []         # page paths indexed in this build, for sitemap.xml
 
 
-def head(title, desc, canon, up, image=None):
+def head(title, desc, canon, up, image=None, index=False):
     return (f'<!doctype html>{BANNER}<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
-            f'<title>{e(title)}</title><meta name="description" content="{e(desc)}"><link rel="canonical" href="{e(canon)}">{ROBOTS}'
+            f'<title>{e(title)}</title><meta name="description" content="{e(desc)}"><link rel="canonical" href="{e(canon)}">{INDEX_ROBOTS if index else ROBOTS}'
             f'<meta property="og:type" content="website"><meta property="og:title" content="{e(title)}"><meta property="og:description" content="{e(desc)}">'
             f'<meta property="og:url" content="{e(canon)}"><meta property="og:image" content="{e(image or BASE + "icon-512.png")}"><meta name="theme-color" content="#080d29">'
             f'<link rel="icon" href="{up}favicon-32.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="{up}apple-touch-icon.png">'
@@ -389,6 +408,141 @@ def page_item(x):
 
 AD_BOX = '<div class="ezz-ad" hidden aria-label="Advertisement"></div>'
 
+# Ezzcoins' own daily price read (data/price-read.json from scripts/price_read.py): written into each page as plain
+# sentences, so the page carries Ezzcoins' own numbers worked out from the prices it recorded, not only a price.
+READ = {}          # EA item id (str) -> [console row or None, PC row or None]
+READ_COLS = []
+READ_AS_OF = ""
+READ_MAX_AGE = 3 * 86400   # an older read (price history broken for days) is left off the pages rather than shown stale
+
+
+def load_read():
+    global READ, READ_COLS, READ_AS_OF
+    try:
+        data = json.load(open(os.path.join(ROOT, "data", "price-read.json"), encoding="utf-8"))
+        as_of = datetime.fromisoformat(data["asOf"].replace("Z", "+00:00"))
+        if (datetime.now(timezone.utc) - as_of).total_seconds() > READ_MAX_AGE:
+            print("Price read is more than 3 days old: left off the pages")
+            return
+        READ, READ_COLS, READ_AS_OF = data["items"], data["cols"], data["asOf"]
+    except (OSError, ValueError, KeyError, TypeError):
+        READ = {}
+
+
+def read_for(item):
+    """(console read, PC read) as dicts for an EA item id, or (None, None)."""
+    try:
+        item = int(item)
+    except (TypeError, ValueError):
+        return None, None
+    rows = READ.get(str(item))
+    if rows is None and 0 < item < TRANSFER_OFFSET // 3:      # a player who changed club: newest base item
+        rows = READ.get(str(item + TRANSFER_OFFSET))
+    if not rows:
+        return None, None
+    return tuple(dict(zip(READ_COLS, r)) if r else None for r in rows)
+
+
+def uk_hour(h):
+    return "midnight" if h == 0 else "noon" if h == 12 else f"{h % 12} {'AM' if h < 12 else 'PM'}"
+
+
+def swing_word(s):
+    return "a calm card" if s < 5 else "a fairly steady card" if s < 12 else "a lively card" if s < 25 else "a very jumpy card"
+
+
+def read_points(r, market):
+    """Plain sentences for one platform's read."""
+    c = lambda n: f"{n:,}"
+    pts = []
+    t = r["trend"]
+    if abs(t) < 3:
+        pts.append(("Trend", f"Steady, within {max(1, round(abs(t)))}% of where it was a week ago."))
+    else:
+        pts.append(("Trend", f"{'Rising' if t > 0 else 'Falling'}, about {round(abs(t))}% {'dearer' if t > 0 else 'cheaper'} than a week ago."))
+    where = ("below its usual range" if r["last"] < r["p10"] else "above its usual range" if r["last"] > r["p90"] else
+             "at the low end of its usual range" if r["p90"] > r["p10"] and (r["last"] - r["p10"]) / (r["p90"] - r["p10"]) < 1 / 3 else
+             "at the high end of its usual range" if r["p90"] > r["p10"] and (r["last"] - r["p10"]) / (r["p90"] - r["p10"]) > 2 / 3 else
+             "in the middle of its usual range")
+    if r["p10"] == r["p90"]:
+        pts.append(("Usual range", f"It sat at {c(r['p10'])} coins nearly all week (lowest {c(r['lo'])}, highest {c(r['hi'])})."))
+    else:
+        pts.append(("Usual range", f"Mostly between {c(r['p10'])} and {c(r['p90'])} coins, average {c(r['avg'])} "
+                                   f"(lowest {c(r['lo'])}, highest {c(r['hi'])}). At the latest reading, {c(r['last'])}, it was {where}."))
+    if r.get("swing") is not None:
+        pts.append(("Daily swing", f"On a typical day its price moved about {max(1, round(r['swing']))}% between that day's low and high: {swing_word(r['swing'])}."))
+    times = []
+    if r.get("cheap"):
+        h, good, seen = r["cheap"]
+        times.append(f"usually cheapest around {uk_hour(h)} UK time ({good} of the last {seen} days)")
+    if r.get("dear"):
+        h, good, seen = r["dear"]
+        times.append(f"usually dearest around {uk_hour(h)} UK time ({good} of the last {seen} days)")
+    if times:
+        txt = " and ".join(times)
+        pts.append(("Time of day", txt[0].upper() + txt[1:] + "."))
+    if r["flip"] > 0:
+        pts.append(("Flipping", f"Buying at the low end of its usual range ({c(r['p10'])}) and selling at the high end ({c(r['p90'])}) "
+                                f"would have left about {c(r['flip'])} coins per card after EA's 5% tax. That looks back at the week; it isn't a promise."))
+    else:
+        pts.append(("Flipping", "Its usual range was narrower than EA's 5% tax, so buying low and selling high within the week would not have paid."))
+    pts.append(("Last 30 days", f"Between {c(r['lo30'])} and {c(r['hi30'])} coins on the {market} market."))
+    return pts
+
+
+def read_summary(item):
+    """One sentence from the price read for the page's meta description, or ''."""
+    console, pc = read_for(item)
+    r, market = (console, "console") if console else (pc, "PC")
+    if not r:
+        return ""
+    rng = f"{r['p10']:,}" if r["p10"] == r["p90"] else f"{r['p10']:,}–{r['p90']:,}"
+    t = r["trend"]
+    trend = "steady" if abs(t) < 3 else f"{'up' if t > 0 else 'down'} {round(abs(t))}%"
+    when = f", usually cheapest around {uk_hour(r['cheap'][0])} UK time" if r.get("cheap") else ""
+    return f" Ezzcoins price read: usual 7-day {market} range {rng} coins, {trend} on the week{when}."
+
+
+def indexable(x, item, special=False):
+    """Whether a card page is strong enough to be indexed: a big base card or a most-watched card, with a full read."""
+    try:
+        item_id = int(item)
+    except (TypeError, ValueError):
+        return False
+    if not ((not special and x["o"] >= INDEX_MIN_OVR) or item_id in WATCHED):
+        return False
+    r = read_for(item)[0]
+    return bool(r and r["n"] >= 100 and r["days"] >= 5 and r["p90"] > r["p10"])
+
+
+def read_box(item):
+    """The 'Ezzcoins price read' section for a page, or '' when Ezzcoins has no read for the card yet."""
+    console, pc = read_for(item)
+    main_r, market = (console, "console") if console else (pc, "PC")
+    if not main_r:
+        return ""
+    c = lambda n: f"{n:,}"
+    lis = "".join(f"<li><b>{e(k)}:</b> {e(v)}</li>" for k, v in read_points(main_r, market))
+
+    def cells(r):
+        if not r:
+            return ["–"] * 6
+        return [f"{c(r['p10'])}–{c(r['p90'])}" if r["p10"] != r["p90"] else c(r["p10"]), f"{c(r['lo'])}–{c(r['hi'])}", c(r["avg"]),
+                f"{r['trend']:+g}%".replace("-", "−"), f"{r['swing']:g}%" if r.get("swing") is not None else "–", f"{c(r['lo30'])}–{c(r['hi30'])}"]
+    labels = ["Usual 7-day range", "7-day low–high", "7-day average", "7-day trend", "Typical daily swing", "30-day low–high"]
+    rows = "".join(f"<tr><th scope=\"row\">{lab}</th><td>{a}</td><td>{b}</td></tr>" for lab, a, b in zip(labels, cells(console), cells(pc)))
+    return (f'<section class="read" id="price-read" aria-labelledby="read-title"><h2 id="read-title">Ezzcoins price read</h2>'
+            f'<p class="read-lede">Worked out by Ezzcoins on {e(day(READ_AS_OF))} from {main_r["n"]} {market} prices it recorded over the last 7 days. '
+            f'The live price above updates all day; this read is updated once a day.</p><ul class="read-points">{lis}</ul>'
+            f'<div class="read-table"><table><thead><tr><th scope="col"><span class="vh">Measure</span></th><th scope="col">Console</th><th scope="col">PC</th></tr></thead>'
+            f'<tbody>{rows}</tbody></table></div>'
+            f'<details class="read-how"><summary>How the price read works</summary><p>Ezzcoins records this card\'s price about once an hour and keeps '
+            f'hourly prices for 7 days and daily prices for 30 days. A single price far off the readings on both sides of it (a glitched or mispriced '
+            f'listing) is left out. The usual range leaves out the cheapest and dearest 10% of hours, so it shows where the card really traded. '
+            f'The time of day compares each price with the card\'s median over the 24 hours around it, so a card that rose all week doesn\'t look '
+            f'"cheapest at midnight", and it is only shown when the pattern held on most days. EA keeps 5% of every sale, so a card has to rise '
+            f'about 5.3% before a flip breaks even. Everything here describes the past: prices can move differently next week.</p></details></section>')
+
 
 def foot(up, price_note=False):
     return (f'<footer>' + ('<p id="price-source" aria-live="polite"></p>' if price_note else '') + f'Ratings: EA SPORTS FC 27. Prices come from FUTBIN when it can be reached and from FUT.GG otherwise. Ezzcoins is a free, fan-made site, not endorsed by or affiliated with EA or its licensors, and not affiliated with FUTBIN, FUT.GG, FUTWIZ or EasySBC. It never sells coins, accounts or boosting. '
@@ -424,8 +578,12 @@ def player_page(x, codes, by_club, by_nat, specials_of, credits):
     desc = (f'{x["n"]}\'s EA SPORTS FC 27 Ultimate Team card: {x["o"]}-rated {x["p"]}'
             + (f' for {x["c"]}' if x["c"] else "") + (f' ({x["l"]})' if x["l"] else "") + (f', {x["nat"]}' if x["nat"] else "")
             + (f". {stats_txt}" if stats_txt else "") + mt_txt
-            + (f". Console price about {price:,} coins on Ezzcoins." if price else ". Console price on Ezzcoins."))
+            + (f". Console price about {price:,} coins on Ezzcoins." if price else ". Console price on Ezzcoins.")
+            + read_summary(page_item(x)))
     canon = BASE + "p/" + x["path"]
+    index = indexable(x, page_item(x))
+    if index:
+        INDEXED.append(x["path"])
     facts = [("Position", x["p"] + (f' (also {", ".join(x["a"].split(","))})' if x["a"] else "")),
              ("Club", x["c"]), ("League", x["l"]), ("Nation", x["nat"]),
              ("Skill moves", f'{x["sm"]}★' if x["sm"] else ""), ("Weak foot", f'{x["wf"]}★' if x["wf"] else ""),
@@ -455,7 +613,7 @@ def player_page(x, codes, by_club, by_nat, specials_of, credits):
     fallback_card = big_card(tier, x["o"], x["p"], x["q"] or x["n"], x["s"], lab, flag(codes, x["nat"], up, True), x["c"], pimg)
     full_art = card_art_image(page_item(x), x["n"], fallback_card)
     style_row = playstyle_row(x.get("pls"))
-    return (head(title, desc, canon, up, BASE + "photos/" + pc["img"] if pc else None) +
+    return (head(title, desc, canon, up, BASE + "photos/" + pc["img"] if pc else None, index) +
             f'<main><div class="crumb"><a href="{up}">Ezzcoins</a> › <a href="{up}p/">Player pages</a> › {e(x["n"])}</div>'
             f'<div class="hero"><div class="side">{full_art}{style_row}{"" if full_art or art_photo else pcredit}</div>'
             f'<div><h1>{e(x["n"])}</h1><div class="sub">{x["o"]} {e(x["p"])}' + (f" · {e(where)}" if where else "")
@@ -463,7 +621,7 @@ def player_page(x, codes, by_club, by_nat, specials_of, credits):
             f'<div class="kv">{px}{meta_box(mt, x["o"])}</div>'
             f'<div class="stats">{stats}</div>{chem_box(x, up)}<dl class="facts">{dl}</dl>' + (f'<p class="mtnote">{e(MT_NOTE)}</p>' if mt else "") +
             f'<a class="btn" href="{up}#q={e(quote(x["n"], safe=""))}">Watch on Ezzcoins</a></div></div>'
-            f'{AD_BOX}<section class="more">{more}</section></main>{script}' + foot(up, True))
+            f'{read_box(page_item(x))}{AD_BOX}<section class="more">{more}</section></main>{script}' + foot(up, True))
 
 
 # PlayStyle names in EA's spelling (FUTWIZ writes some as one word, e.g. "Quickstep", "GameChanger", "Deadball", "Precision").
@@ -525,7 +683,11 @@ def special_page(x, codes, specials, credits):
     desc = (f'{x["n"]}\'s {ver} card in EA SPORTS FC 27 Ultimate Team: {x["o"]}-rated {x["p"]}'
             + (f' for {x["c"]}' if x["c"] else "") + (f', {x["nat"]}' if x["nat"] else "")
             + (f". {stats_txt}" if stats_txt else "") + mt_txt
-            + (f". Console price about {price:,} coins on Ezzcoins." if price else ". Console price on Ezzcoins."))
+            + (f". Console price about {price:,} coins on Ezzcoins." if price else ". Console price on Ezzcoins.")
+            + read_summary(page_item(x)))
+    index = indexable(x, page_item(x), special=True)
+    if index:
+        INDEXED.append(x["path"])
     b = x["base"]
     facts = [("Card", ver), ("Full name", x.get("full") if x.get("full") and x.get("full") != x["n"] else ""), ("Added", day(x["added"])),
              ("Position", x["p"] + (f' (also {", ".join(t.strip() for t in x["a"].split(","))})' if x["a"] else "")),
@@ -557,7 +719,7 @@ def special_page(x, codes, specials, credits):
     fallback_card = big_card(card_variant(x["ver"], x["o"], True), x["o"], x["p"], x["cn"], x["s"], lab, flag(codes, x["nat"], up, True), ver, pimg, sig=True)
     full_art = card_art_image(x["key"], x["n"], fallback_card)
     style_row = playstyle_row(x.get("pls"))
-    return (head(title, desc, BASE + "p/" + x["path"], up, BASE + "photos/" + pc["img"] if pc else None) +
+    return (head(title, desc, BASE + "p/" + x["path"], up, BASE + "photos/" + pc["img"] if pc else None, index) +
             f'<main><div class="crumb"><a href="{up}">Ezzcoins</a> › <a href="{up}p/">Player pages</a> › {e(x["n"])} ({e(ver)})</div>'
             f'<div class="hero"><div class="side">{full_art}{style_row}{"" if full_art or art_photo else pcredit}</div>'
             f'<div><div class="tag">{e(ver)}</div><h1>{e(x["n"])}</h1><div class="sub">{x["o"]} {e(x["p"])}' + (f" · {e(where)}" if where else "")
@@ -565,7 +727,7 @@ def special_page(x, codes, specials, credits):
             f'<div class="kv">{px}{meta_box(mt, x["o"])}</div>'
             + (f'<div class="stats">{stats}</div>{chem_box(x, up)}' if has else '<p class="nostats">This card\'s own stats appear here after one of the next ' + ("price" if leg else "hourly") + ' updates.</p>')
             + f'<dl class="facts">{dl}</dl>' + (f'<p class="mtnote">{e(MT_NOTE)}</p>' if mt else "") + f'<a class="btn" href="{up}#q={e(quote(x["n"], safe=""))}">Watch on Ezzcoins</a></div></div>'
-            f'{AD_BOX}<section class="more">{more}</section></main>{script}' + foot(up, True))
+            f'{read_box(page_item(x))}{AD_BOX}<section class="more">{more}</section></main>{script}' + foot(up, True))
 
 
 def credits_page(credits, allp, legends_by_id=None):
@@ -747,6 +909,11 @@ def main():
     out = os.path.join(ROOT, "p")
     global OLD_PRICES
     load_live()
+    load_read()
+    try:
+        WATCHED.update(int(k) for k in json.load(open(os.path.join(ROOT, "data", "prices.json"), encoding="utf-8")).get("players", {}))
+    except (OSError, ValueError, TypeError):
+        pass
     OLD_PRICES = read_old_prices(out)
     if os.path.isdir(out):
         shutil.rmtree(out)
@@ -796,15 +963,16 @@ def main():
         if os.path.isdir(base):
             articles += sorted((f"{folder}/{n}/" for n in os.listdir(base) if os.path.exists(os.path.join(base, n, "index.html"))),
                                reverse=folder == "recap")
-    # Only the written pages: player pages are noindex (see ROBOTS).
+    # The written pages, then the few player pages that may be indexed (see ROBOTS); the rest are noindex.
     pages = [a for a in ("about/", "contact/") if os.path.exists(os.path.join(ROOT, a, "index.html"))]
-    urls = ([BASE] + [BASE + a for a in pages] + [BASE + a for a in articles] + [BASE + "prices.html", BASE + "tools.html", BASE + "privacy.html"])
+    urls = ([BASE] + [BASE + a for a in pages] + [BASE + a for a in articles] + [BASE + "prices.html", BASE + "tools.html", BASE + "privacy.html"]
+            + [BASE + "p/" + path for path in sorted(set(INDEXED))])
     with open(os.path.join(ROOT, "sitemap.xml"), "w", encoding="utf-8") as fh:
         fh.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
                  + "".join(f"<url><loc>{e(u)}</loc></url>\n" for u in urls) + "</urlset>\n")
     baked = sum(1 for x in players + specials + legends if baked_price(x["path"], page_item(x))[0])
     print(f"Baked prices: {baked} pages (live feed {'used' if LIVE_OK else 'unavailable, old prices kept'})")
-    print(f"OK: {len(players)} player pages ({sum(1 for x in players if str(x['id']) in credits)} with photos), {len(specials)} special card pages, {len(legends)} Icon, Hero and FUT Gallery pages, list page and sitemap ({len(urls)} URLs)")
+    print(f"OK: {len(players)} player pages ({sum(1 for x in players if str(x['id']) in credits)} with photos), {len(specials)} special card pages, {len(legends)} Icon, Hero and FUT Gallery pages, list page and sitemap ({len(urls)} URLs, {len(set(INDEXED))} of them player pages)")
 
 
 if __name__ == "__main__":
