@@ -79,6 +79,22 @@ class PlayerPages(unittest.TestCase):
             checked+=1
         print(f'Checked exact stats, own PlayStyles+ and every position meta on {checked} matched pages.')
 
+    def test_indexed_pages_carry_a_price_read_and_are_in_the_sitemap(self):
+        sitemap=(ROOT/'sitemap.xml').read_text()
+        listed={u.split('/p/',1)[1] for u in re.findall(r'<loc>([^<]+)</loc>',sitemap) if '/p/' in u}
+        indexed=set()
+        for path in (ROOT/'p').glob('*/index.html'):
+            text=path.read_text()
+            if 'content="index,follow"' in text:
+                indexed.add(path.parent.name+'/')
+                self.assertIn('id="price-read"',text,str(path))
+                self.assertEqual(text.count('name="robots"'),1,str(path))
+            else:
+                self.assertIn('content="noindex,follow"',text,str(path))
+        self.assertEqual(indexed,listed)
+        self.assertLess(len(indexed),600)   # only the strongest pages; the rest stay noindex
+        print(f'Indexed player pages: {len(indexed)}, all with a price read and in sitemap.xml.')
+
     def test_goalkeeper_import_never_uses_outfield_pace(self):
         from build_players import row
         p={'id':1,'firstName':'Keeper','position':{'shortLabel':'GK'},'stats':{'pac':90,'gkDiving':87,'gkHandling':85,'gkKicking':70,'gkReflexes':88,'gkPositioning':85,'acceleration':40,'sprintSpeed':50}}

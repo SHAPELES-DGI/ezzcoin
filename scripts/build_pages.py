@@ -313,15 +313,22 @@ CSS += ("\n/* Ezzcoins price read: Ezzcoins' own numbers from the prices it reco
         "\n@media(max-width:600px){.read{padding:17px 14px;text-align:left}.read th,.read td{padding:7px 6px;font-size:.86rem}.read td{white-space:normal}.read th[scope=row]{min-width:92px}.read-points li{font-size:15px}}\n")
 
 # Player, list and credits pages are generated from the card database, so search engines are asked not to index
-# them and they carry no ads: Google AdSense judged a site of 3,000+ such pages "low value content". The written
-# pages (home, guides, recaps, about) are what the site is indexed and reviewed on. Visitors still reach every
-# player page through the site's links.
+# most of them and they carry no ads: Google AdSense judged a site of 3,000+ such pages "low value content". The
+# written pages (home, guides, recaps, about) are what the site is mainly indexed and reviewed on. Visitors still
+# reach every player page through the site's links.
+# The exception: base cards rated INDEX_MIN_OVR+ and the site's most-watched cards whose page carries a full
+# Ezzcoins price read (a week of recorded prices on 5+ days, in a market that moved) may be indexed and are listed in
+# sitemap.xml: those pages hold Ezzcoins' own numbers, not just a copied price.
 ROBOTS = '<meta name="robots" content="noindex,follow">'
+INDEX_ROBOTS = '<meta name="robots" content="index,follow">'
+INDEX_MIN_OVR = 84
+WATCHED = set()      # EA item ids of the most-watched cards (data/prices.json)
+INDEXED = []         # page paths indexed in this build, for sitemap.xml
 
 
-def head(title, desc, canon, up, image=None):
+def head(title, desc, canon, up, image=None, index=False):
     return (f'<!doctype html>{BANNER}<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
-            f'<title>{e(title)}</title><meta name="description" content="{e(desc)}"><link rel="canonical" href="{e(canon)}">{ROBOTS}'
+            f'<title>{e(title)}</title><meta name="description" content="{e(desc)}"><link rel="canonical" href="{e(canon)}">{INDEX_ROBOTS if index else ROBOTS}'
             f'<meta property="og:type" content="website"><meta property="og:title" content="{e(title)}"><meta property="og:description" content="{e(desc)}">'
             f'<meta property="og:url" content="{e(canon)}"><meta property="og:image" content="{e(image or BASE + "icon-512.png")}"><meta name="theme-color" content="#080d29">'
             f'<link rel="icon" href="{up}favicon-32.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="{up}apple-touch-icon.png">'
@@ -483,6 +490,31 @@ def read_points(r, market):
     return pts
 
 
+def read_summary(item):
+    """One sentence from the price read for the page's meta description, or ''."""
+    console, pc = read_for(item)
+    r, market = (console, "console") if console else (pc, "PC")
+    if not r:
+        return ""
+    rng = f"{r['p10']:,}" if r["p10"] == r["p90"] else f"{r['p10']:,}–{r['p90']:,}"
+    t = r["trend"]
+    trend = "steady" if abs(t) < 3 else f"{'up' if t > 0 else 'down'} {round(abs(t))}%"
+    when = f", usually cheapest around {uk_hour(r['cheap'][0])} UK time" if r.get("cheap") else ""
+    return f" Ezzcoins price read: usual 7-day {market} range {rng} coins, {trend} on the week{when}."
+
+
+def indexable(x, item, special=False):
+    """Whether a card page is strong enough to be indexed: a big base card or a most-watched card, with a full read."""
+    try:
+        item_id = int(item)
+    except (TypeError, ValueError):
+        return False
+    if not ((not special and x["o"] >= INDEX_MIN_OVR) or item_id in WATCHED):
+        return False
+    r = read_for(item)[0]
+    return bool(r and r["n"] >= 100 and r["days"] >= 5 and r["p90"] > r["p10"])
+
+
 def read_box(item):
     """The 'Ezzcoins price read' section for a page, or '' when Ezzcoins has no read for the card yet."""
     console, pc = read_for(item)
@@ -546,8 +578,12 @@ def player_page(x, codes, by_club, by_nat, specials_of, credits):
     desc = (f'{x["n"]}\'s EA SPORTS FC 27 Ultimate Team card: {x["o"]}-rated {x["p"]}'
             + (f' for {x["c"]}' if x["c"] else "") + (f' ({x["l"]})' if x["l"] else "") + (f', {x["nat"]}' if x["nat"] else "")
             + (f". {stats_txt}" if stats_txt else "") + mt_txt
-            + (f". Console price about {price:,} coins on Ezzcoins." if price else ". Console price on Ezzcoins."))
+            + (f". Console price about {price:,} coins on Ezzcoins." if price else ". Console price on Ezzcoins.")
+            + read_summary(page_item(x)))
     canon = BASE + "p/" + x["path"]
+    index = indexable(x, page_item(x))
+    if index:
+        INDEXED.append(x["path"])
     facts = [("Position", x["p"] + (f' (also {", ".join(x["a"].split(","))})' if x["a"] else "")),
              ("Club", x["c"]), ("League", x["l"]), ("Nation", x["nat"]),
              ("Skill moves", f'{x["sm"]}★' if x["sm"] else ""), ("Weak foot", f'{x["wf"]}★' if x["wf"] else ""),
@@ -577,7 +613,7 @@ def player_page(x, codes, by_club, by_nat, specials_of, credits):
     fallback_card = big_card(tier, x["o"], x["p"], x["q"] or x["n"], x["s"], lab, flag(codes, x["nat"], up, True), x["c"], pimg)
     full_art = card_art_image(page_item(x), x["n"], fallback_card)
     style_row = playstyle_row(x.get("pls"))
-    return (head(title, desc, canon, up, BASE + "photos/" + pc["img"] if pc else None) +
+    return (head(title, desc, canon, up, BASE + "photos/" + pc["img"] if pc else None, index) +
             f'<main><div class="crumb"><a href="{up}">Ezzcoins</a> › <a href="{up}p/">Player pages</a> › {e(x["n"])}</div>'
             f'<div class="hero"><div class="side">{full_art}{style_row}{"" if full_art or art_photo else pcredit}</div>'
             f'<div><h1>{e(x["n"])}</h1><div class="sub">{x["o"]} {e(x["p"])}' + (f" · {e(where)}" if where else "")
@@ -647,7 +683,11 @@ def special_page(x, codes, specials, credits):
     desc = (f'{x["n"]}\'s {ver} card in EA SPORTS FC 27 Ultimate Team: {x["o"]}-rated {x["p"]}'
             + (f' for {x["c"]}' if x["c"] else "") + (f', {x["nat"]}' if x["nat"] else "")
             + (f". {stats_txt}" if stats_txt else "") + mt_txt
-            + (f". Console price about {price:,} coins on Ezzcoins." if price else ". Console price on Ezzcoins."))
+            + (f". Console price about {price:,} coins on Ezzcoins." if price else ". Console price on Ezzcoins.")
+            + read_summary(page_item(x)))
+    index = indexable(x, page_item(x), special=True)
+    if index:
+        INDEXED.append(x["path"])
     b = x["base"]
     facts = [("Card", ver), ("Full name", x.get("full") if x.get("full") and x.get("full") != x["n"] else ""), ("Added", day(x["added"])),
              ("Position", x["p"] + (f' (also {", ".join(t.strip() for t in x["a"].split(","))})' if x["a"] else "")),
@@ -679,7 +719,7 @@ def special_page(x, codes, specials, credits):
     fallback_card = big_card(card_variant(x["ver"], x["o"], True), x["o"], x["p"], x["cn"], x["s"], lab, flag(codes, x["nat"], up, True), ver, pimg, sig=True)
     full_art = card_art_image(x["key"], x["n"], fallback_card)
     style_row = playstyle_row(x.get("pls"))
-    return (head(title, desc, BASE + "p/" + x["path"], up, BASE + "photos/" + pc["img"] if pc else None) +
+    return (head(title, desc, BASE + "p/" + x["path"], up, BASE + "photos/" + pc["img"] if pc else None, index) +
             f'<main><div class="crumb"><a href="{up}">Ezzcoins</a> › <a href="{up}p/">Player pages</a> › {e(x["n"])} ({e(ver)})</div>'
             f'<div class="hero"><div class="side">{full_art}{style_row}{"" if full_art or art_photo else pcredit}</div>'
             f'<div><div class="tag">{e(ver)}</div><h1>{e(x["n"])}</h1><div class="sub">{x["o"]} {e(x["p"])}' + (f" · {e(where)}" if where else "")
@@ -870,6 +910,10 @@ def main():
     global OLD_PRICES
     load_live()
     load_read()
+    try:
+        WATCHED.update(int(k) for k in json.load(open(os.path.join(ROOT, "data", "prices.json"), encoding="utf-8")).get("players", {}))
+    except (OSError, ValueError, TypeError):
+        pass
     OLD_PRICES = read_old_prices(out)
     if os.path.isdir(out):
         shutil.rmtree(out)
@@ -919,15 +963,16 @@ def main():
         if os.path.isdir(base):
             articles += sorted((f"{folder}/{n}/" for n in os.listdir(base) if os.path.exists(os.path.join(base, n, "index.html"))),
                                reverse=folder == "recap")
-    # Only the written pages: player pages are noindex (see ROBOTS).
+    # The written pages, then the few player pages that may be indexed (see ROBOTS); the rest are noindex.
     pages = [a for a in ("about/", "contact/") if os.path.exists(os.path.join(ROOT, a, "index.html"))]
-    urls = ([BASE] + [BASE + a for a in pages] + [BASE + a for a in articles] + [BASE + "prices.html", BASE + "tools.html", BASE + "privacy.html"])
+    urls = ([BASE] + [BASE + a for a in pages] + [BASE + a for a in articles] + [BASE + "prices.html", BASE + "tools.html", BASE + "privacy.html"]
+            + [BASE + "p/" + path for path in sorted(set(INDEXED))])
     with open(os.path.join(ROOT, "sitemap.xml"), "w", encoding="utf-8") as fh:
         fh.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
                  + "".join(f"<url><loc>{e(u)}</loc></url>\n" for u in urls) + "</urlset>\n")
     baked = sum(1 for x in players + specials + legends if baked_price(x["path"], page_item(x))[0])
     print(f"Baked prices: {baked} pages (live feed {'used' if LIVE_OK else 'unavailable, old prices kept'})")
-    print(f"OK: {len(players)} player pages ({sum(1 for x in players if str(x['id']) in credits)} with photos), {len(specials)} special card pages, {len(legends)} Icon, Hero and FUT Gallery pages, list page and sitemap ({len(urls)} URLs)")
+    print(f"OK: {len(players)} player pages ({sum(1 for x in players if str(x['id']) in credits)} with photos), {len(specials)} special card pages, {len(legends)} Icon, Hero and FUT Gallery pages, list page and sitemap ({len(urls)} URLs, {len(set(INDEXED))} of them player pages)")
 
 
 if __name__ == "__main__":
