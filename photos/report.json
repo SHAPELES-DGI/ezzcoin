@@ -220,14 +220,34 @@
 "ovr": 69,
 "why": "no Wikidata footballer with this name and a photo"
 },
+"269815": {
+"name": "Claire Lelarge",
+"ovr": 67,
+"why": "no Wikidata footballer with this name and a photo"
+},
 "271839": {
 "name": "Selina Vobian",
 "ovr": 77,
 "why": "no Wikidata footballer with this name and a photo"
 },
+"272081": {
+"name": "Ana González Rosa",
+"ovr": 74,
+"why": "no Wikidata footballer with this name and a photo"
+},
 "272137": {
 "name": "Sara Ortega Ruiz",
 "ovr": 73,
+"why": "no Wikidata footballer with this name and a photo"
+},
+"272244": {
+"name": "Raiderlín Carrasco",
+"ovr": 73,
+"why": "no Wikidata footballer with this name and a photo"
+},
+"272270": {
+"name": "Miku Kojima",
+"ovr": 72,
 "why": "no Wikidata footballer with this name and a photo"
 },
 "272612": {
@@ -295,6 +315,11 @@
 "ovr": 66,
 "why": "no Wikidata footballer with this name and a photo"
 },
+"278653": {
+"name": "Paula León Breña",
+"ovr": 70,
+"why": "no Wikidata footballer with this name and a photo"
+},
 "279541": {
 "name": "Trent Koné-Doherty",
 "ovr": 59,
@@ -333,6 +358,11 @@
 "72170": {
 "name": "Ilhan Fakili",
 "ovr": 64,
+"why": "no Wikidata footballer with this name and a photo"
+},
+"72340": {
+"name": "Simona Botero",
+"ovr": 70,
 "why": "no Wikidata footballer with this name and a photo"
 },
 "73014": {
@@ -378,6 +408,11 @@
 "77364": {
 "name": "Soriba Diaoune",
 "ovr": 67,
+"why": "no Wikidata footballer with this name and a photo"
+},
+"79622": {
+"name": "Aitana Zumárraga Garde",
+"ovr": 71,
 "why": "no Wikidata footballer with this name and a photo"
 },
 "80454": {
@@ -445,6 +480,11 @@
 "ovr": 70,
 "why": "no Wikidata footballer with this name and a photo"
 },
+"86671": {
+"name": "Thirsa De Meester",
+"ovr": 69,
+"why": "no Wikidata footballer with this name and a photo"
+},
 "87128": {
 "name": "João Guilherme de Souza Crispim",
 "ovr": 63,
@@ -452,5 +492,5 @@
 }
 },
 "photos": 889,
-"players": 1049
+"players": 1057
 }
