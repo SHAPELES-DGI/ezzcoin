@@ -180,6 +180,11 @@
 "ovr": 78,
 "why": "no Wikidata footballer with this name and a photo"
 },
+"265968": {
+"name": "Cindy Caputo",
+"ovr": 77,
+"why": "no Wikidata footballer with this name and a photo"
+},
 "266123": {
 "name": "Oliver Provstgaard",
 "ovr": 70,
@@ -218,6 +223,11 @@
 "269237": {
 "name": "Arda Okan Kurtulan",
 "ovr": 69,
+"why": "no Wikidata footballer with this name and a photo"
+},
+"269705": {
+"name": "Derry Scherhant",
+"ovr": 73,
 "why": "no Wikidata footballer with this name and a photo"
 },
 "269815": {
@@ -288,6 +298,11 @@
 "276295": {
 "name": "Thierno Barry",
 "ovr": 76,
+"why": "no Wikidata footballer with this name and a photo"
+},
+"276519": {
+"name": "Bernadette Amani",
+"ovr": 78,
 "why": "no Wikidata footballer with this name and a photo"
 },
 "276725": {
@@ -410,6 +425,16 @@
 "ovr": 67,
 "why": "no Wikidata footballer with this name and a photo"
 },
+"78682": {
+"name": "Svea Stoldt",
+"ovr": 72,
+"why": "no Wikidata footballer with this name and a photo"
+},
+"79525": {
+"name": "Adrian Svanbäck",
+"ovr": 67,
+"why": "no Wikidata footballer with this name and a photo"
+},
 "79622": {
 "name": "Aitana Zumárraga Garde",
 "ovr": 71,
@@ -491,6 +516,6 @@
 "why": "no Wikidata footballer with this name and a photo"
 }
 },
-"photos": 889,
-"players": 1057
+"photos": 896,
+"players": 1069
 }
