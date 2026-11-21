@@ -125,6 +125,11 @@
 "ovr": 68,
 "why": "no Wikidata footballer with this name and a photo"
 },
+"258972": {
+"name": "Isaak Touré",
+"ovr": 70,
+"why": "no Wikidata footballer with this name and a photo"
+},
 "259105": {
 "name": "Pablo Rodríguez Delgado",
 "ovr": 69,
@@ -177,6 +182,11 @@
 },
 "265057": {
 "name": "Cora Zicai",
+"ovr": 78,
+"why": "no Wikidata footballer with this name and a photo"
+},
+"265409": {
+"name": "Janou Levels",
 "ovr": 78,
 "why": "no Wikidata footballer with this name and a photo"
 },
@@ -233,6 +243,11 @@
 "269815": {
 "name": "Claire Lelarge",
 "ovr": 67,
+"why": "no Wikidata footballer with this name and a photo"
+},
+"271132": {
+"name": "Gabriel Silva Vieira",
+"ovr": 74,
 "why": "no Wikidata footballer with this name and a photo"
 },
 "271839": {
@@ -516,6 +531,6 @@
 "why": "no Wikidata footballer with this name and a photo"
 }
 },
-"photos": 896,
-"players": 1069
+"photos": 898,
+"players": 1074
 }
