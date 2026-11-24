@@ -440,6 +440,11 @@
 "ovr": 67,
 "why": "no Wikidata footballer with this name and a photo"
 },
+"78549": {
+"name": "Quentin Ndjantou",
+"ovr": 70,
+"why": "no Wikidata footballer with this name and a photo"
+},
 "78682": {
 "name": "Svea Stoldt",
 "ovr": 72,
@@ -525,12 +530,17 @@
 "ovr": 69,
 "why": "no Wikidata footballer with this name and a photo"
 },
+"86857": {
+"name": "Alessandro Longoni",
+"ovr": 65,
+"why": "no Wikidata footballer with this name and a photo"
+},
 "87128": {
 "name": "João Guilherme de Souza Crispim",
 "ovr": 63,
 "why": "no Wikidata footballer with this name and a photo"
 }
 },
-"photos": 899,
-"players": 1075
+"photos": 904,
+"players": 1082
 }
