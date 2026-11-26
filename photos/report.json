@@ -1,5 +1,10 @@
 {
 "missing": {
+"193794": {
+"name": "Asier Villalibre Molina",
+"ovr": 74,
+"why": "no Wikidata footballer with this name and a photo"
+},
 "207606": {
 "name": "Jay Lynch",
 "ovr": 62,
@@ -55,6 +60,11 @@
 "ovr": 73,
 "why": "no Wikidata footballer with this name and a photo"
 },
+"240663": {
+"name": "Miguel Ángel Merentiel",
+"ovr": 76,
+"why": "no Wikidata footballer with this name and a photo"
+},
 "242541": {
 "name": "Ciaron Brown",
 "ovr": 69,
@@ -108,6 +118,11 @@
 "255218": {
 "name": "Víctor Guzmán",
 "ovr": 73,
+"why": "no Wikidata footballer with this name and a photo"
+},
+"256778": {
+"name": "Alexander Lind",
+"ovr": 71,
 "why": "no Wikidata footballer with this name and a photo"
 },
 "256949": {
@@ -240,6 +255,11 @@
 "ovr": 73,
 "why": "no Wikidata footballer with this name and a photo"
 },
+"269728": {
+"name": "Jean-Mattéo Bahoya",
+"ovr": 76,
+"why": "no Wikidata footballer with this name and a photo"
+},
 "269815": {
 "name": "Claire Lelarge",
 "ovr": 67,
@@ -272,6 +292,11 @@
 },
 "272270": {
 "name": "Miku Kojima",
+"ovr": 72,
+"why": "no Wikidata footballer with this name and a photo"
+},
+"272276": {
+"name": "Kara Bathmann",
 "ovr": 72,
 "why": "no Wikidata footballer with this name and a photo"
 },
@@ -325,6 +350,11 @@
 "ovr": 69,
 "why": "no Wikidata footballer with this name and a photo"
 },
+"276901": {
+"name": "Afonso Bastardo Moreira",
+"ovr": 78,
+"why": "no Wikidata footballer with this name and a photo"
+},
 "277211": {
 "name": "Franculino Djú",
 "ovr": 74,
@@ -338,6 +368,11 @@
 "277811": {
 "name": "Mathias de Amorim",
 "ovr": 73,
+"why": "no Wikidata footballer with this name and a photo"
+},
+"277952": {
+"name": "Lotte Keukelaar",
+"ovr": 74,
 "why": "no Wikidata footballer with this name and a photo"
 },
 "278326": {
@@ -541,6 +576,6 @@
 "why": "no Wikidata footballer with this name and a photo"
 }
 },
-"photos": 906,
-"players": 1084
+"photos": 915,
+"players": 1100
 }
