@@ -175,6 +175,11 @@
 "ovr": 69,
 "why": "no Wikidata footballer with this name and a photo"
 },
+"262105": {
+"name": "Julien Duranville",
+"ovr": 72,
+"why": "no Wikidata footballer with this name and a photo"
+},
 "262642": {
 "name": "Zeki Amdouni",
 "ovr": 74,
@@ -576,6 +581,6 @@
 "why": "no Wikidata footballer with this name and a photo"
 }
 },
-"photos": 915,
-"players": 1100
+"photos": 924,
+"players": 1110
 }
